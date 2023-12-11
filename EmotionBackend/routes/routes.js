@@ -3,7 +3,7 @@ import {Test,EmoReadWrite,EmoReg,EmoSurvey} from "../model/model.js";
 const APIrouter = express.Router();
 
 
-APIrouter.get("/test", (req, res) => {
+APIrouter.get("/newtest", (req, res) => {
   const newTest = new Test({
     testID: "liang"+Date.now(),
   });
@@ -11,6 +11,17 @@ APIrouter.get("/test", (req, res) => {
     .save()
     .then((result) => {
       res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+
+APIrouter.get("/tests", (req, res) => {
+  Test.find()
+    .then((found) => {
+      res.send(found);
     })
     .catch((err) => {
       console.log(err);
