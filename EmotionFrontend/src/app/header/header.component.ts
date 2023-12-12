@@ -14,4 +14,8 @@ export class HeaderComponent {
   goToHome() {
     this.router.navigate(['home']);
   }
+
+  goToSurvey() {
+    this.router.navigate(['survey']);
+  }
 }
