@@ -5,14 +5,6 @@ import { EmotionDetailComponent } from './emotion-detail/emotion-detail.componen
 import {StaticsComponent} from "./statics/statics.component";
 import {ReflectionsComponent} from "./reflections/reflections.component";
 
-import { HeroesComponent } from './heroes/heroes.component';
-// const routes: Routes = [
-//   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-//   { path: 'dashboard', component: DashboardComponent },
-//   { path: 'detail/:id', component: EmotionDetailComponent },
-//   { path: 'heroes', component: HeroesComponent }
-// ];
-
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
