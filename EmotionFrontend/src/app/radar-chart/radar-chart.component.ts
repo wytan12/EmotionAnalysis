@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-radar-chart',
@@ -30,8 +31,12 @@ export class RadarChartComponent {
   };
   public radarChartType: ChartType = 'radar';
 
-  constructor() { }
+  constructor(private router: Router) {}
 
+  public handleChartClick() {
+    // Navigate to a common page, e.g., 'emotion-details'
+    this.router.navigate(['emotion-detail']);
+  }
   ngOnInit() {
   }
 }
