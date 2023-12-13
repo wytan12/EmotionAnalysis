@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Label } from "ng2-charts"
 import { ChartType, ChartDataset, ChartOptions } from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels"
 
@@ -9,14 +8,23 @@ import * as pluginDataLabels from "chartjs-plugin-datalabels"
   styleUrls: ["./bar-chart.component.css"]
 })
 export class BarChartComponent implements OnInit {
+randomize: any;
   ngOnInit(): void {
     
   }
-  public barChartLabels: Label[]= ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels: string[]= ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
 
-  public barChartType: ChartType = "bar";
+  // public barChartType: ChartType = "bar";
+  public barChartType: ChartType = 'bar';
   public barChartLegend = true;
-  public barChartPlugins = [pluginDataLabels];
+  // public barChartPlugins = [pluginDataLabels];
+
+  public barChartPlugins = [{
+    datalabels: {
+      anchor: 'end',
+      align: 'end',
+    }
+  }] as any[];
 
   public barChartData: ChartDataset[] = [
     {data: [65,59,80,81,56,55,40], label:'Series A'},
@@ -26,15 +34,28 @@ export class BarChartComponent implements OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
     scales: {
-      x: [{ type: 'category' }],
-      y: [{ type: 'linear', ticks: { beginAtZero: true } }],
-    },
-    plugins:{
-      datalabels:{
-        anchor:'end',
-        align:'end',
+      y: {
+        beginAtZero: true
       }
-    }
+    },
+    // scales: {
+    //   x: [{ type: 'category' }],
+    //   // y: [{
+    //   //   type: 'linear',
+    //   //   beginAtZero: true,
+    //   //   ticks: {
+    //   //     beginAtZero: true,
+    //   //   },
+    //   //   // Add any other required properties
+    //   // }],
+      
+    // },
+  //   plugins:{
+  //     datalabels:{
+  //       anchor:'end',
+  //       align:'end',
+  //     }
+  //   }
   };
   
 }
