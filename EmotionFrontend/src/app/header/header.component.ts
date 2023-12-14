@@ -12,7 +12,7 @@ export class HeaderComponent {
   constructor(private router: Router) { }
   
   goToHome() {
-    this.router.navigate(['home']);
+    this.router.navigate(['dashboard']);
   }
 
   goToSurvey() {

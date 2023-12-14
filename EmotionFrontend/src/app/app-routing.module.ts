@@ -8,7 +8,7 @@ import {ReflectionsComponent} from "./reflections/reflections.component";
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'emotion/:id', component: EmotionDetailComponent },
+  { path: 'emotion-detail', component: EmotionDetailComponent },
   { path: 'reflections', component: ReflectionsComponent },
   { path: 'statics', component: StaticsComponent },
 ];
