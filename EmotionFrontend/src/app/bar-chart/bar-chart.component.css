@@ -1,0 +1,9 @@
+p {
+    font-family: Lato;
+  }
+
+.barchart-container {
+    padding-left: 50px;
+    width: 100%;
+    height: 360px;
+}
