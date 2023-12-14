@@ -13,8 +13,8 @@ import {StaticsComponent} from "./statics/statics.component";
 import { HeaderComponent } from './header/header.component';
 import { NgChartsModule } from 'ng2-charts';
 import { RadarChartComponent } from './radar-chart/radar-chart.component';
-import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { SurveyComponent } from './survey/survey.component';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
 
 
 @NgModule({
