@@ -1,6 +1,6 @@
 <div>
     <div>
-      <div style="display:block">
+      <div style="display:block" class="barchart-container">
         <canvas baseChart
           [datasets]= "barChartData"
           [labels] = "barChartLabels"
@@ -13,3 +13,4 @@
       <button mat-button mat-raised-button color="primary" (click)="randomize()">Update</button>
     </div>
   </div>
+<app-reflect-button></app-reflect-button>

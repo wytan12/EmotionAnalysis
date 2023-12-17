@@ -17,6 +17,8 @@ import { MessagesComponent} from "./messages/messages.component";
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { SurveyComponent } from './survey/survey.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { ReflectFormComponent } from './reflect-form/reflect-form.component';
+import { ReflectButtonComponent } from './reflect-button/reflect-button.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -37,6 +39,8 @@ import { CarouselComponent } from './carousel/carousel.component';
     SurveyComponent,
     CarouselComponent,
     MessagesComponent,
+    ReflectFormComponent,
+    ReflectButtonComponent,
   ],
   bootstrap: [ AppComponent ]
 })
