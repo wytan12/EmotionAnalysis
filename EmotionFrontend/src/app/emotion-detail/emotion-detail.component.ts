@@ -1,9 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-
-import { Hero } from '../hero';
-import { HeroService } from '../hero.service';
 
 @Component({
   selector: 'app-emotion-detail',
@@ -11,32 +6,30 @@ import { HeroService } from '../hero.service';
   styleUrls: [ './emotion-detail.component.css' ]
 })
 export class EmotionDetailComponent implements OnInit {
-  hero: Hero | undefined;
-
-  constructor(
-    private route: ActivatedRoute,
-    private heroService: HeroService,
-    private location: Location
-  ) {}
 
   ngOnInit(): void {
-    this.getHero();
   }
 
-  getHero(): void {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.heroService.getHero(id)
-      .subscribe(hero => this.hero = hero);
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
-  save(): void {
-    if (this.hero) {
-      this.heroService.updateHero(this.hero)
-        .subscribe(() => this.goBack());
-    }
-  }
+  images = [
+    {
+      imageSrc:
+        'https://images.unsplash.com/photo-1460627390041-532a28402358?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+      imageAlt: 'nature1',
+    },
+    {
+      imageSrc:
+        'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+      imageAlt: 'nature2',
+    },
+    {
+      imageSrc:
+        'https://images.unsplash.com/photo-1640844444545-66e19eb6f549?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80',
+      imageAlt: 'person1',
+    },
+    {
+      imageSrc:
+        'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+      imageAlt: 'person2',
+    },
+  ]
 }

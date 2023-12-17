@@ -15,6 +15,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { RadarChartComponent } from './radar-chart/radar-chart.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { SurveyComponent } from './survey/survey.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { SurveyComponent } from './survey/survey.component';
     HeaderComponent,
     RadarChartComponent,
     BarChartComponent,
-    SurveyComponent
+    SurveyComponent,
+    CarouselComponent,
   ],
   bootstrap: [ AppComponent ]
 })
