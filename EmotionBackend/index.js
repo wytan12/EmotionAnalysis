@@ -27,7 +27,7 @@ var corsOptions = {
 
 //////////////////////////////////////////////////  mongoDB ///////////////////////////////////////////////////
 // const mongoURLString = process.env.DATABASE_URL;
-const mongoURLString = "mongodb://liangluya:liangluya@localhost:27017/Emotion";
+const mongoURLString = "mongodb://liangluya:liangluya@192.168.137.1:27017/Emotion";
 
 const connectDB = async () => {
   try {
