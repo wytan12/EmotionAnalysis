@@ -1,0 +1,17 @@
+<div><h2>barchart test</h2></div>
+<canvas
+  baseChart
+  class="chart"
+  [data]="barChartData"
+  [options]="barChartOptions"
+
+  [type]="barChartType"
+  (chartHover)="chartHovered($event)"
+  (chartClick)="chartClicked($event)"
+>
+</canvas>
+<!--  [plugins]="barChartPlugins"-->
+
+<button mat-button mat-raised-button color="primary" (click)="randomize()">
+  Update
+</button>

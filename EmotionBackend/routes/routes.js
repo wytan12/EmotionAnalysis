@@ -81,7 +81,7 @@ APIrouter.post("/emosurvey", (req, res) => {
 });
 
 
-APIrouter.post("/EmoReadWrite", (req, res) => {
+APIrouter.post("/AddEmoReadWrite", (req, res) => {
   const newEmoReadWrite = new EmoReadWrite({
     UserID: req.body.username,
     Timestamp:req.body.timestamp,
@@ -115,16 +115,17 @@ APIrouter.post("/EmoReadWrite", (req, res) => {
 
 //
 // //Get all Method
-// APIrouter.get("/users", (req, res) => {
-//   User.find()
-//     .then((found) => {
-//       res.send(found);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       res.send(err.message);
-//     });
-// });
+APIrouter.get("/findAllEmoReadWrite", (req, res) => {
+  EmoReadWrite.find()
+    .then((found) => {
+      res.send(found);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+
 //
 // //Get by ID Method
 // APIrouter.get("/user/:username", (req, res) => {

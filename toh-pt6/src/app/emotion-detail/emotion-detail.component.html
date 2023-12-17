@@ -1,10 +1,16 @@
-<div *ngIf="hero">
-  <h2>{{hero.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{hero.id}}</div>
-  <div>
-    <label for="hero-name">Hero name: </label>
-    <input id="hero-name" [(ngModel)]="hero.name" placeholder="Hero name"/>
-  </div>
-  <button type="button" (click)="goBack()">go back</button>
-  <button type="button" (click)="save()">save</button>
-</div>
+<!--<el-table [model]="tableData" [scroll-x]="true" center="all">-->
+<!--  <el-table-column model-key="id" label="id" width="140">-->
+<!--  </el-table-column>-->
+<!--  <el-table-column model-key="date" label="date" width="140">-->
+<!--  </el-table-column>-->
+<!--  <el-table-column model-key="idea" label="idea" width="200">-->
+<!--  </el-table-column>-->
+<!--  <el-table-column model-key="intensity" label="intensity" width="140">-->
+<!--      <i class="el-icon-star-on" color="#F7BA2A" ng-repeat="i in intensity"></i>-->
+<!--  </el-table-column>-->
+<!--  <el-table-column label="operation" width="120">-->
+<!--    <ng-template #slot let-scope="scope">-->
+<!--      <el-button type="text" size="small" (click)="reflect(scope)">Reflect&Pan</el-button>-->
+<!--    </ng-template>-->
+<!--  </el-table-column>-->
+<!--</el-table>-->
