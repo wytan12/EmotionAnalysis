@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-
-import {Emotion, Test} from './emotion';
-
+import { catchError, map, filter,tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
+import {EmoReadWrite, Emotion, Test} from "./emotion";
+
 
 
 @Injectable({ providedIn: 'root' })
@@ -27,12 +26,41 @@ export class EmotionService {
         catchError(this.handleError<Test[]>('getEmotiones', []))
       );
   }
-  /** GET Emotiones from the server */
-  getEmotions(): Observable<Emotion[]> {
-    return this.http.get<Emotion[]>(this.EmotionesUrl)
+
+  getEmoRW(): Observable<Object[]> {
+    // this.http.get("api/findAllEmoReadWrite").subscribe((response) =>{
+    //     console.log("get");
+    //     console.log(response);
+    //   });
+    return this.http.get<Object[]>("api/findAllEmoReadWrite")
       .pipe(
         tap(_ => this.log('fetched Emotiones')),
-        catchError(this.handleError<Emotion[]>('getEmotiones', []))
+        catchError(this.handleError<Object[]>('getEmotiones', []))
+      );
+  }
+
+
+
+  //   this.http.get("api/findAllEmoReadWrite").subscribe((response) =>{
+  //     console.log(response);
+  //   });
+  //
+  //   // return this.http.jsonp("api/findAllEmoReadWrite", 'callback');
+  //     // .pipe(
+  //     //   map(result => this.jsonpResultToHeroes(result)),
+  //     //   catchError(this.handleError('searchHeroes', []))
+  //     // );
+  //
+  //   // return this.http.jsonp<any>("api/findAllEmoReadWrite","callback")
+  //   //   .subscribe(data => [console.log(data.results .map((d: any) => d.trackName));
+  // }
+
+  /** GET Emotiones from the server */
+  getEmotions(): Observable<EmoReadWrite[]> {
+    return this.http.get<EmoReadWrite[]>("api/findAllEmoReadWrite")
+      .pipe(
+        tap(_ => this.log('fetched Emotiones')),
+        catchError(this.handleError<EmoReadWrite[]>('getEmotiones', []))
       );
   }
 
