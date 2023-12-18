@@ -1,0 +1,35 @@
+<app-header></app-header>
+<form class="form-style-7">
+    <ul>
+    <li>
+        <label for="name">What do you see in the visualizations?</label>
+        <input type="text" name="name" maxlength="100">
+        <span>Enter here</span>
+    </li>
+    <li>
+        <label for="email">Based on the analysis results, what emotional challenges do we have during the Knowledge Building?</label>
+        <input type="email" name="email" maxlength="100">
+        <span>Enter here</span>
+    </li>
+    <li>
+        <label for="url">Which aspects do you think we can do better?</label>
+        <input type="url" name="url" maxlength="100">
+        <span>Enter here</span>
+    </li>
+    <li>
+        <label for="bio">How can we create a more positive emotional environment to support our Knowledge Building?</label>
+        <textarea name="bio" onkeyup="adjust_textarea(this)"></textarea>
+        <span>Enter here</span>
+    </li>
+    <li>
+        <input type="submit" value="Send This" >
+    </li>
+    </ul>
+</form>
+
+<!-- Container for the circles -->
+<div class="circle-container">
+    <div class="circle">Our analysis<span class="small-text">Analysing our emotions using visualizations</span></div>
+    <div class="circle">Our reflection/discussion<span class="small-text">What problems, gaps, or issues have we identified?</span></div>
+    <div class="circle">Our regulation<span class="small-text">Action plans for regulating emotional issues</span></div>
+</div>
