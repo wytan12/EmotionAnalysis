@@ -24,6 +24,7 @@
     "angular-in-memory-web-api": "~0.16.0",
     "chart.js": "^4.4.1",
     "install": "^0.13.0",
+    "ng-devui": "^16.2.0",
     "ng2-charts": "^5.0.4",
     "npm": "^10.2.5",
     "or": "^0.2.0",

@@ -24,7 +24,7 @@ var corsOptions = {
     "Access-Control-Allow-Headers": "*", // Allow specified headers
   },
 };
-
+console.log(`Backend Start`);
 //////////////////////////////////////////////////  mongoDB ///////////////////////////////////////////////////
 // const mongoURLString = process.env.DATABASE_URL;
 const mongoURLString = "mongodb://liangluya:liangluya@192.168.137.1:27017/Emotion";
