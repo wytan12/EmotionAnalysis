@@ -1,8 +1,15 @@
+<app-popup></app-popup>
 <h2>Test HttpClient</h2>
 
 <div>
-  <button type="button" (click)="getData()">
+  <d-button type="button" bsStyle="primary" background-color="green" (click)="getData()">
     Test HttpClient
-  </button>
+  </d-button>
+</div>
+<div>
+  <ul *ngFor="let item of emoReadWrite">
+    <li>{{item._id}} {{item.ActionType}} {{item.UserID}} {{item.Timestamp}} {{item.Anxious}} {{item.Anxious_Intensity}}</li>
+  </ul>
 </div>
 <!--{{Tests|json}}-->
+

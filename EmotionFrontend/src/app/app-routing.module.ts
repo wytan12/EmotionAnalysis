@@ -5,14 +5,19 @@ import { EmotionDetailComponent } from './emotion-detail/emotion-detail.componen
 import {StaticsComponent} from "./statics/statics.component";
 import {ReflectionsComponent} from "./reflections/reflections.component";
 import { SurveyComponent } from './survey/survey.component';
+import {BarChartComponent} from "./bar-chart/bar-chart.component";
+import { ReflectFormComponent } from './reflect-form/reflect-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'emotion-detail', component: EmotionDetailComponent },
+  // { path: 'emotion/:id', component: EmotionDetailComponent },
   { path: 'reflections', component: ReflectionsComponent },
   { path: 'statics', component: StaticsComponent },
-  { path: 'survey', component: SurveyComponent}
+  { path: 'bar', component: BarChartComponent},
+  { path: 'survey', component: SurveyComponent},
+  { path: 'reflect-form', component: ReflectFormComponent},
 ];
 
 @NgModule({

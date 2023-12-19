@@ -1,0 +1,162 @@
+.form-style-7{
+	max-width:700px;
+	margin:50px auto;
+	background:#fff;
+	border-radius:2px;
+	padding:20px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+.form-style-7 h1{
+	display: block;
+	text-align: center;
+	padding: 0;
+	margin: 0px 0px 20px 0px;
+	color: #5C5C5C;
+	font-size:x-large;
+}
+.form-style-7 ul{
+	list-style:none;
+	padding:0;
+	margin:0;	
+}
+.form-style-7 li{
+	display: block;
+	padding: 9px;
+	border:1px solid #DDDDDD;
+	margin-bottom: 30px;
+	border-radius: 3px;
+}
+.form-style-7 li:last-child{
+	border:none;
+	margin-bottom: 0px;
+	text-align: center;
+}
+.form-style-7 li > label{
+	display: block;
+	float: left;
+	margin-top: -19px;
+	background: #FFFFFF;
+	height: 14px;
+	padding: 2px 5px 2px 5px;
+	color: #363535;
+	font-size: 14px;
+	overflow: hidden;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.form-style-7 input[type="text"],
+.form-style-7 input[type="date"],
+.form-style-7 input[type="datetime"],
+.form-style-7 input[type="email"],
+.form-style-7 input[type="number"],
+.form-style-7 input[type="search"],
+.form-style-7 input[type="time"],
+.form-style-7 input[type="url"],
+.form-style-7 input[type="password"],
+.form-style-7 textarea,
+.form-style-7 select 
+{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	display: block;
+	outline: none;
+	border: none;
+	height: 25px;
+	line-height: 25px;
+	font-size: 16px;
+	padding: 0;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.form-style-7 li > span{
+	background: #F3F3F3;
+	display: block;
+	padding: 3px;
+	margin: 0 -9px -9px -9px;
+	text-align: center;
+	color: #C0C0C0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+.form-style-7 textarea{
+	resize:none;
+}
+.form-style-7 input[type="submit"],
+.form-style-7 input[type="button"]{
+	background: #2471FF;
+	border: none;
+	padding: 10px 20px 10px 20px;
+	border-bottom: 3px solid #5994FF;
+	border-radius: 3px;
+	color: #D2E2FF;
+}
+.form-style-7 input[type="submit"]:hover,
+.form-style-7 input[type="button"]:hover{
+	background: #6B9FFF;
+	color:#fff;
+}
+
+/* Style for the circles */
+.circle-container {
+    display: flex; /* Arrange circles in a row */
+    justify-content: space-between; /* Add space between circles */
+    margin-top: 20px; /* Adjust spacing from the form */
+}
+
+.circle-container {
+    display: flex;
+}
+
+.circle {
+    position: relative;
+    width: 330px; /* Adjust size as needed */
+    height: 330px; /* Adjust size as needed */
+    background-color: #3498db; /* Circle color */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    color: white; /* Text color */
+    font-weight: bold; /* Make the text bold */
+    font-size: 30px; /* Adjust the font size */
+    border-radius: 50%; /* Make it a circle */
+    text-align: center; /* Center the text horizontally */
+    transition: background-color 0.3s ease; /* Add transition for smooth effect */
+}
+
+.circle:hover {
+    background-color: #2c3e50; /* Change color on hover */
+}
+
+.small-text {
+    font-size: 17px;
+    opacity: 0; /* Initially hide the span text */
+    transition: opacity 0.3s ease; /* Add transition for smooth effect */
+}
+
+.circle:hover .small-text {
+    opacity: 1; /* Show the span text on hover */
+}
+
+.circle:hover .circle-title {
+    opacity: 0; /* Hide the title on hover */
+}
+
+.circle-title {
+    margin-top: 10px; /* Adjust spacing between title and span text */
+    opacity: 1; /* Initially show the title */
+    transition: opacity 0.3s ease; /* Add transition for smooth effect */
+}
+
+
+/* Adjustments for responsiveness (optional) */
+@media (max-width: 600px) {
+    .circle {
+        width: 30px;
+        height: 30px;
+        margin-top: 10px;
+    }
+
+    /* Adjust other styles as needed for smaller screens */
+}

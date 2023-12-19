@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 const EmoReadWriteSchema = new mongoose.Schema({
   UserID: String,
   ActionType: {                  // 指定默认参数，在新增时不添加这个字段就会默认添加
-    type: Number,
+    type: String,
     default: 'Reading'
   },
   Timestamp: String,
