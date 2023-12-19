@@ -23,6 +23,7 @@ import {PopupComponent} from "./popup/popup.component";
 import {PopupWindowComponent} from "./popup-window/popup-window.component";
 import { ReflectFormComponent } from './reflect-form/reflect-form.component';
 import { ReflectButtonComponent } from './reflect-button/reflect-button.component';
+import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -48,7 +49,8 @@ import { ReflectButtonComponent } from './reflect-button/reflect-button.componen
     ReflectFormComponent,
     ReflectButtonComponent,
     PopupComponent,
-    PopupWindowComponent
+    PopupWindowComponent,
+    NegativeBarchartComponent
   ],
   bootstrap: [ AppComponent ]
 })
