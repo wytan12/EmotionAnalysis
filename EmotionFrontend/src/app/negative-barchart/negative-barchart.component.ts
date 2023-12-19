@@ -1,14 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { ChartType, ChartDataset, ChartOptions } from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels"
 
 @Component({
-  selector: "app-bar-chart",
-  templateUrl: "./bar-chart.component.html",
-  styleUrls: ["./bar-chart.component.css"]
+  selector: 'app-negative-barchart',
+  templateUrl: './negative-barchart.component.html',
+  styleUrl: './negative-barchart.component.css'
 })
-export class BarChartComponent implements OnInit {
+export class NegativeBarchartComponent implements OnInit {
   ngOnInit(): void {
     
   }
@@ -57,11 +56,4 @@ export class BarChartComponent implements OnInit {
   //     }
   //   }
   };
-
-  constructor(private router: Router) { }
-
-  goToNegativeBarChart() {
-    this.router.navigate(['negative-barchart']);
-  }
-  
 }
