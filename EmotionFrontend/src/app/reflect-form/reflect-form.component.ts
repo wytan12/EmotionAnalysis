@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reflect-form',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class ReflectFormComponent {
 
+  constructor(private router: Router) { }
+
+  goToReflectHistory() {
+    this.router.navigate(['reflect-history']);
+  }
 }

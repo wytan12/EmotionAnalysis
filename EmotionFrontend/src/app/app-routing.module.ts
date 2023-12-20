@@ -8,6 +8,7 @@ import { SurveyComponent } from './survey/survey.component';
 import {BarChartComponent} from "./bar-chart/bar-chart.component";
 import { ReflectFormComponent } from './reflect-form/reflect-form.component';
 import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
+import { ReflectHistoryComponent } from './reflect-history/reflect-history.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'bar', component: BarChartComponent},
   { path: 'survey', component: SurveyComponent},
   { path: 'reflect-form', component: ReflectFormComponent},
+  { path: 'reflect-history', component: ReflectHistoryComponent},
   { path: 'negative-barchart', component: NegativeBarchartComponent},
 ];
 
