@@ -34,7 +34,6 @@ export class RadarChartComponent {
   constructor(private router: Router) {}
 
   public handleChartClick() {
-    // Navigate to a common page, e.g., 'emotion-details'
     this.router.navigate(['emotion-detail']);
   }
   ngOnInit() {
