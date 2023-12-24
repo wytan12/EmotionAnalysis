@@ -15,14 +15,16 @@ import { StaticsComponent} from "./statics/statics.component";
 import { HeaderComponent } from './header/header.component';
 import { NgChartsModule } from 'ng2-charts';
 import { RadarChartComponent } from './radar-chart/radar-chart.component';
+import { SurveyComponent } from './survey/survey.component';
 import { MessagesComponent} from "./messages/messages.component";
 import { BarChartComponent } from './bar-chart/bar-chart.component';
-import { SurveyComponent } from './survey/survey.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import {PopupComponent} from "./popup/popup.component";
 import {PopupWindowComponent} from "./popup-window/popup-window.component";
 import { ReflectFormComponent } from './reflect-form/reflect-form.component';
 import { ReflectButtonComponent } from './reflect-button/reflect-button.component';
+import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
+import { ReflectHistoryComponent } from './reflect-history/reflect-history.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -47,8 +49,10 @@ import { ReflectButtonComponent } from './reflect-button/reflect-button.componen
     MessagesComponent,
     ReflectFormComponent,
     ReflectButtonComponent,
+    ReflectHistoryComponent,
     PopupComponent,
-    PopupWindowComponent
+    PopupWindowComponent,
+    NegativeBarchartComponent
   ],
   bootstrap: [ AppComponent ]
 })
