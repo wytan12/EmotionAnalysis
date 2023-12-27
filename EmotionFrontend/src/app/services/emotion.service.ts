@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, filter,tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
-import {EmoReadWrite, Emotion, Test} from "./emotion";
+import {EmoReadWrite, EmoSurvey, Emotion, Test} from "./emotion";
 
 
 
@@ -39,7 +39,17 @@ export class EmotionService {
       );
   }
 
-
+  // getEmoSurvey(): Observable<EmoSurvey[]> {
+    // this.http.get("api/findAllEmoReadWrite").subscribe((response) =>{
+    //     console.log("get");
+    //     console.log(response);
+    //   });
+    // return this.http.get<EmoSurvey[]>("api/findAllEmoReadWrite")
+    //   .pipe(
+    //     tap(_ => this.log('fetched Emotiones')),
+    //     catchError(this.handleError<EmoReadWrite[]>('getEmotiones', []))
+    //   );
+  // }
 
   //   this.http.get("api/findAllEmoReadWrite").subscribe((response) =>{
   //     console.log(response);
