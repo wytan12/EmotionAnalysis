@@ -25,8 +25,8 @@ export class RadarChartComponent {
   public radarChartData: ChartData<'radar'> = {
     labels: this.radarChartLabels,
     datasets: [
-      { data: [65, 59, 90, 81, 56, 55, 40], label: 'Reading' },
-      { data: [28, 48, 40, 19, 96, 27, 100], label: 'Writing' },
+      { data: [0, 1, 2, 2, 1, 3, 0], label: 'Reading' },
+      { data: [1, 2, 1, 3, 1, 1, 0], label: 'Writing' },
     ],
   };
   public radarChartType: ChartType = 'radar';
