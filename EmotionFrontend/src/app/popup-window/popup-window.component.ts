@@ -8,6 +8,8 @@ import {FormLayout} from "ng-devui";
 })
 export class PopupWindowComponent implements OnInit {
   layoutDirection: FormLayout = FormLayout.Columns;
+  isShow = false;
+  color = ['#fac20a','#beccfa','#fac20a','#c7000b'];
   ngOnInit(): void {
 
   }
@@ -18,6 +20,7 @@ export class PopupWindowComponent implements OnInit {
     id: 1,
     label: 'Yes, I feel a certain emotion'
   }];
+
 
   emotionOptions = [
     {
@@ -49,42 +52,24 @@ export class PopupWindowComponent implements OnInit {
       value: 0,
     }
   ];
-
+  select1:any[]=[];
   formData = {
     radioValue: {},
-    select1:[
-      {
-        name: 'Joyful 😃',
-        value: 0,
-      },
-      {
-        name: 'Curious 😳',
-        value: 0,
-      },
-      {
-        name: 'Surprised 😲',
-        value: 0,
-      },
-      {
-        name: 'Confused 😕',
-        value: 0,
-      },
-      {
-        name: 'Anxious 😰',
-        value: 0,
-      },
-      {
-        name: 'Frustrated 😣',
-        value: 0,
-      },
-      {
-        name: 'Bored 🥱',
-        value: 0,
-      }
-    ]
+    // select1:any[]=[],
   };
-  valueChange(item: string): void {
+  fisrtChange(item: string): void {
+    console.log(Number(item));
+    if (Number(item)==0){
+      this.isShow=false;
+    }else {
+      this.isShow=true;
+    }
+  }
+
+  secondChange(item: string): void {
     console.log(item);
+    console.log(this.select1);
+    console.log(this.select1.length);
   }
 }
 
