@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {EmotionService} from "../services/emotion.service";
-import {EmoReadWrite, Test} from "../services/emotion";
+import {EmoReadWrite, EmoReg, EmoSurvey, Test} from "../services/emotion";
 
 @Component({
   selector: 'app-statics',
@@ -10,56 +10,24 @@ import {EmoReadWrite, Test} from "../services/emotion";
 export class StaticsComponent implements OnInit {
   tests: Test[] = [];
   emoReadWrite: EmoReadWrite[] = [];
-
+  emoReg:EmoReg[] = [];
+  emoSurvey:EmoSurvey[] = [];
   constructor(private emotionService: EmotionService) { }
 
-  getData(): void {
-    // JSON.stringify(this.emos);
-    // this.emotionService.getEmoRW().subscribe(emos => this.emos = emos);
-    // console.log(this.emos);
-    // console.log(JSON.stringify(this.emos));
 
-    this.emotionService.getEmotions().subscribe(emoReadWrite => this.emoReadWrite = emoReadWrite);
+  getEmoReadWrite(): void{
+    this.emotionService.getEmoReadWrite().subscribe(emoReadWrite => this.emoReadWrite = emoReadWrite);
     console.log(this.emoReadWrite);
-    // this.emotionService.getTests()
-    //   .subscribe(tests => this.tests = tests);
-    // // const tmp = this.emotionService.getTests();
-    // console.log(JSON.stringify(this.tests));
-    // const httpOptions = {
-    //   headers = new HttpHeaders({
-    //     'content-type': 'application/json'
-    //   })
-    // }
-
-    // const params = new HttpParams()
-    //   .set('orderBy', '"$key"')
-    //   .set('limitToFirst', "1");
-    //
-    // this.http.get(this.configUrl,{params})
-    //   .subscribe((data: any) => this.config = { ...data });
-    //
-    // this.http.post(url,
-    //   {
-    //     "courseListIcon": "...",
-    //     "description": "TEST",
-    //     "iconUrl": "..",
-    //     "longDescription": "...",
-    //     "url": "new-url"
-    //   })
-    //   .subscribe(
-    //     (res) => {
-    //       console.log("POST call successful value returned in body",
-    //         res);
-    //     },
-    //     error => {
-    //       console.log("POST call in error", error);
-    //     },
-    //     () => {
-    //       console.log("The POST observable is now completed.");
-    //     });
-  // }
+  }
+  getEmoReg(): void{
+    this.emotionService.getEmoReg().subscribe(emoReg => this.emoReg = emoReg);
+    console.log(this.emoReg);
   }
 
+  getEmoSurvey(): void{
+    this.emotionService.getEmoSurvey().subscribe(emoSurvey => this.emoSurvey = emoSurvey);
+    console.log(this.emoSurvey);
+  }
 
   ngOnInit(): void {
     // this.getHeroes();

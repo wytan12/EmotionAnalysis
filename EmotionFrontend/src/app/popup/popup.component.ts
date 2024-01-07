@@ -28,23 +28,7 @@ export class PopupComponent implements OnInit {
         console.log('on dialog closed');
       },
       buttons: [
-        {
-          cssClass: 'stress',
-          text: 'Contribute',
-          handler: ($event: Event) => {
-            results.modalInstance.hide();
-          },
 
-        },
-        {
-          id: 'btn-cancel',
-          cssClass: 'common',
-          text: 'Cancel',
-          handler: ($event: Event) => {
-            results.modalInstance.hide();
-          },
-
-        },
       ],
     });
   }

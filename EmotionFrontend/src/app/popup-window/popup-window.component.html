@@ -1,10 +1,10 @@
 <div class="modal-cases-component">
   <section>
-    <form dForm [layout]="layoutDirection">
+    <form dForm (dSubmit)="submitForm($event)" [layout]="layoutDirection">
       <d-form-item>
         <d-form-label>Do you feel anything?</d-form-label>
         <d-form-control>
-          <d-radio-group [required]="true" name="noemotion" [direction]="'row'" [(ngModel)]="formData.radioValue"  (change)="fisrtChange($event)">
+          <d-radio-group [required]="true" name="noemotion" [direction]="'row'" [(ngModel)]="radioValue"  (change)="fisrtChange($event)">
             <d-radio *ngFor="let option of radioOptions" [name]="'schedule'" [value]="option.id">
               {{ option.label }}
             </d-radio>
@@ -14,7 +14,7 @@
       <div *ngIf="isShow">
         <d-form-item>
           <d-form-label>I feel</d-form-label>
-          <d-form-control>
+          <d-form-control [style.width.%]="80" >
             <section>
                   <d-select
                     [overview]="'underlined'"
@@ -32,11 +32,6 @@
                     [extraConfig]="{ labelization: { enable: true, overflow: 'multiple-line' } }"
                     [size]="'sm'"
                   ></d-select>
-  <!--            <div class="row">-->
-  <!--              <div class="col-md-5">-->
-  <!--                <pre>Current Select: {{ formData.select1 | json }}</pre>-->
-  <!--              </div>-->
-  <!--            </div>-->
             </section>
           </d-form-control>
         </d-form-item>
@@ -49,29 +44,22 @@
     <!--                <div class="slider-wrapper">-->
     <!--                  <d-slider [ngModelOptions]="{standalone: true}" [(ngModel)]="item.value" [min]="0" [max]="10" class="slider"></d-slider>-->
     <!--                </div>-->
-
                     <d-rate [ngModelOptions]="{standalone: true}" [allowClear]="true" [(ngModel)]="item.value" color="#fac20a"  [allowHalf]="false" [count]="3"></d-rate> {{color[item.value-1]}} {{ item.value }}
                   </d-form-control>
                   </div>
                 </d-form-item>
             </div>
         </div>
-
       </div>
-
-<!--      <div class="emotions" [style.width.%]="100">-->
-<!--        <div class="emotion" [style.width.%]="50" ng-repeat="item in formData.select1">-->
-<!--          <d-form-item>-->
-<!--            <d-form-label [required]="true" [hasHelp]="false">{{item.name}}</d-form-label>-->
-<!--            <d-form-control>-->
-<!--              <div class="slider-wrapper">-->
-<!--                <d-slider [(ngModel)]="item.value" [min]="0" [max]="10" class="slider"></d-slider>-->
-<!--              </div>-->
-<!--            </d-form-control>-->
-<!--          </d-form-item>-->
-<!--        </div>-->
-<!--      </div>-->
-
+      <d-form-operation>
+        <d-button
+          class="mr-element-spacing"
+          circled="true"
+          style="margin-right: 8px"
+          dFormSubmit
+          [dFormSubmitData]="'submit-button'"
+        >Submit</d-button>
+      </d-form-operation>
     </form>
   </section>
 </div>
