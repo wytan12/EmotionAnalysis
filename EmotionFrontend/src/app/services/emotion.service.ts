@@ -73,14 +73,16 @@ export class EmotionService {
     const a:EmoReadWrite = new EmoReadWrite(EmotionData.noteID,userID,timestamp,EmotionData.noEmotion,actionType);
     if(EmotionData.noEmotion == 1){
       for (let i = 0; i <EmotionData.emotions.length; i++) {
-        switch (EmotionData[i].id){
-          case 1: a.setJoyful(1); a.setJoyful_Intensity(EmotionData[i].value); break;
-          case 2: a.setCurious(1); a.setCurious_Intensity(EmotionData[i].value); break;
-          case 3: a.setSurprised(1); a.setSurprised_Intensity(EmotionData[i].value); break;
-          case 4: a.setConfused(1); a.setConfused_Intensity(EmotionData[i].value); break;
-          case 5: a.setAnxious(1); a.setAnxious_Intensity(EmotionData[i].value); break;
-          case 6: a.setFrustrated(1); a.setFrustrated_Intensity(EmotionData[i].value); break;
-          case 7: a.setBored(1); a.setBored_Intensity(EmotionData[i].value); break;
+        console.log(EmotionData.emotions[i].id);
+        // const emotion = EmotionData.emotions[i];
+        switch (Number(EmotionData.emotions[i].id)){
+          case 1: a.setJoyful(1); a.setJoyful_Intensity(EmotionData.emotions[i].value); break;
+          case 2: a.setCurious(1); a.setCurious_Intensity(EmotionData.emotions[i].value); break;
+          case 3: a.setSurprised(1); a.setSurprised_Intensity(EmotionData.emotions[i].value); break;
+          case 4: a.setConfused(1); a.setConfused_Intensity(EmotionData.emotions[i].value); break;
+          case 5: a.setAnxious(1); a.setAnxious_Intensity(EmotionData.emotions[i].value); break;
+          case 6: a.setFrustrated(1); a.setFrustrated_Intensity(EmotionData.emotions[i].value); break;
+          case 7: a.setBored(1); a.setBored_Intensity(EmotionData.emotions[i].value); break;
         }
       }
     }

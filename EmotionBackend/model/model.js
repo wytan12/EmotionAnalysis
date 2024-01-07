@@ -69,7 +69,8 @@ const EmoReadWriteSchema = new mongoose.Schema({
 });
 
 const EmoSurveySchema = new mongoose.Schema({
-  TimeStamp: String,
+  UserID:String,
+  Timestamp: String,
   Joyful:{
     type: Number,
     default: 0
@@ -118,9 +119,17 @@ const TestSchema = new mongoose.Schema({
   testID: String,
 });
 
+const EmotionSchema = new mongoose.Schema({
+  id: String,
+  name:String
+});
+
+
 const EmoReadWrite = mongoose.model('EmoReadWrite', EmoReadWriteSchema, 'EmoReadWrite');
 const EmoSurvey = mongoose.model('EmoSurvey', EmoSurveySchema, 'EmoSurvey');
 const EmoReg = mongoose.model('EmoReg', EmoRegSchema, 'EmoReg');
 const Test = mongoose.model('Test', TestSchema, 'Test');
 
-export { EmoReadWrite,EmoSurvey,EmoReg ,Test};
+const Emotion = mongoose.model('Emotion', EmotionSchema, 'Emotion');
+
+export { EmoReadWrite,EmoSurvey,EmoReg ,Test,Emotion};
