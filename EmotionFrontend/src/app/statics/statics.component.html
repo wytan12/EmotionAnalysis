@@ -2,10 +2,19 @@
 <h2>Test HttpClient</h2>
 
 <div>
-  <d-button type="button" bsStyle="primary" background-color="green" (click)="getData()">
-    Test HttpClient
+  <d-button type="button" bsStyle="primary" background-color="green" (click)="getEmoReadWrite()">
+    Test getEmoReadWrite
   </d-button>
+  <d-button type="button" bsStyle="primary" background-color="green" (click)="getEmoSurvey()">
+    Test getEmoSurvey
+  </d-button>
+  <d-button type="button" bsStyle="primary" background-color="green" (click)="getEmoReg()">
+    Test getEmoReg
+  </d-button>
+
 </div>
+
+
 <div>
   <ul *ngFor="let item of emoReadWrite">
     <li>{{item._id}} {{item.ActionType}} {{item.UserID}} {{item.Timestamp}} {{item.Anxious}} {{item.Anxious_Intensity}}</li>

@@ -4,13 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, filter,tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
-import {EmoReadWrite, EmoSurvey, Emotion, Test} from "./emotion";
+import {EmoReadWrite, EmoReg, EmoSurvey, Emotion, Test} from "./emotion";
 
 
 
 @Injectable({ providedIn: 'root' })
 export class EmotionService {
-  private EmotionesUrl = 'api/emotiones';  // URL to web api
+  private EmotionesUrl = 'http:localhost:3000/';  // URL to web api
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -19,6 +19,7 @@ export class EmotionService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
+  /** GET Emotiones from the server */
   getTests(): Observable<Test[]> {
     return this.http.get<Test[]>("api/tests")
       .pipe(
@@ -26,52 +27,115 @@ export class EmotionService {
         catchError(this.handleError<Test[]>('getEmotiones', []))
       );
   }
-
-  getEmoRW(): Observable<Object[]> {
-    // this.http.get("api/findAllEmoReadWrite").subscribe((response) =>{
-    //     console.log("get");
-    //     console.log(response);
-    //   });
-    return this.http.get<Object[]>("api/findAllEmoReadWrite")
-      .pipe(
-        tap(_ => this.log('fetched Emotiones')),
-        catchError(this.handleError<Object[]>('getEmotiones', []))
-      );
-  }
-
-  // getEmoSurvey(): Observable<EmoSurvey[]> {
-    // this.http.get("api/findAllEmoReadWrite").subscribe((response) =>{
-    //     console.log("get");
-    //     console.log(response);
-    //   });
-    // return this.http.get<EmoSurvey[]>("api/findAllEmoReadWrite")
-    //   .pipe(
-    //     tap(_ => this.log('fetched Emotiones')),
-    //     catchError(this.handleError<EmoReadWrite[]>('getEmotiones', []))
-    //   );
-  // }
-
-  //   this.http.get("api/findAllEmoReadWrite").subscribe((response) =>{
-  //     console.log(response);
-  //   });
-  //
-  //   // return this.http.jsonp("api/findAllEmoReadWrite", 'callback');
-  //     // .pipe(
-  //     //   map(result => this.jsonpResultToHeroes(result)),
-  //     //   catchError(this.handleError('searchHeroes', []))
-  //     // );
-  //
-  //   // return this.http.jsonp<any>("api/findAllEmoReadWrite","callback")
-  //   //   .subscribe(data => [console.log(data.results .map((d: any) => d.trackName));
-  // }
-
-  /** GET Emotiones from the server */
-  getEmotions(): Observable<EmoReadWrite[]> {
+  getEmoReadWrite(): Observable<EmoReadWrite[]> {
     return this.http.get<EmoReadWrite[]>("http://localhost:3000/api/findAllEmoReadWrite")
       .pipe(
         tap(_ => this.log('fetched Emotiones')),
         catchError(this.handleError<EmoReadWrite[]>('getEmotiones', []))
       );
+  }
+  getEmoSurvey(): Observable<EmoSurvey[]> {
+    console.log("api/findAllEmoSurvey");
+    return this.http.get<EmoSurvey[]>("api/findAllEmoSurvey")
+      .pipe(
+        tap(_ => this.log('fetched EmoSurvey')),
+        catchError(this.handleError<EmoSurvey[]>('EmoSurvey', []))
+      );
+  }
+  getEmoReg(): Observable<EmoReg[]> {
+    return this.http.get<EmoReg[]>("api/findAllEmoReg")
+      .pipe(
+        tap(_ => this.log('fetched EmoReg')),
+        catchError(this.handleError<EmoReg[]>('EmoReg', []))
+      );
+  }
+
+
+  //////// Save methods //////////
+
+  /** POST: add a new Emotion to the server */
+  addEmotion(EmotionData: any): Observable<Emotion> {
+    let timestamp = Date.now();
+    const a:Emotion = new Emotion(" ",timestamp+"");
+    console.log(a);
+    return this.http.post<Emotion>("api/addEmotion", a, this.httpOptions).pipe(
+      // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
+      catchError(this.handleError<Emotion>('addEmotion'))
+    );
+  }
+  addEmoReadWrite(EmotionData: any): Observable<EmoReadWrite> {
+    let timestamp:string = Date.now().toString();
+    let userID = "userID123";
+    let actionType = "Reading";
+    if(EmotionData.userID == EmotionData.author){
+      actionType = "Writing";
+    }
+    const a:EmoReadWrite = new EmoReadWrite(EmotionData.noteID,userID,timestamp,EmotionData.noEmotion,actionType);
+    if(EmotionData.noEmotion == 1){
+      for (let i = 0; i <EmotionData.emotions.length; i++) {
+        console.log(EmotionData.emotions[i].id);
+        // const emotion = EmotionData.emotions[i];
+        switch (Number(EmotionData.emotions[i].id)){
+          case 1: a.setJoyful(1); a.setJoyful_Intensity(EmotionData.emotions[i].value); break;
+          case 2: a.setCurious(1); a.setCurious_Intensity(EmotionData.emotions[i].value); break;
+          case 3: a.setSurprised(1); a.setSurprised_Intensity(EmotionData.emotions[i].value); break;
+          case 4: a.setConfused(1); a.setConfused_Intensity(EmotionData.emotions[i].value); break;
+          case 5: a.setAnxious(1); a.setAnxious_Intensity(EmotionData.emotions[i].value); break;
+          case 6: a.setFrustrated(1); a.setFrustrated_Intensity(EmotionData.emotions[i].value); break;
+          case 7: a.setBored(1); a.setBored_Intensity(EmotionData.emotions[i].value); break;
+        }
+      }
+    }
+    console.log(a);
+    return this.http.post<EmoReadWrite>( "/api/addEmoReadWrite", a, this.httpOptions).pipe(
+      // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
+      catchError(this.handleError<EmoReadWrite>('addEmoReadWrite'))
+    );
+  }
+  addReg(EmotionData: any): Observable<EmoReg> {
+    let userID = "userID123";
+    let timestamp = Date.now().toString();
+    const a:EmoReg = new EmoReg(userID,timestamp,EmotionData.GroupMembers,
+      EmotionData.Visualization, EmotionData.Challenges,
+      EmotionData.ImprovementWays,EmotionData.PositivePlan,EmotionData.Action);
+    console.log(a);
+    return this.http.post<EmoReg>("api/addReg", a, this.httpOptions).pipe(
+      // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
+      catchError(this.handleError<EmoReg>('addaddReg'))
+    );
+  }
+  addEmoSurvey(EmotionData: any): Observable<EmoSurvey> {
+    let userID = "userID123";
+    let timestamp = Date.now().toString();
+    const a:EmoSurvey = new EmoSurvey(userID,timestamp,EmotionData.Joyful,
+      EmotionData.Curious, EmotionData.Surprised,
+      EmotionData.Confused,EmotionData.Anxious,EmotionData.Frustrated,EmotionData.Bored,
+      EmotionData.Inconducive,EmotionData.Reason,EmotionData.Remarks);
+    console.log(a);
+
+    return this.http.post<EmoSurvey>("api/addEmoSurvey", a, this.httpOptions).pipe(
+      // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
+      catchError(this.handleError<EmoSurvey>('addEmoSurvey'))
+    );
+  }
+
+  // --------------------------------------------------------
+  /** DELETE: delete the Emotion from the server */
+  deleteEmotion(id: number): Observable<Emotion> {
+    const url = `${this.EmotionesUrl}/${id}`;
+
+    return this.http.delete<Emotion>(url, this.httpOptions).pipe(
+      tap(_ => this.log(`deleted Emotion id=${id}`)),
+      catchError(this.handleError<Emotion>('deleteEmotion'))
+    );
+  }
+
+  /** PUT: update the Emotion on the server */
+  updateEmotion(Emotion: Emotion): Observable<any> {
+    return this.http.put(this.EmotionesUrl, Emotion, this.httpOptions).pipe(
+      tap(_ => this.log(`updated Emotion id=${Emotion.id}`)),
+      catchError(this.handleError<any>('updateEmotion'))
+    );
   }
 
   /** GET Emotion by id. Return `undefined` when id not found */
@@ -105,37 +169,9 @@ export class EmotionService {
     }
     return this.http.get<Emotion[]>(`${this.EmotionesUrl}/?name=${term}`).pipe(
       tap(x => x.length ?
-         this.log(`found Emotiones matching "${term}"`) :
-         this.log(`no Emotiones matching "${term}"`)),
+        this.log(`found Emotiones matching "${term}"`) :
+        this.log(`no Emotiones matching "${term}"`)),
       catchError(this.handleError<Emotion[]>('searchEmotiones', []))
-    );
-  }
-
-  //////// Save methods //////////
-
-  /** POST: add a new Emotion to the server */
-  addEmotion(Emotion: Emotion): Observable<Emotion> {
-    return this.http.post<Emotion>(this.EmotionesUrl, Emotion, this.httpOptions).pipe(
-      tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
-      catchError(this.handleError<Emotion>('addEmotion'))
-    );
-  }
-
-  /** DELETE: delete the Emotion from the server */
-  deleteEmotion(id: number): Observable<Emotion> {
-    const url = `${this.EmotionesUrl}/${id}`;
-
-    return this.http.delete<Emotion>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted Emotion id=${id}`)),
-      catchError(this.handleError<Emotion>('deleteEmotion'))
-    );
-  }
-
-  /** PUT: update the Emotion on the server */
-  updateEmotion(Emotion: Emotion): Observable<any> {
-    return this.http.put(this.EmotionesUrl, Emotion, this.httpOptions).pipe(
-      tap(_ => this.log(`updated Emotion id=${Emotion.id}`)),
-      catchError(this.handleError<any>('updateEmotion'))
     );
   }
 

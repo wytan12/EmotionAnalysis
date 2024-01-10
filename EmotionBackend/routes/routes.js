@@ -1,7 +1,6 @@
 import express from "express";
-import {Test,EmoReadWrite,EmoReg,EmoSurvey} from "../model/model.js";
+import {Test, EmoReadWrite, EmoReg, EmoSurvey, Emotion} from "../model/model.js";
 const APIrouter = express.Router();
-
 
 APIrouter.get("/newtest", (req, res) => {
   const newTest = new Test({
@@ -17,7 +16,6 @@ APIrouter.get("/newtest", (req, res) => {
       res.send(err.message);
     });
 });
-
 APIrouter.get("/tests", (req, res) => {
   Test.find()
     .then((found) => {
@@ -29,20 +27,70 @@ APIrouter.get("/tests", (req, res) => {
     });
 });
 
-
-//
 // //Post Method
 
-APIrouter.post("/reflect", (req, res) => {
+APIrouter.post("/addEmotion", (req, res) => {
+  console.log(req.body);
+  console.log("456");
+  const newEmotion = new Emotion({
+    id: req.body.id,
+    name: req.body.name,
+  });
+  newEmotion
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+APIrouter.post("/addEmoReadWrite", (req, res) => {
+  console.log(req.body);
+  console.log("789");
+  const newEmoReadWrite = new EmoReadWrite({
+    UserID: req.body.UserID,
+    Timestamp:req.body.Timestamp,
+    ActionType:req.body.ActionType,
+    Joyful:req.body.Joyful,
+    Curious:req.body.Curious,
+    Surprised:req.body.Surprised,
+    Confused:req.body.Confused,
+    Anxious:req.body.Anxious,
+    Frustrated:req.body.Frustrated,
+    Bored:req.body.Bored,
+    NoEmotion:req.body.NoEmotion,
+    Joyful_Intensity:req.body.Joyful_Intensity,
+    Curious_Intensity:req.body.Curious_Intensity,
+    Surprised_Intensity:req.body.Surprised_Intensity,
+    Confused_Intensity:req.body.Confused_Intensity,
+    Anxious_Intensity:req.body.Anxious_Intensity,
+    Frustrated_Intensity:req.body.Frustrated_Intensity,
+    Bored_Intensity:req.body.Bored_Intensity
+  });
+  newEmoReadWrite
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+APIrouter.post("/addReg", (req, res) => {
+  console.log(req.body);
+  console.log("1112");
   const newReg = new EmoReg({
-    UserID: req.body.username,
-    GroupMembers:req.body.groupmembers,
-    Timestamp:req.body.timestamp,
-    Visualization:req.body.visualization,
-    Challenges:req.body.challenges,
-    ImprovementWays:req.body.improvementways,
-    PositivePlan:req.body.positiveplans,
-    Action:req.body.action,
+    UserID: req.body.UserID,
+    Timestamp: req.body.Timestamp,
+    GroupMembers: req.body.GroupMembers,
+    Visualization: req.body.Visualization,
+    Challenges: req.body.Challenges,
+    ImprovementWays: req.body.ImprovementWays,
+    PositivePlan: req.body.PositivePlan,
+    Action: req.body.Action,
   });
   newReg
     .save()
@@ -54,20 +102,19 @@ APIrouter.post("/reflect", (req, res) => {
       res.send(err.message);
     });
 });
-
-APIrouter.post("/emosurvey", (req, res) => {
+APIrouter.post("/addEmoSurvey", (req, res) => {
   const newEmoSurvey = new EmoSurvey({
-    Timestamp:req.body.timestamp,
-    Joyful:req.body.joyful,
-    Curious:req.body.curious,
-    Surprised:req.body.surprised,
-    Confused:req.body.confused,
-    Anxious:req.body.anxious,
-    Frustrated:req.body.frustrated,
-    Bored:req.body.bored,
-    Inconducive:req.body.inconducive,
-    Reason:req.body.reason,
-    Remarks:req.body.remarks,
+    Timestamp:req.body.Timestamp,
+    Joyful:req.body.Joyful,
+    Curious:req.body.Curious,
+    Surprised:req.body.Surprised,
+    Confused:req.body.Confused,
+    Anxious:req.body.Anxious,
+    Frustrated:req.body.Frustrated,
+    Bored:req.body.Bored,
+    Inconducive:req.body.Inconducive,
+    Reason:req.body.Reason,
+    Remarks:req.body.Remarks,
   });
   newEmoSurvey
     .save()
@@ -81,31 +128,13 @@ APIrouter.post("/emosurvey", (req, res) => {
 });
 
 
-APIrouter.post("/AddEmoReadWrite", (req, res) => {
-  const newEmoReadWrite = new EmoReadWrite({
-    UserID: req.body.username,
-    Timestamp:req.body.timestamp,
-    ActionType:req.body.actiontype,
-    Joyful:req.body.joyful,
-    Curious:req.body.curious,
-    Surprised:req.body.surprised,
-    Confused:req.body.confused,
-    Anxious:req.body.anxious,
-    Frustrated:req.body.frustrated,
-    Bored:req.body.bored,
-    NoEmotion:req.body.noemotion,
-    Joyful_Intensity:req.body.joyfulintensity,
-    Curious_Intensity:req.body.curiousintensity,
-    Surprised_Intensity:req.body.surprisedintensity,
-    Confused_Intensity:req.body.confusedintensity,
-    Anxious_Intensity:req.body.anxiousintensity,
-    Frustrated_Intensity:req.body.frustratedintensity,
-    Bored_Intensity:req.body.boredintensity
-  });
-  newEmoReadWrite
-    .save()
-    .then((result) => {
-      res.send(result);
+//
+// //Get all Method
+APIrouter.get("/findAllEmoReadWrite", (req, res) => {
+  console.log("123");
+  EmoReadWrite.find()
+    .then((found) => {
+      res.send(found);
     })
     .catch((err) => {
       console.log(err);
@@ -113,10 +142,21 @@ APIrouter.post("/AddEmoReadWrite", (req, res) => {
     });
 });
 
-//
-// //Get all Method
-APIrouter.get("/findAllEmoReadWrite", (req, res) => {
-  EmoReadWrite.find()
+APIrouter.get("/findAllEmoReg", (req, res) => {
+  console.log("findAllEmoReg");
+  EmoReg.find()
+    .then((found) => {
+      res.send(found);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+
+APIrouter.get("/findAllEmoSurvey", (req, res) => {
+  console.log("findAllEmoSurvey");
+  EmoSurvey.find()
     .then((found) => {
       res.send(found);
     })

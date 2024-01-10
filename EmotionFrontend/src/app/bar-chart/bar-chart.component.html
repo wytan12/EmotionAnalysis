@@ -2,6 +2,7 @@
     <div class="container">
       <div style="display:block" class="barchart-container">
         <canvas baseChart
+          class="chart"
           [datasets]= "barChartData"
           [labels] = "barChartLabels"
           [options] = "barChartOptions"
@@ -13,4 +14,6 @@
       </div>
     </div>
 </div>
+<!--          [datasets]= "barChartData"-->
+<!--[data]="barChartData"-->
 <app-reflect-button></app-reflect-button>
