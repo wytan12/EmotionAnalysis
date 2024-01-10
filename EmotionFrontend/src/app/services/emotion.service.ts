@@ -67,7 +67,7 @@ export class EmotionService {
 
   /** GET Emotiones from the server */
   getEmotions(): Observable<EmoReadWrite[]> {
-    return this.http.get<EmoReadWrite[]>("api/findAllEmoReadWrite")
+    return this.http.get<EmoReadWrite[]>("http://localhost:3000/api/findAllEmoReadWrite")
       .pipe(
         tap(_ => this.log('fetched Emotiones')),
         catchError(this.handleError<EmoReadWrite[]>('getEmotiones', []))

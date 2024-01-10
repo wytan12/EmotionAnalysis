@@ -49,6 +49,7 @@ if (port == null || port == "") {
 connectDB().then(() => {
   app.listen(port, () => {
     console.log("listening for requests");
+    console.log(port);
   });
 });
 
