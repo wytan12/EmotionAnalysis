@@ -27,8 +27,8 @@ var corsOptions = {
 console.log(`Backend Start`);
 //////////////////////////////////////////////////  mongoDB ///////////////////////////////////////////////////
 // const mongoURLString = process.env.DATABASE_URL;
-const mongoURLString = "mongodb://liangluya:liangluya@localhost:27017/Emotion";
-// const mongoURLString = "mongodb+srv://liangluya:liangluya@cluster0.awhbvnl.mongodb.net/Emotion?retryWrites=true&w=majority";
+// const mongoURLString = "mongodb://liangluya:liangluya@localhost:27017/Emotion";
+const mongoURLString = "mongodb+srv://liangluya:liangluya@cluster0.awhbvnl.mongodb.net/Emotion?retryWrites=true&w=majority";
 
 const connectDB = async () => {
   try {

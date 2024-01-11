@@ -6,6 +6,7 @@ import { HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DevUIModule } from 'ng-devui';
+import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -23,6 +24,8 @@ import { ReflectFormComponent } from './reflect-form/reflect-form.component';
 import { ReflectButtonComponent } from './reflect-button/reflect-button.component';
 import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
 import { ReflectHistoryComponent } from './reflect-history/reflect-history.component';
+import { ScrollspyComponent } from './scrollspy/scrollspy.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -32,6 +35,7 @@ import { ReflectHistoryComponent } from './reflect-history/reflect-history.compo
     HttpClientModule,
     NgChartsModule,
     DevUIModule,
+    MdbScrollspyModule,
   ],
   declarations: [
     AppComponent,
@@ -48,7 +52,8 @@ import { ReflectHistoryComponent } from './reflect-history/reflect-history.compo
     ReflectHistoryComponent,
     PopupComponent,
     PopupWindowComponent,
-    NegativeBarchartComponent
+    NegativeBarchartComponent,
+    ScrollspyComponent
   ],
   bootstrap: [ AppComponent ]
 })

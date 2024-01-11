@@ -1,0 +1,36 @@
+/* :host {
+  display: flex;
+  justify-content: start;
+  border: solid 1px silver;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  border-right: dashed 1px silver;
+}
+li {
+  margin: 2em;
+  list-style: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+li.active {
+  color: blue;
+  font-weight: bold;
+}
+div.container {
+  padding: 2em;
+  height: 20em;
+  overflow-y: scroll;
+  width: 100%;
+}
+div.content {
+  padding: 2em;
+  height: 50em;
+} */
+
+.scrollspy-example {
+  position: relative;
+  height: 200px;
+  overflow: auto;
+}
