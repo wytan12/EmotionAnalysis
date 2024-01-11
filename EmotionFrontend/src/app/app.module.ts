@@ -54,7 +54,7 @@ import { EmotionButtonComponent } from './emotion-button/emotion-button.componen
     PopupComponent,
     PopupWindowComponent,
     NegativeBarchartComponent,
-    EmotionButtonComponent,,
+    EmotionButtonComponent,
     ScrollspyComponent
   ],
   bootstrap: [ AppComponent ]
