@@ -36,14 +36,14 @@ export class EmotionService {
   }
   getEmoSurvey(): Observable<EmoSurvey[]> {
     console.log("api/findAllEmoSurvey");
-    return this.http.get<EmoSurvey[]>("api/findAllEmoSurvey")
+    return this.http.get<EmoSurvey[]>("http://localhost:3000/api/findAllEmoSurvey")
       .pipe(
         tap(_ => this.log('fetched EmoSurvey')),
         catchError(this.handleError<EmoSurvey[]>('EmoSurvey', []))
       );
   }
   getEmoReg(): Observable<EmoReg[]> {
-    return this.http.get<EmoReg[]>("api/findAllEmoReg")
+    return this.http.get<EmoReg[]>("http://localhost:3000/api/findAllEmoReg")
       .pipe(
         tap(_ => this.log('fetched EmoReg')),
         catchError(this.handleError<EmoReg[]>('EmoReg', []))
@@ -58,7 +58,7 @@ export class EmotionService {
     let timestamp = Date.now();
     const a:Emotion = new Emotion(" ",timestamp+"");
     console.log(a);
-    return this.http.post<Emotion>("api/addEmotion", a, this.httpOptions).pipe(
+    return this.http.post<Emotion>("http://localhost:3000/api/addEmotion", a, this.httpOptions).pipe(
       // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
       catchError(this.handleError<Emotion>('addEmotion'))
     );
@@ -87,7 +87,7 @@ export class EmotionService {
       }
     }
     console.log(a);
-    return this.http.post<EmoReadWrite>( "/api/addEmoReadWrite", a, this.httpOptions).pipe(
+    return this.http.post<EmoReadWrite>( "http://localhost:3000/api/addEmoReadWrite", a, this.httpOptions).pipe(
       // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
       catchError(this.handleError<EmoReadWrite>('addEmoReadWrite'))
     );
@@ -99,7 +99,7 @@ export class EmotionService {
       EmotionData.Visualization, EmotionData.Challenges,
       EmotionData.ImprovementWays,EmotionData.PositivePlan,EmotionData.Action);
     console.log(a);
-    return this.http.post<EmoReg>("api/addReg", a, this.httpOptions).pipe(
+    return this.http.post<EmoReg>("http://localhost:3000/api/addReg", a, this.httpOptions).pipe(
       // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
       catchError(this.handleError<EmoReg>('addaddReg'))
     );
