@@ -96,7 +96,7 @@ import {
   provideImgixLoader,
   registerLocaleData,
   setRootDomAdapter
-} from "./chunk-OVEHS2AP.js";
+} from "./chunk-DIVL2P7E.js";
 import {
   IMAGE_CONFIG
 } from "./chunk-WOOE2ABN.js";

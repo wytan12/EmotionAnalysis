@@ -108,7 +108,7 @@ export class BarChartComponent implements OnInit {
   };
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
-      this.router.navigate(['emotion-detail']);
+      this.router.navigate(['scrollspy']);
     }
   }
 }
