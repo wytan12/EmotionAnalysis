@@ -100,8 +100,8 @@ import {
 import {
   IMAGE_CONFIG
 } from "./chunk-RBMZ35AL.js";
-import "./chunk-MOZFDKBI.js";
 import "./chunk-X5LUUZEE.js";
+import "./chunk-MOZFDKBI.js";
 import "./chunk-J6BO45G2.js";
 export {
   APP_BASE_HREF,

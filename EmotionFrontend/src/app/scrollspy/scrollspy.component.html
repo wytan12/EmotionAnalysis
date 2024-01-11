@@ -1,5 +1,10 @@
-<div class="row">
-	<div class="col-md-8">
+<app-header></app-header>
+<div class="container">
+	<section>
+		<h3>Bored</h3>
+	</section>
+	<div class="d-flex flex-column flex-md-row" >
+	<div class="col-10" >
 	  <div class="scrollspy-example scrollspy-container">
 		<section mdbScrollspyElement="scrollspy" id="example-1">
 		  <h3>Section 1</h3>
@@ -52,8 +57,8 @@
 	  </div>
 	</div>
   
-	<div class="col-md-4">
-	  <div id="scrollspy" class="sticky-top">
+	<div class="col-2">
+	  <div id="scrollspy" class="sticky-top" style="height: 100%; z-index: 1;">
 		<ul mdbScrollspy="scrollspy" class="nav flex-column nav-pills menu-sidebar">
 		  <li class="nav-item">
 			<a mdbScrollspyLink="example-1" class="nav-link">Section 1</a>
@@ -63,7 +68,7 @@
 		  </li>
 		  <li class="nav-item">
 			<a mdbScrollspyLink="example-3" class="nav-link">Section 3</a>
-			<ul mdbScrollspy="scrollspy-2" class="nav flex-column ps-3" >
+			<ul mdbScrollspy="scrollspy-2" class="nav flex-column ps-3" [collapsible]="true">
 				<!-- [collapsible]="true"> -->
 			  <li class="nav-item">
 				<a mdbScrollspyLink="example-5" class="nav-link">Subsection A</a>
@@ -80,3 +85,4 @@
 	  </div>
 	</div>
   </div>
+</div>

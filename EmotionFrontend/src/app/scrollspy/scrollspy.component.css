@@ -29,8 +29,10 @@ div.content {
   height: 50em;
 } */
 
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
 .scrollspy-example {
   position: relative;
-  height: 200px;
+  height: 500px;
   overflow: auto;
 }
