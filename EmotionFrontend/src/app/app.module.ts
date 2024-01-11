@@ -27,6 +27,7 @@ import { ReflectHistoryComponent } from './reflect-history/reflect-history.compo
 import { ScrollspyComponent } from './scrollspy/scrollspy.component';
 
 import { EmotionButtonComponent } from './emotion-button/emotion-button.component';
+import { SelectTimeDropdownComponent } from './select-time-dropdown/select-time-dropdown.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -55,6 +56,7 @@ import { EmotionButtonComponent } from './emotion-button/emotion-button.componen
     PopupWindowComponent,
     NegativeBarchartComponent,
     EmotionButtonComponent,
+    SelectTimeDropdownComponent,
     ScrollspyComponent
   ],
   bootstrap: [ AppComponent ]
