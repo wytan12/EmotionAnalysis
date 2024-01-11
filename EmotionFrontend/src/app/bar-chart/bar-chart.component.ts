@@ -23,7 +23,9 @@ export class BarChartComponent implements OnInit {
    ngOnInit(): void {
       this.getData();
   }
+
   emoSurvey: EmoSurvey[] = [];
+  
   public barChartLabels: string[]= [
     'Joyful',
     'Curious',
