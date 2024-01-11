@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
 import { Router } from "@angular/router";
 import {ChartType, ChartDataset, ChartOptions, ChartData} from "chart.js";
+
 import * as pluginDataLabels from "chartjs-plugin-datalabels"
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite, EmoSurvey} from "../services/emotion";
@@ -15,7 +16,7 @@ import labels = _default.defaults.labels;
 })
 export class BarChartComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-
+  
   constructor(private router: Router,
               private emotionService: EmotionService) {}
 
@@ -106,9 +107,35 @@ export class BarChartComponent implements OnInit {
   //     }
   //   }
   };
+
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
-      this.router.navigate(['scrollspy']);
+      // Assuming the label information is available in event.active[0]._model.label
+      const clickedLabel = event.active[0];
+      const value = this.barChartLabels[clickedLabel.index]
+      // console.log(value);
+  
+      // Use the clickedLabel as needed (e.g., navigating to 'scrollspy' route)
+      this.router.navigate(['scrollspy'], { queryParams: { title: value } });
     }
   }
+  
+
+  // public handleChartClick(event: any) {
+  //   const clickedLabel = event.event.chart.canvas.attributes['ng-reflect-labels'].value;
+  //   console.log(clickedLabel)
+  
+  //   // if (clickedLabel) {
+  //   //   this.router.navigate(['scrollspy'], { queryParams: { title: clickedLabel } });
+  //   // }
+  // }
+  
 }
+
+
+// public handleChartClick(event: any) {
+
+//   if (event.active && event.active.length > 0) {
+//     this.router.navigate(['scrollspy']);
+//   }
+// }

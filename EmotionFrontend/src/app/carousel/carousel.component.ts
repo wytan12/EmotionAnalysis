@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ActivatedRoute } from '@angular/router';
+
 interface carouselImage{
   imageSrc: string;
   imageAlt: string;
@@ -19,8 +21,16 @@ export class CarouselComponent implements OnInit{
 
   selectedIndex = 0;
   
+  title: string = '';
+
+  constructor(private route: ActivatedRoute) { }
+
   ngOnInit(): void {
-      
+      // Subscribe to changes in the route parameters
+    this.route.queryParams.subscribe(params => {
+      // Retrieve the 'title' parameter from the query parameters
+      this.title = params['title'];
+    });
   }
 
   selectImage(index: number):void{
@@ -42,4 +52,8 @@ export class CarouselComponent implements OnInit{
       this.selectedIndex ++;
     }
   }
+
+  
+
+
 }
