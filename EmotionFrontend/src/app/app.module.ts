@@ -23,6 +23,7 @@ import { ReflectFormComponent } from './reflect-form/reflect-form.component';
 import { ReflectButtonComponent } from './reflect-button/reflect-button.component';
 import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
 import { ReflectHistoryComponent } from './reflect-history/reflect-history.component';
+import { EmotionButtonComponent } from './emotion-button/emotion-button.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -48,7 +49,8 @@ import { ReflectHistoryComponent } from './reflect-history/reflect-history.compo
     ReflectHistoryComponent,
     PopupComponent,
     PopupWindowComponent,
-    NegativeBarchartComponent
+    NegativeBarchartComponent,
+    EmotionButtonComponent,
   ],
   bootstrap: [ AppComponent ]
 })
