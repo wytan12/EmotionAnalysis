@@ -26,6 +26,7 @@ import { NegativeBarchartComponent } from './negative-barchart/negative-barchart
 import { ReflectHistoryComponent } from './reflect-history/reflect-history.component';
 import { ScrollspyComponent } from './scrollspy/scrollspy.component';
 
+import { EmotionButtonComponent } from './emotion-button/emotion-button.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -53,6 +54,7 @@ import { ScrollspyComponent } from './scrollspy/scrollspy.component';
     PopupComponent,
     PopupWindowComponent,
     NegativeBarchartComponent,
+    EmotionButtonComponent,,
     ScrollspyComponent
   ],
   bootstrap: [ AppComponent ]
