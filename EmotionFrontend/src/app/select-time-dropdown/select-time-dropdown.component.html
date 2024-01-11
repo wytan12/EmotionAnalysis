@@ -1,0 +1,82 @@
+<section style="display: flex;">
+  <div
+    class="btn-group"
+    dDropDown
+    appendToBody
+    (toggleEvent)="onToggle($event)"
+  >
+    <d-icon
+      dDropDownToggle
+      class="devui-dropdown-default devui-dropdown-origin"
+      [icon]="'icon-select-arrow'"
+      [rotate]="rotateDegrees"
+    >
+      <span iconPrefix>From: Jan 2024 Week 1</span>
+    </d-icon>
+    <ul dDropDownMenu class="devui-dropdown-menu devui-scrollbar" role="menu">
+      <li role="menuitem">
+        <input
+          type="text"
+          class="devui-input devui-input-sm devui-search-in-dropdown"
+          placeholder="Search Time"
+        />
+        <div class="icon-in-search">
+          <i class="icon icon-search"></i>
+        </div>
+      </li>
+      <li role="menuitem">
+        <a dDropDownMenuItem>From: Jan 2024 Week 2</a>
+      </li>
+      <li role="menuitem">
+        <a dDropDownMenuItem>From: Jan 2024 Week 3</a>
+      </li>
+      <li role="menuitem">
+        <a dDropDownMenuItem>From: Jan 2024 Week 4</a>
+      </li>
+      <li class="disabled" role="menuitem">
+        <a dDropDownMenuItem class="disabled">From: Jan 2024 Week 5</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Second Dropdown -->
+  <div
+    class="btn-group"
+    dDropDown
+    appendToBody
+    (toggleEvent)="onToggle($event)"
+  >
+    <d-icon
+      dDropDownToggle
+      class="devui-dropdown-default devui-dropdown-origin"
+      [icon]="'icon-select-arrow'"
+      [rotate]="rotateDegrees"
+    >
+      <span iconPrefix>From: June 2024 Week 1</span>
+    </d-icon>
+    <ul dDropDownMenu class="devui-dropdown-menu devui-scrollbar" role="menu">
+      <li role="menuitem">
+        <input
+          type="text"
+          class="devui-input devui-input-sm devui-search-in-dropdown"
+          placeholder="Search Time"
+        />
+        <div class="icon-in-search">
+          <i class="icon icon-search"></i>
+        </div>
+      </li>
+      <li role="menuitem">
+        <a dDropDownMenuItem>From: June 2024 Week 2</a>
+      </li>
+      <li role="menuitem">
+        <a dDropDownMenuItem>From: June 2024 Week 3</a>
+      </li>
+      <li role="menuitem">
+        <a dDropDownMenuItem>From: June 2024 Week 4</a>
+      </li>
+      <li class="disabled" role="menuitem">
+        <a dDropDownMenuItem class="disabled">From: June 2024 Week 5</a>
+      </li>
+    </ul>
+  </div>
+</section>

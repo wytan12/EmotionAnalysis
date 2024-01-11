@@ -24,6 +24,7 @@ import { ReflectButtonComponent } from './reflect-button/reflect-button.componen
 import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
 import { ReflectHistoryComponent } from './reflect-history/reflect-history.component';
 import { EmotionButtonComponent } from './emotion-button/emotion-button.component';
+import { SelectTimeDropdownComponent } from './select-time-dropdown/select-time-dropdown.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -51,6 +52,7 @@ import { EmotionButtonComponent } from './emotion-button/emotion-button.componen
     PopupWindowComponent,
     NegativeBarchartComponent,
     EmotionButtonComponent,
+    SelectTimeDropdownComponent,
   ],
   bootstrap: [ AppComponent ]
 })

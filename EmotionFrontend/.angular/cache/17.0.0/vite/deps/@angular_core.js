@@ -429,8 +429,8 @@ import {
   ɵɵvalidateIframeAttribute,
   ɵɵviewQuery
 } from "./chunk-WOOE2ABN.js";
-import "./chunk-TVCYY2YW.js";
 import "./chunk-6PBJ6XOT.js";
+import "./chunk-TVCYY2YW.js";
 import "./chunk-IEWQYSKC.js";
 export {
   ANIMATION_MODULE_TYPE,
