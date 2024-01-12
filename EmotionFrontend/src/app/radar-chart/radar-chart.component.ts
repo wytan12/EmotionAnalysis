@@ -40,12 +40,11 @@ export class RadarChartComponent{
 
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
-      // Assuming the label information is available in event.active[0]._model.label
+      
       const clickedLabel = event.active[0];
       const value = this.radarChartLabels[clickedLabel.index]
       // console.log(value);
   
-      // Use the clickedLabel as needed (e.g., navigating to 'scrollspy' route)
       this.router.navigate(['emotion-detail'], { queryParams: { title: value } });
     }
   }
