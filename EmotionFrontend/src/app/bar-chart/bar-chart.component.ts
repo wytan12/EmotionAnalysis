@@ -38,7 +38,7 @@ export class BarChartComponent implements OnInit {
   ];
   // public barChartType: ChartType = "bar";
   public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
+  public barChartLegend = false;
   // public barChartPlugins = [pluginDataLabels];
 
   public barChartPlugins = [{
@@ -110,32 +110,15 @@ export class BarChartComponent implements OnInit {
 
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
-      // Assuming the label information is available in event.active[0]._model.label
       const clickedLabel = event.active[0];
       const value = this.barChartLabels[clickedLabel.index]
       // console.log(value);
   
-      // Use the clickedLabel as needed (e.g., navigating to 'scrollspy' route)
       this.router.navigate(['scrollspy'], { queryParams: { title: value } });
     }
   }
   
-
-  // public handleChartClick(event: any) {
-  //   const clickedLabel = event.event.chart.canvas.attributes['ng-reflect-labels'].value;
-  //   console.log(clickedLabel)
-  
-  //   // if (clickedLabel) {
-  //   //   this.router.navigate(['scrollspy'], { queryParams: { title: clickedLabel } });
-  //   // }
-  // }
   
 }
 
 
-// public handleChartClick(event: any) {
-
-//   if (event.active && event.active.length > 0) {
-//     this.router.navigate(['scrollspy']);
-//   }
-// }
