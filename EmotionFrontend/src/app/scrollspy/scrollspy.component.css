@@ -33,6 +33,6 @@ div.content {
 
 .scrollspy-example {
   position: relative;
-  height: 500px;
+  height: 100%;
   overflow: auto;
 }

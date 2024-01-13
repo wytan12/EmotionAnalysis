@@ -7,76 +7,48 @@
 	<div class="col-10" >
 	  <div class="scrollspy-example scrollspy-container">
 		<section mdbScrollspyElement="scrollspy" id="example-1">
-		  <h3>Section 1</h3>
+		  <!-- <h3>Section 1</h3>
 			<p>What caused that emotion?</p> <br>
-			<p>Is there anything else you want to share?</p>
+			<div *ngFor="let emoSurvey of filteredEmoSurveys">
+				<p>Reason: {{ emoSurvey.Reason }}</p>
+			  </div>
+			<p>Is there anything else you want to share?</p> -->
+			<div *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
+				<h3>Section {{ currentSectionNumber + i }}</h3>
+				<p>What caused that emotion?</p>
+				<p>{{ emoSurvey.Reason }}</p>
+				<p>Is there anything else you want to share?</p>
+				<p>{{emoSurvey.Remarks}}</p>
+				<hr>
+			  </div>
 		</section>
-		<section mdbScrollspyElement="scrollspy" id="example-2">
+		<!-- <section mdbScrollspyElement="scrollspy" id="example-2">
 		  <h3>Section 2</h3>
-		  <!-- <p>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore earum natus vel
-			minima quod error maxime, molestias ut. Fuga dignissimos nisi nemo
-			necessitatibus quisquam obcaecati et reiciendis quaerat accusamus numquam.
-		  </p> -->
 		</section>
 		<section mdbScrollspyElement="scrollspy" id="example-3">
 		  <h3>Section 3</h3>
-		  <!-- <p>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore earum natus vel
-			minima quod error maxime, molestias ut. Fuga dignissimos nisi nemo
-			necessitatibus quisquam obcaecati et reiciendis quaerat accusamus numquam.
-		  </p> 
-		  <section mdbScrollspyElement="scrollspy-2" id="example-5">
-			<h3>Subsection A</h3>
-			<p>
-			  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore earum natus
-			  vel minima quod error maxime, molestias ut. Fuga dignissimos nisi nemo
-			  necessitatibus quisquam obcaecati et reiciendis quaerat accusamus numquam.
-			</p>
-		  </section>
-		  <section mdbScrollspyElement="scrollspy-2" id="example-6">
-			<h3>Subsection B</h3>
-			<p>
-			  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore earum natus
-			  vel minima quod error maxime, molestias ut. Fuga dignissimos nisi nemo
-			  necessitatibus quisquam obcaecati et reiciendis quaerat accusamus numquam.
-			</p>
-		  </section>-->
 		</section>
 		<section mdbScrollspyElement="scrollspy" id="example-4">
 		  <h3>Section 4</h3>
-		  <!-- <p>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore earum natus vel
-			minima quod error maxime, molestias ut. Fuga dignissimos nisi nemo
-			necessitatibus quisquam obcaecati et reiciendis quaerat accusamus numquam.
-		  </p> -->
-		</section>
+		</section> -->
 	  </div>
 	</div>
   
 	<div class="col-2">
 	  <div id="scrollspy" class="sticky-top" style="height: 100%; z-index: 1;">
 		<ul mdbScrollspy="scrollspy" class="nav flex-column nav-pills menu-sidebar">
-		  <li class="nav-item">
-			<a mdbScrollspyLink="example-1" class="nav-link">Section 1</a>
+		  <li class="nav-item" *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
+			<a mdbScrollspyLink="example-1" class="nav-link">Section {{ currentSectionNumber + i }}</a>
 		  </li>
-		  <li class="nav-item">
+		  <!-- <li class="nav-item">
 			<a mdbScrollspyLink="example-2" class="nav-link">Section 2</a>
 		  </li>
 		  <li class="nav-item">
 			<a mdbScrollspyLink="example-3" class="nav-link">Section 3</a>
-			<!-- <ul mdbScrollspy="scrollspy-2" class="nav flex-column ps-3" [collapsible]="true">
-			  <li class="nav-item">
-				<a mdbScrollspyLink="example-5" class="nav-link">Subsection A</a>
-			  </li>
-			  <li class="nav-item">
-				<a mdbScrollspyLink="example-6" class="nav-link">Subsection B</a>
-			  </li>
-			</ul> -->
 		  </li>
 		  <li class="nav-item">
 			<a mdbScrollspyLink="example-4" class="nav-link">Section 4</a>
-		  </li>
+		  </li> -->
 		</ul>
 	  </div>
 	</div>
