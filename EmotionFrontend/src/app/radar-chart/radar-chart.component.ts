@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite, EmoSurvey} from "../services/emotion";
 import { BaseChartDirective } from "ng2-charts";
+import { SharedTimeService } from "../shared-time.service";
 
 @Component({
   selector: 'app-radar-chart',
@@ -36,7 +37,8 @@ export class RadarChartComponent{
 
   public radarChartType: ChartType = 'radar';
 
-  constructor(private router: Router, private emotionService: EmotionService) {}
+  constructor(private router: Router, private emotionService: EmotionService, 
+    private sharedTimeService: SharedTimeService) {}
 
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
@@ -62,8 +64,15 @@ export class RadarChartComponent{
     }
   }
 
+  timeRange: number[] | null = null;
+
   ngOnInit() {
     this.getData();
+    this.sharedTimeService.selectedTime$.subscribe((timestampRange: string[]) => {
+      this.timeRange = timestampRange.map(timestamp => new Date(timestamp).getTime());
+      console.log('Start bro:', this.timeRange[0]);
+      console.log('End bro:', this.timeRange[1]);
+    });
   }
 
   ngAfterViewInit() {

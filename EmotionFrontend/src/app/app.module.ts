@@ -59,7 +59,7 @@ import { EmotionRatingComponent } from './emotion-rating/emotion-rating.componen
     EmotionButtonComponent,
     SelectTimeDropdownComponent,
     ScrollspyComponent,
-    EmotionRatingComponent
+    EmotionRatingComponent,
   ],
   bootstrap: [ AppComponent ]
 })
