@@ -42,10 +42,23 @@ export class RadarChartComponent{
     if (event.active && event.active.length > 0) {
       
       const clickedLabel = event.active[0];
-      const value = this.radarChartLabels[clickedLabel.index]
-      // console.log(value);
+      const value = this.radarChartLabels[clickedLabel.index];
+      const dataset = this.radarChartData.datasets[clickedLabel.datasetIndex];
+      const datasetLabel = dataset.label
+
+      if (datasetLabel == 'Reading' ) {
+        const readingValue = this.radarChartData.datasets[0].data[clickedLabel.index];
+        console.log('Reading:', readingValue);
+      } else if (datasetLabel == 'Writing') {
+        const writingValue = this.radarChartData.datasets[1].data[clickedLabel.index];
+        console.log('Writing:', writingValue);
+      }
+
+      console.log(datasetLabel);
+      console.log(clickedLabel);
+      console.log(value);
   
-      this.router.navigate(['emotion-detail'], { queryParams: { title: value } });
+      this.router.navigate(['emotion-rating'], { queryParams: { title: value, datasetLabel: datasetLabel } });
     }
   }
 
