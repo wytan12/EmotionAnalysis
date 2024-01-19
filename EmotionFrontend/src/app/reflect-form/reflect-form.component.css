@@ -4,18 +4,6 @@
   justify-content: space-between;
 }
 
-.question-block {
-  transition: filter 0.5s ease-in-out;
-}
-
-.question-block:not(.active) {
-  filter: blur(5px);
-}
-
-.question-block.active {
-  filter: blur(0);
-}
-
 .left-section,
 .middle-section,
 .right-section {
@@ -87,9 +75,22 @@
   margin-top: 20px;
 }
 
+.disabled-button {
+  color: white; /* Set text color to white for better visibility on the grey background */
+  cursor: not-allowed; /* Change cursor to indicate that the button is not clickable */
+}
+
 .submit-block input {
-  font-size: 18px; /* Adjust the font size as needed */
-  padding: 10px 20px; /* Adjust the padding to increase the clickable area */
+  font-size: 18px;
+  padding: 10px 20px;
+  background-color: green; /* Set the default background color to green */
+  color: white; /* Set text color to white for better visibility on the green background */
+  cursor: pointer; /* Change cursor to pointer for clickable state */
+}
+
+.submit-block input:disabled {
+  background-color: grey; /* Set background color to grey for the disabled state */
+  cursor: not-allowed; /* Change cursor to indicate that the button is not clickable */
 }
 
 .form-style-7 {

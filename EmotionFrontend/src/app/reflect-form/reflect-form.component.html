@@ -3,51 +3,51 @@
 <div class="form-container">
   <div class="left-section">
     <!-- Left Question Block -->
-    <div class="question-block blue-bg" [ngClass]="{ 'active': activeBlockIndex === 0 }">
+    <div class="question-block blue-bg">
       <h1 class="question-block-heading">Our analysis</h1>
       <label for="q1">What do you see in the visualizations?</label>
-      <input type="text" name="q1" maxlength="100" [(ngModel)]="formData.Visualization"/>
+      <input type="text" name="q1" maxlength="100" [(ngModel)]="formData.Visualization" (ngModelChange)="checkIfAllQuestionsAnswered()"/>
 
       <label for="q2"
         >Based on the analysis results, what emotional challenges do we have
         during the Knowledge Building?</label
       >
-      <input type="text" name="q2" maxlength="100" [(ngModel)]="formData.Challenges"/>
+      <input type="text" name="q2" maxlength="100" [(ngModel)]="formData.Challenges" (ngModelChange)="checkIfAllQuestionsAnswered()"/>
     </div>
   </div>
 
   <div class="middle-section">
     <!-- Middle Question Block -->
-    <div class="question-block blue-bg" [ngClass]="{ 'active': activeBlockIndex === 1 }">
+    <div class="question-block blue-bg">
       <h1 class="question-block-heading">Our reflection</h1>
       <label for="q3">Which aspects do you think we can do better?</label>
-      <input type="text" name="q3" maxlength="100" [(ngModel)]="formData.ImprovementWays"/>
+      <input type="text" name="q3" maxlength="100" [(ngModel)]="formData.ImprovementWays" (ngModelChange)="checkIfAllQuestionsAnswered()"/>
 
       <label for="q4"
         >How can we create a more positive emotional environment to support our
         Knowledge Building?</label
       >
-      <input type="text" name="q4" maxlength="100" [(ngModel)]="formData.PositivePlan"/>
+      <input type="text" name="q4" maxlength="100" [(ngModel)]="formData.PositivePlan" (ngModelChange)="checkIfAllQuestionsAnswered()"/>
     </div>
   </div>
 
   <div class="right-section">
     <!-- Right Question Block -->
-    <div class="question-block blue-bg" [ngClass]="{ 'active': activeBlockIndex === 2 }">
+    <div class="question-block blue-bg">
       <h1 class="question-block-heading">Our regulation</h1>
       <label for="q5"
         >What is our specific action plan for creating a supportive emotional
         environment?</label
       >
-      <input type="text" name="q5" maxlength="100" [(ngModel)]="formData.Action"/>
+      <input type="text" name="q5" maxlength="100" [(ngModel)]="formData.Action" (ngModelChange)="checkIfAllQuestionsAnswered()"/>
     </div>
   </div>
 </div>
 
-<div class="submit-block">
-  <input type="submit" [value]="getButtonLabel()" (click)="handleButtonClick()" />
+<div class="submit-block" [ngClass]="{'disabled-button': !allQuestionsAnswered}">
+  <input type="submit" [value]="'Submit'" (click)="onSubmitClick()" [disabled]="!allQuestionsAnswered" />
 </div>
 
-<div class="submit-block">
+<!-- <div class="submit-block">
   <input type="submit" [value]="'Finish_Submit'" (click)="submit()" />
-</div>
+</div> -->
