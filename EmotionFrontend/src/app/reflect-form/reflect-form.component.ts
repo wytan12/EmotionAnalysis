@@ -24,25 +24,23 @@ import { EmotionService } from '../services/emotion.service';
 export class ReflectFormComponent {
   formData: any = {};
 
-  activeBlockIndex: number = 0;
+  // Initialize allQuestionsAnswered as false
+  allQuestionsAnswered = false;
+
+  // Update this function based on your actual logic
+  checkIfAllQuestionsAnswered() {
+    console.log('Checking questions...');
+    // Example: Check if all 5 inputs are not empty
+    this.allQuestionsAnswered = !!(
+      this.formData.Visualization &&
+      this.formData.Challenges &&
+      this.formData.ImprovementWays &&
+      this.formData.PositivePlan &&
+      this.formData.Action
+    );
+  }
 
   constructor(private router: Router, private emotionService: EmotionService) {}
-
-  handleButtonClick() {
-    if (this.activeBlockIndex < 2) {
-      this.goToNextBlock();
-    } else {
-      this.goToReflectHistory();
-    }
-  }
-
-  getButtonLabel() {
-    return this.activeBlockIndex < 2 ? 'Next' : 'Send This';
-  }
-
-  goToNextBlock() {
-    this.activeBlockIndex = (this.activeBlockIndex + 1) % 3;
-  }
 
   goToReflectHistory() {
     this.router.navigate(['reflect-history']);
@@ -61,5 +59,11 @@ export class ReflectFormComponent {
     this.emotionService.addReg(this.formData).subscribe((EmoReadWrite) => {
       console.log(EmoReadWrite);
     });
+  }
+
+  onSubmitClick() {
+    // Call both functions
+    this.goToReflectHistory();
+    this.submit();
   }
 }

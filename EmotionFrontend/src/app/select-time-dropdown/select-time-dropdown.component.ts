@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './select-time-dropdown.component.css'
 })
 export class SelectTimeDropdownComponent {
-  rotateDegrees = 0;
+  value = [new Date('2024/01/01'), new Date('2024/01/10')];
 
   constructor() {
 
@@ -16,8 +16,7 @@ export class SelectTimeDropdownComponent {
   ngOnInit() {
   }
 
-  onToggle(event: any) {
-    console.log(event);
-    this.rotateDegrees = event ? 180 : 0;
+  onChange(dateList:any) {
+    console.log(dateList);
   }
 }

@@ -9,8 +9,26 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-  constructor(private router: Router) { }
+  activePage: string = ''; // Initialize with a default value
+
+  constructor(private router: Router) {
+    this.router.events.subscribe((val) => {
+      this.setActivePage();
+    });
+  }
   
+  // Function to set the activePage variable based on the current route
+  setActivePage() {
+    const currentRoute = this.router.url;
+    if (currentRoute.includes('dashboard')) {
+      this.activePage = 'dashboard';
+    } else if (currentRoute.includes('survey')) {
+      this.activePage = 'survey';
+    } else {
+      this.activePage = ''; // Handle other cases or set a default value
+    }
+  }
+
   goToHome() {
     this.router.navigate(['dashboard']);
   }
