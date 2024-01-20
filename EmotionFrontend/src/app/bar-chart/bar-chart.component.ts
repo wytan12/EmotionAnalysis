@@ -62,6 +62,8 @@ export class BarChartComponent implements OnInit {
   public getDataHttp(): Promise<number[]> {
     return new Promise<number[]>(resolve => {
       const rdata: number[] = [0, 0, 0, 0, 0, 0, 0];
+      let totalEntries = 0;
+
       this.emotionService.getEmoSurvey().subscribe(emoSurvey => {
         for (let i = 0; i < emoSurvey.length; i++) {
           const es: EmoSurvey = emoSurvey[i];
@@ -72,7 +74,14 @@ export class BarChartComponent implements OnInit {
           rdata[4] += es.Anxious;
           rdata[5] += es.Frustrated;
           rdata[6] += es.Bored;
+          totalEntries++;
         }
+
+         // Calculate average value for each intensity
+        for (let i = 0; i < rdata.length; i++) {
+          rdata[i] /= totalEntries;
+        } 
+
         resolve(rdata);
       });
     });
