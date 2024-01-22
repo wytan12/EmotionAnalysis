@@ -34,6 +34,11 @@ export class ScrollspyComponent {
     });
   }
 
+  activeSection: number = 0 ;
+  setActiveSection(sectionIndex: number) {
+    this.activeSection = sectionIndex;
+  }
+
   currentSectionNumber: number = 1;
 
   // public data:number[] =[];
