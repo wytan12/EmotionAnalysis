@@ -1,4 +1,3 @@
-<app-header></app-header>
 <div class="container">
 	<section>
 		<h3>{{title}}</h3>
@@ -48,11 +47,11 @@
 	  </div>
 	</div>
   
-	<div class="col-2">
-	  <div id="scrollspy" class="sticky-top" style="height: 100%; z-index: 1;">
+	<div class="col-2" style="position: sticky; top:0;">
+	  <div id="scrollspy"  style=" position: fixed;z-index: 1; height: 100%; overflow: auto;">
 		<ul [mdbScrollspy]="'scrollspy'" class="nav flex-column nav-pills menu-sidebar">
 			<li class="nav-item" *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
-			  <a [mdbScrollspyLink]="'example-' + (currentSectionNumber + i)" class="nav-link">Section {{ currentSectionNumber + i }}</a>
+			  <a [mdbScrollspyLink]="'example-' + (currentSectionNumber + i)" class="nav-link" [class.active]="activeSection == i" (click)="setActiveSection(i)">Section {{ currentSectionNumber + i }}</a>
 			</li>
 		  
 		<!-- <ul mdbScrollspy="scrollspy" class="nav flex-column nav-pills menu-sidebar">

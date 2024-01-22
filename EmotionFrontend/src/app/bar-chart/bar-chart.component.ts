@@ -123,7 +123,7 @@ export class BarChartComponent implements OnInit {
       const value = this.barChartLabels[clickedLabel.index]
       // console.log(value);
   
-      this.router.navigate(['scrollspy'], { queryParams: { title: value } });
+      this.router.navigate(['survey-reason'], { queryParams: { title: value } });
     }
   }
   

@@ -36,3 +36,8 @@ div.content {
   height: 100%;
   overflow: auto;
 }
+
+.nav-link.active {
+  background-color: #0D6EFD; /* Set your desired background color for the active nav-link */
+  /* Set your desired text color for the active nav-link */
+}

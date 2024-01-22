@@ -29,6 +29,7 @@ import { ScrollspyComponent } from './scrollspy/scrollspy.component';
 import { EmotionButtonComponent } from './emotion-button/emotion-button.component';
 import { SelectTimeDropdownComponent } from './select-time-dropdown/select-time-dropdown.component';
 import { EmotionRatingComponent } from './emotion-rating/emotion-rating.component';
+import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -60,6 +61,7 @@ import { EmotionRatingComponent } from './emotion-rating/emotion-rating.componen
     SelectTimeDropdownComponent,
     ScrollspyComponent,
     EmotionRatingComponent,
+    SurveyReasonComponent
   ],
   bootstrap: [ AppComponent ]
 })
