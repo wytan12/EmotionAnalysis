@@ -1,18 +1,20 @@
 <div class="container">
-	<section>
-		<h3>{{title}}</h3>
+	<section >
+		<h3 class="justify-content: center; align-content:center;">{{title}}</h3>
 	</section>
 	<div class="d-flex flex-column flex-md-row" >
 	<div class="col-10" >
 	  <div class="scrollspy-example scrollspy-container">
 		<div *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
-		<section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + (currentSectionNumber + i)">
+		<section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + (currentSectionNumber + i)" class="survey-section">
 			  <h3>Section {{ currentSectionNumber + i }}</h3>
-			  <p>What caused that emotion?</p>
-			  <p>{{ emoSurvey.Reason }}</p>
-			  <p>Is there anything else you want to share?</p>
-			  <p>{{ emoSurvey.Remarks }}</p>
-			  <hr>
+			  <div class="question-answer">
+				<p class="question">What caused that emotion?</p>
+				<p class="answer">{{ emoSurvey.Reason }}</p>
+				<p class="question">Is there anything else you want to share?</p>
+				<p class="answer">{{ emoSurvey.Remarks }}</p>
+				<hr class="section-divider">
+			  </div>
 			
 		  </section>
 		</div>
@@ -47,8 +49,8 @@
 	  </div>
 	</div>
   
-	<div class="col-2" style="position: sticky; top:0;">
-	  <div id="scrollspy"  style=" position: fixed;z-index: 1; height: 100%; overflow: auto;">
+	<div class="col-2" style="position: sticky; top:0; justify-content: center; align-items: center;">
+	  <div id="scrollspy"  style=" position: fixed; z-index: 1; height: 70%; overflow: auto ; " class="sidebar">
 		<ul [mdbScrollspy]="'scrollspy'" class="nav flex-column nav-pills menu-sidebar">
 			<li class="nav-item" *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
 			  <a [mdbScrollspyLink]="'example-' + (currentSectionNumber + i)" class="nav-link" [class.active]="activeSection == i" (click)="setActiveSection(i)">Section {{ currentSectionNumber + i }}</a>
