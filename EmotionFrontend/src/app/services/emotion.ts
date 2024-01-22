@@ -21,6 +21,7 @@ export class Emotion{
 export interface EmoReadWrite {
   _id:string;
   NoteID: string;
+  NoteTitle: string;
   UserID: string;
   Timestamp: string;
   NoEmotion: number;
@@ -274,6 +275,56 @@ export class EmoReg implements EmoReg{
     this.PositivePlan = PositivePlan;
     this.Action = Action;
   }
-
 }
 
+export interface EmoLogData {
+  UserID: string,
+  Timestamp:string,
+  InteractedElement:string,
+  ActionType:string,
+  Output:string,
+  Title:string,
+  Authors:string,
+  Body:string,
+  Scaffolds:string,
+  Created:string,
+  Views:string,
+  Buildson:string,
+  EditBy:string,
+  ReadBy:string,
+  LastEditedAt:string
+}
+
+export class EmoLogData implements EmoLogData{
+  constructor(UserID: string,
+              Timestamp:string,
+              InteractedElement:string,
+              ActionType:string,
+              Output:string,
+              Title:string,
+              Authors:string,
+              Body:string,
+              Scaffolds:string,
+              Created:string,
+              Views:string,
+              Buildson:string,
+              EditBy:string,
+              ReadBy:string,
+              LastEditedAt:string) {
+    this.Authors = Authors;
+    this.Body = Body;
+    this.Scaffolds = Scaffolds;
+    this.Created = Created;
+    this.Views = Views;
+    this.Buildson = Buildson;
+    this.EditBy = EditBy;
+    this.ReadBy = ReadBy;
+    this.UserID = UserID;
+    this.Timestamp = Timestamp;
+    this.InteractedElement = InteractedElement;
+    this.ActionType = ActionType;
+    this.Output = Output;
+    this.Title = Title;
+    this.LastEditedAt = LastEditedAt;
+  }
+}

@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, filter,tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import {EmoReadWrite, EmoReg, EmoSurvey, Emotion, Test} from "./emotion";
+import moment from "moment";
 
 
 
@@ -150,6 +151,18 @@ export class EmotionService {
         }),
         catchError(this.handleError<Emotion>(`getEmotion id=${id}`))
       );
+  }
+
+  convertToDate(timeStamp:string):string{
+    let now = moment(timeStamp ,'YYYYMMDDHHmmss');
+    let dateTime = now.toDate( );
+    console.log('Date: ' + dateTime);
+    let formatDate = now.format('YYYY-MM-DD HH:mm: ss');
+    return formatDate;
+  }
+  convertToTimeStamp(timeDate:string):string{
+
+    return "";
   }
 
   /** GET Emotion by id. Will 404 if id not found */

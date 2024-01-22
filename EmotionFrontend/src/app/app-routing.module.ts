@@ -10,6 +10,7 @@ import { ReflectHistoryComponent } from './reflect-history/reflect-history.compo
 import { ScrollspyComponent } from './scrollspy/scrollspy.component';
 import { EmotionRatingComponent } from './emotion-rating/emotion-rating.component';
 import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
+import {SelectTimeRangeComponent} from "./messages/select-time-range.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -22,8 +23,9 @@ const routes: Routes = [
   { path: 'reflect-form', component: ReflectFormComponent},
   { path: 'reflect-history', component: ReflectHistoryComponent},
   { path: 'survey-reason', component: SurveyReasonComponent},
-  { path: 'emotion-rating', component: EmotionRatingComponent}
-  
+  { path: 'emotion-rating', component: EmotionRatingComponent},
+  { path: 'testtime', component: SelectTimeRangeComponent}
+
 ];
 
 @NgModule({
