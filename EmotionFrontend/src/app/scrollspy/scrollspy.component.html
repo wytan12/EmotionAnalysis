@@ -1,13 +1,13 @@
 <div class="container">
-	<section >
-		<h3 class="justify-content: center; align-content:center;">{{title}}</h3>
+	<section style="justify-content: center; align-content:center;">
+		<h3 >{{title}}</h3>
 	</section>
 	<div class="d-flex flex-column flex-md-row" >
 	<div class="col-10" >
 	  <div class="scrollspy-example scrollspy-container">
 		<div *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
 		<section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + (currentSectionNumber + i)" class="survey-section">
-			  <h3>Section {{ currentSectionNumber + i }}</h3>
+			  <h3>Note {{ currentSectionNumber + i }}</h3>
 			  <div class="question-answer">
 				<p class="question">What caused that emotion?</p>
 				<p class="answer">{{ emoSurvey.Reason }}</p>
@@ -49,11 +49,11 @@
 	  </div>
 	</div>
   
-	<div class="col-2" style="position: sticky; top:0; justify-content: center; align-items: center;">
+	<div class="col-2" style="position: sticky; top:0; justify-content: center; align-items: center;padding-left: 15px;">
 	  <div id="scrollspy"  style=" position: fixed; z-index: 1; height: 70%; overflow: auto ; " class="sidebar">
 		<ul [mdbScrollspy]="'scrollspy'" class="nav flex-column nav-pills menu-sidebar">
-			<li class="nav-item" *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
-			  <a [mdbScrollspyLink]="'example-' + (currentSectionNumber + i)" class="nav-link" [class.active]="activeSection == i" (click)="setActiveSection(i)">Section {{ currentSectionNumber + i }}</a>
+			<li class="nav-item"  *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
+			  <a [mdbScrollspyLink]="'example-' + (currentSectionNumber + i)" class="nav-link" [class.active]="activeSection == i" (click)="setActiveSection(i)" style="cursor:pointer;">Note {{ currentSectionNumber + i }}</a>
 			</li>
 		  
 		<!-- <ul mdbScrollspy="scrollspy" class="nav flex-column nav-pills menu-sidebar">
