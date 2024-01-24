@@ -16,7 +16,7 @@ export class NegativeBarchartComponent implements OnInit {
 
   // public barChartType: ChartType = "bar";
   public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
+  public barChartLegend = false;
   // public barChartPlugins = [pluginDataLabels];
 
   public barChartPlugins = [{
@@ -27,7 +27,7 @@ export class NegativeBarchartComponent implements OnInit {
   }] as any[];
 
   public barChartData: ChartDataset[] = [
-    {data: [65,59,80], label:'Series A'},
+    {data: [65,59,80] },
   ];
 
   public barChartOptions: ChartOptions = {
@@ -63,5 +63,9 @@ export class NegativeBarchartComponent implements OnInit {
     if (event.active && event.active.length > 0) {
       this.router.navigate(['emotion-detail']);
     }
+  }
+
+  navigate() {
+    this.router.navigate(['survey']);
   }
 }

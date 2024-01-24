@@ -1,19 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 p {
     font-family: Lato;
   }
   
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .barchart-container {
-    margin-top: 12px;
-    width: 100%;
-    padding-left: 50px;
-    overflow: hidden;
-    display: block;
-    width: 70%;
-  }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.barchart-container {
+  margin-top: 20px;
+  width: 100%;
+  padding-left: 50px;
+  overflow: hidden;
+  display: block;
+  width: 70%;
+}
   
