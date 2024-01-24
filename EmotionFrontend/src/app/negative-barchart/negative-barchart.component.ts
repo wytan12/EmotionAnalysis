@@ -61,7 +61,7 @@ export class NegativeBarchartComponent implements OnInit {
 
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
-      this.router.navigate(['emotion-detail']);
+      this.router.navigate(['survey-reason']);
     }
   }
 
