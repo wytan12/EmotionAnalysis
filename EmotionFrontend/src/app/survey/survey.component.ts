@@ -7,8 +7,12 @@ import { Router } from '@angular/router'; // Import the Router module
   styleUrls: ['./survey.component.css']
 })
 export class SurveyComponent {
-  // Add a private property for the Router
-  constructor(private router: Router) {
-    // Your constructor logic here
+  
+  constructor(private router: Router) { }
+
+  navigate() {
+    this.router.navigate(['negative-bar']);
   }
 }
+
+
