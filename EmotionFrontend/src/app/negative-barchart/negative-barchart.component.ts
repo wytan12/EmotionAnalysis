@@ -59,9 +59,19 @@ export class NegativeBarchartComponent implements OnInit {
 
   constructor(private router: Router) {}
 
+  // public handleChartClick(event: any) {
+  //   if (event.active && event.active.length > 0) {
+  //     this.router.navigate(['survey-reason']);
+  //   }
+  // }
+
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
-      this.router.navigate(['survey-reason']);
+      const clickedLabel = event.active[0];
+      const value = this.barChartLabels[clickedLabel.index]
+      // console.log(value);
+  
+      this.router.navigate(['survey-reason'], { queryParams: { title: value } });
     }
   }
 
