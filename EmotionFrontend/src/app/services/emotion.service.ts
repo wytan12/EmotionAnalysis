@@ -71,7 +71,7 @@ export class EmotionService {
     if(EmotionData.userID == EmotionData.author){
       actionType = "Writing";
     }
-    const a:EmoReadWrite = new EmoReadWrite(EmotionData.noteID,userID,timestamp,EmotionData.noEmotion,actionType);
+    const a:EmoReadWrite = new EmoReadWrite(EmotionData.noteID,"NoteTitle",userID,timestamp,EmotionData.noEmotion,actionType);
     if(EmotionData.noEmotion == 1){
       for (let i = 0; i <EmotionData.emotions.length; i++) {
         console.log(EmotionData.emotions[i].id);

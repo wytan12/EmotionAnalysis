@@ -117,7 +117,7 @@ const EmoRegSchema = new mongoose.Schema({
   Action:String,
 });
 
-const EmoLogData = new mongoose.Schema({
+const EmoLogDataSchema = new mongoose.Schema({
   UserID: String,
   Timestamp:String,
   InteractedElement:String,
@@ -151,6 +151,8 @@ const EmoSurvey = mongoose.model('EmoSurvey', EmoSurveySchema, 'EmoSurvey');
 const EmoReg = mongoose.model('EmoReg', EmoRegSchema, 'EmoReg');
 const Test = mongoose.model('Test', TestSchema, 'Test');
 
+const EmoLogData = mongoose.model('EmoLogData', EmoLogDataSchema, 'EmoLogData');
+
 const Emotion = mongoose.model('Emotion', EmotionSchema, 'Emotion');
 
-export { EmoReadWrite,EmoSurvey,EmoReg ,Test,Emotion};
+export { EmoReadWrite,EmoSurvey,EmoReg ,Test,Emotion,EmoLogData};

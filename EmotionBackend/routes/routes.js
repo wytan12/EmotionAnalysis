@@ -1,5 +1,5 @@
 import express from "express";
-import {Test, EmoReadWrite, EmoReg, EmoSurvey, Emotion} from "../model/model.js";
+import {Test, EmoReadWrite, EmoReg, EmoSurvey, Emotion,EmoLogData} from "../model/model.js";
 const APIrouter = express.Router();
 
 APIrouter.get("/newtest", (req, res) => {
@@ -16,6 +16,18 @@ APIrouter.get("/newtest", (req, res) => {
       res.send(err.message);
     });
 });
+
+APIrouter.get("/emolog", (req, res) => {
+  EmoLogData.find()
+    .then((found) => {
+      res.send(found);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+
 APIrouter.get("/tests", (req, res) => {
   Test.find()
     .then((found) => {
@@ -48,9 +60,12 @@ APIrouter.post("/addEmotion", (req, res) => {
 });
 APIrouter.post("/addEmoReadWrite", (req, res) => {
   console.log(req.body);
+  console.log(req.body.NoteTitle);
   console.log("789");
   const newEmoReadWrite = new EmoReadWrite({
     UserID: req.body.UserID,
+    NoteID: req.body.NoteID,
+    NoteTitle: req.body.NoteTitle,
     Timestamp:req.body.Timestamp,
     ActionType:req.body.ActionType,
     Joyful:req.body.Joyful,
