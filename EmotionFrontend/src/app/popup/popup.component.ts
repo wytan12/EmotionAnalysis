@@ -18,8 +18,8 @@ export class PopupComponent implements OnInit {
   openstandardDialog(dialogtype?: string) {
     const results = this.dialogService.open({
       id: 'dialog-service',
-      width: '700px',
-      maxHeight: '500px',
+      width: '50%',
+      maxHeight: '800px',
       title: 'Emotion Selection',
       content: PopupWindowComponent,
       backdropCloseable: true,

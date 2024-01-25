@@ -13,7 +13,7 @@
       </d-form-item>
       <div *ngIf="isShow">
         <d-form-item>
-          <d-form-label>I feel (One star means "weak", Two stars means "normal", Three stars means "strong ")</d-form-label>
+          <d-form-label>I feel</d-form-label>
           <d-form-control [style.width.%]="80" >
             <section>
                   <d-select
@@ -36,7 +36,7 @@
           </d-form-control>
         </d-form-item>
         <div class="emotions" [style.width.%]="100" >
-            <div class="emotion" [style.width.%]="25" *ngFor="let item of select1">
+            <div class="emotion" [style.width.%]="26" *ngFor="let item of select1">
                 <d-form-item>
                   <div *ngIf="item!=null">
                   <d-form-label [hasHelp]="false">{{item.name}}</d-form-label>
@@ -44,7 +44,7 @@
     <!--                <div class="slider-wrapper">-->
     <!--                  <d-slider [ngModelOptions]="{standalone: true}" [(ngModel)]="item.value" [min]="0" [max]="10" class="slider"></d-slider>-->
     <!--                </div>-->
-                    <d-rate [ngModelOptions]="{standalone: true}" [allowClear]="true" [(ngModel)]="item.value" color="#fac20a"  [allowHalf]="false" [count]="3"></d-rate> {{color[item.value-1]}} {{ item.value }}
+                    <d-rate [ngModelOptions]="{standalone: true}" [allowClear]="true" [(ngModel)]="item.value" color="#fac20a"  [allowHalf]="false" [count]="3"></d-rate>{{ item.value }}
                   </d-form-control>
                   </div>
                 </d-form-item>

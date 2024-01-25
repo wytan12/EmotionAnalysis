@@ -35,7 +35,6 @@ import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
 // import {MatDatepickerModule} from "@angular/material/datepicker";
 // import { MatNativeDateModule } from '@angular/material/core';
 // import { SelectTimeRangeComponent } from './messages/select-time-range.component';
-import { NzButtonModule } from 'ng-zorro-antd/button';
 
 /** 导入需要使用的 Angular 语言包 **/
 import { registerLocaleData } from '@angular/common';
@@ -44,6 +43,7 @@ registerLocaleData(en);
 
 /** 配置 ng-zorro-antd 国际化 **/
 import { provideNzI18n, en_US } from 'ng-zorro-antd/i18n';
+import {NzDatePickerComponent, NzRangePickerComponent} from "ng-zorro-antd/date-picker";
 
 @NgModule({
   imports: [
@@ -55,8 +55,9 @@ import { provideNzI18n, en_US } from 'ng-zorro-antd/i18n';
     NgChartsModule,
     DevUIModule,
     MdbScrollspyModule,
-    NzButtonModule,
     ReactiveFormsModule,
+    NzDatePickerComponent,
+    NzRangePickerComponent,
     // MatNativeDateModule
     // MatInputModule,
     // MatDatepickerModule,
