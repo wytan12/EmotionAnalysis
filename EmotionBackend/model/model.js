@@ -1,6 +1,8 @@
 import mongoose, { Schema } from "mongoose";
 const EmoReadWriteSchema = new mongoose.Schema({
   UserID: String,
+  NoteID: String,
+  NoteTitle: String,
   ActionType: {                  // 指定默认参数，在新增时不添加这个字段就会默认添加
     type: String,
     default: 'Reading'
@@ -115,6 +117,25 @@ const EmoRegSchema = new mongoose.Schema({
   Action:String,
 });
 
+const EmoLogDataSchema = new mongoose.Schema({
+  UserID: String,
+  Timestamp:String,
+  InteractedElement:String,
+  ActionType:String,
+  Output:String,
+  Title:String,
+  Authors:String,
+  Body:String,
+  Scaffolds:String,
+  Created:String,
+  Views:String,
+  Buildson:String,
+  EditBy:String,
+  ReadBy:String,
+  LastEditedAt:String
+});
+
+
 const TestSchema = new mongoose.Schema({
   testID: String,
 });
@@ -130,6 +151,8 @@ const EmoSurvey = mongoose.model('EmoSurvey', EmoSurveySchema, 'EmoSurvey');
 const EmoReg = mongoose.model('EmoReg', EmoRegSchema, 'EmoReg');
 const Test = mongoose.model('Test', TestSchema, 'Test');
 
+const EmoLogData = mongoose.model('EmoLogData', EmoLogDataSchema, 'EmoLogData');
+
 const Emotion = mongoose.model('Emotion', EmotionSchema, 'Emotion');
 
-export { EmoReadWrite,EmoSurvey,EmoReg ,Test,Emotion};
+export { EmoReadWrite,EmoSurvey,EmoReg ,Test,Emotion,EmoLogData};

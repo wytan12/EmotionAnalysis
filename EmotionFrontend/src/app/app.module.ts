@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +30,21 @@ import { EmotionButtonComponent } from './emotion-button/emotion-button.componen
 import { SelectTimeDropdownComponent } from './select-time-dropdown/select-time-dropdown.component';
 import { EmotionRatingComponent } from './emotion-rating/emotion-rating.component';
 import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
+
+// import {MatInputModule} from "@angular/material/input";
+// import {MatDatepickerModule} from "@angular/material/datepicker";
+// import { MatNativeDateModule } from '@angular/material/core';
+// import { SelectTimeRangeComponent } from './messages/select-time-range.component';
+
+/** 导入需要使用的 Angular 语言包 **/
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+registerLocaleData(en);
+
+/** 配置 ng-zorro-antd 国际化 **/
+import { provideNzI18n, en_US } from 'ng-zorro-antd/i18n';
+import {NzDatePickerComponent, NzRangePickerComponent} from "ng-zorro-antd/date-picker";
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -40,6 +55,12 @@ import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
     NgChartsModule,
     DevUIModule,
     MdbScrollspyModule,
+    ReactiveFormsModule,
+    NzDatePickerComponent,
+    NzRangePickerComponent,
+    // MatNativeDateModule
+    // MatInputModule,
+    // MatDatepickerModule,
   ],
   declarations: [
     AppComponent,
@@ -61,8 +82,14 @@ import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
     SelectTimeDropdownComponent,
     ScrollspyComponent,
     EmotionRatingComponent,
-    SurveyReasonComponent
+    SurveyReasonComponent,
+    // SelectTimeRangeComponent
+
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
+  providers: [
+    provideNzI18n(en_US)
+  ]
 })
 export class AppModule { }
+
