@@ -11,7 +11,7 @@ export class SurveyComponent {
   constructor(private router: Router) { }
 
   navigate() {
-    this.router.navigate(['negative-bar']);
+    this.router.navigate(['inconducive-chart']);
   }
 }
 

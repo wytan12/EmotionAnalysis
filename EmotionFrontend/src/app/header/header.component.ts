@@ -22,7 +22,7 @@ export class HeaderComponent {
     const currentRoute = this.router.url;
     if (currentRoute.includes('dashboard')) {
       this.activePage = 'dashboard';
-    } else if (currentRoute.includes('survey') || (currentRoute.includes('negative-bar'))) {
+    } else if (currentRoute.includes('survey') || (currentRoute.includes('inconducive'))) {
       this.activePage = 'survey';
     } else {
       this.activePage = ''; // Handle other cases or set a default value

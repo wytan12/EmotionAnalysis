@@ -30,6 +30,7 @@ import { EmotionButtonComponent } from './emotion-button/emotion-button.componen
 import { SelectTimeDropdownComponent } from './select-time-dropdown/select-time-dropdown.component';
 import { EmotionRatingComponent } from './emotion-rating/emotion-rating.component';
 import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
+import { InconduciveComponent } from './inconducive/inconducive.component';
 
 // import {MatInputModule} from "@angular/material/input";
 // import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -46,6 +47,7 @@ import { provideNzI18n, en_US } from 'ng-zorro-antd/i18n';
 import {NzDatePickerComponent, NzRangePickerComponent} from "ng-zorro-antd/date-picker";
 import { SelectMemberDropdownComponent } from './select-member-dropdown/select-member-dropdown.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+
 
 @NgModule({
   imports: [
@@ -87,6 +89,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     EmotionRatingComponent,
     SurveyReasonComponent,
     SelectMemberDropdownComponent,
+    InconduciveComponent
     // SelectTimeRangeComponent
 
   ],
