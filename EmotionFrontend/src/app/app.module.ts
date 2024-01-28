@@ -44,6 +44,8 @@ registerLocaleData(en);
 /** 配置 ng-zorro-antd 国际化 **/
 import { provideNzI18n, en_US } from 'ng-zorro-antd/i18n';
 import {NzDatePickerComponent, NzRangePickerComponent} from "ng-zorro-antd/date-picker";
+import { SelectMemberDropdownComponent } from './select-member-dropdown/select-member-dropdown.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   imports: [
@@ -58,6 +60,7 @@ import {NzDatePickerComponent, NzRangePickerComponent} from "ng-zorro-antd/date-
     ReactiveFormsModule,
     NzDatePickerComponent,
     NzRangePickerComponent,
+    NzSelectModule,
     // MatNativeDateModule
     // MatInputModule,
     // MatDatepickerModule,
@@ -83,6 +86,7 @@ import {NzDatePickerComponent, NzRangePickerComponent} from "ng-zorro-antd/date-
     ScrollspyComponent,
     EmotionRatingComponent,
     SurveyReasonComponent,
+    SelectMemberDropdownComponent,
     // SelectTimeRangeComponent
 
   ],
