@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite, EmoSurvey} from "../services/emotion";
+import { TimeService } from '../services/time.service';
 
 @Component({
 	selector: "app-scrollspy",
@@ -11,9 +12,11 @@ import {EmoReadWrite, EmoSurvey} from "../services/emotion";
 
 export class ScrollspyComponent {
 	title: string = '';
+  
 
   constructor(private route: ActivatedRoute,
-    private emotionService: EmotionService) { }
+    private emotionService: EmotionService, 
+    private timeService: TimeService) { }
 
   // Assuming you have a property to store the filtered data
   filteredEmoSurveys: EmoSurvey[] = [];
@@ -56,8 +59,8 @@ export class ScrollspyComponent {
       this.emotionService.getEmoSurvey().subscribe(emoSurveyList => {
         // Filter the list based on the emotion title
         const filteredList = emoSurveyList.filter(emoSurvey => {
-          // Assuming that the emotion property is a string property in EmoSurvey
           return emoSurvey.Inconducive === emotionTitle;
+          
         });
   
         resolve(filteredList);
@@ -65,12 +68,27 @@ export class ScrollspyComponent {
     });
   }
 
+
+  // public formatDate() {
+  //   // Extract the 'i' (milliseconds) part
+  //   const milliseconds = timestamp.i;
+
+  //   // Call convertToDate with the milliseconds
+  //   const formattedDate = this.timeService.convertToDate(milliseconds);
+
+  //   console.log(formattedDate);
+  //   return formattedDate;
+  // }
+
   // const desiredEmotionTitle = 'Joyful';
 
   // this.getEmoSurveyByEmotionTitle(title).then(filteredData => {
   //   // filteredData contains only EmoSurvey objects with the specified emotion title
   //   console.log(filteredData);
   // });
+
+
+
 
 }
 
