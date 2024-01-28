@@ -22,6 +22,7 @@ export interface EmoReadWrite {
   _id:string;
   NoteID: string;
   NoteTitle: string;
+  NoteContent: string;
   UserID: string;
   Timestamp: string;
   NoEmotion: number;
@@ -43,9 +44,10 @@ export interface EmoReadWrite {
 }
 
 export class EmoReadWrite implements EmoReadWrite {
-  constructor(NoteID: string,NoteTitle: string, UserID: string, Timestamp: string,NoEmotion: number,ActionType: string){
+  constructor(NoteID: string,NoteTitle: string,NoteContent: string, UserID: string, Timestamp: string,NoEmotion: number,ActionType: string){
     this.NoteID = NoteID;
     this.NoteTitle = NoteTitle;
+    this.NoteContent = NoteContent;
     this.UserID = UserID;
     this.Timestamp = Timestamp;
     this.NoEmotion = NoEmotion;
