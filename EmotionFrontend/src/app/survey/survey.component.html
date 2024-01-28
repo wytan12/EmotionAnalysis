@@ -1,11 +1,14 @@
 <app-header></app-header>
-<app-bar-chart></app-bar-chart>
+<div class="dashboard-container">
+    <div class="left-section">
+      <app-bar-chart></app-bar-chart>
+    </div>
 
-<div style="display: flex; justify-content: center; align-items: center;">
-    <app-select-time-dropdown></app-select-time-dropdown>
-    <app-reflect-button></app-reflect-button>
-    <div class="flex fixed bottom-20 right-12">
-    <button
+    <div class="right-section">
+        <app-select-time-dropdown></app-select-time-dropdown>
+        <app-reflect-button></app-reflect-button>
+      
+      <button
     type="button"
     class="inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white hover:bg-black hover:bg-opacity-80 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
     (click)="navigate()">
@@ -26,6 +29,14 @@
             <polyline points="12 5 19 12 12 19"></polyline>
         </svg>
     </button>
+    </div>
 </div>
+
+<!-- <div style="display: flex; justify-content: center; align-items: center;">
+    <app-select-time-dropdown></app-select-time-dropdown>
+    <app-reflect-button></app-reflect-button>
+    <div class="flex fixed bottom-20 right-12">
+    
 </div>
+</div> -->
 
