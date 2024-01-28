@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite, EmoReg, EmoSurvey, Test} from "../services/emotion";
+import {TimeService} from "../services/time.service";
 
 @Component({
   selector: 'app-statics',
@@ -12,7 +13,7 @@ export class StaticsComponent implements OnInit {
   emoReadWrite: EmoReadWrite[] = [];
   emoReg:EmoReg[] = [];
   emoSurvey:EmoSurvey[] = [];
-  constructor(private emotionService: EmotionService) { }
+  constructor(private emotionService: EmotionService, private timeService:TimeService) { }
 
 
   getEmoReadWrite(): void{
@@ -31,6 +32,9 @@ export class StaticsComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getHeroes();
+    console.log("1706449063");
+    this.timeService.convertToDate(1706449063);
+    this.timeService.convertToDateMS(1706449063);
   }
 
 

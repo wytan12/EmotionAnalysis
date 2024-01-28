@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite, EmoSurvey} from "../services/emotion";
 import { TimeService } from '../services/time.service';
+import {map} from "rxjs/operators";
 
 @Component({
 	selector: "app-scrollspy",
@@ -12,10 +13,10 @@ import { TimeService } from '../services/time.service';
 
 export class ScrollspyComponent {
 	title: string = '';
-  
+
 
   constructor(private route: ActivatedRoute,
-    private emotionService: EmotionService, 
+    private emotionService: EmotionService,
     private timeService: TimeService) { }
 
   // Assuming you have a property to store the filtered data
@@ -45,7 +46,7 @@ export class ScrollspyComponent {
   currentSectionNumber: number = 1;
 
   // public data:number[] =[];
-   
+
 
   // async getData() {
   //   const dataHttp = await this.getDataHttp();
@@ -60,9 +61,13 @@ export class ScrollspyComponent {
         // Filter the list based on the emotion title
         const filteredList = emoSurveyList.filter(emoSurvey => {
           return emoSurvey.Inconducive === emotionTitle;
-          
         });
-  
+        filteredList.forEach(emoSurvey => {
+          // console.log(emoSurvey.Timestamp);
+          // console.log(Number(emoSurvey.Timestamp));
+          emoSurvey.Timestamp = this.timeService.convertToDate(Number(emoSurvey.Timestamp));
+          // console.log(emoSurvey.Timestamp);
+        });
         resolve(filteredList);
       });
     });
