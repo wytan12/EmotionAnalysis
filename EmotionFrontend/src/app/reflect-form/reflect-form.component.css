@@ -191,3 +191,9 @@
   background: #6b9fff;
   color: #fff;
 }
+
+.question-block textarea {
+  color: black; /* Set the font color to black */
+}
+
+

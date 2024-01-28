@@ -38,7 +38,7 @@ export class BarChartComponent implements OnInit {
   ];
   // public barChartType: ChartType = "bar";
   public barChartType: ChartType = 'bar';
-  public barChartLegend = false;
+  public barChartLegend = true;
   // public barChartPlugins = [pluginDataLabels];
 
   public barChartPlugins = [{
@@ -49,7 +49,7 @@ export class BarChartComponent implements OnInit {
   }] as any[];
 
   public barChartData: ChartDataset[] = [
-    {data: [1,2,3,4,5,6,7], backgroundColor: 'rgba(0, 0, 200, 0.5)'},
+    {data: [1,2,3,4,5,6,7], label: 'Average emotion intensity', backgroundColor: 'rgba(0, 0, 200, 0.5)'},
   ];
 
   async getData() {

@@ -29,7 +29,7 @@ emoSurvey: EmoSurvey[] = [];
 
   // public barChartType: ChartType = "bar";
   public barChartType: ChartType = 'bar';
-  public barChartLegend = false;
+  public barChartLegend = true;
   // public barChartPlugins = [pluginDataLabels];
 
   public barChartPlugins = [{
@@ -40,7 +40,7 @@ emoSurvey: EmoSurvey[] = [];
   }] as any[];
 
   public barChartData: ChartDataset[] = [
-    {data: [1,2,3]},
+    {data: [1,2,3], label: 'Frequency of inconducive emotion'},
   ];
 
   async getData() {
@@ -105,12 +105,6 @@ emoSurvey: EmoSurvey[] = [];
   //   }
   };
 
-  // public handleChartClick(event: any) {
-  //   if (event.active && event.active.length > 0) {
-  //     this.router.navigate(['survey-reason']);
-  //   }
-  // }
-
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
       const clickedLabel = event.active[0];
@@ -121,7 +115,4 @@ emoSurvey: EmoSurvey[] = [];
     }
   }
 
-  navigate() {
-    this.router.navigate(['survey']);
-  }
 }

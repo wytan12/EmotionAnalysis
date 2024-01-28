@@ -6,7 +6,9 @@ module.exports = {
     './app/**/*.html',
     './app/**/*.css',
     './survey/**/*.html',
-    './survey/**/*.css'
+    './survey/**/*.css',
+    './inconducive/**/*.html',
+    './inconducive/**/*.css'
   ],
   theme: {
     extend: {},

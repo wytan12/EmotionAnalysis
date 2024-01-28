@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.inconducive-container {
+    display: flex;
+  }
+  
+.left-section {
+    width: 50%;
+    flex: 1; /* This will make the left section take up the available space */
+}
+  
+.right-section {
+    margin-top: 50px;
+    width: 40%; /* You can adjust the width as needed for the right section */
+}
+
+button.button:hover { 
+    text-decoration: none;
+    background-color: #a9a9a9; /* Dark grey color */
+  }
