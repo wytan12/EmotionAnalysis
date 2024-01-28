@@ -8,7 +8,7 @@
 		<div *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
 		<section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + (currentSectionNumber + i)" class="survey-section">
 			  <h3>Response {{ currentSectionNumber + i }}</h3>
-			  	<!-- <p>{{formatDate(emoSurvey.Timestamp)}}</p> -->
+			  	<p>{{emoSurvey.Timestamp}}</p>
 			  <div class="question-answer">
 				<p class="question">What caused that emotion?</p>
 				<p class="answer">{{ emoSurvey.Reason }}</p>

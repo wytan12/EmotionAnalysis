@@ -59,6 +59,8 @@ export class ScrollspyComponent {
       this.emotionService.getEmoSurvey().subscribe(emoSurveyList => {
         // Filter the list based on the emotion title
         const filteredList = emoSurveyList.filter(emoSurvey => {
+          emoSurvey.Timestamp = this.timeService.convertToDate(Number(emoSurvey.Timestamp));
+          console.log(emoSurvey.Timestamp)
           return emoSurvey.Inconducive === emotionTitle;
           
         });
@@ -68,24 +70,7 @@ export class ScrollspyComponent {
     });
   }
 
-
-  // public formatDate() {
-  //   // Extract the 'i' (milliseconds) part
-  //   const milliseconds = timestamp.i;
-
-  //   // Call convertToDate with the milliseconds
-  //   const formattedDate = this.timeService.convertToDate(milliseconds);
-
-  //   console.log(formattedDate);
-  //   return formattedDate;
-  // }
-
-  // const desiredEmotionTitle = 'Joyful';
-
-  // this.getEmoSurveyByEmotionTitle(title).then(filteredData => {
-  //   // filteredData contains only EmoSurvey objects with the specified emotion title
-  //   console.log(filteredData);
-  // });
+  
 
 
 
