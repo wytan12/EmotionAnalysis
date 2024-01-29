@@ -7,13 +7,12 @@
 	<div class="d-flex flex-column flex-md-row" >
 	<div class="col-10" >
 	  <div class="scrollspy-example scrollspy-container">
-		<div *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
+		<div *ngFor="let emoReadWrite of filteredEmoReadWrite; let i = index">
 		<section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + (currentSectionNumber + i)">
 			  <h3>Section {{ currentSectionNumber + i }}</h3>
-			  <p>What caused that emotion?</p>
-			  <p>{{ emoSurvey.Reason }}</p>
-			  <p>Is there anything else you want to share?</p>
-			  <p>{{ emoSurvey.Remarks }}</p>
+			  <p>{{ emoReadWrite.NoteID }}</p>
+			  <p>{{ emoReadWrite.NoteTitle }}</p> 
+			  <p>{{ emoReadWrite.NoteContent}}</p>
 			  <hr>
 			
 		  </section>
@@ -25,7 +24,7 @@
 	<div class="col-2">
 	  <div id="scrollspy" class="sticky-top" style="height: 100%; z-index: 1;">
 		<ul [mdbScrollspy]="'scrollspy'" class="nav flex-column nav-pills menu-sidebar">
-			<li class="nav-item" *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
+			<li class="nav-item" *ngFor="let emoReadWrite of filteredEmoReadWrite; let i = index">
 			  <a [mdbScrollspyLink]="'example-' + (currentSectionNumber + i)" class="nav-link">Section {{ currentSectionNumber + i }}</a>
 			</li>
 		  

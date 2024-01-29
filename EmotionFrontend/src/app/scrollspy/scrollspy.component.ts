@@ -62,7 +62,7 @@ export class ScrollspyComponent {
         const filteredList = emoSurveyList.filter(emoSurvey => {
           emoSurvey.Timestamp = this.timeService.convertToDate(Number(emoSurvey.Timestamp));
           console.log(emoSurvey.Timestamp)
-          return emoSurvey.Inconducive === emotionTitle;
+          return emoSurvey.Inconducive == emotionTitle;
         });
         filteredList.forEach(emoSurvey => {
           // console.log(emoSurvey.Timestamp);

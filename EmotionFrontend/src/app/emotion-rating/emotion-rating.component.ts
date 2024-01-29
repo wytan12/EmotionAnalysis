@@ -16,7 +16,7 @@ export class EmotionRatingComponent {
     private emotionService: EmotionService) { }
 
   // Assuming you have a property to store the filtered data
-  filteredEmoSurveys: EmoSurvey[] = [];
+  filteredEmoReadWrite: EmoReadWrite[] = [];
   ngOnInit() {
     // Subscribe to changes in the route parameters
     this.route.queryParams.subscribe(params => {
@@ -24,38 +24,42 @@ export class EmotionRatingComponent {
       this.title = params['title'];
       this.datasetLabel = params['datasetLabel'];
 
-    //   // Check if 'title' parameter exists before using it
-    // if (this.title) {
-    //   // Call the function to filter EmoSurvey objects based on the 'title'
-    //   this.getEmoSurveyByEmotionTitle(this.title).then(filteredData => {
-    //     // Store the filtered data in the component property
-    //     this.filteredEmoSurveys = filteredData;
-    //   });
-    // }
+      // Check if 'title' parameter exists before using it
+    if (this.title) {
+      // Call the function to filter EmoSurvey objects based on the 'title'
+      this.getEmoReadWriteByEmotionTitle(this.title, this.datasetLabel).then(filteredData => {
+        // Store the filtered data in the component property
+        this.filteredEmoReadWrite = filteredData;
+      });
+    }
     });
   }
 
   currentSectionNumber: number = 1;
 
-  // public getEmoSurveyByEmotionTitle(title: string): Promise<EmoSurvey[]> {
-  //   // Assuming emoSurveyData is your data array
-  //   return new Promise(resolve => {
-  //     // Filter data based on the 'title' parameter
-  //     const filteredData = EmoSurvey.filter(item => item.title === title);
-  //     resolve(filteredData);
-  //   });
     
-  // public getEmoSurveyByEmotionTitle(emotionTitle: string): Promise<EmoSurvey[]> {
-  //   return new Promise<EmoSurvey[]>(resolve => {
-  //     this.emotionService.getEmoSurvey().subscribe(emoSurveyList => {
-  //       // Filter the list based on the emotion title
-  //       const filteredList = emoSurveyList.filter(emoSurvey => {
-  //         // Assuming that the emotion property is a string property in EmoSurvey
-  //         return emoSurvey.Inconducive === emotionTitle;
-  //       });
+  public getEmoReadWriteByEmotionTitle(emotionTitle: string, emotionLabel: string): Promise<EmoReadWrite[]> {
+    return new Promise<EmoReadWrite[]>(resolve => {
+      this.emotionService.getEmoReadWrite().subscribe(emoReadWriteList => {
+        // Filter the list based on the emotion title and any emotion having a value of 1
+        const filteredList = emoReadWriteList.filter(emoReadWrite => {
+          const hasEmotionWithValueOne = Object.keys(emoReadWrite).some((key: string) => {
+            const typedKey = key as keyof EmoReadWrite;  // Type assertion
+          
+            if (typedKey.toLowerCase() == emotionTitle.toLowerCase() && typeof emoReadWrite[typedKey] === 'number' && emoReadWrite.ActionType == emotionLabel ) {
+              return emoReadWrite[typedKey] == 1;
+            }
+            return false;
+          });
+          
   
-  //       resolve(filteredList);
-  //     });
-  //   });
-  // }
+          return hasEmotionWithValueOne;
+        });
+  
+        resolve(filteredList);
+      });
+    });
+  }
+  
+  
 }
