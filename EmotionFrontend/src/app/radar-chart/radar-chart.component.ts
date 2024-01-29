@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartType, Ticks } from 'chart.js';
 import { Router } from '@angular/router';
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite, EmoSurvey} from "../services/emotion";
@@ -16,6 +16,24 @@ export class RadarChartComponent{
   // Radar
   public radarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    scales: {
+      r: {
+        pointLabels: {
+          font: {
+            size: 15 // Adjust the font size as needed
+          },
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          font:{
+            size: 18
+          }
+        }
+      }
+    }
   };
   public radarChartLabels: string[] = [
     'Joyful',
