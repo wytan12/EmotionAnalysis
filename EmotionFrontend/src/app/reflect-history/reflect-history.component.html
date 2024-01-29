@@ -1,31 +1,50 @@
 <app-header></app-header>
-<div class="history-container">
-    <h1 class="history-title">Reflection History</h1>
-    <ul>
-        <li style="--accent-color:#41516C">
-            <div class="date">31 January 2024</div>
-            <div class="title">Why I was curious</div>
-            <div class="descr">By:</div>
-        </li>
-        <li style="--accent-color:#FBCA3E">
-            <div class="date">24 January 2024</div>
-            <div class="title">Why I was confused</div>
-            <div class="descr">By:</div>
-        </li>
-        <li style="--accent-color:#E24A68">
-            <div class="date">17 January 2024</div>
-            <div class="title">Why I was surprised</div>
-            <div class="descr">By:</div>
-        </li>
-        <li style="--accent-color:#1B5F8C">
-            <div class="date">3 January 2024</div>
-            <div class="title">Why I was bored</div>
-            <div class="descr">By:</div>
-        </li>
-        <li style="--accent-color:#4CADAD">
-            <div class="date">1 January 2024</div>
-            <div class="title">Why I was joyful</div>
-            <div class="descr">By:</div>
-        </li>
-    </ul>
+
+<div class="container">
+  <section style="justify-content: center; align-content:center; margin-bottom: 25px;">
+    <h3>Reflection History</h3>
+  </section>
+
+  <div class="d-flex flex-column flex-md-row">
+    <div class="col-10">
+      <div class="scrollspy-example scrollspy-container">
+        <div *ngFor="let emoReg of filteredEmoReg; let i = index">
+          <section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + i" class="survey-section">
+            <h3>Reflection {{ i + 1 }}</h3>
+            <p>{{ emoReg.Timestamp }}</p>
+            <div class="question-answer">
+              <p class="question">Group Members:</p>
+              <p class="answer">{{ emoReg.GroupMembers }}</p>
+              <p class="question">What is our specific action plan for creating a supportive emotional
+                environment?</p>
+              <p class="answer">{{ emoReg.Action }}</p>
+              <p class="question">What do you see in the visualizations?</p>
+              <p class="answer">{{ emoReg.Visualization }}</p>
+              <p class="question">Based on the analysis results, what emotional challenges do we have
+                during the Knowledge Building?</p>
+              <p class="answer">{{ emoReg.Challenges }}</p>
+              <p class="question">Which aspects do you think we can do better?</p>
+              <p class="answer">{{ emoReg.ImprovementWays }}</p>
+              <p class="question">How can we create a more positive emotional environment to support our
+                Knowledge Building?</p>
+              <p class="answer">{{ emoReg.PositivePlan }}</p>
+              <hr class="section-divider">
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-2" style="position: sticky; top:0; justify-content: center; align-items: center;padding-left: 15px;">
+      <div id="scrollspy"  style=" position: fixed; z-index: 1; height: 70%; overflow: auto;" class="sidebar">
+        <ul [mdbScrollspy]="'scrollspy'" class="nav flex-column nav-pills menu-sidebar">
+          <li class="nav-item" *ngFor="let emoReg of filteredEmoReg; let i = index">
+            <a [mdbScrollspyLink]="'example-' + i" class="nav-link" [class.active]="activeSection == i" (click)="setActiveSection(i)" style="cursor:pointer;">
+              Reflection {{ i + 1 }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
