@@ -6,7 +6,12 @@ import {Timestamp} from "rxjs";
 export class TimeService {
 
   convertToDate(timeStamp:number):string{
-    let dateTime = new Date(Number(String(timeStamp)+"000"));
+    let dateTime;
+    if (timeStamp.toString().length == 10){
+      dateTime = new Date(Number(String(timeStamp)+"000"));
+    }else{
+      dateTime = new Date(timeStamp);
+    }
     // let formatDate = dateTime.format('YYYY-MM-DD HH:mm:ss');
     let formatDate= dateTime.toLocaleString(); //获取当前时间
     // let formatDate3= dateTime.toLocaleDateString();
