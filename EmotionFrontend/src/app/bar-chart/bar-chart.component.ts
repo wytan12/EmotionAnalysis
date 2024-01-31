@@ -90,13 +90,31 @@ export class BarChartComponent implements OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
     scales: {
-      y: {
-        beginAtZero: true
+      x:{
+        ticks : {
+          font :{
+            size : 18
+          }
+        }
       },
-      // legend: {
-      //   display: false,
-      // },
+      y: {
+        beginAtZero: true,
+        ticks : {
+        font :{
+          size : 18
+        }
+      }
+      }
     },
+    plugins :{
+      legend :{
+        labels: {
+          font :{
+            size:15
+          }
+        }
+      }
+    }
     // scales: {
     //   x: [{ type: 'category' }],
     //   // y: [{

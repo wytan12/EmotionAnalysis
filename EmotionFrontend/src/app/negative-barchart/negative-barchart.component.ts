@@ -81,10 +81,31 @@ emoSurvey: EmoSurvey[] = [];
   public barChartOptions: ChartOptions = {
     responsive: true,
     scales: {
+      x:{
+        ticks : {
+          font :{
+            size : 18
+          }
+        }
+      },
       y: {
-        beginAtZero: true
+        beginAtZero: true,
+        ticks : {
+        font :{
+          size : 18
+        }
+      }
       }
     },
+    plugins :{
+      legend :{
+        labels: {
+          font :{
+            size:15
+          }
+        }
+      }
+    }
     // scales: {
     //   x: [{ type: 'category' }],
     //   // y: [{
