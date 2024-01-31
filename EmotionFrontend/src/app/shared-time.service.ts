@@ -6,19 +6,16 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SharedTimeService {
 
-  private selectedTimeSubject = new BehaviorSubject<string[]>([]);
+  private selectedTimeSubject = new BehaviorSubject<number[]>([]);
   selectedTime$ = this.selectedTimeSubject.asObservable();
 
-  setSelectedTime(startDate: Date, endDate: Date) {
-    const startTimestamp = startDate.toISOString(); // Convert to ISO string
-    const endTimestamp = endDate.toISOString(); // Convert to ISO string
-    console.log("Start:", startTimestamp);
-    console.log("End:", endTimestamp);
+  setSelectedTime(startDate: number, endDate: number) {
+    console.log("Start:", startDate);
+    console.log("End:", endDate);
 
-    const timestampRange = [startTimestamp, endTimestamp];
+    const timestampRange = [startDate, endDate];
     
     this.selectedTimeSubject.next(timestampRange);
-    console.log("Timestamp Range:", timestampRange);
   }
 
   constructor() { }
