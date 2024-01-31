@@ -9,6 +9,7 @@
 		<div *ngFor="let emoReadWrite of filteredEmoReadWrite; let i = index">
 		<section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + (currentSectionNumber + i)" class="survey-section">
 			  <h3>Note {{ currentSectionNumber + i }}</h3>
+			  <p>{{emoReadWrite.Timestamp}}</p>
 			  <div class="question-answer">
 				<p class="question">Note ID: </p>
 				<p class="answer">{{ emoReadWrite.NoteID }}</p>

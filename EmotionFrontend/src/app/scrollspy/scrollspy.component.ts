@@ -60,16 +60,16 @@ export class ScrollspyComponent {
       this.emotionService.getEmoSurvey().subscribe(emoSurveyList => {
         // Filter the list based on the emotion title
         const filteredList = emoSurveyList.filter(emoSurvey => {
-          emoSurvey.Timestamp = this.timeService.convertToDate(Number(emoSurvey.Timestamp));
+          emoSurvey.Timestamp = this.timeService.convertToDate(Number(emoSurvey.Timestamp)*1000);
           console.log(emoSurvey.Timestamp)
           return emoSurvey.Inconducive == emotionTitle;
         });
-        filteredList.forEach(emoSurvey => {
-          // console.log(emoSurvey.Timestamp);
-          // console.log(Number(emoSurvey.Timestamp));
-          emoSurvey.Timestamp = this.timeService.convertToDate(Number(emoSurvey.Timestamp));
-          // console.log(emoSurvey.Timestamp);
-        });
+        // filteredList.forEach(emoSurvey => {
+        //   // console.log(emoSurvey.Timestamp);
+        //   // console.log(Number(emoSurvey.Timestamp));
+        //   emoSurvey.Timestamp = this.timeService.convertToDate(Number(emoSurvey.Timestamp));
+        //   // console.log(emoSurvey.Timestamp);
+        // });
         resolve(filteredList);
       });
     });

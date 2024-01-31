@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite, EmoSurvey} from "../services/emotion";
+import { TimeService } from '../services/time.service';
 
 @Component({
   selector: 'app-emotion-rating',
@@ -13,7 +14,8 @@ export class EmotionRatingComponent {
   datasetLabel: string = '';
 
   constructor(private route: ActivatedRoute,
-    private emotionService: EmotionService) { }
+    private emotionService: EmotionService,
+    private timeService: TimeService) { }
 
   // Assuming you have a property to store the filtered data
   filteredEmoReadWrite: EmoReadWrite[] = [];
@@ -43,6 +45,7 @@ export class EmotionRatingComponent {
       this.emotionService.getEmoReadWrite().subscribe(emoReadWriteList => {
         // Filter the list based on the emotion title and any emotion having a value of 1
         const filteredList = emoReadWriteList.filter(emoReadWrite => {
+          emoReadWrite.Timestamp = this.timeService.convertToDate(Number(emoReadWrite.Timestamp)*1000);
           const hasEmotionWithValueOne = Object.keys(emoReadWrite).some((key: string) => {
             const typedKey = key as keyof EmoReadWrite;  // Type assertion
           
