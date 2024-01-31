@@ -11,7 +11,7 @@ import {TimeService} from "../services/time.service";
   styleUrl: './select-time-dropdown.component.css'
 })
 export class SelectTimeDropdownComponent {
-  constructor(private timeService: TimeService) {
+  constructor(private timeService: TimeService, private sharedTimeService : SharedTimeService) {
   }
   ngOnInit() {
     this.range.valueChanges.subscribe(
@@ -27,13 +27,12 @@ export class SelectTimeDropdownComponent {
     console.log('onChange: ', result);
     const from = this.timeService.convertToTimeStamp(result[0]);
     const to = this.timeService.convertToTimeStamp(result[1]);
-    console.log(from);
-    console.log(this.timeService.convertToDate(from));
-    console.log(to);
-    console.log(this.timeService.convertToDate(to));
+    console.log('From number:', from);
+    console.log('From:', this.timeService.convertToDate(from));
+    console.log('To number:', to);
+    console.log('To:', this.timeService.convertToDate(to));
+    if (result.length === 2 && result[0] && result[1]) {
+      this.sharedTimeService.setSelectedTime(from, to);
+    }
   }
-
-
-
-
 }
