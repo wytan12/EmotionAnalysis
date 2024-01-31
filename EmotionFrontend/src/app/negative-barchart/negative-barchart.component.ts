@@ -25,7 +25,15 @@ this.getData();
 }
 
 emoSurvey: EmoSurvey[] = [];
-  public barChartLabels: string[]= ['Bored', 'Frustrated', 'Anxious'];
+  public barChartLabels: string[]= [
+    'Joyful',
+    'Curious',
+    'Surprised',
+    'Confused',
+    'Anxious',
+    'Frustrated',
+    'Bored',
+];
 
   // public barChartType: ChartType = "bar";
   public barChartType: ChartType = 'bar';
@@ -40,7 +48,7 @@ emoSurvey: EmoSurvey[] = [];
   }] as any[];
 
   public barChartData: ChartDataset[] = [
-    {data: [1,2,3], label: 'Frequency of inconducive emotion'},
+    {data: [1,2,3, 4, 5, 6, 7], label: 'Frequency of inconducive emotion'},
   ];
 
   async getData() {
@@ -58,20 +66,22 @@ emoSurvey: EmoSurvey[] = [];
       this.emotionService.getEmoSurvey().subscribe(emoSurvey => {
         for (let i = 0; i < emoSurvey.length; i++) {
           const es: EmoSurvey = emoSurvey[i];
-          rdata[0] += es.Joyful;
-          rdata[1] += es.Curious;
-          rdata[2] += es.Surprised;
-          rdata[3] += es.Confused;
-          rdata[4] += es.Anxious;
-          rdata[5] += es.Frustrated;
-          rdata[6] += es.Bored;
-          totalEntries++;
+            if (es.Inconducive === 'Joyful') {
+              rdata[0]++;
+            } else if (es.Inconducive === 'Curious') {
+              rdata[1]++;
+            } else if (es.Inconducive === 'Surprised') {
+              rdata[2]++;
+            } else if (es.Inconducive === 'Confused') {
+              rdata[3]++;
+            } else if (es.Inconducive === 'Anxious') {
+              rdata[4]++;
+            } else if (es.Inconducive === 'Frustrated') {
+              rdata[5]++;
+            } else if (es.Inconducive === 'Bored') {
+              rdata[6]++;
+            }
         }
-
-         // Calculate average value for each intensity
-        for (let i = 0; i < rdata.length; i++) {
-          rdata[i] /= totalEntries;
-        } 
 
         resolve(rdata);
       });
