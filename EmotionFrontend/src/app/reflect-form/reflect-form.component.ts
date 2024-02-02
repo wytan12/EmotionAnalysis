@@ -23,6 +23,7 @@ import { EmotionService } from '../services/emotion.service';
 })
 export class ReflectFormComponent {
   formData: any = {};
+  selectedUsers: string[] = [];
 
   // Initialize allQuestionsAnswered as false
   allQuestionsAnswered = false;
@@ -44,6 +45,13 @@ export class ReflectFormComponent {
 
   goToReflectHistory() {
     this.router.navigate(['reflect-history']);
+  }
+
+  // Method to handle selected users from dropdown
+  onUserSelected(selectedUsers: string[]) {
+    this.selectedUsers = selectedUsers;
+    this.formData.GroupMembers = selectedUsers;
+    console.log("Ok received: ", selectedUsers);
   }
 
   submit() {

@@ -1,5 +1,7 @@
 <nz-select
   nzMode="multiple"
+  (ngModelChange)="onUserSelected($event)"
+  (nzOnSearch)="onSearch($event)" 
   nzPlaceHolder="Group Members:     [select authors]"
   nzAllowClear
   nzShowSearch

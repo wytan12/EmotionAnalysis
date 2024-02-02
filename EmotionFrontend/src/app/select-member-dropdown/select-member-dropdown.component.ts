@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter , Output} from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, debounceTime, map, switchMap } from 'rxjs/operators';
 
@@ -9,11 +9,12 @@ import { catchError, debounceTime, map, switchMap } from 'rxjs/operators';
   styleUrl: './select-member-dropdown.component.css',
 })
 export class SelectMemberDropdownComponent {
+  @Output() userSelected = new EventEmitter<string[]>();
 
   randomUserUrl = 'https://api.randomuser.me/?results=5';
   searchChange$ = new BehaviorSubject('');
   optionList: string[] = [];
-  selectedUser?: string;
+  selectedUser?: string[];
   isLoading = false;
 
   onSearch(value: string): void {
@@ -22,6 +23,10 @@ export class SelectMemberDropdownComponent {
   }
 
   constructor(private http: HttpClient) {}
+
+  onUserSelected(selectedUser: string[]) {
+    this.userSelected.emit(selectedUser);
+  }
 
   ngOnInit(): void {
     /* eslint-disable @typescript-eslint/no-explicit-any */
