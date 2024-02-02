@@ -47,6 +47,7 @@ import { provideNzI18n, en_US } from 'ng-zorro-antd/i18n';
 import {NzDatePickerComponent, NzRangePickerComponent} from "ng-zorro-antd/date-picker";
 import { SelectMemberDropdownComponent } from './select-member-dropdown/select-member-dropdown.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { SelectViewDropdownComponent } from './select-view-dropdown/select-view-dropdown.component';
 
 
 @NgModule({
@@ -89,8 +90,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     EmotionRatingComponent,
     SurveyReasonComponent,
     SelectMemberDropdownComponent,
-    InconduciveComponent
-    // SelectTimeRangeComponent
+    InconduciveComponent,
+    SelectViewDropdownComponent,
 
   ],
   bootstrap: [ AppComponent ],

@@ -1,0 +1,11 @@
+<h5>Select View:</h5>
+<nz-select
+  nzShowSearch
+  nzAllowClear
+  nzPlaceHolder="Select view"
+  (ngModelChange)="onChange($event)"
+  [(ngModel)]="selectedView"
+>
+  <nz-option nzLabel="Energy & Solar group 1" nzValue="Energy & Solar group 1"></nz-option>
+  <nz-option nzLabel="Data science/AI group 6" nzValue="Data science/AI group 6"></nz-option>
+</nz-select>

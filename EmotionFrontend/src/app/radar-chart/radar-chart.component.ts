@@ -5,6 +5,7 @@ import { EmotionService } from '../services/emotion.service';
 import { EmoReadWrite, EmoSurvey } from '../services/emotion';
 import { BaseChartDirective } from 'ng2-charts';
 import { SharedTimeService } from '../shared-time.service';
+import { SharedViewService } from '../shared-view.service';
 
 @Component({
   selector: 'app-radar-chart',
@@ -58,7 +59,8 @@ export class RadarChartComponent {
   constructor(
     private router: Router,
     private emotionService: EmotionService,
-    private sharedTimeService: SharedTimeService
+    private sharedTimeService: SharedTimeService,
+    private sharedViewService: SharedViewService
   ) {}
 
   public handleChartClick(event: any) {
@@ -89,21 +91,33 @@ export class RadarChartComponent {
   }
 
   timeRange: number[] | null = null;
+  selectedView: string[] | null = null;
 
   ngOnInit() {
     this.sharedTimeService.selectedTime$.subscribe((timeRange: number[]) => {
       if (timeRange && timeRange.length === 2) {
         const from = new Date(timeRange[0]);
-        console.log("From Date: ", from)
+        console.log('From Date: ', from);
         const to = new Date(timeRange[1]);
-        console.log("To Date: ", to)
+        console.log('To Date: ', to);
         this.getData(from, to);
-      } else{
+      } else {
         this.getData(undefined, undefined);
       }
     });
     this.sharedTimeService.selectedTime$.subscribe((timeRange: number[]) => {
       console.log('Selected time range:', timeRange);
+    });
+    this.sharedViewService.selectedView$.subscribe((view: string | null) => {
+      if (!view) {
+        // Default view if null
+        this.selectedView = ['Energy & Solar group 1', 'Data science/AI group 6'];
+        console.log('Default Radar chart view: ', this.selectedView);
+      } else {
+        this.selectedView = [view];
+        console.log('Radar chart view: ', this.selectedView);
+      }
+      this.getData(); // Call getData after setting the view
     });
   }
 
@@ -169,7 +183,17 @@ export class RadarChartComponent {
             const timestamp = new Date(timestampnumber * 1000);
 
             // Filter data based on the timestamp within the selected time range
-            if (timestamp >= from && timestamp <= to) {
+            // and the selected view
+            const entryViews: string | undefined = dataEntry['Views'];
+            // console.log('Data Views are:', entryViews);
+            // Filter data based on the timestamp within the selected time range
+            if (
+              timestamp >= from &&
+              timestamp <= to &&
+              this.selectedView &&
+              entryViews &&
+              this.selectedView.some(view => entryViews.includes(view))
+            ) {
               for (const key of intensityKeys) {
                 const emotionKey = key;
                 const intensityKey = `${key}_Intensity`;
