@@ -42,6 +42,7 @@ export class EmotionRatingComponent {
     
   public getEmoReadWriteByEmotionTitle(emotionTitle: string, emotionLabel: string): Promise<EmoReadWrite[]> {
     return new Promise<EmoReadWrite[]>(resolve => {
+      let storedIntensity: number | null;
       this.emotionService.getEmoReadWrite().subscribe(emoReadWriteList => {
         // Filter the list based on the emotion title and any emotion having a value of 1
         const filteredList = emoReadWriteList.filter(emoReadWrite => {
@@ -49,7 +50,7 @@ export class EmotionRatingComponent {
           const hasEmotionWithValueOne = Object.keys(emoReadWrite).some((key: string) => {
             const typedKey = key as keyof EmoReadWrite;  // Type assertion
           
-            if (typedKey.toLowerCase() == emotionTitle.toLowerCase() && typeof emoReadWrite[typedKey] === 'number' && emoReadWrite.ActionType == emotionLabel ) {
+            if (typedKey.toLowerCase() == emotionTitle.toLowerCase() && typeof emoReadWrite[typedKey] == 'number' && emoReadWrite.ActionType == emotionLabel ) {
               return emoReadWrite[typedKey] == 1;
             }
             return false;

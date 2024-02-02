@@ -48,7 +48,18 @@ import {NzDatePickerComponent, NzRangePickerComponent} from "ng-zorro-antd/date-
 import { SelectMemberDropdownComponent } from './select-member-dropdown/select-member-dropdown.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { SelectViewDropdownComponent } from './select-view-dropdown/select-view-dropdown.component';
+import { NzRateModule } from 'ng-zorro-antd/rate';
+import { StarRatingComponent } from './star-rating/star-rating.component';
 
+import { NZ_ICONS } from 'ng-zorro-antd/icon';
+// import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { IconDefinition } from '@ant-design/icons-angular';
+import * as AllIcons from '@ant-design/icons-angular/icons';
+
+const antDesignIcons = AllIcons as {
+  [key: string]: IconDefinition;
+};
+const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
 
 @NgModule({
   imports: [
@@ -64,6 +75,7 @@ import { SelectViewDropdownComponent } from './select-view-dropdown/select-view-
     NzDatePickerComponent,
     NzRangePickerComponent,
     NzSelectModule,
+    NzRateModule
     // MatNativeDateModule
     // MatInputModule,
     // MatDatepickerModule,
@@ -92,6 +104,7 @@ import { SelectViewDropdownComponent } from './select-view-dropdown/select-view-
     SelectMemberDropdownComponent,
     InconduciveComponent,
     SelectViewDropdownComponent,
+    StarRatingComponent,
 
   ],
   bootstrap: [ AppComponent ],
