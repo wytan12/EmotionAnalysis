@@ -1,4 +1,11 @@
 <div class="header-container">
     <div class="logo" [ngClass]="{'active': activePage === 'dashboard'}" (click)="goToHome()">Note Emotion</div>
     <div class="survey" [ngClass]="{'active': activePage === 'survey'}" (click)="goToSurvey()">Survey Emotion</div>
+    <div class="flex-spacer"></div>
+    <div class="reflect-button">
+        <app-reflect-button></app-reflect-button>
+    </div>
+    <!-- <div class="flex-spacer">
+        <app-reflect-button ></app-reflect-button>
+    </div> -->
 </div>
