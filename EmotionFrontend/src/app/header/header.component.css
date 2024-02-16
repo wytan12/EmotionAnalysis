@@ -36,3 +36,11 @@
 .header-container .survey.active {
   color: black; /* Apply grey color for the active state */
 }
+
+.flex-spacer {
+  flex: 1;
+}
+
+.reflect-button{
+  margin-right: 20px;
+}
