@@ -1,18 +1,14 @@
 <app-header></app-header>
-<div class="dashboard-container">
-  <div class="left-section">
+<div style="display: flex; margin-top: 10px; margin-left: 2%">
+  <app-user-guide-button style="margin-right: 20px;"></app-user-guide-button>
+  <app-select-time-dropdown style="flex: 1"></app-select-time-dropdown>
+  <app-select-view-dropdown style="flex: 1"></app-select-view-dropdown>
+</div>
+<div style="display: flex; justify-content: space-between">
+  <div style="flex: 1">
     <app-radar-chart></app-radar-chart>
   </div>
-
-  <div class="right-section">
-    <div class="user-guide-container">
-      <p style="font-size: 25px;">User Guide:</p>
-      <ul>
-        <li><p>User can click on radar chart data point to view detailed notes</p></li>
-      </ul>
-    </div>
-    <app-select-time-dropdown></app-select-time-dropdown>
-    <app-select-view-dropdown></app-select-view-dropdown>
-    <app-reflect-button></app-reflect-button>
+  <div style="flex: 1">
+    <app-radar-chart-writing></app-radar-chart-writing>
   </div>
 </div>

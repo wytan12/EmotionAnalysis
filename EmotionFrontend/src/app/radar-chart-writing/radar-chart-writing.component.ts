@@ -8,11 +8,11 @@ import { SharedTimeService } from '../shared-time.service';
 import { SharedViewService } from '../shared-view.service';
 
 @Component({
-  selector: 'app-radar-chart',
-  templateUrl: './radar-chart.component.html',
-  styleUrl: './radar-chart.component.css',
+  selector: 'app-radar-chart-writing',
+  templateUrl: './radar-chart-writing.component.html',
+  styleUrl: './radar-chart-writing.component.css',
 })
-export class RadarChartComponent {
+export class RadarChartWritingComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   // Radar
   public radarChartOptions: ChartConfiguration['options'] = {
@@ -49,7 +49,14 @@ export class RadarChartComponent {
   public radarChartData: ChartData<'radar'> = {
     labels: this.radarChartLabels,
     datasets: [
-      { data: [], label: 'Reading', pointRadius: 5, },
+      {
+        data: [],
+        label: 'Writing',
+        borderColor: 'blue', // Set border color to blue
+        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+        pointBackgroundColor: 'blue',
+        pointRadius: 5,
+      },
     ],
   };
 
@@ -69,16 +76,14 @@ export class RadarChartComponent {
       const dataset = this.radarChartData.datasets[clickedLabel.datasetIndex];
       const datasetLabel = dataset.label;
 
-      if (datasetLabel == 'Reading') {
-        const readingValue =
+      if (datasetLabel == 'Writing') {
+        const writingValue =
           this.radarChartData.datasets[0].data[clickedLabel.index];
-        console.log('Reading:', readingValue);
+        console.log('Writing:', writingValue);
       }
-
       console.log(datasetLabel);
       console.log(clickedLabel);
       console.log(value);
-
       this.router.navigate(['emotion-rating'], {
         queryParams: { title: value, datasetLabel: datasetLabel },
       });
@@ -106,7 +111,10 @@ export class RadarChartComponent {
     this.sharedViewService.selectedView$.subscribe((view: string | null) => {
       if (!view) {
         // Default view if null
-        this.selectedView = ['Energy & Solar group 1', 'Data science/AI group 6'];
+        this.selectedView = [
+          'Energy & Solar group 1',
+          'Data science/AI group 6',
+        ];
         console.log('Default Radar chart view: ', this.selectedView);
       } else {
         this.selectedView = [view];
@@ -135,7 +143,7 @@ export class RadarChartComponent {
     }
 
     const dataHttp = await this.getDataHttp(from, to);
-    this.radarChartData.datasets[0].data = dataHttp['Reading']; // Assuming dataHttp[0] contains average values for 'Reading'
+    this.radarChartData.datasets[0].data = dataHttp['Writing']; // Assuming dataHttp[1] contains average values for 'Writing'
 
     // Trigger chart update after setting the data
     if (this.chart) {
@@ -149,10 +157,10 @@ export class RadarChartComponent {
   ): Promise<{ [key: string]: number[] }> {
     return new Promise<{ [key: string]: number[] }>((resolve) => {
       const rdata: { [key: string]: number[] } = {
-        Reading: [0, 0, 0, 0, 0, 0, 0],
+        Writing: [0, 0, 0, 0, 0, 0, 0],
       };
       let totalEntries: { [key: string]: number } = {
-        Reading: 0,
+        Writing: 0,
       };
 
       this.emotionService
@@ -184,12 +192,13 @@ export class RadarChartComponent {
               timestamp <= to &&
               this.selectedView &&
               entryViews &&
-              this.selectedView.some(view => entryViews.includes(view))
+              this.selectedView.some((view) => entryViews.includes(view))
             ) {
               for (const key of intensityKeys) {
                 const emotionKey = key;
                 const intensityKey = `${key}_Intensity`;
-                if (actionType === 'Reading') {
+                if (actionType === 'Writing') {
+                  // Only process 'Writing' data
                   rdata[actionType][intensityKeys.indexOf(key)] +=
                     dataEntry[intensityKey];
                 }
@@ -201,7 +210,7 @@ export class RadarChartComponent {
           // Calculate average intensity for each category
           for (const key of intensityKeys) {
             const index = intensityKeys.indexOf(key);
-            rdata['Reading'][index] /= totalEntries['Reading'];
+            rdata['Writing'][index] /= totalEntries['Writing'];
           }
 
           resolve(rdata);
