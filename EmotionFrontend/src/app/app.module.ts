@@ -5,7 +5,7 @@ import { HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DevUIModule } from 'ng-devui';
+import { DevUIModule, UserGuideComponent } from 'ng-devui';
 import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 
 import { AppComponent } from './app.component';
@@ -55,6 +55,8 @@ import { NZ_ICONS } from 'ng-zorro-antd/icon';
 // import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
+import { RadarChartWritingComponent } from './radar-chart-writing/radar-chart-writing.component';
+import { UserGuideButtonComponent } from './user-guide-button/user-guide-button.component';
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -87,6 +89,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     StaticsComponent,
     HeaderComponent,
     RadarChartComponent,
+    RadarChartWritingComponent,
     BarChartComponent,
     SurveyComponent,
     CarouselComponent,
@@ -105,7 +108,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     InconduciveComponent,
     SelectViewDropdownComponent,
     StarRatingComponent,
-
+    UserGuideButtonComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [
