@@ -11,3 +11,26 @@
   margin-top: 50px;
   width: 50%; /* You can adjust the width as needed for the right section */
 }
+
+.user-guide-container {
+  background-color: #D3D3D3; /* Bright blue background color */
+  border-radius: 10px; /* Rounded corners */
+  padding: 15px; /* Add padding for content spacing */
+  width: 85%;
+  margin-bottom: 40px;
+  border: 2px solid #1f2d3d; /* Dark blue border color */
+}
+
+.user-guide-container h3 {
+  color: #000; /* White text color */
+}
+
+.user-guide-container h4 {
+  color: #000; /* White text color */
+}
+
+.user-guide-container ul {
+  list-style-type: disc; /* Use disc bullet points */
+  color: #000;
+}
+
