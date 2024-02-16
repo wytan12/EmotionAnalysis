@@ -12,6 +12,7 @@ import { TimeService } from '../services/time.service';
 export class EmotionRatingComponent {
   title: string = '';
   datasetLabel: string = '';
+  intensity: string = '';
 
   constructor(private route: ActivatedRoute,
     private emotionService: EmotionService,
@@ -25,6 +26,7 @@ export class EmotionRatingComponent {
       // Retrieve the 'title' parameter from the query parameters
       this.title = params['title'];
       this.datasetLabel = params['datasetLabel'];
+      this.intensity = `${this.title}_Intensity`;
 
       // Check if 'title' parameter exists before using it
     if (this.title) {
@@ -43,16 +45,18 @@ export class EmotionRatingComponent {
   public getEmoReadWriteByEmotionTitle(emotionTitle: string, emotionLabel: string): Promise<EmoReadWrite[]> {
     return new Promise<EmoReadWrite[]>(resolve => {
       let storedIntensity: number | null;
+      const intensity: number[] = [];
       this.emotionService.getEmoReadWrite().subscribe(emoReadWriteList => {
         // Filter the list based on the emotion title and any emotion having a value of 1
         const filteredList = emoReadWriteList.filter(emoReadWrite => {
           emoReadWrite.Timestamp = this.timeService.convertToDate(Number(emoReadWrite.Timestamp)*1000);
           const hasEmotionWithValueOne = Object.keys(emoReadWrite).some((key: string) => {
-            const typedKey = key as keyof EmoReadWrite;  // Type assertion
+          const typedKey = key as keyof EmoReadWrite;  // Type assertion
           
             if (typedKey.toLowerCase() == emotionTitle.toLowerCase() && typeof emoReadWrite[typedKey] == 'number' && emoReadWrite.ActionType == emotionLabel ) {
-              return emoReadWrite[typedKey] == 1;
-            }
+              // Check if the intensity key matches the emotion title
+            return emoReadWrite[typedKey] == 1;
+          }
             return false;
           });
           
