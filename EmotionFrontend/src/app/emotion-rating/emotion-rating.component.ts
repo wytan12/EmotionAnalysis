@@ -60,7 +60,6 @@ export class EmotionRatingComponent {
             return false;
           });
           
-  
           return hasEmotionWithValueOne;
         });
 
