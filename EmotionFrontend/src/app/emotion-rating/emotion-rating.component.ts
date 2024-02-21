@@ -63,6 +63,8 @@ export class EmotionRatingComponent {
   
           return hasEmotionWithValueOne;
         });
+
+        filteredList.sort((a, b) => new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf());
   
         resolve(filteredList);
       });

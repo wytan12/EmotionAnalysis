@@ -45,16 +45,6 @@ export class ScrollspyComponent {
 
   currentSectionNumber: number = 1;
 
-  // public data:number[] =[];
-
-
-  // async getData() {
-  //   const dataHttp = await this.getDataHttp();
-  //   this.title = dataHttp;
-  //   console.log(this.data);
-  //   this.barChartData[0].data= this.data;
-  //   this.chart?.update();
-  // }
   public getEmoSurveyByEmotionTitle(emotionTitle: string): Promise<EmoSurvey[]> {
     return new Promise<EmoSurvey[]>(resolve => {
       this.emotionService.getEmoSurvey().subscribe(emoSurveyList => {
@@ -64,12 +54,10 @@ export class ScrollspyComponent {
           console.log(emoSurvey.Timestamp)
           return emoSurvey.Inconducive == emotionTitle;
         });
-        // filteredList.forEach(emoSurvey => {
-        //   // console.log(emoSurvey.Timestamp);
-        //   // console.log(Number(emoSurvey.Timestamp));
-        //   emoSurvey.Timestamp = this.timeService.convertToDate(Number(emoSurvey.Timestamp));
-        //   // console.log(emoSurvey.Timestamp);
-        // });
+
+        // Sort the filtered list by timestamp in descending order
+        filteredList.sort((a, b) => new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf());
+
         resolve(filteredList);
       });
     });
