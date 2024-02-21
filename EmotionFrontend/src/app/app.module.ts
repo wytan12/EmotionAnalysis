@@ -58,10 +58,10 @@ import * as AllIcons from '@ant-design/icons-angular/icons';
 import { RadarChartWritingComponent } from './radar-chart-writing/radar-chart-writing.component';
 import { UserGuideButtonComponent } from './user-guide-button/user-guide-button.component';
 
-const antDesignIcons = AllIcons as {
-  [key: string]: IconDefinition;
-};
-const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
+// const antDesignIcons = AllIcons as {
+//   [key: string]: IconDefinition;
+// };
+// const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
 
 @NgModule({
   imports: [
@@ -112,7 +112,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
   ],
   bootstrap: [ AppComponent ],
   providers: [
-    provideNzI18n(en_US)
+    provideNzI18n(en_US),
+    // { provide: NZ_ICONS, useValue: icons }
   ]
 })
 export class AppModule { }
