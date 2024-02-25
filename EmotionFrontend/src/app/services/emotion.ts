@@ -41,6 +41,7 @@ export interface EmoReadWrite {
   Frustrated_Intensity: number;
   Bored: number;
   Bored_Intensity: number;
+  Intensity: { key: keyof EmoReadWrite, value: number }[];
 }
 
 export class EmoReadWrite implements EmoReadWrite {
@@ -52,6 +53,7 @@ export class EmoReadWrite implements EmoReadWrite {
     this.Timestamp = Timestamp;
     this.NoEmotion = NoEmotion;
     this.ActionType = ActionType;
+    this.Intensity = []; 
   }
 
   getJoyful(): number {

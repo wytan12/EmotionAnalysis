@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {EmotionService} from "../services/emotion.service";
-import {EmoReadWrite, EmoSurvey} from "../services/emotion";
+import {EmoReadWrite} from "../services/emotion";
 import { TimeService } from '../services/time.service';
 
 @Component({
@@ -12,7 +12,8 @@ import { TimeService } from '../services/time.service';
 export class EmotionRatingComponent {
   title: string = '';
   datasetLabel: string = '';
-  intensity: string = '';
+  intensity: number | null = null;
+intensityKey: any;
 
   constructor(private route: ActivatedRoute,
     private emotionService: EmotionService,
@@ -26,13 +27,17 @@ export class EmotionRatingComponent {
       // Retrieve the 'title' parameter from the query parameters
       this.title = params['title'];
       this.datasetLabel = params['datasetLabel'];
-      this.intensity = `${this.title}_Intensity`;
+      // this.intensity = params['intenstiy'];
+      // this.intensity = `${this.title}_Intensity`;
 
       // Check if 'title' parameter exists before using it
     if (this.title) {
       // Call the function to filter EmoSurvey objects based on the 'title'
+      
       this.getEmoReadWriteByEmotionTitle(this.title, this.datasetLabel).then(filteredData => {
         // Store the filtered data in the component property
+        const intensityKey = `${this.title}_Intensity`;
+        this.intensityKey = intensityKey;
         this.filteredEmoReadWrite = filteredData;
       });
     }
@@ -44,17 +49,26 @@ export class EmotionRatingComponent {
     
   public getEmoReadWriteByEmotionTitle(emotionTitle: string, emotionLabel: string): Promise<EmoReadWrite[]> {
     return new Promise<EmoReadWrite[]>(resolve => {
-      let storedIntensity: number | null;
-      const intensity: number[] = [];
+      // let storedIntensity: number | null;
+      // const intensity: number[] = [];
       this.emotionService.getEmoReadWrite().subscribe(emoReadWriteList => {
         // Filter the list based on the emotion title and any emotion having a value of 1
         const filteredList = emoReadWriteList.filter(emoReadWrite => {
           emoReadWrite.Timestamp = this.timeService.convertToDate(Number(emoReadWrite.Timestamp)*1000);
           const hasEmotionWithValueOne = Object.keys(emoReadWrite).some((key: string) => {
           const typedKey = key as keyof EmoReadWrite;  // Type assertion
-          
             if (typedKey.toLowerCase() == emotionTitle.toLowerCase() && typeof emoReadWrite[typedKey] == 'number' && emoReadWrite.ActionType == emotionLabel ) {
-              // Check if the intensity key matches the emotion title
+              // get the intensity map to the title 
+              const intensityKey = `${emotionTitle}_Intensity`as keyof EmoReadWrite;
+              const intensityValue = parseFloat(emoReadWrite[intensityKey] as string);
+              emoReadWrite.Intensity = emoReadWrite.Intensity || [];
+              emoReadWrite.Intensity.push({ key: intensityKey, value: intensityValue })
+              console.log(intensityKey);
+              console.log(intensityValue);
+              console.log(emoReadWrite[intensityKey]);
+              // intensity.push(emoReadWrite[]);
+              // emoReadWrite.Intensity = emoReadWrite[intensityKey];
+              // Check if the intensity key matches the emotion title and return the intensity
             return emoReadWrite[typedKey] == 1;
           }
             return false;
