@@ -6,14 +6,13 @@
     <!-- Left Question Block -->
     <div class="question-block blue-bg">
       <h1 class="question-block-heading">Our analysis</h1>
-      <label for="q1">What do you see in the visualizations?</label>
-      <textarea name="q1" maxlength="500" [(ngModel)]="formData.Visualization" (ngModelChange)="checkIfAllQuestionsAnswered()"></textarea>
+      <label>What do you see in the visualizations?</label>
+      <textarea name="q1" rows="5" maxlength="1000"  [(ngModel)]="formData.Visualization" (ngModelChange)="checkIfAllQuestionsAnswered()"></textarea>
 
-      <label for="q2"
-        >Based on the analysis results, what emotional challenges do we have
+      <label>Based on the analysis results, what emotional challenges do we have
         during the Knowledge Building?</label
       >
-      <textarea name="q2" maxlength="500" [(ngModel)]="formData.Challenges" (ngModelChange)="checkIfAllQuestionsAnswered()"></textarea>
+      <textarea name="q2" rows="5" maxlength="1000"  [(ngModel)]="formData.Challenges" (ngModelChange)="checkIfAllQuestionsAnswered()"></textarea>
     </div>
   </div>
 
@@ -21,14 +20,13 @@
     <!-- Middle Question Block -->
     <div class="question-block blue-bg">
       <h1 class="question-block-heading">Our reflection</h1>
-      <label for="q3">Which aspects do you think we can do better?</label>
-      <textarea name="q3" maxlength="500" [(ngModel)]="formData.ImprovementWays" (ngModelChange)="checkIfAllQuestionsAnswered()"></textarea>
+      <label>Which aspects do you think we can do better?</label>
+      <textarea name="q3" rows="5" maxlength="1000"  [(ngModel)]="formData.ImprovementWays" (ngModelChange)="checkIfAllQuestionsAnswered()"></textarea>
 
-      <label for="q4"
-        >How can we create a more positive emotional environment to support our
+      <label>How can we create a more positive emotional environment to support our
         Knowledge Building?</label
       >
-      <textarea name="q4" maxlength="500" [(ngModel)]="formData.PositivePlan" (ngModelChange)="checkIfAllQuestionsAnswered()"></textarea>
+      <textarea name="q4" rows="5" maxlength="1000"  [(ngModel)]="formData.PositivePlan" (ngModelChange)="checkIfAllQuestionsAnswered()"></textarea>
     </div>
   </div>
 
@@ -36,11 +34,10 @@
     <!-- Right Question Block -->
     <div class="question-block blue-bg">
       <h1 class="question-block-heading">Our regulation</h1>
-      <label for="q5"
-        >What is our specific action plan for creating a supportive emotional
+      <label>What is our specific action plan for creating a supportive emotional
         environment?</label
       >
-      <textarea name="q5" maxlength="500" [(ngModel)]="formData.Action" (ngModelChange)="checkIfAllQuestionsAnswered()"></textarea>
+      <textarea name="q5" rows="8" maxlength="1000" [(ngModel)]="formData.Action" (ngModelChange)="checkIfAllQuestionsAnswered()"></textarea>
     </div>
   </div>
 </div>

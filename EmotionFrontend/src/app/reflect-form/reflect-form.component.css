@@ -23,7 +23,7 @@
   margin: 10px 0;
   border-radius: 10px;
   color: #fff;
-  height: 400px;
+  height: 580px;
   font-size: large;
 }
 
@@ -31,13 +31,22 @@
   text-align: center;
 }
 
+/*.blue-bg {*/
+/*  background: linear-gradient(*/
+/*    0deg,*/
+/*    rgba(6, 0, 66, 1) 0%,*/
+/*    rgba(34, 193, 195, 1) 60%*/
+/*  );*/
+/*}*/
+
 .blue-bg {
   background: linear-gradient(
     0deg,
-    rgba(6, 0, 66, 1) 0%,
-    rgba(34, 193, 195, 1) 100%
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 80%
   );
 }
+
 
 .pink-bg {
   background: linear-gradient(
@@ -83,7 +92,8 @@
 .submit-block input {
   font-size: 18px;
   padding: 10px 20px;
-  background-color: green; /* Set the default background color to green */
+  border-radius: 5px;
+  background-color: rgb(50,205,50); /* Set the default background color to green */
   color: white; /* Set text color to white for better visibility on the green background */
   cursor: pointer; /* Change cursor to pointer for clickable state */
 }
