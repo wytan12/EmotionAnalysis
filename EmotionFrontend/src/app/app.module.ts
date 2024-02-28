@@ -53,8 +53,6 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
 
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 // import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
-import { IconDefinition } from '@ant-design/icons-angular';
-import * as AllIcons from '@ant-design/icons-angular/icons';
 import { RadarChartWritingComponent } from './radar-chart-writing/radar-chart-writing.component';
 import { UserGuideButtonComponent } from './user-guide-button/user-guide-button.component';
 
