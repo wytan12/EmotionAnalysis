@@ -13,7 +13,7 @@ export class EmotionRatingComponent {
   title: string = '';
   datasetLabel: string = '';
   intensity: number | null = null;
-intensityKey: any;
+  intensityKey: any;
 
   constructor(private route: ActivatedRoute,
     private emotionService: EmotionService,
@@ -77,14 +77,25 @@ intensityKey: any;
     });
   }
   
-  // filterList(selectedValue: string) {
-  //   this.filteredEmoReadWrite = this.emoReadWrite.filter(item => {
-  //       // Modify the condition based on your filter logic
-  //       return item.Intensity === selectedValue;
-  //   });
-  // }
-  // resetFilter() {
-  //   this.filteredEmoReadWrite = this.emoReadWrite;
-  // }
+
+  filterList(selectedValue: string): void {
+
+    console.log(selectedValue);
+    if (selectedValue == "Intensity" ) {
+      this.filteredEmoReadWrite.sort((a, b) => {
+        // Sort by intensity value in descending order
+        const intensityA = a.Intensity[0]?.value || 0;
+        const intensityB = b.Intensity[0]?.value || 0;
+        return intensityB - intensityA;
+      });
+      
+    }
+    else{
+      this.filteredEmoReadWrite.sort((a, b) => new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf());
+    }
+   
+}
+
+
   
 }

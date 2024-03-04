@@ -5,8 +5,8 @@
 			<h3>{{title}} : {{datasetLabel}}</h3>
 		</div>
 		<div>
-			<app-intensity-dropdown></app-intensity-dropdown>
-			<!-- <app-intensity-dropdown (click)="filterList($event.target.value)"></app-intensity-dropdown> -->
+			<!-- <app-intensity-dropdown></app-intensity-dropdown> -->
+			<app-intensity-dropdown (selectedValueChange)="filterList($event)"></app-intensity-dropdown>
 		</div>
 	</section>
 	
