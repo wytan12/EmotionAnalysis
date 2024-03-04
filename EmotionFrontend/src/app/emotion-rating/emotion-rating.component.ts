@@ -13,7 +13,7 @@ export class EmotionRatingComponent {
   title: string = '';
   datasetLabel: string = '';
   intensity: number | null = null;
-intensityKey: any;
+  intensityKey: any;
 
   constructor(private route: ActivatedRoute,
     private emotionService: EmotionService,
@@ -27,13 +27,10 @@ intensityKey: any;
       // Retrieve the 'title' parameter from the query parameters
       this.title = params['title'];
       this.datasetLabel = params['datasetLabel'];
-      // this.intensity = params['intenstiy'];
-      // this.intensity = `${this.title}_Intensity`;
 
       // Check if 'title' parameter exists before using it
     if (this.title) {
       // Call the function to filter EmoSurvey objects based on the 'title'
-      
       this.getEmoReadWriteByEmotionTitle(this.title, this.datasetLabel).then(filteredData => {
         // Store the filtered data in the component property
         const intensityKey = `${this.title}_Intensity`;
@@ -49,8 +46,6 @@ intensityKey: any;
     
   public getEmoReadWriteByEmotionTitle(emotionTitle: string, emotionLabel: string): Promise<EmoReadWrite[]> {
     return new Promise<EmoReadWrite[]>(resolve => {
-      // let storedIntensity: number | null;
-      // const intensity: number[] = [];
       this.emotionService.getEmoReadWrite().subscribe(emoReadWriteList => {
         // Filter the list based on the emotion title and any emotion having a value of 1
         const filteredList = emoReadWriteList.filter(emoReadWrite => {
@@ -66,8 +61,6 @@ intensityKey: any;
               console.log(intensityKey);
               console.log(intensityValue);
               console.log(emoReadWrite[intensityKey]);
-              // intensity.push(emoReadWrite[]);
-              // emoReadWrite.Intensity = emoReadWrite[intensityKey];
               // Check if the intensity key matches the emotion title and return the intensity
             return emoReadWrite[typedKey] == 1;
           }
@@ -84,5 +77,25 @@ intensityKey: any;
     });
   }
   
+
+  filterList(selectedValue: string): void {
+
+    console.log(selectedValue);
+    if (selectedValue == "Intensity" ) {
+      this.filteredEmoReadWrite.sort((a, b) => {
+        // Sort by intensity value in descending order
+        const intensityA = a.Intensity[0]?.value || 0;
+        const intensityB = b.Intensity[0]?.value || 0;
+        return intensityB - intensityA;
+      });
+      
+    }
+    else{
+      this.filteredEmoReadWrite.sort((a, b) => new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf());
+    }
+   
+}
+
+
   
 }

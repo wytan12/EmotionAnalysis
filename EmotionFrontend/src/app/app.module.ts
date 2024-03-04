@@ -55,11 +55,12 @@ import { NZ_ICONS } from 'ng-zorro-antd/icon';
 // import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { RadarChartWritingComponent } from './radar-chart-writing/radar-chart-writing.component';
 import { UserGuideButtonComponent } from './user-guide-button/user-guide-button.component';
+import { IntensityDropdownComponent } from './intensity-dropdown/intensity-dropdown.component';
 
-// const antDesignIcons = AllIcons as {
-//   [key: string]: IconDefinition;
-// };
-// const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
   imports: [
@@ -75,7 +76,11 @@ import { UserGuideButtonComponent } from './user-guide-button/user-guide-button.
     NzDatePickerComponent,
     NzRangePickerComponent,
     NzSelectModule,
-    NzRateModule
+    NzRateModule,
+    ScrollingModule,
+    DragDropModule,
+    NzDropDownModule,
+    NzIconModule
     // MatNativeDateModule
     // MatInputModule,
     // MatDatepickerModule,
@@ -107,6 +112,7 @@ import { UserGuideButtonComponent } from './user-guide-button/user-guide-button.
     SelectViewDropdownComponent,
     StarRatingComponent,
     UserGuideButtonComponent,
+    IntensityDropdownComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [
