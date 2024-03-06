@@ -44,7 +44,7 @@ export class EmotionRatingComponent {
   currentSectionNumber: number = 1;
 
     
-  public getEmoReadWriteByEmotionTitle(emotionTitle: string, emotionLabel: string): Promise<EmoReadWrite[]> {
+  getEmoReadWriteByEmotionTitle(emotionTitle: string, emotionLabel: string): Promise<EmoReadWrite[]> {
     return new Promise<EmoReadWrite[]>(resolve => {
       this.emotionService.getEmoReadWrite().subscribe(emoReadWriteList => {
         // Filter the list based on the emotion title and any emotion having a value of 1
