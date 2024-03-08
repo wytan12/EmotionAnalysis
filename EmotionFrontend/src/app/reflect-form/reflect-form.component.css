@@ -22,7 +22,9 @@
   padding: 10px;
   margin: 10px 0;
   border-radius: 10px;
-  color: #fff;
+  /*color: #fff;*/
+  border-style:solid;
+  border-width:4px;
   height: 580px;
   font-size: large;
 }
@@ -40,11 +42,13 @@
 /*}*/
 
 .blue-bg {
-  background: linear-gradient(
-    0deg,
-    rgba(238, 174, 202, 1) 0%,
-    rgba(148, 187, 233, 1) 80%
-  );
+  /*background: linear-gradient(*/
+  /*  0deg,*/
+  /*  rgba(238, 174, 202, 1) 0%,*/
+  /*  rgba(148, 187, 233, 1) 80%*/
+  /*);*/
+  border-style:solid;
+  border-width:4px;
 }
 
 

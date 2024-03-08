@@ -34,6 +34,16 @@ export class RadarChartComponent {
           },
         },
       },
+      tooltip: {
+        enabled: true,
+        titleFont:{
+          size:15,
+        },
+        bodyFont: {
+          size: 15, // Set the font size for the tooltip text
+        },
+        padding: 15,
+      },
     },
   };
   public radarChartLabels: string[] = [
@@ -49,7 +59,8 @@ export class RadarChartComponent {
   public radarChartData: ChartData<'radar'> = {
     labels: this.radarChartLabels,
     datasets: [
-      { data: [], label: 'Reading', pointRadius: 5, },
+      { data: [], label: 'Reading', pointRadius: 5,  
+      pointHoverBackgroundColor: '#fff',pointHoverBorderColor: 'rgb(255, 99, 132)'},
     ],
   };
 

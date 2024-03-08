@@ -1,8 +1,15 @@
 <app-header></app-header>
 <div class="container">
-	<section>
-		<h3>{{title}} : {{datasetLabel}}</h3>
+	<section style="display: flex; justify-content: space-between; align-items: center;">
+		<div>
+			<h3>{{title}} : {{datasetLabel}}</h3>
+		</div>
+		<div>
+			<!-- <app-intensity-dropdown></app-intensity-dropdown> -->
+			<app-intensity-dropdown (selectedValueChange)="filterList($event)"></app-intensity-dropdown>
+		</div>
 	</section>
+	
 	<div class="d-flex flex-column flex-md-row" >
 	<div class="col-10" >
 	  <div class="scrollspy-example scrollspy-container">
@@ -25,7 +32,7 @@
 		  
 	  </div>
 	</div>
-  
+	
 	<div class="col-2" style="position: sticky; top:0; justify-content: center; align-items: center;padding-left: 15px;">
 	  <div id="scrollspy" style=" position: fixed; z-index: 1; height: 70%; overflow: auto;" class="sidebar">
 		<ul [mdbScrollspy]="'scrollspy'" class="nav flex-column nav-pills menu-sidebar">

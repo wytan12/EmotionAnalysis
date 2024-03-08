@@ -34,6 +34,16 @@ export class RadarChartWritingComponent {
           },
         },
       },
+      tooltip: {
+        enabled: true,
+        titleFont:{
+          size:15,
+        },
+        bodyFont: {
+          size: 15, // Set the font size for the tooltip text
+        },
+        padding: 15,
+      },
     },
   };
   public radarChartLabels: string[] = [
@@ -56,6 +66,8 @@ export class RadarChartWritingComponent {
         backgroundColor: 'rgba(0, 0, 255, 0.2)',
         pointBackgroundColor: 'blue',
         pointRadius: 5,
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(54, 162, 235)'
       },
     ],
   };

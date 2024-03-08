@@ -45,7 +45,7 @@ export class ScrollspyComponent {
 
   currentSectionNumber: number = 1;
 
-  public getEmoSurveyByEmotionTitle(emotionTitle: string): Promise<EmoSurvey[]> {
+  getEmoSurveyByEmotionTitle(emotionTitle: string): Promise<EmoSurvey[]> {
     return new Promise<EmoSurvey[]>(resolve => {
       this.emotionService.getEmoSurvey().subscribe(emoSurveyList => {
         // Filter the list based on the emotion title

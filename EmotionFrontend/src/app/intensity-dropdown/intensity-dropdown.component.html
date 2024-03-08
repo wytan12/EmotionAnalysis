@@ -1,0 +1,10 @@
+<button nz-button nz-dropdown [nzDropdownMenu]="menu4" class="custom-button"style="width: 150px;">
+    {{ selectedValue }} 
+    <span nz-icon nzType="down"></span>
+</button>
+<nz-dropdown-menu #menu4="nzDropdownMenu">
+<ul nz-menu>
+    <li nz-menu-item (click)="selectValue('Date and Time')">Date and Time</li>
+    <li nz-menu-item (click)="selectValue('Intensity')">Intensity</li>
+</ul>
+</nz-dropdown-menu>
