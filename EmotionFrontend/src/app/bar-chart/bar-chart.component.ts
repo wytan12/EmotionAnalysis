@@ -83,7 +83,7 @@ export class BarChartComponent implements OnInit {
       // Set default values for from and to if not provided
       const defaultFromDate = new Date(); // Default to current date/time
       const defaultToDate = new Date(); // Default to current date/time
-      defaultFromDate.setDate(defaultFromDate.getDate() - 30); // Default to one month ago
+      defaultFromDate.setDate(defaultFromDate.getDate() - 100); // Default to one month ago
       this.getData(defaultFromDate, defaultToDate);
       return; // Exit function to prevent further execution
     }
