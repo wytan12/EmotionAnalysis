@@ -6,6 +6,11 @@ nz-button-group {
     background-color: rgb(250, 250, 213);
     color: black;
     margin-right: 50px;
-    border-radius: 10px;
+    margin-bottom: 20px;
+    border-radius: 15px;
     padding: 10px 10px;
+    border: 2px solid #000;
+    font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
+    font-size: 15px;
+    font-weight: 600;
 }
