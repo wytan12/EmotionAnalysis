@@ -5,7 +5,7 @@ const EmoReadWriteSchema = new mongoose.Schema({
   NoteTitle: String,
   NoteContent: String,
   Views: String,
-  ActionType: {                  // 指定默认参数，在新增时不添加这个字段就会默认添加
+  ActionType: {               
     type: String,
     default: 'Reading'
   },

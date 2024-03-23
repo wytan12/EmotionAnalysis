@@ -61,6 +61,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { ReportEmotionButtonComponent } from './report-emotion-button/report-emotion-button.component';
 
 @NgModule({
   imports: [
@@ -112,7 +113,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     SelectViewDropdownComponent,
     StarRatingComponent,
     UserGuideButtonComponent,
-    IntensityDropdownComponent
+    IntensityDropdownComponent,
+    ReportEmotionButtonComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [

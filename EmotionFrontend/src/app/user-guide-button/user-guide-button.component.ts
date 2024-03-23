@@ -7,19 +7,25 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   styleUrl: './user-guide-button.component.css'
 })
 export class UserGuideButtonComponent {
+  private notificationShown = false;
+
   constructor(private notification: NzNotificationService) {}
 
   createBasicNotification(): void {
-    this.notification.blank(
-      'TAKE NOTE',
-      '0-1 means weak, 1-2 means moderate, 2-3 means strong. <br> User can hover and click on the graph points to see relevant notes.',
-      {
-        nzStyle: {
-          width: '600px',
-          marginLeft: '-265px'
-        },
-        nzClass: 'test-class'
-      }
-    );
+    if (!this.notificationShown) {
+      this.notification.blank(
+        'TAKE NOTE',
+        '0-1 means weak, 1-2 means moderate, 2-3 means strong. <br> User can hover and click on the graph points to see relevant notes.',
+        {
+          nzStyle: {
+            width: '600px',
+            marginLeft: '-265px'
+          },
+          nzClass: 'test-class',
+          nzDuration: 0
+        }
+      );
+      this.notificationShown = true;
+    }
   }
 }
