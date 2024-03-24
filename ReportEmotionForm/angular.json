@@ -84,6 +84,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/ng-zorro-antd/dist/ng-zorro-antd.css",
               "src/styles.css"
             ],
             "scripts": []

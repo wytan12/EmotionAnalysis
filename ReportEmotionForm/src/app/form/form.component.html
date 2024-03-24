@@ -1,98 +1,23 @@
-<div class="row">
-    <div class="col-md-6 mx-auto">
-      <div class="card">
-        <div class="card-header">
-          <h2 class="display-5">Template-driven Form</h2>
-        </div>
-        <div class="card-body">
-          <form
-            class="form"
-            #registerForm="ngForm"
-            (ngSubmit)="registerForm.form.valid && onSubmit()"
-            novalidate
-            autocomplete="off"
-          >
-            <div class="mb-3">
-              <label for="Name" class="form-label">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="Email" class="form-label">Email</label>
-              <input
-                required
-                email
-              />
-            </div>
-            <div class="mb-3">
-              <label for="User Name" class="form-label">User Name</label>
-              <input
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="Password" class="form-label">Password</label>
-              <input
-                required
-              />
-              <!-- <span
-                class="text-danger"
-                *ngIf="
-                  (password.touched || registerForm.submitted) &&
-                  password.errors?.required
-                "
-              >
-                Password is required
-              </span>
-              <span
-                class="text-danger"
-                *ngIf="password.touched && password.errors?.invalidPassword"
-              >
-                Password should have minimum 8 characters, at least 1 uppercase
-                letter, 1 lowercase letter and 1 number
-              </span> -->
-            </div>
-            <div class="mb-3">
-              <label for="Confirm Password" class="form-label"
-                >Confirm Password</label
-              >
-              <input
-                required
-              />
-              <!-- <span
-                class="text-danger"
-                *ngIf="
-                  (confirmPassword.touched || registerForm.submitted) &&
-                  confirmPassword.errors?.required
-                "
-              >
-                Confirm Password is required
-              </span> -->
-              <!-- <span
-                class="text-danger"
-                *ngIf="
-                  confirmPassword.touched &&
-                  confirmPassword.errors?.passwordMismatch
-                "
-              >
-                Passwords doesnot match
-              </span> -->
-            </div>
-            <div align="right">
-              <button type="submit" class="btn btn-success">Register</button>
-              <button
-                type="reset"
-                class="btn btn-danger ms-2"
-              >
-              
-                Reset
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+<app-emotion-slider></app-emotion-slider>
+<div>
+  <h2 for="negativeInfluence">Which emotion you reported above negatively influenced your Knowledge Building?</h2>
+  <select formControlName="negativeInfluence" id="negativeInfluence">
+    <option value="" disabled>Select:</option>
+    <option value="joyful">Joyful</option>
+    <option value="curious">Curious</option>
+    <option value="surprised">Surprised</option>
+    <option value="confused">Confused</option>
+    <option value="anxious">Anxious</option>
+    <option value="frustrated">Frustrated</option>
+    <option value="bored">Bored</option>
+  </select>
+</div>
+<div>
+  <h2 for="emotionCause">What caused that emotion?</h2>
+  <textarea formControlName="emotionCause" id="emotionCause" style="width: 600px; height: 120px; resize: none;"></textarea>
+</div>
+<div>
+  <h2 for="additionalComments">Is there anything else that you want to share?</h2>
+  <textarea formControlName="additionalComments" id="additionalComments" style="width: 600px; height: 120px; resize: none;"></textarea>
+</div>
+<button type="submit">Submit</button>
