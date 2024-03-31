@@ -25,3 +25,25 @@ label {
   width: 100px;
   margin-bottom: 10px; /* Adjust margin as needed for vertical spacing */
 }
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+div {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
