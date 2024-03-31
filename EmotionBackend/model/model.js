@@ -9,7 +9,7 @@ const EmoReadWriteSchema = new mongoose.Schema({
     type: String,
     default: 'Reading'
   },
-  Timestamp: String,
+  Timestamp: Number,
   NoEmotion:{
     type: Number,
     default: 1
@@ -74,7 +74,7 @@ const EmoReadWriteSchema = new mongoose.Schema({
 
 const EmoSurveySchema = new mongoose.Schema({
   UserID:String,
-  Timestamp: String,
+  Timestamp: Number,
   Joyful:{
     type: Number,
     default: 0
@@ -111,7 +111,7 @@ const EmoSurveySchema = new mongoose.Schema({
 const EmoRegSchema = new mongoose.Schema({
   UserID: String,
   GroupMembers:String,
-  Timestamp:String,
+  Timestamp:Number,
   Visualization:String,
   Challenges:String,
   ImprovementWays:String,

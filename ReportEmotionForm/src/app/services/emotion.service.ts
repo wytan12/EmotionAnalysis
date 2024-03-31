@@ -161,7 +161,10 @@ export class EmotionService {
   //Adding Survey Emotion
   addEmoSurvey(EmotionData: any): Observable<EmoSurvey> {
     let UserID = "USER123";
-    let timestamp = Date.now().toString();
+    let milliseconds = Date.now(); // Your timestamp in milliseconds
+    let timestamp = Math.floor(milliseconds / 1000); // Convert milliseconds to seconds
+    console.log("Correct timestamp", timestamp); // Output: 1711899284
+
     const a: EmoSurvey = new EmoSurvey(
       UserID,
       timestamp,

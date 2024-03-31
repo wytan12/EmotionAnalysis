@@ -167,48 +167,13 @@ export interface Test{
     setBored_Intensity(value: number) {
       this.Bored_Intensity = value;
     }
-  
-    // constructor(NoteID: string, UserID: string, Timestamp: string, NoEmotion: number, ActionType: string, Joyful: number,
-    // Joyful_Intensity: number,
-    // Curious: number,
-    // Curious_Intensity: number,
-    // Surprised: number,
-    // Surprised_Intensity: number,
-    // Confused: number,
-    // Confused_Intensity: number,
-    // Anxious: number,
-    // Anxious_Intensity: number,
-    // Frustrated: number,
-    // Frustrated_Intensity: number,
-    // Bored: number,
-    // Bored_Intensity: number) {
-    //   this.NoteID = NoteID;
-    //   this.UserID = UserID;
-    //   this.Timestamp = Timestamp;
-    //   this.NoEmotion = NoEmotion;
-    //   this.ActionType = ActionType;
-    //   this.Joyful =Joyful;
-    //   this.Joyful_Intensity=Joyful_Intensity;
-    //   this.Curious=Curious;
-    //   this.Curious_Intensity=Curious_Intensity;
-    //   this.Surprised=Surprised;
-    //   this.Surprised_Intensity=Surprised_Intensity;
-    //   this.Confused=Confused;
-    //   this.Confused_Intensity=Confused_Intensity;
-    //   this.Anxious=Anxious;
-    //   this.Anxious_Intensity=Anxious_Intensity;
-    //   this.Frustrated=Frustrated;
-    //   this.Frustrated_Intensity=Frustrated_Intensity;
-    //   this.Bored=Bored;
-    //   this.Bored_Intensity=Bored_Intensity;
-    // }
   }
   
   
   export interface EmoSurvey {
     id: number;
     UserID: string;
-    Timestamp: string;
+    Timestamp: number;
     Joyful: number;
     Curious: number;
     Surprised: number;
@@ -223,7 +188,7 @@ export interface Test{
   
   export class EmoSurvey implements EmoSurvey{
     constructor(UserID: string,
-                Timestamp: string,
+                Timestamp: number,
                 Joyful: number,
                 Curious: number,
                 Surprised: number,
