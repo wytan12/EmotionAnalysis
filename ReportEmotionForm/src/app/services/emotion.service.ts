@@ -5,7 +5,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, filter, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { EmoReadWrite, EmoReg, EmoSurvey, Emotion, Test } from './emotion';
-import moment from 'moment';
 
 @Injectable({ providedIn: 'root' })
 export class EmotionService {
@@ -159,11 +158,12 @@ export class EmotionService {
       );
   }
 
+  //Adding Survey Emotion
   addEmoSurvey(EmotionData: any): Observable<EmoSurvey> {
-    let userID = 'userID123';
+    let UserID = "USER123";
     let timestamp = Date.now().toString();
     const a: EmoSurvey = new EmoSurvey(
-      userID,
+      UserID,
       timestamp,
       EmotionData.Joyful,
       EmotionData.Curious,
@@ -176,7 +176,7 @@ export class EmotionService {
       EmotionData.Reason,
       EmotionData.Remarks
     );
-    console.log(a);
+    console.log("Hello", a);
 
     return this.http
       .post<EmoSurvey>('http://localhost:3000/api/addEmoSurvey', a, this.httpOptions)
