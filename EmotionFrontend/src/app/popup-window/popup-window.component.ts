@@ -95,18 +95,5 @@ export class PopupWindowComponent implements OnInit {
       console.log(EmoReadWrite);
     });
   }
-  // submitForm({}) {
-  //   const formData={
-  //     id:"noteID123",
-  //     userID:"userID123",
-  //     author:"auther",
-  //     noEmotion:this.radioValue,
-  //     emotions:this.select1,
-  //   }
-  //   console.log(formData);
-  //   this.emotionService.addEmotion(formData).subscribe(Emotion => {
-  //     console.log(Emotion);
-  //   });
-  // }
 }
 
