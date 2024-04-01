@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, filter, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { EmoReadWrite, EmoReg, EmoSurvey, Emotion, Test } from './emotion';
-import moment from 'moment';
+// import moment from 'moment';
 
 @Injectable({ providedIn: 'root' })
 export class EmotionService {
