@@ -40,7 +40,7 @@ const connectDB = async () => {
   }
 };
 
-let port = process.env.PORT;
+let port = process.env.PORT ;
 if (port == null || port == "") {
   port = 3000;
 }
@@ -59,6 +59,8 @@ database.on("error", (error) => {
 });
 
 ///////////////////////////////////////////////  port /////////////////////////////////////////////////////////
-// app.listen(port, function () {
-//   console.log(`Server is running on ${port}`);
-// });
+app.listen(port, function () {
+  console.log(`Server is running on ${port}`);
+});
+
+export default app; 
