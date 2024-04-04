@@ -2,7 +2,7 @@
 <div class="container">
 	<section style="display: flex; justify-content: space-between; align-items: center;">
 		<div>
-			<h3>{{title}} : {{datasetLabel}}</h3>
+			<h1><b>{{title}}</b> : <b>{{datasetLabel}}</b></h1>
 		</div>
 		<div>
 			<!-- <app-intensity-dropdown></app-intensity-dropdown> -->
@@ -15,13 +15,13 @@
 	  <div class="scrollspy-example scrollspy-container">
 		<div *ngFor="let emoReadWrite of filteredEmoReadWrite; let i = index">
 		<section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + (currentSectionNumber + i)" class="survey-section">
-			  <h3>Note {{ currentSectionNumber + i }}</h3>
+			  <h1>Note {{ currentSectionNumber + i }}</h1>
 			  <p>{{emoReadWrite.Timestamp}}</p>
 			  <div class="question-answer">
 				<p class="question">Title: </p>
-				<p>{{ emoReadWrite.NoteTitle }}</p> 
+				<p class="answer">{{ emoReadWrite.NoteTitle }}</p> 
 				<p class="question">Content: </p>
-				<p>{{ emoReadWrite.NoteContent}}</p>
+				<p class="answer">{{ emoReadWrite.NoteContent}}</p>
 				<app-star-rating *ngFor="let intensity of emoReadWrite.Intensity" [intensity]="intensity.value"></app-star-rating>
 
 				<hr class="section-divider">
@@ -37,7 +37,7 @@
 	  <div id="scrollspy" style=" position: fixed; z-index: 1; height: 70%; overflow: auto;" class="sidebar">
 		<ul [mdbScrollspy]="'scrollspy'" class="nav flex-column nav-pills menu-sidebar">
 			<li class="nav-item" *ngFor="let emoReadWrite of filteredEmoReadWrite; let i = index">
-			  <a [mdbScrollspyLink]="'example-' + (currentSectionNumber + i)" class="nav-link" style="cursor:pointer;">
+			  <a [mdbScrollspyLink]="'example-' + (currentSectionNumber + i)" class="nav-link" [class.active]="activeSection == i" (click)="setActiveSection(i)" style="cursor:pointer;">
 				Note {{ currentSectionNumber + i }}</a>
 			</li>
 		  

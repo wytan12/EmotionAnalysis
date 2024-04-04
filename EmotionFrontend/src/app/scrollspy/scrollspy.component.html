@@ -1,14 +1,14 @@
 <div class="container">
 	<section style="justify-content: center; align-content:center;">
-		<h3 >{{title}}</h3>
+		<h1><b>{{title}}</b></h1>
 	</section>
 	<div class="d-flex flex-column flex-md-row" >
 	<div class="col-10" >
 	  <div class="scrollspy-example scrollspy-container">
 		<div *ngFor="let emoSurvey of filteredEmoSurveys; let i = index">
 		<section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + (currentSectionNumber + i)" class="survey-section">
-			  <h3>Response {{ currentSectionNumber + i }}</h3>
-			  	<p>{{emoSurvey.Timestamp}}</p>
+			  <h1>Response {{ currentSectionNumber + i }}</h1>
+			  	<p class="answer">{{emoSurvey.Timestamp}}</p>
 			  <div class="question-answer">
 				<p class="question">What caused that emotion?</p>
 				<p class="answer">{{ emoSurvey.Reason }}</p>

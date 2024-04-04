@@ -2,7 +2,7 @@
 
 <div class="container">
   <section style="justify-content: center; align-content:center; margin-bottom: 25px;">
-    <h3>Reflection History</h3>
+    <h1><b>Reflection History</b></h1>
   </section>
 
   <div class="d-flex flex-column flex-md-row">
@@ -10,8 +10,8 @@
       <div class="scrollspy-example scrollspy-container">
         <div *ngFor="let emoReg of filteredEmoReg; let i = index">
           <section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + i" class="survey-section">
-            <h3>Reflection {{ i + 1 }}</h3>
-            <p>{{ emoReg.Timestamp }}</p>
+            <h1>Reflection {{ i + 1 }}</h1>
+            <p class="answer">{{ emoReg.Timestamp }}</p>
             <div class="question-answer">
               <p class="question">Group Members:</p>
               <p class="answer">{{ emoReg.GroupMembers }}</p>

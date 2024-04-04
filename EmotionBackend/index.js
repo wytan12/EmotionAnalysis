@@ -28,6 +28,7 @@ console.log(`Backend Start`);
 //////////////////////////////////////////////////  mongoDB ///////////////////////////////////////////////////
 // const mongoURLString = process.env.DATABASE_URL;
 // const mongoURLString = "mongodb://liangluya:liangluya@localhost:27017/Emotion";
+// "mongodb+srv://liangluya:liangluya@cluster0.awhbvnl.mongodb.net/Emotion?retryWrites=true&w=majority"
 const mongoURLString = "mongodb+srv://liangluya:liangluya@cluster0.awhbvnl.mongodb.net/Emotion?retryWrites=true&w=majority";
 
 const connectDB = async () => {
@@ -40,10 +41,10 @@ const connectDB = async () => {
   }
 };
 
-let port = process.env.PORT ;
-if (port == null || port == "") {
-  port = 3000;
-}
+let port = process.env.PORT || 3000 ;
+// if (port == null || port == "") {
+//   port = 3000;
+// }
 
 //Connect to the database before listening
 connectDB().then(() => {
@@ -59,8 +60,8 @@ database.on("error", (error) => {
 });
 
 ///////////////////////////////////////////////  port /////////////////////////////////////////////////////////
-app.listen(port, function () {
-  console.log(`Server is running on ${port}`);
-});
+// app.listen(port, function () {
+//   console.log(`Server is running on ${port}`);
+// });
 
 export default app; 
