@@ -6,7 +6,7 @@ import { SurveyComponent } from './survey/survey.component';
 import {BarChartComponent} from "./bar-chart/bar-chart.component";
 import { ReflectFormComponent } from './reflect-form/reflect-form.component';
 import { ReflectHistoryComponent } from './reflect-history/reflect-history.component';
-import { ScrollspyComponent } from './scrollspy/scrollspy.component';
+// import { ScrollspyComponent } from './scrollspy/scrollspy.component';
 import { EmotionRatingComponent } from './emotion-rating/emotion-rating.component';
 import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
 import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
