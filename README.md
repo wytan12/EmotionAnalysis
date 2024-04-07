@@ -5,7 +5,7 @@ This repository contains code and resources related to Emotion Analysis
 # Usage
 
 ## Prequisite
-* Node.js installed
+* Node.js installed (Go to this link if you haven't)[https://docs.npmjs.com/downloading-and-installing-node-js-and-npm#windows-node-version-managers]
 * Angular CLI installed (`npm install -g @angular/cli`)
 
 ## Installation
