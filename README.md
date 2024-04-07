@@ -10,7 +10,7 @@ Usage
 
 ## Installation
 1. Clone the repository.
-`git clone` https://github.com/wytan12/EmotionAnalysis.git 
+`git clone https://github.com/wytan12/EmotionAnalysis.git` 
 
 2. `cd .\EmotionBackend\`
 3. `npm install`
