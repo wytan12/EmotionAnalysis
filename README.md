@@ -19,3 +19,6 @@ Usage
 6. `npm install`
 7. `ng serve`
 8. Open your web browser and go to `http://localhost:4200/` to access the Emotion Analysis application.
+
+## Stopping the servers
+To stop the servers, simply terminate the respective processes in your terminal (e.g., press `Ctrl + C`).
