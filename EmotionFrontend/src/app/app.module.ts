@@ -60,6 +60,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ReportEmotionButtonComponent } from './report-emotion-button/report-emotion-button.component';
+import { ReportReadwriteButtonComponent } from './report-readwrite-button/report-readwrite-button.component';
 
 @NgModule({
   imports: [
@@ -108,6 +109,7 @@ import { ReportEmotionButtonComponent } from './report-emotion-button/report-emo
     UserGuideButtonComponent,
     IntensityDropdownComponent,
     ReportEmotionButtonComponent,
+    ReportReadwriteButtonComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [
