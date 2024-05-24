@@ -12,6 +12,7 @@ import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
 import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
 import { InconduciveComponent } from './inconducive/inconducive.component';
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'reflect-history', component: ReflectHistoryComponent},
   { path: 'survey-reason', component: SurveyReasonComponent},
   { path: 'emotion-rating', component: EmotionRatingComponent},
-  { path: 'inconducive-chart', component:InconduciveComponent }
+  { path: 'inconducive-chart', component:InconduciveComponent },
   
 ];
 
