@@ -1,37 +1,55 @@
 <app-header></app-header>
-<div class="inconducive-container">
-    <div class="left-section">
-      <!-- <app-negative-barchart></app-negative-barchart> -->
-      <app-stackbarchart></app-stackbarchart>
+<div class="inconducive-container flex flex-col w-full">
+  <div class="flex w-full">
+    <div class="left-section flex-2">
+      <app-stackbarchart
+        class="flex flex-col justify-center"
+        style="width: 100%; height: 100%"
+      ></app-stackbarchart>
     </div>
 
-    <div class="right-section">
+    <div class="right-section justify-center flex-1">
+      <div class="flex flex-col">
         <app-select-time-dropdown></app-select-time-dropdown>
-      
         <button
-            type="button"
-            class="button inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-            style="max-width: 200px;"
-            (click)="navigate()">
-            Survey Overview 
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-2 h-4 w-4"
-                    >
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-      </button>
+          type="button"
+          class="button inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          style="max-width: 200px"
+          (click)="navigate()"
+        >
+          Survey Overview
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="mr-2 h-4 w-4"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </button>
+      </div>
     </div>
+  </div>
+
+  <div class="flex pt-4 w-2/3 justify-around">
+    <button
+      type="button"
+      class="button inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+    >
+      Download EmoReadWrite
+    </button>
+    <button
+      type="button"
+      class="button inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+    >
+      Download EmoSurvey
+    </button>
+  </div>
 </div>
-
-
-
