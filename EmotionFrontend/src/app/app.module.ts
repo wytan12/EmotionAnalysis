@@ -63,6 +63,9 @@ import { ReportEmotionButtonComponent } from './report-emotion-button/report-emo
 import { ReportReadwriteButtonComponent } from './report-readwrite-button/report-readwrite-button.component';
 import { StackbarchartComponent } from './stackbarchart/stackbarchart.component';
 
+import {MatTabsModule} from '@angular/material/tabs';
+import { TabComponent } from './tab/tab.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -81,7 +84,8 @@ import { StackbarchartComponent } from './stackbarchart/stackbarchart.component'
     ScrollingModule,
     DragDropModule,
     NzDropDownModule,
-    NzIconModule
+    NzIconModule,
+    MatTabsModule
   ],
   declarations: [
     AppComponent,
@@ -111,7 +115,8 @@ import { StackbarchartComponent } from './stackbarchart/stackbarchart.component'
     IntensityDropdownComponent,
     ReportEmotionButtonComponent,
     ReportReadwriteButtonComponent,
-    StackbarchartComponent
+    StackbarchartComponent,
+    TabComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [

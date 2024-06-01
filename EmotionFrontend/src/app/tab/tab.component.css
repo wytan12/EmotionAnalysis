@@ -1,0 +1,9 @@
+.mat-tab-group {
+    margin-bottom: 48px;
+    background-color: red;
+}
+
+.mat-tab-label:hover {
+    color: #ff4081; /* Change this to your desired hover color */
+}
+  
