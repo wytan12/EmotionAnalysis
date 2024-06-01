@@ -136,7 +136,7 @@ emoSurvey: EmoSurvey[] = [];
       x:{
         ticks : {
           font :{
-            size : 18
+            size : 16
           }
         }
       },
@@ -158,24 +158,7 @@ emoSurvey: EmoSurvey[] = [];
         }
       }
     }
-    // scales: {
-    //   x: [{ type: 'category' }],
-    //   // y: [{
-    //   //   type: 'linear',
-    //   //   beginAtZero: true,
-    //   //   ticks: {
-    //   //     beginAtZero: true,
-    //   //   },
-    //   //   // Add any other required properties
-    //   // }],
-      
-    // },
-  //   plugins:{
-  //     datalabels:{
-  //       anchor:'end',
-  //       align:'end',
-  //     }
-  //   }
+
   };
 
   public handleChartClick(event: any) {

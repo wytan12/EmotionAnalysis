@@ -134,7 +134,7 @@ export class BarChartComponent implements OnInit {
       x:{
         ticks : {
           font :{
-            size : 18
+            size : 16
           }
         }
       },
