@@ -132,6 +132,7 @@ emoSurvey: EmoSurvey[] = [];
 
   public barChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       x:{
         ticks : {

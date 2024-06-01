@@ -130,6 +130,7 @@ export class BarChartComponent implements OnInit {
 
   public barChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       x:{
         ticks : {
@@ -156,24 +157,7 @@ export class BarChartComponent implements OnInit {
         }
       }
     }
-    // scales: {
-    //   x: [{ type: 'category' }],
-    //   // y: [{
-    //   //   type: 'linear',
-    //   //   beginAtZero: true,
-    //   //   ticks: {
-    //   //     beginAtZero: true,
-    //   //   },
-    //   //   // Add any other required properties
-    //   // }],
 
-    // },
-  //   plugins:{
-  //     datalabels:{
-  //       anchor:'end',
-  //       align:'end',
-  //     }
-  //   }
   };
 
   public handleChartClick(event: any) {
