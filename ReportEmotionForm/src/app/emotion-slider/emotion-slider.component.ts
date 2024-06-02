@@ -6,16 +6,15 @@ import { EmoSurvey } from '../services/emotion';
 @Component({
   selector: 'app-emotion-slider',
   templateUrl: './emotion-slider.component.html',
-  styleUrl: './emotion-slider.component.css'
+  styleUrl: './emotion-slider.component.css',
 })
 export class EmotionSliderComponent implements OnInit {
-
   feelingsForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private emotionService: EmotionService // Inject your EmotionService here
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.feelingsForm = this.formBuilder.group({
@@ -48,9 +47,11 @@ export class EmotionSliderComponent implements OnInit {
       console.log('Form data:', this.feelingsForm.value);
 
       // Call the addEmoSurvey function from the EmotionService
-      this.emotionService.addEmoSurvey(this.feelingsForm.value).subscribe(EmoSurvey => {
-        console.log('EmoSurvey added successfully!', EmoSurvey.Timestamp);
-      });
+      this.emotionService
+        .addEmoSurvey(this.feelingsForm.value)
+        .subscribe((EmoSurvey) => {
+          console.log('EmoSurvey added successfully!', EmoSurvey.Timestamp);
+        });
       //   (response: EmoSurvey) => {
       //     console.log('EmoSurvey added successfully!', response);
       //   },

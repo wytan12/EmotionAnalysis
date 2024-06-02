@@ -14,6 +14,8 @@
   .right-section {
     margin-top: 50px;
     width: 40%; /* You can adjust the width as needed for the right section */
-    display: flex;
+    display: absolute;
     flex-direction: column;
+    height: 40vh;
+    overflow-y: auto; 
   }
