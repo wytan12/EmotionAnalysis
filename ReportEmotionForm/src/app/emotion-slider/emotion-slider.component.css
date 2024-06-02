@@ -1,5 +1,5 @@
 form {
-  max-width: 600px;
+  max-width: 1000px;
   margin: 0 auto; /* Center the form horizontally */
   padding: 20px; /* Add padding for spacing */
   border: 2px solid #ccc; /* Add border around the form */
@@ -12,9 +12,9 @@ div {
   margin-bottom: 30px;
 }
 
-label {
+/* label {
   font-weight: bold;
-}
+} */
 
 .radio-group {
   display: flex;
@@ -23,10 +23,12 @@ label {
 
 .radio-group label {
   margin-right: 20px; /* Adjust spacing between radio buttons */
+
 }
 
 .emotion-label {
-  margin-right: 30px; /* Adjust width as needed for consistent spacing */
+  margin-right: 30px; 
+  /* Adjust width as needed for consistent spacing */
   width: 100px;
   margin-bottom: 10px; /* Adjust margin as needed for vertical spacing */
 }

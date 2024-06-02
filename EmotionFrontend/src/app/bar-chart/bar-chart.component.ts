@@ -10,6 +10,7 @@ import _default from "chart.js/dist/plugins/plugin.legend";
 import labels = _default.defaults.labels;
 
 import { SharedTimeService } from '../shared-time.service';
+import { TitleService } from '../title.service';
 
 @Component({
   selector: "app-bar-chart",
@@ -21,9 +22,12 @@ export class BarChartComponent implements OnInit {
   
   constructor(private router: Router,
               private emotionService: EmotionService,
-              private sharedTimeService: SharedTimeService) {}
+              private sharedTimeService: SharedTimeService,
+              private titleService: TitleService) {}
 
   public data:number[] =[];
+
+  public title:string ='';
 
   emoSurvey: EmoSurvey[] = [];
   
@@ -164,9 +168,11 @@ export class BarChartComponent implements OnInit {
     if (event.active && event.active.length > 0) {
       const clickedLabel = event.active[0];
       const value = this.barChartLabels[clickedLabel.index]
-      // console.log(value);
-  
-      this.router.navigate(['survey-reason'], { queryParams: { title: value } });
+      
+      // this.title = value;
+      this.titleService.selectedTitle = value;
+      console.log(value);
+      // this.router.navigate(['survey-reason'], { queryParams: { title: value } });
     }
   }
   

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router'; // Import the Router module
 import { ExportService } from '../services/export.service';
 
