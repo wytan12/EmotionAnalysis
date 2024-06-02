@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite, EmoSurvey} from "../services/emotion";
 import { TimeService } from '../services/time.service';
 import {map} from "rxjs/operators";
+import { TitleService } from '../title.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: "app-scrollspy",
@@ -13,29 +15,31 @@ import {map} from "rxjs/operators";
 
 export class ScrollspyComponent {
 	title: string = '';
-
+  filteredEmoSurveys: EmoSurvey[] = [];
 
   constructor(private route: ActivatedRoute,
     private emotionService: EmotionService,
-    private timeService: TimeService) { }
+    private timeService: TimeService,
+    private titleService: TitleService) {
+      
+     }
 
-  // Assuming you have a property to store the filtered data
-  filteredEmoSurveys: EmoSurvey[] = [];
   ngOnInit() {
-    // Subscribe to changes in the route parameters
-    this.route.queryParams.subscribe(params => {
-      // Retrieve the 'title' parameter from the query parameters
-      this.title = params['title'];
-
-      // Check if 'title' parameter exists before using it
-    if (this.title) {
-      // Call the function to filter EmoSurvey objects based on the 'title'
-      this.getEmoSurveyByEmotionTitle(this.title).then(filteredData => {
-        // Store the filtered data in the component property
-        this.filteredEmoSurveys = filteredData;
-      });
-    }
+    // // Subscribe to changes in the route parameters
+    // this.route.queryParams.subscribe(params => {
+    //   // Retrieve the 'title' parameter from the query parameters
+    //   this.title = params['title'];
+    this.titleService.selectedTitle$.subscribe((title: string| null) => {
+      if(title){
+        console.log('Title received:', title);
+        this.title = title;
+        this.getEmoSurveyByEmotionTitle(this.title).then(filteredData => {
+          this.filteredEmoSurveys = filteredData;
+        });
+      }
+       // Set the title in the component property
     });
+   
   }
 
   activeSection: number = 0 ;
