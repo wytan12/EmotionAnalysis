@@ -26,10 +26,20 @@ export class EmotionSliderComponent implements OnInit {
       Frustrated: ['', Validators.required],
       Bored: ['', Validators.required],
       Inconducive: ['', Validators.required],
-      Reason: ['', Validators.required],
+      Reason: [''],
       Remarks: [''],
     });
   }
+
+  options = [
+    { id: 'Joyful', label: 'Joyful' },
+    { id: 'Curious', label: 'Curious' },
+    { id: 'Surprised', label: 'Surprised' },
+    { id: 'Confused', label: 'Confused' },
+    { id: 'Anxious', label: 'Anxious' },
+    { id: 'Frustrated', label: 'Frustrated' },
+    { id: 'Bored', label: 'Bored' }
+  ];
 
   onSubmit() {
     if (this.feelingsForm.valid) {

@@ -21,7 +21,8 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Joyful" value="5" />
+        <input type="radio" formControlName="Joyful" value=5 />
+        <br />
         Very Strong
       </label>
     </div>
@@ -30,7 +31,8 @@
     <div class="radio-group">
       <label class="emotion-label">Curious:</label>
       <label>
-        <input type="radio" formControlName="Curious" value="1" />
+        <input type="radio" formControlName="Curious" value=1 />
+        <br />
         Very Weak
       </label>
       <label>
@@ -46,7 +48,8 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Curious" value="5" />
+        <input type="radio" formControlName="Curious" value=5 />
+        <br />
         Very Strong
       </label>
     </div>
@@ -55,7 +58,8 @@
     <div class="radio-group">
       <label class="emotion-label">Surprised:</label>
       <label>
-        <input type="radio" formControlName="Surprised" value="1" />
+        <input type="radio" formControlName="Surprised" value=1 />
+        <br />
         Very Weak
       </label>
       <label>
@@ -71,7 +75,8 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Surprised" value="5" />
+        <input type="radio" formControlName="Surprised" value=5 />
+        <br />
         Very Strong
       </label>
     </div>
@@ -80,7 +85,8 @@
     <div class="radio-group">
       <label class="emotion-label">Confused:</label>
       <label>
-        <input type="radio" formControlName="Confused" value="1" />
+        <input type="radio" formControlName="Confused" value=1/>
+        <br />
         Very Weak
       </label>
       <label>
@@ -96,8 +102,10 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Confused" value="5" />
+        <input type="radio" formControlName="Confused" value=5 />
+        <br />
         Very Strong
+      
       </label>
     </div>
   </div>
@@ -105,7 +113,8 @@
     <div class="radio-group">
       <label class="emotion-label">Anxious:</label>
       <label>
-        <input type="radio" formControlName="Anxious" value="1" />
+        <input type="radio" formControlName="Anxious" value=1 />
+        <br />
         Very Weak
       </label>
       <label>
@@ -121,7 +130,8 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Anxious" value="5" />
+        <input type="radio" formControlName="Anxious" value=5 />
+        <br />
         Very Strong
       </label>
     </div>
@@ -130,7 +140,8 @@
     <div class="radio-group">
       <label class="emotion-label">Frustrated:</label>
       <label>
-        <input type="radio" formControlName="Frustrated" value="1" />
+        <input type="radio" formControlName="Frustrated" value=1 />
+        <br />
         Very Weak
       </label>
       <label>
@@ -146,7 +157,8 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Frustrated" value="5" />
+        <input type="radio" formControlName="Frustrated" value=5 />
+        <br />
         Very Strong
       </label>
     </div>
@@ -155,7 +167,8 @@
     <div class="radio-group">
       <label class="emotion-label">Bored:</label>
       <label>
-        <input type="radio" formControlName="Bored" value="1" />
+        <input type="radio" formControlName="Bored" value=1 />
+        <br />
         Very Weak
       </label>
       <label>
@@ -171,17 +184,23 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Bored" value="5" />
+        <input type="radio" formControlName="Bored" value=5 />
+        <br />
         Very Strong
       </label>
     </div>
   </div>
 
+  <!-- <div formArrayName="Inconducive">
+    <h2 for="Inconducive">Which emotions you reported above negatively influenced your Knowledge Building?</h2>
+    <div *ngFor="let option of options; let i = index">
+      <input type="checkbox" [formControlName]="i" [id]="option.id" />
+      <label [for]="option.id">{{ option.label }}</label>
+    </div>
+  </div> -->
+
   <div>
-    <h2 for="Inconducive">
-      Which emotion you reported above negatively influenced your Knowledge
-      Building?
-    </h2>
+    <h2 for="Inconducive">Which emotion you reported above negatively influenced your Knowledge Building?</h2>
     <select formControlName="Inconducive" id="Inconducive">
       <option value="" disabled>Select:</option>
       <option value="Joyful">Joyful</option>
