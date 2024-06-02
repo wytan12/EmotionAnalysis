@@ -8,10 +8,9 @@ describe('ReportEmotionButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReportEmotionButtonComponent]
-    })
-    .compileComponents();
-    
+      imports: [ReportEmotionButtonComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ReportEmotionButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
