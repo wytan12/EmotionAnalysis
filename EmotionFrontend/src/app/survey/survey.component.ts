@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'; // Import the Router module
+import { ExportService } from '../services/export.service';
 
 @Component({
   selector: 'app-survey',
@@ -8,7 +9,31 @@ import { Router } from '@angular/router'; // Import the Router module
 })
 export class SurveyComponent {
   
-  constructor(private router: Router) { }
+  constructor(private router: Router, private exportService: ExportService) { }
+
+  exportToCsv() {
+    this.exportService.exportToCsv().subscribe((data) => {
+      const blob = new Blob([data], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
+  exportSurveyToCsv() {
+    this.exportService.exportSurveyToCsv().subscribe((data) => {
+      const blob = new Blob([data], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'survey_data.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
 
   navigate() {
     this.router.navigate(['inconducive-chart']);

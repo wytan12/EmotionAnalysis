@@ -4,6 +4,10 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import "dotenv/config";
 import { APIrouter } from "./routes/routes.js";
+import fs from "fs";
+import path from "path";
+import { Parser } from "json2csv";
+import { EmoReadWrite, EmoSurvey } from "./model/model.js";
 
 ///////////////////////////////////////////////// app set-up //////////////////////////////////////////////////
 const app = express();
@@ -44,6 +48,36 @@ let port = process.env.PORT || 3000 ;
 // if (port == null || port == "") {
 //   port = 3000;
 // }
+
+// Route to export data to CSV
+app.get('/export/csv', async (req, res) => {
+  try {
+      const data = await EmoReadWrite.find().lean();
+      const json2csvParser = new Parser();
+      const csv = json2csvParser.parse(data);
+
+      res.header('Content-Type', 'text/csv');
+      res.attachment('data.csv');
+      res.send(csv);
+  } catch (err) {
+      res.status(500).send(err.toString());
+  }
+});
+
+// Route to export EmoSurvey data to CSV
+app.get('/export/survey/csv', async (req, res) => {
+  try {
+    const data = await EmoSurvey.find().lean();
+    const json2csvParser = new Parser();
+    const csv = json2csvParser.parse(data);
+
+    res.header('Content-Type', 'text/csv');
+    res.attachment('survey_data.csv');
+    res.send(csv);
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+});
 
 //Connect to the database before listening
 connectDB().then(() => {
