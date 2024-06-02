@@ -21,7 +21,7 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Joyful" value=5 />
+        <input type="radio" formControlName="Joyful" value="5" />
         <br />
         Very Strong
       </label>
@@ -31,7 +31,7 @@
     <div class="radio-group">
       <label class="emotion-label">Curious:</label>
       <label>
-        <input type="radio" formControlName="Curious" value=1 />
+        <input type="radio" formControlName="Curious" value="1" />
         <br />
         Very Weak
       </label>
@@ -48,7 +48,7 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Curious" value=5 />
+        <input type="radio" formControlName="Curious" value="5" />
         <br />
         Very Strong
       </label>
@@ -58,7 +58,7 @@
     <div class="radio-group">
       <label class="emotion-label">Surprised:</label>
       <label>
-        <input type="radio" formControlName="Surprised" value=1 />
+        <input type="radio" formControlName="Surprised" value="1" />
         <br />
         Very Weak
       </label>
@@ -75,7 +75,7 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Surprised" value=5 />
+        <input type="radio" formControlName="Surprised" value="5" />
         <br />
         Very Strong
       </label>
@@ -85,7 +85,7 @@
     <div class="radio-group">
       <label class="emotion-label">Confused:</label>
       <label>
-        <input type="radio" formControlName="Confused" value=1/>
+        <input type="radio" formControlName="Confused" value="1" />
         <br />
         Very Weak
       </label>
@@ -102,10 +102,9 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Confused" value=5 />
+        <input type="radio" formControlName="Confused" value="5" />
         <br />
         Very Strong
-      
       </label>
     </div>
   </div>
@@ -113,7 +112,7 @@
     <div class="radio-group">
       <label class="emotion-label">Anxious:</label>
       <label>
-        <input type="radio" formControlName="Anxious" value=1 />
+        <input type="radio" formControlName="Anxious" value="1" />
         <br />
         Very Weak
       </label>
@@ -130,7 +129,7 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Anxious" value=5 />
+        <input type="radio" formControlName="Anxious" value="5" />
         <br />
         Very Strong
       </label>
@@ -140,7 +139,7 @@
     <div class="radio-group">
       <label class="emotion-label">Frustrated:</label>
       <label>
-        <input type="radio" formControlName="Frustrated" value=1 />
+        <input type="radio" formControlName="Frustrated" value="1" />
         <br />
         Very Weak
       </label>
@@ -157,7 +156,7 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Frustrated" value=5 />
+        <input type="radio" formControlName="Frustrated" value="5" />
         <br />
         Very Strong
       </label>
@@ -167,7 +166,7 @@
     <div class="radio-group">
       <label class="emotion-label">Bored:</label>
       <label>
-        <input type="radio" formControlName="Bored" value=1 />
+        <input type="radio" formControlName="Bored" value="1" />
         <br />
         Very Weak
       </label>
@@ -184,7 +183,7 @@
         Strong
       </label>
       <label>
-        <input type="radio" formControlName="Bored" value=5 />
+        <input type="radio" formControlName="Bored" value="5" />
         <br />
         Very Strong
       </label>
@@ -200,17 +199,30 @@
   </div> -->
 
   <div>
-    <h2 for="Inconducive">Which emotion you reported above negatively influenced your Knowledge Building?</h2>
-    <select formControlName="Inconducive" id="Inconducive">
-      <option value="" disabled>Select:</option>
-      <option value="Joyful">Joyful</option>
-      <option value="Curious">Curious</option>
-      <option value="Surprised">Surprised</option>
-      <option value="Confused">Confused</option>
-      <option value="Anxious">Anxious</option>
-      <option value="Frustrated">Frustrated</option>
-      <option value="Bored">Bored</option>
-    </select>
+    <h2 for="Inconducive">
+      Which emotions you reported above negatively influenced your Knowledge
+      Building?
+    </h2>
+    <input type="checkbox" formControlName="Joyful" id="Joyful" />
+    <label for="Joyful">Joyful</label><br />
+
+    <input type="checkbox" formControlName="Curious" id="Curious" />
+    <label for="Curious">Curious</label><br />
+
+    <input type="checkbox" formControlName="Surprised" id="Surprised" />
+    <label for="Surprised">Surprised</label><br />
+
+    <input type="checkbox" formControlName="Confused" id="Confused" />
+    <label for="Confused">Confused</label><br />
+
+    <input type="checkbox" formControlName="Anxious" id="Anxious" />
+    <label for="Anxious">Anxious</label><br />
+
+    <input type="checkbox" formControlName="Frustrated" id="Frustrated" />
+    <label for="Frustrated">Frustrated</label><br />
+
+    <input type="checkbox" formControlName="Bored" id="Bored" />
+    <label for="Bored">Bored</label><br />
   </div>
   <div>
     <h2 for="Reason">What caused that emotion?</h2>
