@@ -30,12 +30,6 @@ import { EmotionRatingComponent } from './emotion-rating/emotion-rating.componen
 import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
 import { InconduciveComponent } from './inconducive/inconducive.component';
 
-// import {MatInputModule} from "@angular/material/input";
-// import {MatDatepickerModule} from "@angular/material/datepicker";
-// import { MatNativeDateModule } from '@angular/material/core';
-// import { SelectTimeRangeComponent } from './messages/select-time-range.component';
-
-/** 导入需要使用的 Angular 语言包 **/
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 registerLocaleData(en);
