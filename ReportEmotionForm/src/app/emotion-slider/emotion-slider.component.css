@@ -12,9 +12,9 @@ div {
   margin-bottom: 30px;
 }
 
-label {
+/* label {
   font-weight: bold;
-}
+} */
 
 .radio-group {
   display: flex;
