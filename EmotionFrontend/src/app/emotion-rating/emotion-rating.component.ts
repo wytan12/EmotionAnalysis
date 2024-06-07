@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite} from "../services/emotion";
 import { TimeService } from '../services/time.service';
+import { TitleService } from '../title.service';
+import { combineLatest } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-emotion-rating',
@@ -17,27 +20,55 @@ export class EmotionRatingComponent {
 
   constructor(private route: ActivatedRoute,
     private emotionService: EmotionService,
-    private timeService: TimeService) { }
+    private timeService: TimeService,
+    private titleService: TitleService) { }
 
   // Assuming you have a property to store the filtered data
   filteredEmoReadWrite: EmoReadWrite[] = [];
+  // ngOnInit() {
+  //   // Subscribe to changes in the route parameters
+  //   // this.route.queryParams.subscribe(params => {
+  //   //   // Retrieve the 'title' parameter from the query parameters
+  //   //   this.title = params['title'];
+  //   //   this.datasetLabel = params['datasetLabel'];
+  //   this.titleService.selectedTitle$.subscribe((title: string| null) => {
+  //     // Check if 'title' parameter exists before using it
+  //   if (title) {
+  //     this.title = title;
+  //     this.titleService.selectedLabel$.subscribe((datasetLabel: string| null) => {
+  //     this.datasetLabel = datasetLabel;
+  //     // Call the function to filter EmoSurvey objects based on the 'title'
+  //     this.getEmoReadWriteByEmotionTitle(this.title, this.datasetLabel).then(filteredData => {
+  //       // Store the filtered data in the component property
+  //       const intensityKey = `${this.title}_Intensity`;
+  //       this.intensityKey = intensityKey;
+  //       this.filteredEmoReadWrite = filteredData;
+  //     });
+      
   ngOnInit() {
-    // Subscribe to changes in the route parameters
-    this.route.queryParams.subscribe(params => {
-      // Retrieve the 'title' parameter from the query parameters
-      this.title = params['title'];
-      this.datasetLabel = params['datasetLabel'];
+    // Combine latest observables for title and dataset label
+    combineLatest([
+      this.titleService.selectedTitle$,
+      this.titleService.selectedLabel$
+    ]).pipe(
+      switchMap(([title, datasetLabel]) => {
+        if (title && datasetLabel) {
+          this.title = title;
+          this.datasetLabel = datasetLabel;
+          const intensityKey = `${title}_Intensity`;
+          this.intensityKey = intensityKey;
 
-      // Check if 'title' parameter exists before using it
-    if (this.title) {
-      // Call the function to filter EmoSurvey objects based on the 'title'
-      this.getEmoReadWriteByEmotionTitle(this.title, this.datasetLabel).then(filteredData => {
-        // Store the filtered data in the component property
-        const intensityKey = `${this.title}_Intensity`;
-        this.intensityKey = intensityKey;
-        this.filteredEmoReadWrite = filteredData;
-      });
-    }
+          // Assuming getEmoReadWriteByEmotionTitle returns an Observable
+          return this.getEmoReadWriteByEmotionTitle(title, datasetLabel);
+        } else {
+          // Properly handle the scenario where one or both are null
+          return []; // This needs to be an Observable, might need adjustments based on your service implementation
+        }
+      })
+    ).subscribe(filteredData => {
+      this.filteredEmoReadWrite = filteredData;
+    }, error => {
+      console.error('Error fetching EmoReadWrite data:', error);
     });
   }
 

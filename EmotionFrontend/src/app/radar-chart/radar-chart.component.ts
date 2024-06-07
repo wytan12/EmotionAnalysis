@@ -6,6 +6,7 @@ import { EmoReadWrite, EmoSurvey } from '../services/emotion';
 import { BaseChartDirective } from 'ng2-charts';
 import { SharedTimeService } from '../shared-time.service';
 import { SharedViewService } from '../shared-view.service';
+import { TitleService } from '../title.service';
 
 @Component({
   selector: 'app-radar-chart',
@@ -80,15 +81,16 @@ export class RadarChartComponent {
     private router: Router,
     private emotionService: EmotionService,
     private sharedTimeService: SharedTimeService,
-    private sharedViewService: SharedViewService
+    private sharedViewService: SharedViewService,
+    private titleService: TitleService
   ) {}
 
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
       const clickedLabel = event.active[0];
-      const value = this.radarChartLabels[clickedLabel.index];
+      const value = this.radarChartLabels[clickedLabel.index] || null;
       const dataset = this.radarChartData.datasets[clickedLabel.datasetIndex];
-      const datasetLabel = dataset.label;
+      const datasetLabel = dataset.label || null;
 
       if (datasetLabel == 'Reading') {
         const readingValue =
@@ -104,9 +106,13 @@ export class RadarChartComponent {
       console.log(clickedLabel);
       console.log(value);
 
-      this.router.navigate(['emotion-rating'], {
-        queryParams: { title: value, datasetLabel: datasetLabel },
-      });
+      this.titleService.selectedTitle = value;
+      this.titleService.selectedLabel = datasetLabel;
+
+
+      // this.router.navigate(['emotion-rating'], {
+      //   queryParams: { title: value, datasetLabel: datasetLabel },
+      // });
     }
   }
 
