@@ -1,10 +1,13 @@
-import { Component, OnInit , TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit , Inject } from '@angular/core';
 import { DialogService, ModalService } from 'ng-devui/modal';
 import {FormLayout} from "ng-devui";
 import _default from "chart.js/dist/plugins/plugin.tooltip";
 import {EmoReadWrite} from "../services/emotion";
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import type = _default.defaults.animations.numbers.type;
 import {EmotionService} from "../services/emotion.service";
+import { MatSnackBar } from '@angular/material/snack-bar'; 
+
 @Component({
   selector: 'app-popup-window',
   templateUrl: './popup-window.component.html',
@@ -14,10 +17,9 @@ export class PopupWindowComponent implements OnInit {
   layoutDirection: FormLayout = FormLayout.Columns;
   isShow = false;
   color = ['#fac20a','#beccfa','#fac20a','#c7000b'];
-  constructor(private emotionService: EmotionService) { }
-  ngOnInit(): void {
+  constructor(private emotionService: EmotionService, private snackBar: MatSnackBar) { }
+  ngOnInit(): void {}
 
-  }
   radioOptions = [{
     id: 0,
     label: "No, I don't fell anything"
@@ -90,10 +92,28 @@ export class PopupWindowComponent implements OnInit {
       noEmotion:this.radioValue,
       emotions:this.select1,
     }
-    console.log(formData);
-    this.emotionService.addEmoReadWrite(formData).subscribe(EmoReadWrite => {
-      console.log(EmoReadWrite);
-    });
+    this.emotionService.addEmoReadWrite(formData).subscribe(
+      EmoReadWrite => {
+        console.log(EmoReadWrite);
+        this.showNotificationAndClose();
+      },
+      error => {
+        console.error('Error submitting form data:', error);
+      }
+    );
   }
+
+  showNotificationAndClose(): void {
+    // Show the notification
+    this.snackBar.open('Form successfully submitted', 'Close', {
+      duration: 2000
+    });
+
+     // Close the modal after 2.5 seconds
+     setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }
+  
 }
 

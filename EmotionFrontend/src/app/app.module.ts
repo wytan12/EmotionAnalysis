@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DevUIModule, UserGuideComponent } from 'ng-devui';
 import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
+import { MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSnackBarModule
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -79,7 +80,8 @@ import { TabComponent } from './tab/tab.component';
     DragDropModule,
     NzDropDownModule,
     NzIconModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSnackBarModule
   ],
   declarations: [
     AppComponent,
