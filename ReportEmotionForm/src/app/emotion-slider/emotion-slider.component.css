@@ -23,11 +23,10 @@ div {
 
 .radio-group label {
   margin-right: 20px; /* Adjust spacing between radio buttons */
-
 }
 
 .emotion-label {
-  margin-right: 30px; 
+  margin-right: 30px;
   /* Adjust width as needed for consistent spacing */
   width: 100px;
   margin-bottom: 10px; /* Adjust margin as needed for vertical spacing */
@@ -45,3 +44,8 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
+label {
+  font-size: 20px; /* Adjust the font size as needed */
+}
+
