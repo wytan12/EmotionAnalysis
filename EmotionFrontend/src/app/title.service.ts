@@ -9,6 +9,7 @@ export class TitleService {
   private titleSource : BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   // title$ = this.titleSource.asObservable();
 
+  private labelSource: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
   constructor() { }
 
@@ -30,5 +31,14 @@ export class TitleService {
   public set selectedTitle(title: string | null) {
     this.titleSource.next(title);
   }
+
+  public get selectedLabel$(): Observable<string | null> {
+    return this.labelSource.asObservable();
+  }
+
+  public set selectedLabel(title: string | null) {
+    this.labelSource.next(title);
+  }
+
 
 }

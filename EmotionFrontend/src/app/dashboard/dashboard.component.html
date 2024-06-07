@@ -8,9 +8,26 @@
   <div style="flex: 1">
     <app-radar-chart></app-radar-chart>
   </div>
-  <div style="flex: 1">
-    <app-radar-chart-writing></app-radar-chart-writing>
+  <div class="right-section flex-1">
+    <!-- <app-radar-chart-writing></app-radar-chart-writing> -->
+     <app-emotion-rating></app-emotion-rating>
   </div>
+</div>
+<div class="flex pt-4 w-2/3 justify-around">
+  <button
+    (click)="exportToCsv()"
+    type="button"
+    class="button inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+  >
+    Download EmoReadWrite
+  </button>
+  <button
+    (click)="exportSurveyToCsv()"
+    type="button"
+    class="button inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+  >
+    Download EmoSurvey
+  </button>
 </div>
 <app-report-emotion-button class="btn btn-help" (click)="helpWindow()"></app-report-emotion-button>
 <app-report-readwrite-button></app-report-readwrite-button>

@@ -8,4 +8,11 @@
   /* margin-right: 10px; Optional: Adjust margin between charts */
 }
 
-
+.right-section {
+  margin-top: 50px;
+  width: 50%; /* You can adjust the width as needed for the right section */
+  display: absolute;
+  flex-direction: column;
+  height: 60vh;
+  overflow-y: auto; 
+}
