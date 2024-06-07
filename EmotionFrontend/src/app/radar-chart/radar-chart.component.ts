@@ -61,6 +61,16 @@ export class RadarChartComponent {
     datasets: [
       { data: [], label: 'Reading', pointRadius: 5,  
       pointHoverBackgroundColor: '#fff',pointHoverBorderColor: 'rgb(255, 99, 132)'},
+      {
+        data: [],
+        label: 'Writing',
+        borderColor: 'blue', // Set border color to blue
+        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+        pointBackgroundColor: 'blue',
+        pointRadius: 5,
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(54, 162, 235)'
+      },
     ],
   };
 
@@ -84,6 +94,10 @@ export class RadarChartComponent {
         const readingValue =
           this.radarChartData.datasets[0].data[clickedLabel.index];
         console.log('Reading:', readingValue);
+      } else if (datasetLabel == 'Writing') {
+        const writingValue =
+          this.radarChartData.datasets[1].data[clickedLabel.index];
+        console.log('Writing:', writingValue);
       }
 
       console.log(datasetLabel);
@@ -146,7 +160,8 @@ export class RadarChartComponent {
     }
 
     const dataHttp = await this.getDataHttp(from, to);
-    this.radarChartData.datasets[0].data = dataHttp['Reading']; // Assuming dataHttp[0] contains average values for 'Reading'
+    this.radarChartData.datasets[0].data = dataHttp['Reading'];
+    this.radarChartData.datasets[1].data = dataHttp['Writing']; 
 
     // Trigger chart update after setting the data
     if (this.chart) {
@@ -161,9 +176,11 @@ export class RadarChartComponent {
     return new Promise<{ [key: string]: number[] }>((resolve) => {
       const rdata: { [key: string]: number[] } = {
         Reading: [0, 0, 0, 0, 0, 0, 0],
+        Writing: [0, 0, 0, 0, 0, 0, 0],
       };
       let totalEntries: { [key: string]: number } = {
         Reading: 0,
+        Writing: 0,
       };
 
       this.emotionService
@@ -203,6 +220,9 @@ export class RadarChartComponent {
                 if (actionType === 'Reading') {
                   rdata[actionType][intensityKeys.indexOf(key)] +=
                     dataEntry[intensityKey];
+                } else if (actionType === 'Writing') {
+                  rdata[actionType][intensityKeys.indexOf(key)] +=
+                    dataEntry[intensityKey];
                 }
                 totalEntries[actionType]++;
               }
@@ -213,6 +233,7 @@ export class RadarChartComponent {
           for (const key of intensityKeys) {
             const index = intensityKeys.indexOf(key);
             rdata['Reading'][index] /= totalEntries['Reading'];
+            rdata['Writing'][index] /= totalEntries['Writing'];
           }
 
           resolve(rdata);
