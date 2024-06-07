@@ -60,6 +60,7 @@ import { StackbarchartComponent } from './stackbarchart/stackbarchart.component'
 
 import {MatTabsModule} from '@angular/material/tabs';
 import { TabComponent } from './tab/tab.component';
+import { ReflectHistoryButtonComponent } from './reflect-history-button/reflect-history-button.component';
 
 @NgModule({
   imports: [
@@ -112,7 +113,8 @@ import { TabComponent } from './tab/tab.component';
     ReportEmotionButtonComponent,
     ReportReadwriteButtonComponent,
     StackbarchartComponent,
-    TabComponent
+    TabComponent,
+    ReflectHistoryButtonComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [
