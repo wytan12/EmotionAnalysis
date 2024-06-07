@@ -13,6 +13,8 @@ import {map} from "rxjs/operators";
 export class ReflectHistoryComponent {
   title: string = 'Reflection History';
   filteredEmoReg: EmoReg[] = []; // Initialize the array to store EmoReg objects
+  activeSection: number = 0;
+  currentSectionNumber: number = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,12 +33,9 @@ export class ReflectHistoryComponent {
     });
   }
 
-  activeSection: number = 0 ;
-  setActiveSection(sectionIndex: number) {
+  setActiveSection(sectionIndex: number): void {
     this.activeSection = sectionIndex;
   }
-
-  currentSectionNumber: number = 1;
 
   getEmoReg(): void {
     // Call the service to retrieve EmoReg objects
@@ -47,11 +46,19 @@ export class ReflectHistoryComponent {
           ...emoReg,
           Timestamp: this.timeService.convertToDate(Number(emoReg.Timestamp))
         }));
+        // Sort the EmoReg objects by Timestamp in descending order
+        this.sortReflectionsByTimestamp();
       },
       error => {
         // Handle error
         console.error('Error fetching EmoReg objects:', error);
       }
     );
+  }
+
+  sortReflectionsByTimestamp(): void {
+    this.filteredEmoReg.sort((a, b) => {
+      return new Date(b.Timestamp).getTime() - new Date(a.Timestamp).getTime();
+    });
   }
 }
