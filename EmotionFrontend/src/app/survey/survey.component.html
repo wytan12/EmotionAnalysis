@@ -13,39 +13,43 @@
 </div> -->
 
 <div class="survey-container flex flex-col w-full">
-    <div class="flex w-full ">
-      <div class="left-section flex-2">
-        <app-tab></app-tab>
-      </div>
-  
-      <div class="right-section justify-center flex-1">
-        <div class="flex flex-col">
-          <app-scrollspy></app-scrollspy>
-        </div>
+  <div class="flex w-full">
+    <div class="left-section flex-2">
+      <app-tab></app-tab>
+    </div>
+
+    <div class="right-section justify-center flex-1">
+      <div class="flex flex-col">
+        <app-scrollspy></app-scrollspy>
       </div>
     </div>
-  
+  </div>
+
+  <div class="flex flex-col pt-4 w-2/3 justify-around">
+    <div class="flex pt-4 w-2/3 justify-left pl-24">
+      <app-select-time-dropdown></app-select-time-dropdown>
+    </div>
+
     <div class="flex pt-4 w-2/3 justify-around">
-    <app-select-time-dropdown></app-select-time-dropdown>
       <button
         (click)="exportToCsv()"
         type="button"
-        class="button inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+        class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
       >
         Download EmoReadWrite
       </button>
       <button
         (click)="exportSurveyToCsv()"
         type="button"
-        class="button inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+        class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
       >
         Download EmoSurvey
       </button>
     </div>
   </div>
+</div>
 
-
- <!-- <button
+<!-- <button
     type="button"
     class="inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white hover:bg-black hover:bg-opacity-80 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
     style="max-width: 200px;"
@@ -75,4 +79,3 @@
     
 </div>
 </div> -->
-
