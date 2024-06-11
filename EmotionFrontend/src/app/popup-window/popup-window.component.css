@@ -9,3 +9,10 @@
   margin-left:20px;
 }
 
+.centered-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: auto; /* Centering the block itself if necessary */
+}

@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DevUIModule, UserGuideComponent } from 'ng-devui';
 import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
+import { MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSnackBarModule
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -59,6 +60,7 @@ import { StackbarchartComponent } from './stackbarchart/stackbarchart.component'
 
 import {MatTabsModule} from '@angular/material/tabs';
 import { TabComponent } from './tab/tab.component';
+import { ReflectHistoryButtonComponent } from './reflect-history-button/reflect-history-button.component';
 
 @NgModule({
   imports: [
@@ -79,7 +81,8 @@ import { TabComponent } from './tab/tab.component';
     DragDropModule,
     NzDropDownModule,
     NzIconModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSnackBarModule
   ],
   declarations: [
     AppComponent,
@@ -110,7 +113,8 @@ import { TabComponent } from './tab/tab.component';
     ReportEmotionButtonComponent,
     ReportReadwriteButtonComponent,
     StackbarchartComponent,
-    TabComponent
+    TabComponent,
+    ReflectHistoryButtonComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [

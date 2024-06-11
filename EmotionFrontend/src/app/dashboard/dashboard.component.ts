@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environment';
+import { ExportService } from '../services/export.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,7 +9,8 @@ import { environment } from '../../environment';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, 
+              private exportService: ExportService) {}
 
   ngOnInit(): void {}
 
@@ -25,5 +27,29 @@ export class DashboardComponent implements OnInit {
       '_blank',
       `location=yes,width=${width},height=${height},left=${left},top=${top},scrollbars=yes,status=yes`
     );
+  }
+
+  exportToCsv() {
+    this.exportService.exportToCsv().subscribe((data) => {
+      const blob = new Blob([data], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
+  exportSurveyToCsv() {
+    this.exportService.exportSurveyToCsv().subscribe((data) => {
+      const blob = new Blob([data], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'survey_data.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
   }
 }

@@ -13,13 +13,13 @@ import { EmotionService } from '../services/emotion.service';
   selector: 'app-reflect-form',
   templateUrl: './reflect-form.component.html',
   styleUrl: './reflect-form.component.css',
-  animations: [
-    trigger('blockTransition', [
-      state('clear', style({ filter: 'blur(0)' })),
-      state('blur', style({ filter: 'blur(5px)' })),
-      transition('blur <=> clear', animate('0.5s ease-in-out')),
-    ]),
-  ],
+  // animations: [
+  //   trigger('blockTransition', [
+  //     state('clear', style({ filter: 'blur(0)' })),
+  //     state('blur', style({ filter: 'blur(5px)' })),
+  //     transition('blur <=> clear', animate('0.5s ease-in-out')),
+  //   ]),
+  // ],
 })
 export class ReflectFormComponent {
   formData: any = {};
@@ -43,9 +43,9 @@ export class ReflectFormComponent {
 
   constructor(private router: Router, private emotionService: EmotionService) {}
 
-  goToReflectHistory() {
-    this.router.navigate(['reflect-history']);
-  }
+  // goToReflectHistory() {
+  //   this.router.navigate(['reflect-history']);
+  // }
 
   // Method to handle selected users from dropdown
   onUserSelected(selectedUsers: string[]) {
@@ -55,23 +55,17 @@ export class ReflectFormComponent {
   }
 
   submit() {
-    // const formData = {
-    //   GroupMembers: 'GroupMembers',
-    //   Visualization: 'Visualization',
-    //   Challenges: 'Challenges',
-    //   ImprovementWays: 'ImprovementWays',
-    //   PositivePlan: 'PositivePlan',
-    //   Action: 'Action',
-    // };
     console.log(this.formData);
-    this.emotionService.addReg(this.formData).subscribe((EmoReadWrite) => {
-      console.log(EmoReadWrite);
+    this.emotionService.addReg(this.formData).subscribe(() => {
+      this.router.navigate(['reflect-history']);
+    }, error => {
+      console.error('Error submitting form data:', error);
     });
   }
 
   onSubmitClick() {
     // Call both functions
-    this.goToReflectHistory();
+    // this.goToReflectHistory();
     this.submit();
   }
 }

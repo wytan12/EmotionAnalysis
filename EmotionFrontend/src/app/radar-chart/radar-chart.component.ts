@@ -6,6 +6,7 @@ import { EmoReadWrite, EmoSurvey } from '../services/emotion';
 import { BaseChartDirective } from 'ng2-charts';
 import { SharedTimeService } from '../shared-time.service';
 import { SharedViewService } from '../shared-view.service';
+import { TitleService } from '../title.service';
 
 @Component({
   selector: 'app-radar-chart',
@@ -61,6 +62,16 @@ export class RadarChartComponent {
     datasets: [
       { data: [], label: 'Reading', pointRadius: 5,  
       pointHoverBackgroundColor: '#fff',pointHoverBorderColor: 'rgb(255, 99, 132)'},
+      {
+        data: [],
+        label: 'Writing',
+        borderColor: 'blue', // Set border color to blue
+        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+        pointBackgroundColor: 'blue',
+        pointRadius: 5,
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(54, 162, 235)'
+      },
     ],
   };
 
@@ -70,29 +81,38 @@ export class RadarChartComponent {
     private router: Router,
     private emotionService: EmotionService,
     private sharedTimeService: SharedTimeService,
-    private sharedViewService: SharedViewService
+    private sharedViewService: SharedViewService,
+    private titleService: TitleService
   ) {}
 
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
       const clickedLabel = event.active[0];
-      const value = this.radarChartLabels[clickedLabel.index];
+      const value = this.radarChartLabels[clickedLabel.index] || null;
       const dataset = this.radarChartData.datasets[clickedLabel.datasetIndex];
-      const datasetLabel = dataset.label;
+      const datasetLabel = dataset.label || null;
 
       if (datasetLabel == 'Reading') {
         const readingValue =
           this.radarChartData.datasets[0].data[clickedLabel.index];
         console.log('Reading:', readingValue);
+      } else if (datasetLabel == 'Writing') {
+        const writingValue =
+          this.radarChartData.datasets[1].data[clickedLabel.index];
+        console.log('Writing:', writingValue);
       }
 
       console.log(datasetLabel);
       console.log(clickedLabel);
       console.log(value);
 
-      this.router.navigate(['emotion-rating'], {
-        queryParams: { title: value, datasetLabel: datasetLabel },
-      });
+      this.titleService.selectedTitle = value;
+      this.titleService.selectedLabel = datasetLabel;
+
+
+      // this.router.navigate(['emotion-rating'], {
+      //   queryParams: { title: value, datasetLabel: datasetLabel },
+      // });
     }
   }
 
@@ -146,7 +166,8 @@ export class RadarChartComponent {
     }
 
     const dataHttp = await this.getDataHttp(from, to);
-    this.radarChartData.datasets[0].data = dataHttp['Reading']; // Assuming dataHttp[0] contains average values for 'Reading'
+    this.radarChartData.datasets[0].data = dataHttp['Reading'];
+    this.radarChartData.datasets[1].data = dataHttp['Writing']; 
 
     // Trigger chart update after setting the data
     if (this.chart) {
@@ -161,9 +182,11 @@ export class RadarChartComponent {
     return new Promise<{ [key: string]: number[] }>((resolve) => {
       const rdata: { [key: string]: number[] } = {
         Reading: [0, 0, 0, 0, 0, 0, 0],
+        Writing: [0, 0, 0, 0, 0, 0, 0],
       };
       let totalEntries: { [key: string]: number } = {
         Reading: 0,
+        Writing: 0,
       };
 
       this.emotionService
@@ -203,6 +226,9 @@ export class RadarChartComponent {
                 if (actionType === 'Reading') {
                   rdata[actionType][intensityKeys.indexOf(key)] +=
                     dataEntry[intensityKey];
+                } else if (actionType === 'Writing') {
+                  rdata[actionType][intensityKeys.indexOf(key)] +=
+                    dataEntry[intensityKey];
                 }
                 totalEntries[actionType]++;
               }
@@ -213,6 +239,7 @@ export class RadarChartComponent {
           for (const key of intensityKeys) {
             const index = intensityKeys.indexOf(key);
             rdata['Reading'][index] /= totalEntries['Reading'];
+            rdata['Writing'][index] /= totalEntries['Writing'];
           }
 
           resolve(rdata);
