@@ -1,8 +1,11 @@
 <app-header></app-header>
-<div style="display: flex; margin-top: 10px; margin-left: 2%;">
-  <app-user-guide-button style="margin-left: 0.2%; margin-top: 0.2%;"></app-user-guide-button>
-  <app-select-time-dropdown style="margin-left: 2%;"></app-select-time-dropdown>
-  <app-select-view-dropdown style="margin-left: 2%;"></app-select-view-dropdown>
+
+<div style="display: flex; margin-top: 10px; margin-left: 2%">
+  <app-user-guide-button
+    style="margin-left: 0.2%; margin-top: 0.2%"
+  ></app-user-guide-button>
+  <app-select-time-dropdown style="margin-left: 2%"></app-select-time-dropdown>
+  <app-select-view-dropdown style="margin-left: 2%"></app-select-view-dropdown>
 </div>
 <div style="display: flex; justify-content: space-between">
   <div style="flex: 1">
@@ -10,25 +13,29 @@
   </div>
   <div class="right-section flex-1">
     <!-- <app-radar-chart-writing></app-radar-chart-writing> -->
-     <app-emotion-rating></app-emotion-rating>
+    <app-emotion-rating></app-emotion-rating>
   </div>
 </div>
-<div class="flex pt-4 w-2/3 justify-around">
+<div class="flex pt-4" style="width: 60%; padding-left: 4rem;">
   <button
     (click)="exportToCsv()"
     type="button"
-    class="button inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+    class="button inline-flex px-3 py-3 items-center mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
   >
     Download EmoReadWrite
   </button>
   <button
     (click)="exportSurveyToCsv()"
     type="button"
-    class="button inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+    class="button inline-flex px-3 py-3 items-center mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+    style="margin-left: 4rem;"
   >
     Download EmoSurvey
   </button>
 </div>
-<app-report-emotion-button class="btn btn-help" (click)="helpWindow()"></app-report-emotion-button>
-<app-report-readwrite-button></app-report-readwrite-button>
 
+<app-report-emotion-button
+  class="btn btn-help"
+  (click)="helpWindow()"
+></app-report-emotion-button>
+<app-report-readwrite-button></app-report-readwrite-button>
