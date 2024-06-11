@@ -4,8 +4,18 @@
       <d-form-item>
         <d-form-label>Do you feel anything?</d-form-label>
         <d-form-control>
-          <d-radio-group [required]="true" name="noemotion" [direction]="'row'" [(ngModel)]="radioValue"  (change)="fisrtChange($event)">
-            <d-radio *ngFor="let option of radioOptions" [name]="'schedule'" [value]="option.id">
+          <d-radio-group
+            [required]="true"
+            name="noemotion"
+            [direction]="'row'"
+            [(ngModel)]="radioValue"
+            (change)="fisrtChange($event)"
+          >
+            <d-radio
+              *ngFor="let option of radioOptions"
+              [name]="'schedule'"
+              [value]="option.id"
+            >
               {{ option.label }}
             </d-radio>
           </d-radio-group>
@@ -13,44 +23,64 @@
       </d-form-item>
       <div *ngIf="isShow">
         <d-form-item>
-          <d-form-label class="centered-label">1 star means weak <br> 2 stars mean moderate <br> 3 stars mean strong
+          <d-form-label
+            class="flex flex-col"
+            style="margin: 0; text-align: left"
+          >
+            ⭐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Weak Emotion<br />
+            ⭐⭐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Moderate Emotion<br />
+            ⭐⭐⭐&nbsp;- Strong Emotion
           </d-form-label>
           <d-form-label>I feel</d-form-label>
-          <d-form-control [style.width.%]="80" >
+          <d-form-control [style.width.%]="80">
             <section>
-                  <d-select
-                    [overview]="'underlined'"
-                    [name]="'emotions'"
-                    [placeholder]="'please select'"
-                    [options]="emotionOptions"
-                    [isSearch]="true"
-                    [allowClear]="true"
-                    [readonly]="true"
-                    [isSelectAll]="false"
-                    [multiple]="true"
-                    [(ngModel)]="select1"
-                    [filterKey]="'name'"
-                    (valueChange)="secondChange($event)"
-                    [extraConfig]="{ labelization: { enable: true, overflow: 'multiple-line' } }"
-                    [size]="'sm'"
-                  ></d-select>
+              <d-select
+                [overview]="'underlined'"
+                [name]="'emotions'"
+                [placeholder]="'please select'"
+                [options]="emotionOptions"
+                [isSearch]="true"
+                [allowClear]="true"
+                [readonly]="true"
+                [isSelectAll]="false"
+                [multiple]="true"
+                [(ngModel)]="select1"
+                [filterKey]="'name'"
+                (valueChange)="secondChange($event)"
+                [extraConfig]="{
+                  labelization: { enable: true, overflow: 'multiple-line' }
+                }"
+                [size]="'sm'"
+              ></d-select>
             </section>
           </d-form-control>
         </d-form-item>
-        <div class="emotions" [style.width.%]="100" >
-            <div class="emotion" [style.width.%]="26" *ngFor="let item of select1">
-                <d-form-item>
-                  <div *ngIf="item!=null">
-                  <d-form-label [hasHelp]="false">{{item.name}}</d-form-label>
-                  <d-form-control>
-    <!--                <div class="slider-wrapper">-->
-    <!--                  <d-slider [ngModelOptions]="{standalone: true}" [(ngModel)]="item.value" [min]="0" [max]="10" class="slider"></d-slider>-->
-    <!--                </div>-->
-                    <d-rate [ngModelOptions]="{standalone: true}" [allowClear]="true" [(ngModel)]="item.value" color="#fac20a"  [allowHalf]="false" [count]="3"></d-rate>{{ item.value }}
-                  </d-form-control>
-                  </div>
-                </d-form-item>
-            </div>
+        <div class="emotions" [style.width.%]="100">
+          <div
+            class="emotion"
+            [style.width.%]="26"
+            *ngFor="let item of select1"
+          >
+            <d-form-item>
+              <div *ngIf="item != null">
+                <d-form-label [hasHelp]="false">{{ item.name }}</d-form-label>
+                <d-form-control>
+                  <!--                <div class="slider-wrapper">-->
+                  <!--                  <d-slider [ngModelOptions]="{standalone: true}" [(ngModel)]="item.value" [min]="0" [max]="10" class="slider"></d-slider>-->
+                  <!--                </div>-->
+                  <d-rate
+                    [ngModelOptions]="{ standalone: true }"
+                    [allowClear]="true"
+                    [(ngModel)]="item.value"
+                    color="#fac20a"
+                    [allowHalf]="false"
+                    [count]="3"
+                  ></d-rate
+                  >{{ item.value }}
+                </d-form-control>
+              </div>
+            </d-form-item>
+          </div>
         </div>
       </div>
       <d-form-operation>
@@ -60,7 +90,8 @@
           style="margin-right: 8px"
           dFormSubmit
           [dFormSubmitData]="'submit-button'"
-        >Submit</d-button>
+          >Submit</d-button
+        >
       </d-form-operation>
     </form>
   </section>
