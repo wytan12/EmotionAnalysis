@@ -3,186 +3,36 @@
   <div>
     <h2>I am feeling...</h2>
     <h3 style="font-weight: 100">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       Very Weak &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       Weak &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moderate
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Strong
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Very Strong
     </h3>
-    <div class="radio-group">
-      <label class="emotion-label">Joyful 😀:</label>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <label>
-        <input type="radio" formControlName="Joyful" value="1" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Joyful" value="2" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Joyful" value="3" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Joyful" value="4" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Joyful" value="5" />
-      </label>
+    <div *ngFor="let option of options" style="display: flex; align-items: center;">
+      <label class="emotion-label">{{ option.label }} {{ getEmoji(option.id) }}: </label>
+      <div class="radio-group">
+        <label *ngFor="let i of [1, 2, 3, 4, 5]">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input
+            type="radio"
+            [formControlName]="option.id"
+            [value]="i"
+          />
+        </label>
+      </div>
     </div>
   </div>
-  <div>
-    <div class="radio-group">
-      <label class="emotion-label">Curious 😳:</label>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <label>
-        <input type="radio" formControlName="Curious" value="1" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Curious" value="2" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Curious" value="3" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Curious" value="4" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Curious" value="5" />
-      </label>
+
+  <!-- <div>
+    <h2 for="Inconducive" >Which emotions you reported above negatively influenced your Knowledge Building?</h2>
+    <div class="horizontal-options">
+      <div *ngFor="let option of options">
+        <input type="checkbox" [formControlName]="option.id" [value]="option.id" [id]="option.id" (change)="updateInconducive(option.id, $event.target.checked)"/>
+        <label [for]="option.id">{{ option.label }} {{ getEmoji(option.id) }}</label>
+      </div>
     </div>
-  </div>
-  <div>
-    <div class="radio-group">
-      <label class="emotion-label">Surprised 😲:</label>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <label>
-        <input type="radio" formControlName="Surprised" value="1" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Surprised" value="2" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Surprised" value="3" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Surprised" value="4" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Surprised" value="5" />
-      </label>
-    </div>
-  </div>
-  <div>
-    <div class="radio-group">
-      <label class="emotion-label">Confused 😕:</label>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <label>
-        <input type="radio" formControlName="Confused" value="1" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Confused" value="2" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Confused" value="3" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Confused" value="4" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Confused" value="5" />
-      </label>
-    </div>
-  </div>
-  <div>
-    <div class="radio-group">
-      <label class="emotion-label">Anxious 😰:</label>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <label>
-        <input type="radio" formControlName="Anxious" value="1" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Anxious" value="2" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Anxious" value="3" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Anxious" value="4" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Anxious" value="5" />
-      </label>
-    </div>
-  </div>
-  <div>
-    <div class="radio-group">
-      <label class="emotion-label">Frustrated 😣:</label>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <label>
-        <input type="radio" formControlName="Frustrated" value="1" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Frustrated" value="2" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Frustrated" value="3" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Frustrated" value="4" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Frustrated" value="5" />
-      </label>
-    </div>
-  </div>
-  <div>
-    <div class="radio-group">
-      <label class="emotion-label">Bored 🥱:</label>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <label>
-        <input type="radio" formControlName="Bored" value="1" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Bored" value="2" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Bored" value="3" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Bored" value="4" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </label>
-      <label>
-        <input type="radio" formControlName="Bored" value="5" />
-      </label>
-    </div>
-  </div>
+  </div> -->
 
   <!-- <div formArrayName="Inconducive">
     <h2 for="Inconducive">Which emotions you reported above negatively influenced your Knowledge Building?</h2>
@@ -192,32 +42,42 @@
     </div>
   </div> -->
 
+  <!-- <div formArrayName="Inconducive">
+    <h2 for="Inconducive" >Which emotions you reported above negatively influenced your Knowledge Building?</h2>
+    <div class="horizontal-options">
+      <div *ngFor="let option of options">
+        <input type="checkbox" [formControlName]="option.id" [id]="option.id" />
+        <label [for]="option.id">{{ option.label }} {{ getEmoji(option.id) }}</label>
+      </div>
+    </div>
+  </div> -->
+
   <div>
-    <h2 for="Inconducive">
+    <h2 for="Inconducive"  >
       Which emotions you reported above negatively influenced your Knowledge
       Building?
     </h2>
     <div>
       <input type="checkbox" formControlName="Joyful" id="Joyful" />
-      <label for="Joyful">Joyful 😀</label>
+      <label value="Joyful">Joyful 😀</label>
 
       <input type="checkbox" formControlName="Curious" id="Curious" />
-      <label for="Curious">Curious 😳</label>
+      <label value="Curious">Curious 😳</label>
 
       <input type="checkbox" formControlName="Surprised" id="Surprised" />
-      <label for="Surprised">Surprised 😲</label>
+      <label value="Surprised">Surprised 😲</label>
 
       <input type="checkbox" formControlName="Confused" id="Confused" />
-      <label for="Confused">Confused 😕</label>
+      <label value="Confused">Confused 😕</label>
 
       <input type="checkbox" formControlName="Anxious" id="Anxious" />
-      <label for="Anxious">Anxious 😰</label>
+      <label value="Anxious">Anxious 😰</label>
 
       <input type="checkbox" formControlName="Frustrated" id="Frustrated" />
-      <label for="Frustrated">Frustrated 😣</label>
+      <label value="Frustrated">Frustrated 😣</label>
 
       <input type="checkbox" formControlName="Bored" id="Bored" />
-      <label for="Bored">Bored 🥱</label>
+      <label value="Bored">Bored 🥱</label>
     </div>
   </div>
   <div>

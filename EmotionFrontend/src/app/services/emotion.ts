@@ -216,7 +216,7 @@ export interface EmoSurvey {
   Anxious: number;
   Frustrated: number;
   Bored: number;
-  Inconducive: string;
+  Inconducive: string[];
   Reason: string;
   Remarks: string;
 }
@@ -231,7 +231,7 @@ export class EmoSurvey implements EmoSurvey{
               Anxious: number,
               Frustrated: number,
               Bored: number,
-              Inconducive: string,
+              Inconducive: string[],
               Reason: string,
               Remarks: string) {
     this.UserID = UserID;

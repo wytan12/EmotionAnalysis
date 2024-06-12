@@ -56,7 +56,7 @@ export class ScrollspyComponent {
         const filteredList = emoSurveyList.filter(emoSurvey => {
           emoSurvey.Timestamp = this.timeService.convertToDate(Number(emoSurvey.Timestamp)*1000);
           console.log(emoSurvey.Timestamp)
-          return emoSurvey.Inconducive == emotionTitle;
+          return emoSurvey.Inconducive.includes(emotionTitle);
         });
 
         // Sort the filtered list by timestamp in descending order
