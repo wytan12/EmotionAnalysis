@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmotionService } from '../services/emotion.service';
 import { EmoSurvey } from '../services/emotion';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-emotion-slider',
@@ -13,7 +14,8 @@ export class EmotionSliderComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private emotionService: EmotionService // Inject your EmotionService here
+    private emotionService: EmotionService, // Inject your EmotionService here
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class EmotionSliderComponent implements OnInit {
     { id: 'Confused', label: 'Confused' },
     { id: 'Anxious', label: 'Anxious' },
     { id: 'Frustrated', label: 'Frustrated' },
-    { id: 'Bored', label: 'Bored' }
+    { id: 'Bored', label: 'Bored' },
   ];
 
   onSubmit() {
@@ -47,20 +49,28 @@ export class EmotionSliderComponent implements OnInit {
       console.log('Form data:', this.feelingsForm.value);
 
       // Call the addEmoSurvey function from the EmotionService
-      this.emotionService
-        .addEmoSurvey(this.feelingsForm.value)
-        .subscribe((EmoSurvey) => {
+      this.emotionService.addEmoSurvey(this.feelingsForm.value).subscribe(
+        (EmoSurvey) => {
           console.log('EmoSurvey added successfully!', EmoSurvey.Timestamp);
-        });
-      //   (response: EmoSurvey) => {
-      //     console.log('EmoSurvey added successfully!', response);
-      //   },
-      //   (error) => {
-      //     console.error('Error adding EmoSurvey:', error);
-      //   }
-      // );
+          this.openSnackBar('Form submitted successfully!', 'Close');
+        },
+        (error) => {
+          console.error('Error adding EmoSurvey:', error);
+          this.openSnackBar(
+            'Error submitting form. Please try again.',
+            'Close'
+          );
+        }
+      );
     } else {
       console.log('Please answer all compulsory questions.');
+      this.openSnackBar('Please answer all compulsory questions.', 'Close');
     }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000, // 3 seconds
+    });
   }
 }
