@@ -28,7 +28,7 @@ div {
 .emotion-label {
   margin-right: 30px;
   /* Adjust width as needed for consistent spacing */
-  width: 120px;
+  width: 150px;
   margin-bottom: 10px; /* Adjust margin as needed for vertical spacing */
 }
 
@@ -48,4 +48,3 @@ button:hover {
 label {
   font-size: 20px; /* Adjust the font size as needed */
 }
-
