@@ -25,6 +25,7 @@ export interface EmoReadWrite {
   NoteContent: string;
   UserID: string;
   Timestamp: string;
+  Views: string;
   NoEmotion: number;
   ActionType: string;
   Joyful: number;
@@ -216,7 +217,7 @@ export interface EmoSurvey {
   Anxious: number;
   Frustrated: number;
   Bored: number;
-  Inconducive: string;
+  Inconducive: string[];
   Reason: string;
   Remarks: string;
 }
@@ -231,7 +232,7 @@ export class EmoSurvey implements EmoSurvey{
               Anxious: number,
               Frustrated: number,
               Bored: number,
-              Inconducive: string,
+              Inconducive: string[],
               Reason: string,
               Remarks: string) {
     this.UserID = UserID;

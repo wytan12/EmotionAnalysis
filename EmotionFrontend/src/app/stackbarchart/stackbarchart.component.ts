@@ -142,19 +142,25 @@ export class StackbarchartComponent {
           const timestampnumber = es['Timestamp'];
           const timestamp = new Date(Number(timestampnumber) * 1000);
           if (timestamp >= from && timestamp <= to) {
-            if (es.Inconducive === 'Joyful') {
+            if (es.Inconducive.includes('Joyful')) {
               rdata[0]++;
-            } else if (es.Inconducive === 'Curious') {
+            }
+            if (es.Inconducive.includes('Curious')) {
               rdata[1]++;
-            } else if (es.Inconducive === 'Surprised') {
+            }
+            if (es.Inconducive.includes('Surprised')) {
               rdata[2]++;
-            } else if (es.Inconducive === 'Confused') {
+            }
+            if (es.Inconducive.includes('Confused')) {
               rdata[3]++;
-            } else if (es.Inconducive === 'Anxious') {
+            }
+            if (es.Inconducive.includes('Anxious')) {
               rdata[4]++;
-            } else if (es.Inconducive === 'Frustrated') {
+            }
+            if (es.Inconducive.includes('Frustrated')) {
               rdata[5]++;
-            } else if (es.Inconducive === 'Bored') {
+            }
+            if (es.Inconducive.includes('Bored')) {
               rdata[6]++;
             }
           }

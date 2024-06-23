@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmotionService } from '../services/emotion.service';
 import { EmoSurvey } from '../services/emotion';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -27,7 +27,7 @@ export class EmotionSliderComponent implements OnInit {
       Anxious: ['', Validators.required],
       Frustrated: ['', Validators.required],
       Bored: ['', Validators.required],
-      Inconducive: ['', Validators.required],
+      Inconducive: this.formBuilder.array([], Validators.required),
       Reason: [''],
       Remarks: [''],
     });
@@ -42,6 +42,30 @@ export class EmotionSliderComponent implements OnInit {
     { id: 'Frustrated', label: 'Frustrated' },
     { id: 'Bored', label: 'Bored' },
   ];
+
+  getEmoji(id: string): string {
+    switch (id) {
+      case 'Joyful': return '😀';
+      case 'Curious': return '😳';
+      case 'Surprised': return '😲';
+      case 'Confused': return '😕';
+      case 'Anxious': return '😰';
+      case 'Frustrated': return '😣';
+      case 'Bored': return '🥱';
+      default: return '';
+    }
+  }
+
+  updateInconducive(emotionId: string, isChecked: boolean) {
+    const inconducive = this.feelingsForm.get('Inconducive') as FormArray;
+    if (isChecked) {
+      inconducive.push(new FormControl(emotionId));
+    } else {
+      const index = inconducive.controls.findIndex(x => x.value === emotionId);
+      inconducive.removeAt(index);
+    }
+  }
+
 
   onSubmit() {
     if (this.feelingsForm.valid) {
