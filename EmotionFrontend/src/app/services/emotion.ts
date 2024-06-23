@@ -25,6 +25,7 @@ export interface EmoReadWrite {
   NoteContent: string;
   UserID: string;
   Timestamp: string;
+  Views: string;
   NoEmotion: number;
   ActionType: string;
   Joyful: number;

@@ -48,10 +48,10 @@ button:hover {
 label {
   font-size: 20px; /* Adjust the font size as needed */
 }
-.horizontal-options {
+/* .horizontal-options {
   display: flex;
-}
+} */
 
-.horizontal-options div {
+/* .horizontal-options div {
   margin-right: 20px; /* Adjust as needed */
-}
+/* }  */
