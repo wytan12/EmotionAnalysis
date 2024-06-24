@@ -1,7 +1,7 @@
 <form [formGroup]="feelingsForm" (ngSubmit)="onSubmit()">
   <h1>Emotion Survey</h1>
   <div>
-    <h2>I am feeling...</h2>
+    <h2>I feel...</h2>
     <h3 style="font-weight: 100">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       Very Weak &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Weak
@@ -54,8 +54,7 @@
 
   <div>
     <h2 for="Inconducive"  >
-      Which emotions you reported above negatively influenced your Knowledge
-      Building?
+      Which emotion(s) above negatively influenced your knowledge building?
     </h2>
     <div>
       <input type="checkbox" formControlName="Joyful" id="Joyful" />
@@ -81,7 +80,7 @@
     </div>
   </div>
   <div>
-    <h2 for="Reason">What caused that emotion? [Optional]</h2>
+    <h2 for="Reason">Why do you feel these emotion(s)? [Optional]</h2>
     <textarea
       formControlName="Reason"
       id="Reason"
