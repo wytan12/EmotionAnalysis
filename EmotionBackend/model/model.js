@@ -151,7 +151,10 @@ const EmoSurveySchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  Inconducive: String,
+  Inconducive: {
+    type: [String],
+    default: []
+  },
   Reason: String,
   Remarks: String,
 });
