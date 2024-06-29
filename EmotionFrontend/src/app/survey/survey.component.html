@@ -1,18 +1,6 @@
 <app-header></app-header>
 
-<!-- <div class="survey-container ">
-    <div class="left-section">
-        <app-tab></app-tab>
-    </div>
-
-    <div class="right-section">
-        <app-select-time-dropdown></app-select-time-dropdown>
-      
-     
-    </div>
-</div> -->
-
-<div class="survey-container flex flex-col w-full">
+<div class="survey-container flex flex-col w-full h-screen">
   <div class="flex w-full">
     <div class="left-section flex-2">
       <app-tab></app-tab>
@@ -24,58 +12,27 @@
       </div>
     </div>
   </div>
+</div>
 
-  <div class="flex flex-col pt-4 w-2/3 justify-around">
-    <div class="flex pt-4 w-2/3 justify-left pl-24">
-      <app-select-time-dropdown></app-select-time-dropdown>
-    </div>
+<div class="flex flex-col pt-2 w-2/3 justify-around" style="margin-bottom: 50px;">
+  <div class="flex pt-2 w-2/3 justify-left pl-24">
+    <app-select-time-dropdown></app-select-time-dropdown>
+  </div>
 
-    <div class="flex pt-4 w-2/3 justify-around">
-      <button
-        (click)="exportToCsv()"
-        type="button"
-        class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-      >
-        Download EmoReadWrite
-      </button>
-      <button
-        (click)="exportSurveyToCsv()"
-        type="button"
-        class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-      >
-        Download EmoSurvey
-      </button>
-    </div>
+  <div class="flex pt-2 w-2/3 justify-around">
+    <button
+      (click)="exportToCsv()"
+      type="button"
+      class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+    >
+      Download EmoReadWrite
+    </button>
+    <button
+      (click)="exportSurveyToCsv()"
+      type="button"
+      class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+    >
+      Download EmoSurvey
+    </button>
   </div>
 </div>
-
-<!-- <button
-    type="button"
-    class="inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white hover:bg-black hover:bg-opacity-80 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-    style="max-width: 200px;"
-    (click)="navigate()">
-    Inconducive Emotion
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="ml-2 h-4 w-4"
-        >
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-    </button> -->
-
-<!-- <div style="display: flex; justify-content: center; align-items: center;">
-    <app-select-time-dropdown></app-select-time-dropdown>
-    <app-reflect-button></app-reflect-button>
-    <div class="flex fixed bottom-20 right-12">
-    
-</div>
-</div> -->
