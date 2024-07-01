@@ -11,6 +11,7 @@ import labels = _default.defaults.labels;
 
 import { SharedTimeService } from '../shared-time.service';
 import { TitleService } from '../title.service';
+import { NoteVisibilityService } from '../note-visibility.service';
 
 @Component({
   selector: 'app-negative-barchart',
@@ -23,7 +24,8 @@ export class NegativeBarchartComponent implements OnInit {
   constructor(private router: Router,
     private emotionService: EmotionService,
     private sharedTimeService: SharedTimeService,
-    private titleService: TitleService) {}
+    private titleService: TitleService,
+    private visibilityService: NoteVisibilityService) {}
 
 public data:number[] =[];
 
@@ -180,6 +182,7 @@ emoSurvey: EmoSurvey[] = [];
       const value = this.barChartLabels[clickedLabel.index]
       // console.log(value);
       // this.title = this.barChartLabels[clickedLabel.index];
+      this.visibilityService.setVisibility('SurveyNote', true);
       this.titleService.selectedTitle = value;
       console.log(value);
       // this.router.navigate(['survey-reason'], { queryParams: { title: value } });
