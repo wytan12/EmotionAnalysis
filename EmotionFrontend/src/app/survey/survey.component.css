@@ -4,6 +4,7 @@
 
 .survey-container {
     display: flex;
+    height:70vh;
   }
   
   .left-section {
@@ -13,10 +14,10 @@
   
   .right-section {
     margin-top: 50px;
-    width: 40%; /* You can adjust the width as needed for the right section */
+    width: 20%; /* You can adjust the width as needed for the right section */
     display: absolute;
     flex-direction: column;
-    height: 40vh;
+    height: 80vh;
     overflow-y: auto; 
   }
 

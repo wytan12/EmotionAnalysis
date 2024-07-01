@@ -1,12 +1,12 @@
 <form [formGroup]="feelingsForm" (ngSubmit)="onSubmit()">
   <h1>Emotion Survey</h1>
   <div>
-    <h2>I feel...</h2>
+    <h2>I am feeling...</h2>
     <h3 style="font-weight: 100">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Very Weak &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Weak
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Moderate
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Strong
+      Very Weak &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weak
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moderate
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Strong
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Very Strong
     </h3>
     <div *ngFor="let option of options" style="display: flex; align-items: center;">
@@ -24,63 +24,24 @@
     </div>
   </div>
 
-  <!-- <div>
-    <h2 for="Inconducive" >Which emotions you reported above negatively influenced your Knowledge Building?</h2>
-    <div class="horizontal-options">
-      <div *ngFor="let option of options">
-        <input type="checkbox" [formControlName]="option.id" [value]="option.id" [id]="option.id" (change)="updateInconducive(option.id, $event.target.checked)"/>
-        <label [for]="option.id">{{ option.label }} {{ getEmoji(option.id) }}</label>
-      </div>
-    </div>
-  </div> -->
-
-  <!-- <div formArrayName="Inconducive">
-    <h2 for="Inconducive">Which emotions you reported above negatively influenced your Knowledge Building?</h2>
-    <div *ngFor="let option of options; let i = index">
-      <input type="checkbox" [formControlName]="i" [id]="option.id" />
-      <label [for]="option.id">{{ option.label }}</label>
-    </div>
-  </div> -->
-
-  <!-- <div formArrayName="Inconducive">
-    <h2 for="Inconducive" >Which emotions you reported above negatively influenced your Knowledge Building?</h2>
-    <div class="horizontal-options">
-      <div *ngFor="let option of options">
-        <input type="checkbox" [formControlName]="option.id" [id]="option.id" />
-        <label [for]="option.id">{{ option.label }} {{ getEmoji(option.id) }}</label>
-      </div>
-    </div>
-  </div> -->
-
   <div>
-    <h2 for="Inconducive"  >
-      Which emotion(s) above negatively influenced your knowledge building?
-    </h2>
+    <h2 for="Inconducive">Which emotions you reported above negatively influenced your Knowledge Building?</h2>
     <div>
-      <input type="checkbox" formControlName="Joyful" id="Joyful" />
-      <label value="Joyful">Joyful 😀</label>
-
-      <input type="checkbox" formControlName="Curious" id="Curious" />
-      <label value="Curious">Curious 😳</label>
-
-      <input type="checkbox" formControlName="Surprised" id="Surprised" />
-      <label value="Surprised">Surprised 😲</label>
-
-      <input type="checkbox" formControlName="Confused" id="Confused" />
-      <label value="Confused">Confused 😕</label>
-
-      <input type="checkbox" formControlName="Anxious" id="Anxious" />
-      <label value="Anxious">Anxious 😰</label>
-
-      <input type="checkbox" formControlName="Frustrated" id="Frustrated" />
-      <label value="Frustrated">Frustrated 😣</label>
-
-      <input type="checkbox" formControlName="Bored" id="Bored" />
-      <label value="Bored">Bored 🥱</label>
+      <div *ngFor="let option of options">
+        <input
+          type="checkbox"
+          [formControlName]="option.id"
+          [value]="option.id"
+          [id]="option.id"
+          (change)="onCheckboxChange($event)"
+        />
+        <label [for]="option.id">{{ option.label }} {{ getEmoji(option.id) }}</label>
+      </div>
     </div>
   </div>
+  
   <div>
-    <h2 for="Reason">Why do you feel these emotion(s)? [Optional]</h2>
+    <h2 for="Reason">What caused that emotion? [Optional]</h2>
     <textarea
       formControlName="Reason"
       id="Reason"

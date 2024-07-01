@@ -1,4 +1,52 @@
 import mongoose, { Schema } from "mongoose";
+const TestingReadWriteSchema = new mongoose.Schema({
+  _id: String,
+  ratings: [
+    {
+      emotionId: String,
+      intensity: Number,
+    }
+  ],
+  authors: [
+    {
+      type: String
+    }
+  ],
+  actionType: {
+    type: String,
+    default: 'Reading'
+  },
+  communityId: String,
+  created: Date,
+  inViews: [
+    {
+      _id: String,
+      title: String
+    }
+  ],
+  note: {
+    _id: String,
+    title: String,
+    authors: [
+      {
+        type: String
+      }
+    ],
+    data: {
+      body: String,
+      languages: {
+        type: String,
+        default: null
+      },
+      isAssignedReading: {
+        type: Boolean,
+        default: false
+      }
+    },
+    created: Date
+  },
+});
+
 const EmoReadWriteSchema = new mongoose.Schema({
   UserID: String,
   NoteID: String,
@@ -103,7 +151,10 @@ const EmoSurveySchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  Inconducive: String,
+  Inconducive: {
+    type: [String],
+    default: []
+  },
   Reason: String,
   Remarks: String,
 });
@@ -148,13 +199,12 @@ const EmotionSchema = new mongoose.Schema({
 });
 
 
+const TestReadWrite = mongoose.model('TestReadWrite', TestingReadWriteSchema, 'TestReadWrite');
 const EmoReadWrite = mongoose.model('EmoReadWrite', EmoReadWriteSchema, 'EmoReadWrite');
 const EmoSurvey = mongoose.model('EmoSurvey', EmoSurveySchema, 'EmoSurvey');
 const EmoReg = mongoose.model('EmoReg', EmoRegSchema, 'EmoReg');
 const Test = mongoose.model('Test', TestSchema, 'Test');
-
 const EmoLogData = mongoose.model('EmoLogData', EmoLogDataSchema, 'EmoLogData');
-
 const Emotion = mongoose.model('Emotion', EmotionSchema, 'Emotion');
 
-export { EmoReadWrite,EmoSurvey,EmoReg ,Test,Emotion,EmoLogData};
+export { TestReadWrite,EmoReadWrite,EmoSurvey,EmoReg ,Test,Emotion,EmoLogData};

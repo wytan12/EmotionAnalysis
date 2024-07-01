@@ -12,27 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EmotionSliderComponent implements OnInit {
   feelingsForm!: FormGroup;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private emotionService: EmotionService, // Inject your EmotionService here
-    private snackBar: MatSnackBar
-  ) {}
-
-  ngOnInit(): void {
-    this.feelingsForm = this.formBuilder.group({
-      Joyful: ['', Validators.required],
-      Curious: ['', Validators.required],
-      Surprised: ['', Validators.required],
-      Confused: ['', Validators.required],
-      Anxious: ['', Validators.required],
-      Frustrated: ['', Validators.required],
-      Bored: ['', Validators.required],
-      Inconducive: this.formBuilder.array([], Validators.required),
-      Reason: [''],
-      Remarks: [''],
-    });
-  }
-
   options = [
     { id: 'Joyful', label: 'Joyful' },
     { id: 'Curious', label: 'Curious' },
@@ -42,6 +21,27 @@ export class EmotionSliderComponent implements OnInit {
     { id: 'Frustrated', label: 'Frustrated' },
     { id: 'Bored', label: 'Bored' },
   ];
+
+  constructor(
+    private fb: FormBuilder,
+    private emotionService: EmotionService, // Inject your EmotionService here
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    this.feelingsForm = this.fb.group({
+      Joyful: [0],
+      Curious: [0],
+      Surprised: [0],
+      Confused: [0],
+      Anxious: [0],
+      Frustrated: [0],
+      Bored: [0],
+      Inconducive: this.fb.array([]),
+      Reason: [''],
+      Remarks: ['']
+    });
+  }
 
   getEmoji(id: string): string {
     switch (id) {
@@ -56,16 +56,16 @@ export class EmotionSliderComponent implements OnInit {
     }
   }
 
-  updateInconducive(emotionId: string, isChecked: boolean) {
-    const inconducive = this.feelingsForm.get('Inconducive') as FormArray;
-    if (isChecked) {
-      inconducive.push(new FormControl(emotionId));
+  onCheckboxChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const inconducive: FormArray = this.feelingsForm.get('Inconducive') as FormArray;
+    if (input.checked) {
+      inconducive.push(new FormControl(input.value));
     } else {
-      const index = inconducive.controls.findIndex(x => x.value === emotionId);
+      const index = inconducive.controls.findIndex(x => x.value === input.value);
       inconducive.removeAt(index);
     }
   }
-
 
   onSubmit() {
     if (this.feelingsForm.valid) {
