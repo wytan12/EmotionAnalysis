@@ -3,8 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite} from "../services/emotion";
 import { TimeService } from '../services/time.service';
+import { SharedTimeService } from '../shared-time.service';
 import { TitleService } from '../title.service';
-import { combineLatest } from 'rxjs';
+import { SharedViewService } from '../shared-view.service';
+import { combineLatest , of} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -17,11 +19,15 @@ export class EmotionRatingComponent {
   datasetLabel: string = '';
   intensity: number | null = null;
   intensityKey: any;
+  selectedTimeRange: [Date | null, Date | null] = [null, null];
+  selectedView: string[] = [];
 
   constructor(private route: ActivatedRoute,
     private emotionService: EmotionService,
     private timeService: TimeService,
-    private titleService: TitleService) { }
+    private sharedTimeService: SharedTimeService,
+    private titleService: TitleService,
+    private sharedViewService: SharedViewService) { }
 
   // Assuming you have a property to store the filtered data
   filteredEmoReadWrite: EmoReadWrite[] = [];
@@ -49,20 +55,38 @@ export class EmotionRatingComponent {
     // Combine latest observables for title and dataset label
     combineLatest([
       this.titleService.selectedTitle$,
-      this.titleService.selectedLabel$
+      this.titleService.selectedLabel$,
+      this.sharedTimeService.selectedTime$,
+      this.sharedViewService.selectedView$
     ]).pipe(
-      switchMap(([title, datasetLabel]) => {
+      switchMap(([title, datasetLabel, timeRange, view]) => {
         if (title && datasetLabel) {
           this.title = title;
           this.datasetLabel = datasetLabel;
           const intensityKey = `${title}_Intensity`;
           this.intensityKey = intensityKey;
 
-          // Assuming getEmoReadWriteByEmotionTitle returns an Observable
-          return this.getEmoReadWriteByEmotionTitle(title, datasetLabel);
+      //     // Assuming getEmoReadWriteByEmotionTitle returns an Observable
+      //     return this.getEmoReadWriteByEmotionTitle(title, datasetLabel);
+      //   } else {
+      //     // Properly handle the scenario where one or both are null
+      //     return []; // This needs to be an Observable, might need adjustments based on your service implementation
+      //   }
+      // })
+          const from = timeRange && timeRange.length === 2 ? new Date(timeRange[0]) : undefined;
+          const to = timeRange && timeRange.length === 2 ? new Date(timeRange[1]) : undefined;
+
+          if (!view) {
+            this.selectedView = ['Energy & Solar group 1', 'Data science/AI group 6'];
+            console.log('Default Radar chart view: ', this.selectedView);
+          } else {
+            this.selectedView = [view];
+            console.log('Radar chart view: ', this.selectedView);
+          }
+
+          return this.getEmoReadWriteByEmotionTitle(title, datasetLabel, from, to, this.selectedView);
         } else {
-          // Properly handle the scenario where one or both are null
-          return []; // This needs to be an Observable, might need adjustments based on your service implementation
+          return of([]); // Return an observable of an empty array
         }
       })
     ).subscribe(filteredData => {
@@ -70,39 +94,74 @@ export class EmotionRatingComponent {
     }, error => {
       console.error('Error fetching EmoReadWrite data:', error);
     });
+
+
   }
 
   currentSectionNumber: number = 1;
 
     
-  getEmoReadWriteByEmotionTitle(emotionTitle: string, emotionLabel: string): Promise<EmoReadWrite[]> {
+  // getEmoReadWriteByEmotionTitle(emotionTitle: string, emotionLabel: string): Promise<EmoReadWrite[]> {
+  //   return new Promise<EmoReadWrite[]>(resolve => {
+  //     this.emotionService.getEmoReadWrite().subscribe(emoReadWriteList => {
+  //       // Filter the list based on the emotion title and any emotion having a value of 1
+  //       const filteredList = emoReadWriteList.filter(emoReadWrite => {
+  //         emoReadWrite.Timestamp = this.timeService.convertToDate(Number(emoReadWrite.Timestamp)*1000);
+  //         const hasEmotionWithValueOne = Object.keys(emoReadWrite).some((key: string) => {
+  //         const typedKey = key as keyof EmoReadWrite;  // Type assertion
+  //           if (typedKey.toLowerCase() == emotionTitle.toLowerCase() && typeof emoReadWrite[typedKey] == 'number' && emoReadWrite.ActionType == emotionLabel ) {
+  //             // get the intensity map to the title 
+  //             const intensityKey = `${emotionTitle}_Intensity`as keyof EmoReadWrite;
+  //             const intensityValue = parseFloat(emoReadWrite[intensityKey] as string);
+  //             emoReadWrite.Intensity = emoReadWrite.Intensity || [];
+  //             emoReadWrite.Intensity.push({ key: intensityKey, value: intensityValue })
+  //             console.log(intensityKey);
+  //             console.log(intensityValue);
+  //             console.log(emoReadWrite[intensityKey]);
+  //             // Check if the intensity key matches the emotion title and return the intensity
+  //           return emoReadWrite[typedKey] == 1;
+  //         }
+  //           return false;
+  //         });
+          
+  //         return hasEmotionWithValueOne;
+  //       });
+
+  //       filteredList.sort((a, b) => new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf());
+  
+  //       resolve(filteredList);
+  //     });
+  //   });
+  // }
+
+  getEmoReadWriteByEmotionTitle(emotionTitle: string, emotionLabel: string, fromDate?: Date, toDate?: Date, views?: string[]): Promise<EmoReadWrite[]> {
     return new Promise<EmoReadWrite[]>(resolve => {
       this.emotionService.getEmoReadWrite().subscribe(emoReadWriteList => {
-        // Filter the list based on the emotion title and any emotion having a value of 1
         const filteredList = emoReadWriteList.filter(emoReadWrite => {
-          emoReadWrite.Timestamp = this.timeService.convertToDate(Number(emoReadWrite.Timestamp)*1000);
+          emoReadWrite.Timestamp = this.timeService.convertToDate(Number(emoReadWrite.Timestamp) * 1000);
+
+          const isWithinDateRange = (!fromDate || new Date(emoReadWrite.Timestamp) >= fromDate) &&
+                                    (!toDate || new Date(emoReadWrite.Timestamp) <= toDate);
+
           const hasEmotionWithValueOne = Object.keys(emoReadWrite).some((key: string) => {
-          const typedKey = key as keyof EmoReadWrite;  // Type assertion
-            if (typedKey.toLowerCase() == emotionTitle.toLowerCase() && typeof emoReadWrite[typedKey] == 'number' && emoReadWrite.ActionType == emotionLabel ) {
-              // get the intensity map to the title 
-              const intensityKey = `${emotionTitle}_Intensity`as keyof EmoReadWrite;
+            const typedKey = key as keyof EmoReadWrite;
+            if (typedKey.toLowerCase() === emotionTitle.toLowerCase() && typeof emoReadWrite[typedKey] === 'number' && emoReadWrite.ActionType === emotionLabel) {
+              const intensityKey = `${emotionTitle}_Intensity` as keyof EmoReadWrite;
               const intensityValue = parseFloat(emoReadWrite[intensityKey] as string);
               emoReadWrite.Intensity = emoReadWrite.Intensity || [];
-              emoReadWrite.Intensity.push({ key: intensityKey, value: intensityValue })
-              console.log(intensityKey);
-              console.log(intensityValue);
-              console.log(emoReadWrite[intensityKey]);
-              // Check if the intensity key matches the emotion title and return the intensity
-            return emoReadWrite[typedKey] == 1;
-          }
+              emoReadWrite.Intensity.push({ key: intensityKey, value: intensityValue });
+              return emoReadWrite[typedKey] === 1;
+            }
             return false;
           });
-          
-          return hasEmotionWithValueOne;
+
+          const isInView = !views || views.includes(emoReadWrite.Views);
+
+          return hasEmotionWithValueOne && isWithinDateRange && isInView;
         });
 
         filteredList.sort((a, b) => new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf());
-  
+
         resolve(filteredList);
       });
     });
@@ -125,7 +184,7 @@ export class EmotionRatingComponent {
       this.filteredEmoReadWrite.sort((a, b) => new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf());
     }
    
-}
+  }
 
 
   

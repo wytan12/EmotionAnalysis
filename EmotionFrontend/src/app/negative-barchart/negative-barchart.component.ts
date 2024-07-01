@@ -87,7 +87,7 @@ emoSurvey: EmoSurvey[] = [];
       // Set default values for from and to if not provided
       const defaultFromDate = new Date(); // Default to current date/time
       const defaultToDate = new Date(); // Default to current date/time
-      defaultFromDate.setDate(defaultFromDate.getDate() - 100); // Default to one month ago
+      defaultFromDate.setDate(defaultFromDate.getDate() - 500); // Default to one month ago
       this.getData(defaultFromDate, defaultToDate);
       return; // Exit function to prevent further execution
     }
@@ -101,6 +101,7 @@ emoSurvey: EmoSurvey[] = [];
     }
     // this.chart?.update();
   }
+
   public getDataHttp(from: Date, to: Date): Promise<number[]> {
     return new Promise<number[]>(resolve => {
       const rdata: number[] = [0, 0, 0, 0, 0, 0, 0];
@@ -111,25 +112,32 @@ emoSurvey: EmoSurvey[] = [];
           const timestampnumber = es['Timestamp'];
           const timestamp = new Date(Number(timestampnumber) * 1000);
           if (timestamp >= from && timestamp <= to) {
-            if (es.Inconducive === 'Joyful') {
+            if (es.Inconducive.includes('Joyful')) {
               rdata[0]++;
-            } else if (es.Inconducive === 'Curious') {
+            }
+            if (es.Inconducive.includes('Curious')) {
               rdata[1]++;
-            } else if (es.Inconducive === 'Surprised') {
+            }
+            if (es.Inconducive.includes('Surprised')) {
               rdata[2]++;
-            } else if (es.Inconducive === 'Confused') {
+            }
+            if (es.Inconducive.includes('Confused')) {
               rdata[3]++;
-            } else if (es.Inconducive === 'Anxious') {
+            }
+            if (es.Inconducive.includes('Anxious')) {
               rdata[4]++;
-            } else if (es.Inconducive === 'Frustrated') {
+            }
+            if (es.Inconducive.includes('Frustrated')) {
               rdata[5]++;
-            } else if (es.Inconducive === 'Bored') {
+            }
+            if (es.Inconducive.includes('Bored')) {
               rdata[6]++;
             }
           }
         }
 
         resolve(rdata);
+        console.log("Final array:", rdata);
       });
     });
   }

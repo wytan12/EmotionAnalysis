@@ -40,10 +40,9 @@ export class BarChartComponent implements OnInit {
     'Frustrated',
     'Bored',
   ];
-  // public barChartType: ChartType = "bar";
+
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
-  // public barChartPlugins = [pluginDataLabels];
 
   public barChartPlugins = [{
     datalabels: {
@@ -98,8 +97,8 @@ export class BarChartComponent implements OnInit {
     if (this.chart) {
       this.chart.update();
     }
-    // this.chart?.update();
   }
+
   public getDataHttp(from: Date, to: Date): Promise<number[]> {
     return new Promise<number[]>(resolve => {
       const rdata: number[] = [0, 0, 0, 0, 0, 0, 0];
@@ -136,32 +135,32 @@ export class BarChartComponent implements OnInit {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
-      x:{
-        ticks : {
-          font :{
-            size : 16
+      x: {
+        ticks: {
+          font: {
+            size: 16
           }
         }
       },
       y: {
         beginAtZero: true,
-        ticks : {
-        font :{
-          size : 18
+        ticks: {
+          font: {
+            size: 18
+          },
+          stepSize: 0.5,
         }
       }
-      }
     },
-    plugins :{
-      legend :{
+    plugins: {
+      legend: {
         labels: {
-          font :{
-            size:15
+          font: {
+            size: 15
           }
         }
       }
     }
-
   };
 
   public handleChartClick(event: any) {
@@ -175,8 +174,6 @@ export class BarChartComponent implements OnInit {
       // this.router.navigate(['survey-reason'], { queryParams: { title: value } });
     }
   }
-  
-  
 }
 
 

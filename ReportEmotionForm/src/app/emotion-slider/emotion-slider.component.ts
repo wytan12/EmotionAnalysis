@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { EmotionService } from '../services/emotion.service';
 import { EmoSurvey } from '../services/emotion';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,27 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EmotionSliderComponent implements OnInit {
   feelingsForm!: FormGroup;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private emotionService: EmotionService, // Inject your EmotionService here
-    private snackBar: MatSnackBar
-  ) {}
-
-  ngOnInit(): void {
-    this.feelingsForm = this.formBuilder.group({
-      Joyful: ['', Validators.required],
-      Curious: ['', Validators.required],
-      Surprised: ['', Validators.required],
-      Confused: ['', Validators.required],
-      Anxious: ['', Validators.required],
-      Frustrated: ['', Validators.required],
-      Bored: ['', Validators.required],
-      Inconducive: ['', Validators.required],
-      Reason: [''],
-      Remarks: [''],
-    });
-  }
-
   options = [
     { id: 'Joyful', label: 'Joyful' },
     { id: 'Curious', label: 'Curious' },
@@ -42,6 +21,51 @@ export class EmotionSliderComponent implements OnInit {
     { id: 'Frustrated', label: 'Frustrated' },
     { id: 'Bored', label: 'Bored' },
   ];
+
+  constructor(
+    private fb: FormBuilder,
+    private emotionService: EmotionService, // Inject your EmotionService here
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    this.feelingsForm = this.fb.group({
+      Joyful: [0],
+      Curious: [0],
+      Surprised: [0],
+      Confused: [0],
+      Anxious: [0],
+      Frustrated: [0],
+      Bored: [0],
+      Inconducive: this.fb.array([]),
+      Reason: [''],
+      Remarks: ['']
+    });
+  }
+
+  getEmoji(id: string): string {
+    switch (id) {
+      case 'Joyful': return '😀';
+      case 'Curious': return '😳';
+      case 'Surprised': return '😲';
+      case 'Confused': return '😕';
+      case 'Anxious': return '😰';
+      case 'Frustrated': return '😣';
+      case 'Bored': return '🥱';
+      default: return '';
+    }
+  }
+
+  onCheckboxChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const inconducive: FormArray = this.feelingsForm.get('Inconducive') as FormArray;
+    if (input.checked) {
+      inconducive.push(new FormControl(input.value));
+    } else {
+      const index = inconducive.controls.findIndex(x => x.value === input.value);
+      inconducive.removeAt(index);
+    }
+  }
 
   onSubmit() {
     if (this.feelingsForm.valid) {
