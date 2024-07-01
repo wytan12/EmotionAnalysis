@@ -95,6 +95,9 @@ export class EmotionSliderComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 3000, // 3 seconds
+      horizontalPosition: 'center', // Center horizontally
+      verticalPosition: 'top', // Center vertically
+      panelClass: ['custom-snackbar'], // Apply custom styling
     });
   }
 }
