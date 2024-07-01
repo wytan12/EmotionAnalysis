@@ -1,7 +1,7 @@
 p {
-    font-family: Lato;
-  }
-  
+  font-family: Lato;
+}
+
 /* .container {
   display: flex;
   flex-direction: column;
@@ -15,6 +15,6 @@ p {
   padding-left: 50px;
   overflow: hidden;
   display: block;
+  height: 400px;
   /* width: 70%; */
 }
-  
