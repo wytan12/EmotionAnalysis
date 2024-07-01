@@ -7,17 +7,17 @@ import { BehaviorSubject } from 'rxjs';
 export class NoteVisibilityService {
   private visibilitySubjects: { [key: string]: BehaviorSubject<boolean> } = {};
 
-  getVisibilityObservable(noteId: string) {
-    if (!this.visibilitySubjects[noteId]) {
-      this.visibilitySubjects[noteId] = new BehaviorSubject<boolean>(true);
+  getVisibilityObservable(note: string) {
+    if (!this.visibilitySubjects[note]) {
+      this.visibilitySubjects[note] = new BehaviorSubject<boolean>(true);
     }
-    return this.visibilitySubjects[noteId].asObservable();
+    return this.visibilitySubjects[note].asObservable();
   }
 
-  setVisibility(noteId: string, visible: boolean): void {
-    if (!this.visibilitySubjects[noteId]) {
-      this.visibilitySubjects[noteId] = new BehaviorSubject<boolean>(true);
+  setVisibility(note: string, visible: boolean): void {
+    if (!this.visibilitySubjects[note]) {
+      this.visibilitySubjects[note] = new BehaviorSubject<boolean>(true);
     }
-    this.visibilitySubjects[noteId].next(visible);
+    this.visibilitySubjects[note].next(visible);
   }
 }
