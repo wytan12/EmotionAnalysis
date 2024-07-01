@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router'; // Import the Router module
 import { ExportService } from '../services/export.service';
+import { NoteVisibilityService } from '../note-visibility.service';
 
 @Component({
   selector: 'app-survey',
@@ -9,7 +10,8 @@ import { ExportService } from '../services/export.service';
 })
 export class SurveyComponent {
   
-  constructor(private router: Router, private exportService: ExportService) { }
+  constructor(private router: Router, private exportService: ExportService,
+    private visibilityService: NoteVisibilityService) { }
 
   exportToCsv() {
     this.exportService.exportToCsv().subscribe((data) => {
@@ -38,6 +40,14 @@ export class SurveyComponent {
   navigate() {
     this.router.navigate(['inconducive-chart']);
   }
+
+  closeSurveyNote(): void {
+    this.visibilityService.setVisibility('SurveyNote', false);
+  }
 }
+
+// closeSurveyNote() {
+//   this.showScrollSpy = false;
+// }
 
 
