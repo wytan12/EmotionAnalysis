@@ -1,1 +1,37 @@
-<nz-rate [ngModel]="intensity" nzDisabled nzCount="3"></nz-rate>
+<!-- <nz-rate [ngModel]="intensity" nzDisabled nzCount="1"></nz-rate>  -->
+
+<!-- <table>
+    <tr>
+      <th>Rating</th>
+      <th>Count</th>
+    </tr>
+    <tr>
+      <td><nz-rate [ngModel]="1" nzDisabled nzCount="1"></nz-rate></td>
+      <td>{{ 1 }}</td>
+    </tr>
+    <tr>
+      <td><nz-rate [ngModel]="2" nzDisabled nzCount="2"></nz-rate></td>
+      <td>{{ 2 }}</td>
+    </tr>
+    <tr>
+      <td><nz-rate [ngModel]="3" nzDisabled nzCount="3"></nz-rate></td>
+      <td>{{ 3 }}</td>
+    </tr>
+</table> -->
+
+<table>
+    <tr>
+      <th>Rating</th>
+      <td><nz-rate [ngModel]="1" nzDisabled nzCount="1"></nz-rate></td>
+      <td><nz-rate [ngModel]="2" nzDisabled nzCount="2"></nz-rate></td>
+      <td><nz-rate [ngModel]="3" nzDisabled nzCount="3"></nz-rate></td>
+    </tr>
+    <tr>
+      <th>Count</th>
+      <td>{{ intensity1 }}</td>
+      <td>{{ 3 }}</td>
+      <td>{{ intensity }}</td>
+    </tr>
+</table>
+  
+  

@@ -35,7 +35,8 @@
               <p>{{ emoReadWrite.NoteContent }}</p>
               <app-star-rating
                 *ngFor="let intensity of emoReadWrite.Intensity"
-                [intensity]="intensity.value"
+                [intensity1]="intensity.value"
+                [intensity]="intensity.value - 1"
               ></app-star-rating>
 
               <hr class="section-divider" />
