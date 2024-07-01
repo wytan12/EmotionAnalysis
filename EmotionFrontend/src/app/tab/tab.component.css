@@ -1,9 +1,14 @@
 .mat-tab-group {
-    margin-bottom: 70px;
-    background-color: red;
+  margin-bottom: 70px;
+  background-color: red;
+  ::ng-deep.mat-tab-label,
+  ::ng-deep.mat-tab-label-active {
+    min-width: 0 !important;
+    padding: 3px !important;
+    margin: 3px !important;
+  }
 }
 
 .mat-tab-label:hover {
-    color: #ff4081; /* Change this to your desired hover color */
+  color: #ff4081; /* Change this to your desired hover color */
 }
-  
