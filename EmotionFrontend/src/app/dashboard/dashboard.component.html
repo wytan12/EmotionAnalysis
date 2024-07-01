@@ -8,15 +8,15 @@
   <app-select-view-dropdown style="margin-left: 2%"></app-select-view-dropdown>
 </div>
 <div style="display: flex; justify-content: space-between">
-  <div style="flex: 1">
+  <div class="left-section" style="flex: 1">
     <app-radar-chart></app-radar-chart>
   </div>
-  <div class="right-section flex-1">
+  <div class="right-section flex">
     <!-- <app-radar-chart-writing></app-radar-chart-writing> -->
-    <app-emotion-rating></app-emotion-rating>
+    <app-emotion-rating style="flex: 1; overflow: auto"></app-emotion-rating>
   </div>
 </div>
-<div class="flex pt-4" style="width: 60%; padding-left: 4rem;">
+<div class="flex pt-4" style="width: 60%; padding-left: 4rem">
   <button
     (click)="exportToCsv()"
     type="button"
@@ -28,7 +28,7 @@
     (click)="exportSurveyToCsv()"
     type="button"
     class="button inline-flex px-3 py-3 items-center mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-    style="margin-left: 4rem;"
+    style="margin-left: 4rem"
   >
     Download EmoSurvey
   </button>
