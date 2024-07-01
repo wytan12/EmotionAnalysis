@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:55641/'
+    apiUrl: 'https://report-emotion-form.vercel.app/form'
   };
