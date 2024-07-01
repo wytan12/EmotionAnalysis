@@ -21,6 +21,7 @@ export class EmotionRatingComponent {
   intensityKey: any;
   selectedTimeRange: [Date | null, Date | null] = [null, null];
   selectedView: string[] = [];
+  Math: any;
 
   constructor(private route: ActivatedRoute,
     private emotionService: EmotionService,
