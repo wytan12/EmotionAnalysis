@@ -9,9 +9,16 @@ import { NoteVisibilityService } from '../note-visibility.service';
   styleUrls: ['./survey.component.css']
 })
 export class SurveyComponent {
+  isVisible = false;
   
   constructor(private router: Router, private exportService: ExportService,
     private visibilityService: NoteVisibilityService) { }
+
+  ngOnInit() {
+    this.visibilityService.getVisibilityObservable('SurveyNote').subscribe(visible => {
+      this.isVisible = visible;
+    });
+  }
 
   exportToCsv() {
     this.exportService.exportToCsv().subscribe((data) => {
