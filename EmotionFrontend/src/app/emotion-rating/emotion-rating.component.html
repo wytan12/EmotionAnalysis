@@ -1,15 +1,24 @@
 <!-- <app-header></app-header> -->
+<div *ngIf="isVisible">
 <div class="container">
-  <section
+  <!-- <section
     style="display: flex; justify-content: space-between; align-items: center"
-  >
+  > -->
+  <section class="header-section">
     <div>
       <h3>
         {{ title }}<span *ngIf="title && datasetLabel"> : </span
         >{{ datasetLabel }}
       </h3>
     </div>
-    <div>
+    <div class="controls">
+      <button *ngIf="isVisible"
+          (click)="closeEmotionNote()"
+          type="button"
+          class="custom-button"
+        >
+          Close
+      </button>
       <!-- <app-intensity-dropdown></app-intensity-dropdown> -->
       <app-intensity-dropdown
         (selectedValueChange)="filterList($event)"
@@ -59,4 +68,5 @@
 	  </div>
 	</div> -->
   </div>
+</div>
 </div>
