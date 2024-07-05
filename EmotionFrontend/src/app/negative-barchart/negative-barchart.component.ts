@@ -166,11 +166,13 @@ emoSurvey: EmoSurvey[] = [];
     },
     plugins :{
       legend :{
+        display: true,
         labels: {
           font :{
             size:15
-          }
-        }
+          },
+        },
+        onClick: () => {},
       }
     }
 
