@@ -164,11 +164,13 @@ export class BarChartComponent implements OnInit {
     },
     plugins: {
       legend: {
+        display: true,
         labels: {
           font: {
             size: 15,
           },
         },
+        onClick: () => {},
       },
     },
   };
