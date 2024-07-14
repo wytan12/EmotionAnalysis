@@ -8,6 +8,7 @@ import { TitleService } from '../title.service';
 import { SharedViewService } from '../shared-view.service';
 import { combineLatest , of} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { NoteVisibilityService } from '../note-visibility.service';
 
 @Component({
   selector: 'app-emotion-rating',
@@ -21,13 +22,16 @@ export class EmotionRatingComponent {
   intensityKey: any;
   selectedTimeRange: [Date | null, Date | null] = [null, null];
   selectedView: string[] = [];
+  Math: any;
+  isVisible = true;
 
   constructor(private route: ActivatedRoute,
     private emotionService: EmotionService,
     private timeService: TimeService,
     private sharedTimeService: SharedTimeService,
     private titleService: TitleService,
-    private sharedViewService: SharedViewService) { }
+    private sharedViewService: SharedViewService,
+    private visibilityService: NoteVisibilityService) { }
 
   // Assuming you have a property to store the filtered data
   filteredEmoReadWrite: EmoReadWrite[] = [];
@@ -53,6 +57,9 @@ export class EmotionRatingComponent {
       
   ngOnInit() {
     // Combine latest observables for title and dataset label
+    this.visibilityService.getVisibilityObservable('EmotionNote').subscribe(visible => {
+      this.isVisible = visible;
+    });
     combineLatest([
       this.titleService.selectedTitle$,
       this.titleService.selectedLabel$,
@@ -186,6 +193,9 @@ export class EmotionRatingComponent {
    
   }
 
+  closeEmotionNote(): void {
+    this.visibilityService.setVisibility('EmotionNote', false);
+  }
 
   
 }

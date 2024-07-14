@@ -6,7 +6,16 @@
       <app-tab></app-tab>
     </div>
 
-    <div class="right-section justify-center flex-1">
+    <div class="right-section justify-center flex-1 ">
+      <div class = "flex justify-end">
+          <button *ngIf="isVisible"
+          (click)="closeSurveyNote()"
+          type="button"
+          class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black close-button"
+        >
+          Close
+        </button>
+      </div>
       <div class="flex flex-col">
         <app-scrollspy></app-scrollspy>
       </div>

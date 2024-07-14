@@ -7,6 +7,7 @@ import {map} from "rxjs/operators";
 import { TitleService } from '../title.service';
 import { SharedTimeService } from '../shared-time.service';
 import { Observable } from 'rxjs';
+import { NoteVisibilityService } from '../note-visibility.service';
 
 @Component({
 	selector: "app-scrollspy",
@@ -18,12 +19,14 @@ export class ScrollspyComponent {
 	title: string = '';
   filteredEmoSurveys: EmoSurvey[] = [];
   selectedTimeRange: [Date | null, Date | null] = [null, null];
+  isVisible = true;
 
   constructor(private route: ActivatedRoute,
     private emotionService: EmotionService,
     private timeService: TimeService,
     private sharedTimeService: SharedTimeService,
-    private titleService: TitleService) {
+    private titleService: TitleService,
+    private visibilityService: NoteVisibilityService) {
       
      }
 
@@ -32,6 +35,9 @@ export class ScrollspyComponent {
     // this.route.queryParams.subscribe(params => {
     //   // Retrieve the 'title' parameter from the query parameters
     //   this.title = params['title'];
+    this.visibilityService.getVisibilityObservable('SurveyNote').subscribe(visible => {
+      this.isVisible = visible;
+    });
     this.titleService.selectedTitle$.subscribe((title: string| null) => {
       if(title){
         console.log('Title received:', title);

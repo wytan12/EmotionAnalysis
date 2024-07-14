@@ -7,6 +7,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { SharedTimeService } from '../shared-time.service';
 import { SharedViewService } from '../shared-view.service';
 import { TitleService } from '../title.service';
+import { NoteVisibilityService } from '../note-visibility.service';
 
 @Component({
   selector: 'app-radar-chart',
@@ -82,7 +83,8 @@ export class RadarChartComponent {
     private emotionService: EmotionService,
     private sharedTimeService: SharedTimeService,
     private sharedViewService: SharedViewService,
-    private titleService: TitleService
+    private titleService: TitleService,
+    private visibilityService: NoteVisibilityService
   ) {}
 
   public handleChartClick(event: any) {
@@ -106,6 +108,7 @@ export class RadarChartComponent {
       console.log(clickedLabel);
       console.log(value);
 
+      this.visibilityService.setVisibility('EmotionNote', true);
       this.titleService.selectedTitle = value;
       this.titleService.selectedLabel = datasetLabel;
 

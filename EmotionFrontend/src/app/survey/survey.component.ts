@@ -1,15 +1,30 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, Input,ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router'; // Import the Router module
 import { ExportService } from '../services/export.service';
+import { NoteVisibilityService } from '../note-visibility.service';
+import { startWith } from 'rxjs';
 
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.css']
 })
-export class SurveyComponent {
+export class SurveyComponent implements OnInit {
+  isVisible = false;
   
-  constructor(private router: Router, private exportService: ExportService) { }
+  constructor(private router: Router, private exportService: ExportService,
+    private visibilityService: NoteVisibilityService,
+    private cdr: ChangeDetectorRef) { }
+
+  ngOnInit() {
+    this.visibilityService.getVisibilityObservable('SurveyNote').pipe(
+      startWith(false) // Ensure the observable starts with false
+    ).subscribe(visible => {
+      console.log('Visibility:', visible);
+      this.isVisible = visible;
+      this.cdr.detectChanges(); // Manually trigger change detection
+    });
+  }
 
   exportToCsv() {
     this.exportService.exportToCsv().subscribe((data) => {
@@ -38,6 +53,14 @@ export class SurveyComponent {
   navigate() {
     this.router.navigate(['inconducive-chart']);
   }
+
+  closeSurveyNote(): void {
+    this.visibilityService.setVisibility('SurveyNote', false);
+  }
 }
+
+// closeSurveyNote() {
+//   this.showScrollSpy = false;
+// }
 
 

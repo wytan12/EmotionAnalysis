@@ -8,4 +8,5 @@ import { CommonModule } from '@angular/common';
 })
 export class StarRatingComponent {
   @Input() intensity: number | undefined;
+  @Input() intensity1: number | undefined;
 }
