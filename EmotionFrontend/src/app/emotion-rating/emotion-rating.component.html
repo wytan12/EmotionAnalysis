@@ -7,7 +7,7 @@
   <section class="header-section">
     <div>
       <h3>
-        {{ title }}<span *ngIf="title && datasetLabel"> : </span
+        {{ title }}<span *ngIf="title && datasetLabel">: </span
         >{{ datasetLabel }}
       </h3>
     </div>
@@ -42,12 +42,19 @@
               <p>{{ emoReadWrite.NoteTitle }}</p>
               <p class="question">Content:</p>
               <p>{{ emoReadWrite.NoteContent }}</p>
-              <app-star-rating
-                *ngFor="let intensity of emoReadWrite.Intensity"
-                [intensity1]="intensity.value"
-                [intensity]="intensity.value - 1"
-              ></app-star-rating>
-
+              <div>
+                <ng-container *ngFor="let intensity of emoReadWrite.Intensity">
+                  <ng-container *ngIf="datasetLabel == 'Reading'; else writeRating">
+                    <app-star-rating
+                      [intensity1]="intensity.value"
+                      [intensity]="intensity.value - 1"
+                    ></app-star-rating>
+                  </ng-container>
+                  <ng-template #writeRating>
+                    <app-write-rating [intensity]="intensity.value"></app-write-rating>
+                  </ng-template>
+                </ng-container>
+              </div>
               <hr class="section-divider" />
             </div>
           </section>

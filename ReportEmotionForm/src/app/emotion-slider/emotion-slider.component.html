@@ -1,19 +1,19 @@
 <form [formGroup]="feelingsForm" (ngSubmit)="onSubmit()">
   <h1>Emotion Survey</h1>
   <div>
-    <h2>I am feeling...</h2>
+    <h2>I feel...</h2>
     <h3 style="font-weight: 100">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Very Weak &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weak
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moderate
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Strong
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Very Strong
+      Very Weak &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weak
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Moderate
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Strong
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Very Strong
     </h3>
     <div *ngFor="let option of options" style="display: flex; align-items: center;">
       <label class="emotion-label">{{ option.label }} {{ getEmoji(option.id) }}: </label>
       <div class="radio-group">
         <label *ngFor="let i of [1, 2, 3, 4, 5]">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <input
             type="radio"
             [formControlName]="option.id"
@@ -25,7 +25,7 @@
   </div>
 
   <div>
-    <h2 for="Inconducive">Which emotions you reported above negatively influenced your Knowledge Building?</h2>
+    <h2 for="Inconducive">Which emotion(s) above negatively influence your Knowledge Building?</h2>
     <div>
       <div *ngFor="let option of options">
         <input
@@ -41,7 +41,7 @@
   </div>
   
   <div>
-    <h2 for="Reason">What caused that emotion? [Optional]</h2>
+    <h2 for="Reason">Why do you feel these emotion(s)? [Optional]</h2>
     <textarea
       formControlName="Reason"
       id="Reason"

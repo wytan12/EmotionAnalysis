@@ -59,12 +59,12 @@ div.content {
 }
 
 .question {
-  font-weight: bold;
   font-size: 18px; /* Adjust font size */
   margin-bottom: 8px; /* Spacing below the question */
 }
 
 .answer { 
+  font-weight: bold;
   font-size: 16px; /* Adjust font size */
 }
 
