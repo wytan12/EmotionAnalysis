@@ -1,5 +1,6 @@
 import express from "express";
 import {Test, EmoReadWrite, EmoReg, EmoSurvey, Emotion,EmoLogData} from "../model/model.js";
+import axios from 'axios';
 const APIrouter = express.Router();
 
 APIrouter.get("/newtest", (req, res) => {
@@ -38,6 +39,30 @@ APIrouter.get("/tests", (req, res) => {
       res.send(err.message);
     });
 });
+
+APIrouter.get('/community-data', async (req, res) => {
+  try {
+    // Login to get the token (check)
+    const loginResponse = await axios.post('https://kf6.ualbany.org/auth/local', {
+      userName: "USERNAME",
+      password: "PASSWORD"
+    });
+    const token = loginResponse.data.token;
+    console.log(token);
+    // res.send(token);
+
+    // Fetch community data using the token
+    const dataResponse = await axios.get('https://kf6.ualbany.org/api/analytics/emotions/note-emotions/community-id/668719a69d8dd4219c66ac03', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    res.status(200).json(dataResponse.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error processing request', error: error });
+  }
+});
+
 
 // //Post Method
 
