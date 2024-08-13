@@ -62,6 +62,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { TabComponent } from './tab/tab.component';
 import { ReflectHistoryButtonComponent } from './reflect-history-button/reflect-history-button.component';
 import { WriteRatingComponent } from './write-rating/write-rating.component';
+import { TryingnoteComponent } from './tryingnote/tryingnote.component';
+import { RadarChartJerrisonapiComponent } from './radar-chart-jerrisonapi/radar-chart-jerrisonapi.component';
 
 @NgModule({
   imports: [
@@ -116,7 +118,9 @@ import { WriteRatingComponent } from './write-rating/write-rating.component';
     StackbarchartComponent,
     TabComponent,
     ReflectHistoryButtonComponent,
-    WriteRatingComponent
+    WriteRatingComponent,
+    TryingnoteComponent,
+    RadarChartJerrisonapiComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [

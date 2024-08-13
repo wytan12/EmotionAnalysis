@@ -36,4 +36,8 @@ export class HeaderComponent {
   goToSurvey() {
     this.router.navigate(['survey']);
   }
+
+  goToTryingnote() {
+    this.router.navigate(['tryingnote']);
+  }
 }
