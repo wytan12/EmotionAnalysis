@@ -44,8 +44,8 @@ APIrouter.get('/community-data', async (req, res) => {
   try {
     // Login to get the token (check)
     const loginResponse = await axios.post('https://kf6.ualbany.org/auth/local', {
-      userName: "USERNAME",
-      password: "PASSWORD"
+      userName: "bron322",
+      password: "HelloWorld322"
     });
     const token = loginResponse.data.token;
     console.log(token);

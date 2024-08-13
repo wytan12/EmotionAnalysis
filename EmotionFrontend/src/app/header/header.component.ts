@@ -22,13 +22,15 @@ export class HeaderComponent {
     const currentRoute = this.router.url;
     if (currentRoute.includes('dashboard')) {
       this.activePage = 'dashboard';
-    } else if (currentRoute.includes('survey') || (currentRoute.includes('inconducive'))) {
+    } else if (currentRoute.includes('survey') || currentRoute.includes('inconducive')) {
       this.activePage = 'survey';
+    } else if (currentRoute.includes('tryingnote')) {
+      this.activePage = 'tryingnote';
     } else {
       this.activePage = ''; // Handle other cases or set a default value
     }
   }
-
+  
   goToHome() {
     this.router.navigate(['dashboard']);
   }
