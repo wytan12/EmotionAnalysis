@@ -1,0 +1,13 @@
+p {
+    font-family: Lato;
+}
+
+.radarchart-container {
+    padding-left: 50px;
+    overflow: hidden;
+    display: block;
+    width: 80%;
+    margin-top: 20px;
+    cursor: pointer;
+}
+

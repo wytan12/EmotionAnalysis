@@ -1,13 +1,3 @@
-/* .dashboard-container {
-  display: flex;
-  justify-content: space-between;
-} */
-
-.radar-chart-container {
-  /* flex: 1; */
-  /* margin-right: 10px; Optional: Adjust margin between charts */
-}
-
 .right-section {
   margin-top: 50px;
   margin-right: 100px;
