@@ -26,6 +26,7 @@ export class EmotionService {
       catchError(this.handleError<Test[]>('getEmotiones', []))
     );
   }
+  
   getEmoReadWrite(): Observable<EmoReadWrite[]> {
     return this.http
       .get<EmoReadWrite[]>('http://localhost:3000/api/findAllEmoReadWrite')

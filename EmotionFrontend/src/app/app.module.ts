@@ -64,6 +64,7 @@ import { ReflectHistoryButtonComponent } from './reflect-history-button/reflect-
 import { WriteRatingComponent } from './write-rating/write-rating.component';
 import { TryingnoteComponent } from './tryingnote/tryingnote.component';
 import { RadarChartJerrisonapiComponent } from './radar-chart-jerrisonapi/radar-chart-jerrisonapi.component';
+import { TestNoteratingComponent } from './test-noterating/test-noterating.component';
 
 @NgModule({
   imports: [
@@ -121,6 +122,7 @@ import { RadarChartJerrisonapiComponent } from './radar-chart-jerrisonapi/radar-
     WriteRatingComponent,
     TryingnoteComponent,
     RadarChartJerrisonapiComponent,
+    TestNoteratingComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [
