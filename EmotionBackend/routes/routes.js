@@ -48,7 +48,7 @@ APIrouter.get('/community-data', async (req, res) => {
       password: "HelloWorld322"
     });
     const token = loginResponse.data.token;
-    console.log(token);
+    // console.log(token);
     // res.send(token);
 
     // Fetch community data using the token
