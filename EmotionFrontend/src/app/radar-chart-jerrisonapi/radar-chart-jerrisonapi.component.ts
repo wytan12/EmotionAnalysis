@@ -11,11 +11,11 @@ import { NoteVisibilityService } from '../note-visibility.service';
 @Component({
   selector: 'app-radar-chart-jerrisonapi',
   templateUrl: './radar-chart-jerrisonapi.component.html',
-  styleUrl: './radar-chart-jerrisonapi.component.css'
+  styleUrl: './radar-chart-jerrisonapi.component.css',
 })
 export class RadarChartJerrisonapiComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  
+
   public radarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     scales: {
@@ -37,8 +37,8 @@ export class RadarChartJerrisonapiComponent {
       },
       tooltip: {
         enabled: true,
-        titleFont:{
-          size:15,
+        titleFont: {
+          size: 15,
         },
         bodyFont: {
           size: 15,
@@ -47,7 +47,7 @@ export class RadarChartJerrisonapiComponent {
       },
     },
   };
-  
+
   public radarChartLabels: string[] = [
     'Joyful',
     'Curious',
@@ -66,7 +66,7 @@ export class RadarChartJerrisonapiComponent {
         label: 'Read',
         pointRadius: 5,
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(255, 99, 132)'
+        pointHoverBorderColor: 'rgb(255, 99, 132)',
       },
       {
         data: [],
@@ -76,7 +76,7 @@ export class RadarChartJerrisonapiComponent {
         pointBackgroundColor: 'blue',
         pointRadius: 5,
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(54, 162, 235)'
+        pointHoverBorderColor: 'rgb(54, 162, 235)',
       },
     ],
   };
@@ -99,7 +99,7 @@ export class RadarChartJerrisonapiComponent {
       const dataset = this.radarChartData.datasets[clickedLabel.datasetIndex];
       const datasetLabel = dataset.label || null;
 
-      console.log("test");
+      console.log('test');
       console.log(datasetLabel);
       console.log(clickedLabel);
       console.log(value);
@@ -139,16 +139,24 @@ export class RadarChartJerrisonapiComponent {
         this.getData(undefined, undefined);
       }
     });
+
     this.sharedViewService.selectedView$.subscribe((view: string | null) => {
-      if (!view) {
-        this.selectedView = ['Energy & Solar group 1', 'Data science/AI group 6'];
-        console.log('Default Radar chart view: ', this.selectedView);
-      } else {
-        this.selectedView = [view];
-        console.log('Radar chart view: ', this.selectedView);
-      }
-      this.getData(); // Call getData after setting the view
+      this.selectedView = view ? [view] : [];
+      this.getData(); // Fetch data based on selected view
     });
+    // this.sharedViewService.selectedView$.subscribe((view: string | null) => {
+    //   if (!view) {
+    //     this.selectedView = [
+    //       'Energy & Solar group 1',
+    //       'Data science/AI group 6',
+    //     ];
+    //     console.log('Default Radar chart view: ', this.selectedView);
+    //   } else {
+    //     this.selectedView = [view];
+    //     console.log('Radar chart view: ', this.selectedView);
+    //   }
+    //   this.getData(); // Call getData after setting the view
+    // });
   }
 
   ngAfterViewInit() {
@@ -175,18 +183,22 @@ export class RadarChartJerrisonapiComponent {
     }
   }
 
-  public getDataHttp(from: Date, to: Date): Promise<{ [key: string]: number[] }> {
-    return new Promise<{ [key: string]: number[] }>((resolve) => {
-      const rdata: { [key: string]: number[] } = {
-        Read: [0, 0, 0, 0, 0, 0, 0],
-        Write: [0, 0, 0, 0, 0, 0, 0],
-      };
-      const totalEntries: { [key: string]: Set<string> } = {
-        read: new Set<string>(),
-        write: new Set<string>(),
-      };
+  public getDataHttp(
+  from: Date,
+  to: Date
+): Promise<{ [key: string]: number[] }> {
+  return new Promise<{ [key: string]: number[] }>((resolve) => {
+    const rdata: { [key: string]: number[] } = {
+      Read: [0, 0, 0, 0, 0, 0, 0],
+      Write: [0, 0, 0, 0, 0, 0, 0],
+    };
+    const totalEntries: { [key: string]: Set<string> } = {
+      read: new Set<string>(),
+      write: new Set<string>(),
+    };
 
-      this.http.get<any[]>('http://localhost:3000/api/community-data').subscribe((response: any[]) => {
+    this.http.get<any[]>('http://localhost:3000/api/community-data').subscribe(
+      (response: any[]) => {
         const intensityKeys = [
           'Joyful',
           'Curious',
@@ -197,21 +209,29 @@ export class RadarChartJerrisonapiComponent {
           'Bored',
         ];
 
-        response.forEach(dataEntry => {
+        response.forEach((dataEntry) => {
           const actionType = dataEntry['actionType'];
           const timestamp = new Date(dataEntry['created']);
           const _id = dataEntry['_id'];
 
-          if (timestamp >= from && timestamp <= to) {
+          // Check if the entry matches the selected view
+          const viewsMatch = this.selectedView
+            ? dataEntry.inViews.some((view: any) =>
+                this.selectedView?.includes(view.title)
+              )
+            : true;
+
+          if (timestamp >= from && timestamp <= to && viewsMatch) {
             intensityKeys.forEach((key, index) => {
               const emotionId = `eat_${key.toLowerCase()}`;
-              const rating = dataEntry['ratings']?.find((r: any) => r.emotionId === emotionId);
+              const rating = dataEntry['ratings']?.find(
+                (r: any) => r.emotionId === emotionId
+              );
               const intensity = rating ? rating.intensity : 0;
 
               if (actionType === 'read' || actionType === 'write') {
-                const typeKey = actionType.charAt(0).toUpperCase() + actionType.slice(1);
-                // console.log("sister:", typeKey)
-                // console.log("brother:", actionType)
+                const typeKey =
+                  actionType.charAt(0).toUpperCase() + actionType.slice(1);
                 if (rdata[typeKey]) {
                   rdata[typeKey][index] += intensity;
                   totalEntries[actionType].add(_id);
@@ -225,19 +245,21 @@ export class RadarChartJerrisonapiComponent {
         const readCount = totalEntries['read'].size;
         const writeCount = totalEntries['write'].size;
 
-        console.log("readnumber:", totalEntries['read'].size)
-        console.log("writenumber:", totalEntries['write'].size)
-
         intensityKeys.forEach((key, index) => {
           rdata['Read'][index] /= readCount || 1;
           rdata['Write'][index] /= writeCount || 1;
         });
 
         resolve(rdata);
-      }, (error) => {
+      },
+      (error) => {
         console.error('Error fetching data:', error);
-        resolve({ Reading: [0, 0, 0, 0, 0, 0, 0], Writing: [0, 0, 0, 0, 0, 0, 0] });
-      });
-    });
-  }
+        resolve({
+          Reading: [0, 0, 0, 0, 0, 0, 0],
+          Writing: [0, 0, 0, 0, 0, 0, 0],
+        });
+      }
+    );
+  });
+}
 }

@@ -3,11 +3,11 @@ p {
 }
 
 .radarchart-container {
-    padding-left: 50px;
+    padding-left: 2rem;
     overflow: hidden;
     display: block;
-    width: 80%;
-    margin-top: 20px;
+    width: 65vh;
+    margin-top: 1rem;
     cursor: pointer;
 }
 
