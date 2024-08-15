@@ -6,6 +6,9 @@
   (ngModelChange)="onChange($event)"
   [(ngModel)]="selectedView"
 >
-  <nz-option nzLabel="Energy & Solar group 1" nzValue="Energy & Solar group 1"></nz-option>
-  <nz-option nzLabel="Data science/AI group 6" nzValue="Data science/AI group 6"></nz-option>
+  <nz-option
+    *ngFor="let view of views"
+    [nzLabel]="view"
+    [nzValue]="view"
+  ></nz-option>
 </nz-select>
