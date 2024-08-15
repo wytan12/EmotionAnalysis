@@ -1,0 +1,41 @@
+<app-header></app-header>
+
+<div style="display: flex; margin-top: 10px; margin-left: 2%">
+  <app-user-guide-button
+    style="margin-left: 0.2%; margin-top: 0.2%"
+  ></app-user-guide-button>
+  <app-select-time-dropdown style="margin-left: 2%"></app-select-time-dropdown>
+  <app-select-view-dropdown style="margin-left: 2%"></app-select-view-dropdown>
+</div>
+<div style="display: flex; justify-content: space-between">
+  <div class="left-section" style="flex: 1">
+    <!-- <app-radar-chart></app-radar-chart> -->
+    <app-radar-chart-jerrisonapi></app-radar-chart-jerrisonapi>
+  </div>
+  <div class="right-section flex">
+    <app-test-noterating style="flex: 1; overflow: auto"></app-test-noterating>
+  </div>
+</div>
+<div class="flex pt-4" style="width: 60%; padding-left: 4rem">
+  <button
+    (click)="exportToCsv()"
+    type="button"
+    class="button inline-flex px-3 py-3 items-center mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+  >
+    Download Note Emotion
+  </button>
+  <button
+    (click)="exportSurveyToCsv()"
+    type="button"
+    class="button inline-flex px-3 py-3 items-center mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+    style="margin-left: 4rem"
+  >
+    Download Survey Emotion
+  </button>
+</div>
+
+<app-report-emotion-button
+  class="btn btn-help"
+  (click)="helpWindow()"
+></app-report-emotion-button>
+<app-report-readwrite-button></app-report-readwrite-button>

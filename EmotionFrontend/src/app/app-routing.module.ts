@@ -11,13 +11,13 @@ import { EmotionRatingComponent } from './emotion-rating/emotion-rating.componen
 import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
 import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
 import { InconduciveComponent } from './inconducive/inconducive.component';
+import { TryingnoteComponent } from './tryingnote/tryingnote.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  // { path: 'emotion-detail', component: EmotionDetailComponent },
-  // { path: 'emotion/:id', component: EmotionDetailComponent },
+  { path: 'tryingnote', component: TryingnoteComponent },
   { path: 'statics', component: StaticsComponent },
   { path: 'bar', component: BarChartComponent},
   { path: 'survey', component: SurveyComponent},

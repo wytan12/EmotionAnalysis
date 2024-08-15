@@ -1,0 +1,100 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+.scrollspy-example {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+
+.nav-link.active {
+  background-color: #0D6EFD; /* Set your desired background color for the active nav-link */
+  /* Set your desired text color for the active nav-link */
+}
+
+.container {
+  padding: 20px;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; /* Adds space between the dropdown and the button */
+  margin-left: auto; /* Pushes the controls to the right end */
+}
+
+.controls .button {
+  margin-bottom: 5px; /* Add space below the button */
+}
+
+.custom-button {
+  background-color: black; /* Blue background color */
+  color: white; /* White text */
+  font-weight: bold; /* Bold text */
+  padding: 0.5rem 1rem; /* Padding (8px top/bottom, 16px left/right) */
+  border-radius: 15px; /* Rounded corners */
+  border: none; /* Remove default border */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.custom-button:hover {
+  background-color: grey; /* Darker blue on hover */
+}
+
+.custom-button:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5), 0 0 0 4px rgba(59, 130, 246, 0.3); /* Custom focus outline */
+}
+
+.survey-section {
+  background-color: #f8f9fa; /* Light gray background color */
+  border: 1px solid #dee2e6; /* Border color */
+  border-radius: 8px; /* Rounded corners */
+  margin-bottom: 20px; /* Spacing between sections */
+  padding: 20px; /* Padding inside each section */
+}
+
+.question-answer {
+  margin-bottom: 15px; /* Spacing between question and answer */
+}
+
+.question {
+  font-weight: bold;
+  font-size: 18px; /* Adjust font size */
+  margin-bottom: 8px; /* Spacing below the question */
+}
+
+.answer { 
+  font-size: 16px; /* Adjust font size */
+}
+
+.section-divider {
+  border-top: 1px solid #ccc; /* Border color for section divider */
+  margin-top: 20px; /* Spacing above the divider */
+  margin-bottom: 20px; /* Spacing below the divider */
+}
+
+.sidebar {
+  background-color: #ffffe2; 
+  color: black;
+  padding: 10px; /* Padding inside the sidebar items */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.sidebar .nav-link {
+  color: black; /* White text color for sidebar links */
+  font-size: 16px; /* Adjust font size */
+  margin-bottom: 10px; /* Spacing between sidebar links */
+}
+
+.sidebar .nav-link.active {
+  background-color: #0056b3; /* Darker blue background color for active link */
+}
