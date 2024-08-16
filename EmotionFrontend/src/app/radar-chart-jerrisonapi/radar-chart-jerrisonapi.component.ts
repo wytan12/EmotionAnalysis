@@ -141,8 +141,15 @@ export class RadarChartJerrisonapiComponent {
     });
 
     this.sharedViewService.selectedView$.subscribe((view: string | null) => {
-      this.selectedView = view ? [view] : [];
-      this.getData(); // Fetch data based on selected view
+      if (view) {
+        this.selectedView = [view];
+        this.getData();
+      } else {
+        this.sharedViewService.getViews().subscribe((views: string[]) => {
+          this.selectedView = views; // Set all views as default
+          this.getData(); // Fetch data based on selected view
+        });
+      }
     });
     // this.sharedViewService.selectedView$.subscribe((view: string | null) => {
     //   if (!view) {

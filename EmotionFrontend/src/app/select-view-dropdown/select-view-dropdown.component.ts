@@ -16,7 +16,7 @@ export class SelectViewDropdownComponent implements OnInit {
     this.sharedViewService.getViews().subscribe((views: string[]) => {
       this.views = views;
       if (views.length > 0) {
-        this.selectedView = views[0]; // Optionally set the first view as default
+        this.selectedView = views.join(', '); // Optionally set the first view as default
         this.onChange(this.selectedView);
       }
     });
