@@ -71,12 +71,18 @@ export class TestNoteratingComponent implements OnInit {
             this.selectedView = Array.isArray(view) ? view : view ? [view] : [];
             console.log('Selected views:', this.selectedView);
 
+            const viewsArray = typeof view === 'string' ? 
+                           view.split(',').map(v => v.trim()) : 
+                           Array.isArray(view) ? view : [];
+            console.log('views array:', viewsArray);
+
             return this.getEmoReadWriteByEmotionTitle(
               title,
               datasetLabel,
               from,
               to,
-              this.selectedView
+              viewsArray
+              // this.selectedView
             );
           } else {
             return of([]); // Return an observable of an empty array
@@ -133,9 +139,14 @@ export class TestNoteratingComponent implements OnInit {
             });
 
             // Implement view filtering
-            const isInView =
-              !views ||
-              data.inViews.some((view: any) => views.includes(view.title));
+            // const isInView =
+            //   !views ||
+            //   data.inViews.some((view: any) => views.includes(view.title));
+
+            const title = data.inViews[0].title;
+            const isInView = views == undefined || views.includes(data.inViews[0].title);
+            console.log(title);
+            console.log(`isInView result: ${isInView}`);
 
             return (
               isActionTypeMatch &&
