@@ -68,20 +68,23 @@ export class TestNoteratingComponent implements OnInit {
                 ? new Date(timeRange[1])
                 : undefined;
 
-            this.selectedView = Array.isArray(view) ? view : view ? [view] : [];
+            // this.selectedView = Array.isArray(view) ? view : view ? [view] : [];
+            if (view) {
+              this.selectedView = view.includes(',') ? view.split(',').map(v => v.trim()) : [view.trim()];
+            } else {
+              this.sharedViewService.getViews().subscribe((views: string[]) => {
+                this.selectedView = views;
+              });
+            }
+  
             console.log('Selected views:', this.selectedView);
-
-            const viewsArray = typeof view === 'string' ?
-                           view.split(',').map(v => v.trim()) :
-                           Array.isArray(view) ? view : [];
-            console.log('views array:', viewsArray);
 
             return this.getEmoReadWriteByEmotionTitle(
               title,
               datasetLabel,
               from,
               to,
-              viewsArray
+              this.selectedView
             );
           } else {
             return of([]); // Return an observable of an empty array
@@ -136,6 +139,7 @@ export class TestNoteratingComponent implements OnInit {
             });
 
             const title = data.inViews[0]?.title;
+            //const isInView = views == undefined || views.length === 0 || views.includes(title);
             const isInView = views == undefined || views.includes(title);
 
             return (
