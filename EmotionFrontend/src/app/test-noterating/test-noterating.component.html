@@ -1,3 +1,4 @@
+
 <!-- Preloader -->
 <div *ngIf="isLoading" class="preloader">
   <div class="spinner"></div>
@@ -14,6 +15,7 @@
         </h3>
       </div>
       <div class="controls">
+
         <button
           *ngIf="isVisible"
           (click)="closeEmotionNote()"
@@ -21,6 +23,7 @@
           class="custom-button"
         >
           Close
+
         </button>
         <app-intensity-dropdown
           (selectedValueChange)="filterList($event)"
@@ -28,10 +31,12 @@
       </div>
     </section>
 
+
     <div class="d-flex flex-column flex-md-row">
       <div class="col-10">
         <div class="scrollspy-example scrollspy-container">
           <div *ngFor="let emoReadWrite of filteredEmoReadWrite; let i = index">
+
             <section
               [mdbScrollspyElement]="'scrollspy'"
               [id]="'example-' + (currentSectionNumber + i)"
@@ -45,6 +50,7 @@
                 <p class="question">Content:</p>
                 <p [innerHTML]="emoReadWrite.note.data.body"></p>
                 <div>
+
                   <ng-container
                     *ngFor="let intensity of emoReadWrite.Intensity"
                   >
@@ -63,6 +69,7 @@
                     </ng-template>
                   </ng-container>
                 </div>
+
                 <hr class="section-divider" />
               </div>
             </section>

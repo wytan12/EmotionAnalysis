@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TimeService } from '../services/time.service';
@@ -12,7 +12,7 @@ import { NoteVisibilityService } from '../note-visibility.service';
 @Component({
   selector: 'app-test-noterating',
   templateUrl: './test-noterating.component.html',
-  styleUrls: ['./test-noterating.component.css'], // corrected 'styleUrl' to 'styleUrls'
+  styleUrls: ['./test-noterating.component.css'],
 })
 export class TestNoteratingComponent implements OnInit {
   title: string = '';
@@ -23,8 +23,21 @@ export class TestNoteratingComponent implements OnInit {
   selectedView: string[] = [];
   Math: any = Math; // Assigning Math object to use in the template
   isVisible = true;
-  isLoading = true; // Add loading state
-  filteredEmoReadWrite: any[] = []; // Replaced EmoReadWrite[] with any[] since the structure isn't strictly defined in the code
+
+  isLoading = true;
+  filteredEmoReadWrite: any[] = [];
+  filteredUniqueEmoReadWrite: any[] = [];
+  intensityCounts: {
+    [noteId: string]: {
+      [emotionId: string]: {
+        intensity_1star: number;
+        intensity_2star: number;
+        intensity_3star: number;
+      };
+    };
+  } = {};
+  currentSectionNumber: number = 1; // Add this line
+
 
   constructor(
     private route: ActivatedRoute,
@@ -33,11 +46,11 @@ export class TestNoteratingComponent implements OnInit {
     private sharedTimeService: SharedTimeService,
     private titleService: TitleService,
     private sharedViewService: SharedViewService,
-    private visibilityService: NoteVisibilityService
+    private visibilityService: NoteVisibilityService,
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    // Combine latest observables for title and dataset label
     this.visibilityService
       .getVisibilityObservable('EmotionNote')
       .subscribe((visible) => {
@@ -69,22 +82,25 @@ export class TestNoteratingComponent implements OnInit {
                 ? new Date(timeRange[1])
                 : undefined;
 
-            // Update to handle multiple selected views
-            this.selectedView = Array.isArray(view) ? view : view ? [view] : [];
-            console.log('Selected views:', this.selectedView);
+            // this.selectedView = Array.isArray(view) ? view : view ? [view] : [];
+            if (view) {
+              this.selectedView = view.includes(',')
+                ? view.split(',').map((v) => v.trim())
+                : [view.trim()];
+            } else {
+              this.sharedViewService.getViews().subscribe((views: string[]) => {
+                this.selectedView = views;
+              });
+            }
 
-            const viewsArray = typeof view === 'string' ? 
-                           view.split(',').map(v => v.trim()) : 
-                           Array.isArray(view) ? view : [];
-            console.log('views array:', viewsArray);
+            console.log('Selected views:', this.selectedView);
 
             return this.getEmoReadWriteByEmotionTitle(
               title,
               datasetLabel,
               from,
               to,
-              viewsArray
-              // this.selectedView
+              this.selectedView
             );
           } else {
             return of([]); // Return an observable of an empty array
@@ -94,6 +110,9 @@ export class TestNoteratingComponent implements OnInit {
       .subscribe(
         (filteredData) => {
           this.filteredEmoReadWrite = filteredData;
+          this.updateUniqueEmoReadWrite(); // Update unique items
+          this.calculateIntensityCounts(filteredData);
+          this.cdr.detectChanges(); // Trigger change detection
           this.isLoading = false; // End loading
         },
         (error) => {
@@ -102,8 +121,6 @@ export class TestNoteratingComponent implements OnInit {
         }
       );
   }
-
-  currentSectionNumber: number = 1;
 
   getEmoReadWriteByEmotionTitle(
     emotionTitle: string,
@@ -117,7 +134,6 @@ export class TestNoteratingComponent implements OnInit {
         .get<any[]>('http://localhost:3000/api/community-data')
         .subscribe((dataList) => {
           const filteredList = dataList.filter((data) => {
-            console.log(data);
             const action = data.actionType.toLowerCase();
             const isActionTypeMatch = action === emotionLabel.toLowerCase();
 
@@ -142,15 +158,8 @@ export class TestNoteratingComponent implements OnInit {
               return false;
             });
 
-            // Implement view filtering
-            // const isInView =
-            //   !views ||
-            //   data.inViews.some((view: any) => views.includes(view.title));
-
-            const title = data.inViews[0].title;
-            const isInView = views == undefined || views.includes(data.inViews[0].title);
-            console.log(title);
-            console.log(`isInView result: ${isInView}`);
+            const title = data.inViews[0]?.title;
+            const isInView = views == undefined || views.includes(title);
 
             return (
               isActionTypeMatch &&
@@ -161,13 +170,82 @@ export class TestNoteratingComponent implements OnInit {
           });
 
           resolve(filteredList);
-          console.log(filteredList);
         });
     });
   }
 
+  calculateIntensityCounts(filteredData: any[]): void {
+    this.intensityCounts = filteredData.reduce((acc: any, curr: any) => {
+      const noteId = curr.note._id;
+
+      if (!acc[noteId]) {
+        acc[noteId] = {};
+      }
+
+      curr.ratings.forEach((rating: any) => {
+        const emotionId = rating.emotionId;
+        const intensity = rating.intensity;
+
+        if (!acc[noteId][emotionId]) {
+          acc[noteId][emotionId] = {
+            intensity_1star: 0,
+            intensity_2star: 0,
+            intensity_3star: 0,
+          };
+        }
+
+        if (intensity === 1) {
+          acc[noteId][emotionId].intensity_1star += 1;
+        } else if (intensity === 2) {
+          acc[noteId][emotionId].intensity_2star += 1;
+        } else if (intensity === 3) {
+          acc[noteId][emotionId].intensity_3star += 1;
+        }
+      });
+
+      return acc;
+    }, {});
+  }
+
+  getIntensityCount(
+    noteId: string,
+    emotionId: string,
+    intensity: number
+  ): number {
+    const noteData = this.intensityCounts[noteId];
+    if (noteData && noteData[emotionId]) {
+      const key = `intensity_${intensity}star` as
+        | 'intensity_1star'
+        | 'intensity_2star'
+        | 'intensity_3star';
+      return noteData[emotionId][key] || 0;
+    }
+    return 0;
+  }
+
+  getWriteIntensityValue(noteId: string, emotionId: string): number {
+    const noteData = this.intensityCounts[noteId];
+    if (noteData && noteData[emotionId]) {
+      // Determine the highest intensity level
+      const intensities = [1, 2, 3];
+      let maxIntensity = 0;
+
+      for (const intensity of intensities) {
+        const key = `intensity_${intensity}star` as
+          | 'intensity_1star'
+          | 'intensity_2star'
+          | 'intensity_3star';
+        if (noteData[emotionId][key] > 0) {
+          maxIntensity = intensity;
+        }
+      }
+
+      return maxIntensity;
+    }
+    return 0;
+  }
+
   filterList(selectedValue: string): void {
-    console.log(selectedValue);
     if (selectedValue === 'Intensity') {
       this.filteredEmoReadWrite.sort((a, b) => {
         const intensityA = a.Intensity[0]?.value || 0;
@@ -180,9 +258,25 @@ export class TestNoteratingComponent implements OnInit {
           new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf()
       );
     }
+
+    // Update filteredUniqueEmoReadWrite after filtering
+    this.updateUniqueEmoReadWrite();
+    this.cdr.detectChanges(); // Trigger change detection
   }
 
   closeEmotionNote(): void {
     this.visibilityService.setVisibility('EmotionNote', false);
+  }
+
+  // Method to update filteredUniqueEmoReadWrite
+  updateUniqueEmoReadWrite(): void {
+    const seenIds = new Set<string>();
+    this.filteredUniqueEmoReadWrite = this.filteredEmoReadWrite.filter((item) => {
+      if (!seenIds.has(item.note._id)) {
+        seenIds.add(item.note._id);
+        return true;
+      }
+      return false;
+    });
   }
 }
