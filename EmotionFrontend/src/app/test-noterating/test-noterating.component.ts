@@ -23,6 +23,7 @@ export class TestNoteratingComponent implements OnInit {
   selectedView: string[] = [];
   Math: any = Math; // Assigning Math object to use in the template
   isVisible = true;
+  isLoading = true; // Add loading state
   filteredEmoReadWrite: any[] = []; // Replaced EmoReadWrite[] with any[] since the structure isn't strictly defined in the code
 
   constructor(
@@ -52,6 +53,7 @@ export class TestNoteratingComponent implements OnInit {
       .pipe(
         switchMap(([title, datasetLabel, timeRange, view]) => {
           if (title && datasetLabel) {
+            this.isLoading = true; // Start loading
             this.title = title;
             this.datasetLabel = datasetLabel;
             console.log('Title:', title);
@@ -92,9 +94,11 @@ export class TestNoteratingComponent implements OnInit {
       .subscribe(
         (filteredData) => {
           this.filteredEmoReadWrite = filteredData;
+          this.isLoading = false; // End loading
         },
         (error) => {
           console.error('Error fetching community data:', error);
+          this.isLoading = false; // End loading
         }
       );
   }

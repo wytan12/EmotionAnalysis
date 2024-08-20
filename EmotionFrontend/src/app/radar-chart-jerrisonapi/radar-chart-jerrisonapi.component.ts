@@ -15,6 +15,7 @@ import { NoteVisibilityService } from '../note-visibility.service';
 })
 export class RadarChartJerrisonapiComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  isLoading = true;
 
   public radarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -151,19 +152,6 @@ export class RadarChartJerrisonapiComponent {
         });
       }
     });
-    // this.sharedViewService.selectedView$.subscribe((view: string | null) => {
-    //   if (!view) {
-    //     this.selectedView = [
-    //       'Energy & Solar group 1',
-    //       'Data science/AI group 6',
-    //     ];
-    //     console.log('Default Radar chart view: ', this.selectedView);
-    //   } else {
-    //     this.selectedView = [view];
-    //     console.log('Radar chart view: ', this.selectedView);
-    //   }
-    //   this.getData(); // Call getData after setting the view
-    // });
   }
 
   ngAfterViewInit() {
@@ -173,6 +161,7 @@ export class RadarChartJerrisonapiComponent {
   }
 
   async getData(from?: Date, to?: Date) {
+    this.isLoading = true; // Start loading
     if (!from || !to) {
       const defaultFromDate = new Date();
       const defaultToDate = new Date();
@@ -188,6 +177,7 @@ export class RadarChartJerrisonapiComponent {
     if (this.chart) {
       this.chart.update();
     }
+    this.isLoading = false;
   }
 
   public getDataHttp(

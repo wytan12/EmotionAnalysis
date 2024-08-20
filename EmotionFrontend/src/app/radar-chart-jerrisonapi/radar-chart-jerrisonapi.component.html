@@ -1,14 +1,19 @@
 <div style="display: block">
   <!-- Radar Chart Container -->
   <div class="radarchart-container">
-    <!-- Chart Component -->
-    <canvas
-      baseChart
-      [data]="radarChartData"
-      [options]="radarChartOptions"
-      [type]="radarChartType"
-      (chartClick)="handleChartClick($event)"
-    >
-    </canvas>
+    <div *ngIf="isLoading" class="preloader">
+      <!-- Simple preloader animation -->
+      <div class="spinner"></div>
+    </div>
+    <div *ngIf="!isLoading">
+      <canvas
+        baseChart
+        [data]="radarChartData"
+        [options]="radarChartOptions"
+        [type]="radarChartType"
+        (chartClick)="handleChartClick($event)"
+      >
+      </canvas>
+    </div>
   </div>
 </div>
