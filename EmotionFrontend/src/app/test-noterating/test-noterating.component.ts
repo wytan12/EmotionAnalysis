@@ -23,6 +23,8 @@ export class TestNoteratingComponent implements OnInit {
   selectedView: string[] = [];
   Math: any = Math; // Assigning Math object to use in the template
   isVisible = true;
+
+  isLoading = true;
   filteredEmoReadWrite: any[] = [];
   filteredUniqueEmoReadWrite: any[] = [];
   intensityCounts: {
@@ -35,6 +37,7 @@ export class TestNoteratingComponent implements OnInit {
     };
   } = {};
   currentSectionNumber: number = 1; // Add this line
+
 
   constructor(
     private route: ActivatedRoute,
@@ -63,6 +66,7 @@ export class TestNoteratingComponent implements OnInit {
       .pipe(
         switchMap(([title, datasetLabel, timeRange, view]) => {
           if (title && datasetLabel) {
+            this.isLoading = true; // Start loading
             this.title = title;
             this.datasetLabel = datasetLabel;
             console.log('Title:', title);
@@ -109,9 +113,11 @@ export class TestNoteratingComponent implements OnInit {
           this.updateUniqueEmoReadWrite(); // Update unique items
           this.calculateIntensityCounts(filteredData);
           this.cdr.detectChanges(); // Trigger change detection
+          this.isLoading = false; // End loading
         },
         (error) => {
           console.error('Error fetching community data:', error);
+          this.isLoading = false; // End loading
         }
       );
   }
