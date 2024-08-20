@@ -24,7 +24,7 @@
     <div class="d-flex flex-column flex-md-row">
       <div class="col-10">
         <div class="scrollspy-example scrollspy-container">
-          <div *ngFor="let emoReadWrite of filteredEmoReadWrite; let i = index">
+          <div *ngFor="let emoReadWrite of filteredUniqueEmoReadWrite; let i = index">
             <section
               [mdbScrollspyElement]="'scrollspy'"
               [id]="'example-' + (currentSectionNumber + i)"
