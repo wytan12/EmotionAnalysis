@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TimeService } from '../services/time.service';
@@ -24,7 +24,16 @@ export class TestNoteratingComponent implements OnInit {
   Math: any = Math; // Assigning Math object to use in the template
   isVisible = true;
   filteredEmoReadWrite: any[] = [];
-  intensityCounts: { [noteId: string]: { [emotionId: string]: { intensity_1star: number, intensity_2star: number, intensity_3star: number } } } = {};
+  filteredUniqueEmoReadWrite: any[] = [];
+  intensityCounts: {
+    [noteId: string]: {
+      [emotionId: string]: {
+        intensity_1star: number;
+        intensity_2star: number;
+        intensity_3star: number;
+      };
+    };
+  } = {};
   currentSectionNumber: number = 1; // Add this line
 
   constructor(
@@ -34,7 +43,8 @@ export class TestNoteratingComponent implements OnInit {
     private sharedTimeService: SharedTimeService,
     private titleService: TitleService,
     private sharedViewService: SharedViewService,
-    private visibilityService: NoteVisibilityService
+    private visibilityService: NoteVisibilityService,
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -70,13 +80,15 @@ export class TestNoteratingComponent implements OnInit {
 
             // this.selectedView = Array.isArray(view) ? view : view ? [view] : [];
             if (view) {
-              this.selectedView = view.includes(',') ? view.split(',').map(v => v.trim()) : [view.trim()];
+              this.selectedView = view.includes(',')
+                ? view.split(',').map((v) => v.trim())
+                : [view.trim()];
             } else {
               this.sharedViewService.getViews().subscribe((views: string[]) => {
                 this.selectedView = views;
               });
             }
-  
+
             console.log('Selected views:', this.selectedView);
 
             return this.getEmoReadWriteByEmotionTitle(
@@ -94,7 +106,9 @@ export class TestNoteratingComponent implements OnInit {
       .subscribe(
         (filteredData) => {
           this.filteredEmoReadWrite = filteredData;
+          this.updateUniqueEmoReadWrite(); // Update unique items
           this.calculateIntensityCounts(filteredData);
+          this.cdr.detectChanges(); // Trigger change detection
         },
         (error) => {
           console.error('Error fetching community data:', error);
@@ -139,7 +153,6 @@ export class TestNoteratingComponent implements OnInit {
             });
 
             const title = data.inViews[0]?.title;
-            //const isInView = views == undefined || views.length === 0 || views.includes(title);
             const isInView = views == undefined || views.includes(title);
 
             return (
@@ -188,10 +201,17 @@ export class TestNoteratingComponent implements OnInit {
     }, {});
   }
 
-  getIntensityCount(noteId: string, emotionId: string, intensity: number): number {
+  getIntensityCount(
+    noteId: string,
+    emotionId: string,
+    intensity: number
+  ): number {
     const noteData = this.intensityCounts[noteId];
     if (noteData && noteData[emotionId]) {
-      const key = `intensity_${intensity}star` as 'intensity_1star' | 'intensity_2star' | 'intensity_3star';
+      const key = `intensity_${intensity}star` as
+        | 'intensity_1star'
+        | 'intensity_2star'
+        | 'intensity_3star';
       return noteData[emotionId][key] || 0;
     }
     return 0;
@@ -203,18 +223,21 @@ export class TestNoteratingComponent implements OnInit {
       // Determine the highest intensity level
       const intensities = [1, 2, 3];
       let maxIntensity = 0;
-  
+
       for (const intensity of intensities) {
-        const key = `intensity_${intensity}star` as 'intensity_1star' | 'intensity_2star' | 'intensity_3star';
+        const key = `intensity_${intensity}star` as
+          | 'intensity_1star'
+          | 'intensity_2star'
+          | 'intensity_3star';
         if (noteData[emotionId][key] > 0) {
           maxIntensity = intensity;
         }
       }
-  
+
       return maxIntensity;
     }
     return 0;
-  }  
+  }
 
   filterList(selectedValue: string): void {
     if (selectedValue === 'Intensity') {
@@ -229,9 +252,25 @@ export class TestNoteratingComponent implements OnInit {
           new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf()
       );
     }
+
+    // Update filteredUniqueEmoReadWrite after filtering
+    this.updateUniqueEmoReadWrite();
+    this.cdr.detectChanges(); // Trigger change detection
   }
 
   closeEmotionNote(): void {
     this.visibilityService.setVisibility('EmotionNote', false);
+  }
+
+  // Method to update filteredUniqueEmoReadWrite
+  updateUniqueEmoReadWrite(): void {
+    const seenIds = new Set<string>();
+    this.filteredUniqueEmoReadWrite = this.filteredEmoReadWrite.filter((item) => {
+      if (!seenIds.has(item.note._id)) {
+        seenIds.add(item.note._id);
+        return true;
+      }
+      return false;
+    });
   }
 }
