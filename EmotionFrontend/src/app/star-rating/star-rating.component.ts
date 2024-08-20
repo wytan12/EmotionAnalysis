@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ApiService, ProcessedData } from '../services/api.service';
 
 @Component({
   selector: 'app-star-rating',
@@ -7,6 +8,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './star-rating.component.css'
 })
 export class StarRatingComponent {
-  @Input() intensity: number | undefined;
-  @Input() intensity1: number | undefined;
+  @Input() intensity_1star: number | undefined;
+  @Input() intensity_2star: number | undefined;
+  @Input() intensity_3star: number | undefined;
 }
