@@ -1,69 +1,60 @@
-<!-- <app-header></app-header> -->
 <div *ngIf="isVisible">
-    <div class="container">
-      <!-- <section
-        style="display: flex; justify-content: space-between; align-items: center"
-      > -->
-      <section class="header-section">
-        <div>
-          <h3>
-            {{ title }}<span *ngIf="title && datasetLabel">: </span
-            >{{ datasetLabel }}
-          </h3>
-        </div>
-        <div class="controls">
-          <button *ngIf="isVisible"
-              (click)="closeEmotionNote()"
-              type="button"
-              class="custom-button"
+  <div class="container">
+    <section class="header-section">
+      <div>
+        <h3>
+          {{ title }}<span *ngIf="title && datasetLabel">: </span
+          >{{ datasetLabel }}
+        </h3>
+      </div>
+      <div class="controls">
+        <button *ngIf="isVisible"
+            (click)="closeEmotionNote()"
+            type="button"
+            class="custom-button"
+          >
+            Close
+        </button>
+        <app-intensity-dropdown
+          (selectedValueChange)="filterList($event)"
+        ></app-intensity-dropdown>
+      </div>
+    </section>
+  
+    <div class="d-flex flex-column flex-md-row">
+      <div class="col-10">
+        <div class="scrollspy-example scrollspy-container">
+          <div *ngFor="let emoReadWrite of filteredEmoReadWrite; let i = index">
+            <section
+              [mdbScrollspyElement]="'scrollspy'"
+              [id]="'example-' + (currentSectionNumber + i)"
+              class="survey-section"
             >
-              Close
-          </button>
-          <!-- <app-intensity-dropdown></app-intensity-dropdown> -->
-          <app-intensity-dropdown
-            (selectedValueChange)="filterList($event)"
-          ></app-intensity-dropdown>
-        </div>
-      </section>
-    
-      <div class="d-flex flex-column flex-md-row">
-        <div class="col-10">
-          <div class="scrollspy-example scrollspy-container">
-            <div *ngFor="let emoReadWrite of filteredEmoReadWrite; let i = index">
-              <section
-                [mdbScrollspyElement]="'scrollspy'"
-                [id]="'example-' + (currentSectionNumber + i)"
-                class="survey-section"
-              >
-                <h3>Note {{ currentSectionNumber + i }}</h3>
-                <p>{{ emoReadWrite.created }}</p>
-                <div class="question-answer">
-                  <p class="question">Title:</p>
-                  <p>{{ emoReadWrite.note.title }}</p>
-                  <p class="question">Content:</p>
-                  <!-- <p>{{ emoReadWrite.note.data.body }}</p> -->
-                  <p [innerHTML]="emoReadWrite.note.data.body"></p>
-                  <div>
-                    <ng-container *ngFor="let intensity of emoReadWrite.Intensity">
-                      <ng-container *ngIf="datasetLabel == 'Read'; else writeRating">
-                        <app-star-rating
-                          [intensity1]="intensity.value"
-                          [intensity]="intensity.value - 1"
-                        ></app-star-rating>
-                      </ng-container>
-                      <ng-template #writeRating>
-                        <app-write-rating [intensity]="intensity.value"></app-write-rating>
-                      </ng-template>
-                    </ng-container>
-                  </div>
-                  <hr class="section-divider" />
-                </div>
-              </section>
-            </div>
+              <h3>Note {{ currentSectionNumber + i }}</h3>
+              <p>{{ emoReadWrite.created }}</p>
+              <div class="question-answer">
+                <p class="question">Title:</p>
+                <p>{{ emoReadWrite.note.title }}</p>
+                <p class="question">Content:</p>
+                <p [innerHTML]="emoReadWrite.note.data.body"></p>
+                <div>
+                  <ng-container *ngIf="datasetLabel === 'Read'; else writeRating">
+                    <app-star-rating
+                      [intensity_1star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 1)"
+                      [intensity_2star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 2)"
+                      [intensity_3star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 3)">
+                    </app-star-rating>
+                  </ng-container>
+                  <ng-template #writeRating>
+                    <app-write-rating [intensity]="emoReadWrite.Intensity[0]?.value"></app-write-rating>
+                  </ng-template>
+                </div>                               
+                <hr class="section-divider" />
+              </div>
+            </section>
           </div>
         </div>
-    
       </div>
     </div>
-    </div>
-    
+  </div>
+</div>

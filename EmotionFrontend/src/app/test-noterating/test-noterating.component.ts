@@ -12,7 +12,7 @@ import { NoteVisibilityService } from '../note-visibility.service';
 @Component({
   selector: 'app-test-noterating',
   templateUrl: './test-noterating.component.html',
-  styleUrls: ['./test-noterating.component.css'], // corrected 'styleUrl' to 'styleUrls'
+  styleUrls: ['./test-noterating.component.css'],
 })
 export class TestNoteratingComponent implements OnInit {
   title: string = '';
@@ -23,7 +23,9 @@ export class TestNoteratingComponent implements OnInit {
   selectedView: string[] = [];
   Math: any = Math; // Assigning Math object to use in the template
   isVisible = true;
-  filteredEmoReadWrite: any[] = []; // Replaced EmoReadWrite[] with any[] since the structure isn't strictly defined in the code
+  filteredEmoReadWrite: any[] = [];
+  intensityCounts: { [noteId: string]: { [emotionId: string]: { intensity_1star: number, intensity_2star: number, intensity_3star: number } } } = {};
+  currentSectionNumber: number = 1; // Add this line
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +38,6 @@ export class TestNoteratingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Combine latest observables for title and dataset label
     this.visibilityService
       .getVisibilityObservable('EmotionNote')
       .subscribe((visible) => {
@@ -67,12 +68,11 @@ export class TestNoteratingComponent implements OnInit {
                 ? new Date(timeRange[1])
                 : undefined;
 
-            // Update to handle multiple selected views
             this.selectedView = Array.isArray(view) ? view : view ? [view] : [];
             console.log('Selected views:', this.selectedView);
 
-            const viewsArray = typeof view === 'string' ? 
-                           view.split(',').map(v => v.trim()) : 
+            const viewsArray = typeof view === 'string' ?
+                           view.split(',').map(v => v.trim()) :
                            Array.isArray(view) ? view : [];
             console.log('views array:', viewsArray);
 
@@ -82,7 +82,6 @@ export class TestNoteratingComponent implements OnInit {
               from,
               to,
               viewsArray
-              // this.selectedView
             );
           } else {
             return of([]); // Return an observable of an empty array
@@ -92,14 +91,13 @@ export class TestNoteratingComponent implements OnInit {
       .subscribe(
         (filteredData) => {
           this.filteredEmoReadWrite = filteredData;
+          this.calculateIntensityCounts(filteredData);
         },
         (error) => {
           console.error('Error fetching community data:', error);
         }
       );
   }
-
-  currentSectionNumber: number = 1;
 
   getEmoReadWriteByEmotionTitle(
     emotionTitle: string,
@@ -113,7 +111,6 @@ export class TestNoteratingComponent implements OnInit {
         .get<any[]>('http://localhost:3000/api/community-data')
         .subscribe((dataList) => {
           const filteredList = dataList.filter((data) => {
-            console.log(data);
             const action = data.actionType.toLowerCase();
             const isActionTypeMatch = action === emotionLabel.toLowerCase();
 
@@ -138,15 +135,8 @@ export class TestNoteratingComponent implements OnInit {
               return false;
             });
 
-            // Implement view filtering
-            // const isInView =
-            //   !views ||
-            //   data.inViews.some((view: any) => views.includes(view.title));
-
-            const title = data.inViews[0].title;
-            const isInView = views == undefined || views.includes(data.inViews[0].title);
-            console.log(title);
-            console.log(`isInView result: ${isInView}`);
+            const title = data.inViews[0]?.title;
+            const isInView = views == undefined || views.includes(title);
 
             return (
               isActionTypeMatch &&
@@ -157,13 +147,53 @@ export class TestNoteratingComponent implements OnInit {
           });
 
           resolve(filteredList);
-          console.log(filteredList);
         });
     });
   }
 
+  calculateIntensityCounts(filteredData: any[]): void {
+    this.intensityCounts = filteredData.reduce((acc: any, curr: any) => {
+      const noteId = curr.note._id;
+
+      if (!acc[noteId]) {
+        acc[noteId] = {};
+      }
+
+      curr.ratings.forEach((rating: any) => {
+        const emotionId = rating.emotionId;
+        const intensity = rating.intensity;
+
+        if (!acc[noteId][emotionId]) {
+          acc[noteId][emotionId] = {
+            intensity_1star: 0,
+            intensity_2star: 0,
+            intensity_3star: 0,
+          };
+        }
+
+        if (intensity === 1) {
+          acc[noteId][emotionId].intensity_1star += 1;
+        } else if (intensity === 2) {
+          acc[noteId][emotionId].intensity_2star += 1;
+        } else if (intensity === 3) {
+          acc[noteId][emotionId].intensity_3star += 1;
+        }
+      });
+
+      return acc;
+    }, {});
+  }
+
+  getIntensityCount(noteId: string, emotionId: string, intensity: number): number {
+    const noteData = this.intensityCounts[noteId];
+    if (noteData && noteData[emotionId]) {
+      const key = `intensity_${intensity}star` as 'intensity_1star' | 'intensity_2star' | 'intensity_3star';
+      return noteData[emotionId][key] || 0;
+    }
+    return 0;
+  }
+
   filterList(selectedValue: string): void {
-    console.log(selectedValue);
     if (selectedValue === 'Intensity') {
       this.filteredEmoReadWrite.sort((a, b) => {
         const intensityA = a.Intensity[0]?.value || 0;
