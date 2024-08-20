@@ -197,6 +197,25 @@ export class TestNoteratingComponent implements OnInit {
     return 0;
   }
 
+  getWriteIntensityValue(noteId: string, emotionId: string): number {
+    const noteData = this.intensityCounts[noteId];
+    if (noteData && noteData[emotionId]) {
+      // Determine the highest intensity level
+      const intensities = [1, 2, 3];
+      let maxIntensity = 0;
+  
+      for (const intensity of intensities) {
+        const key = `intensity_${intensity}star` as 'intensity_1star' | 'intensity_2star' | 'intensity_3star';
+        if (noteData[emotionId][key] > 0) {
+          maxIntensity = intensity;
+        }
+      }
+  
+      return maxIntensity;
+    }
+    return 0;
+  }  
+
   filterList(selectedValue: string): void {
     if (selectedValue === 'Intensity') {
       this.filteredEmoReadWrite.sort((a, b) => {

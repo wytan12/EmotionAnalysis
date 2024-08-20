@@ -46,7 +46,7 @@
                     </app-star-rating>
                   </ng-container>
                   <ng-template #writeRating>
-                    <app-write-rating [intensity]="emoReadWrite.Intensity[0]?.value"></app-write-rating>
+                    <app-write-rating [intensity]="getWriteIntensityValue(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId)"></app-write-rating>
                   </ng-template>
                 </div>                               
                 <hr class="section-divider" />
