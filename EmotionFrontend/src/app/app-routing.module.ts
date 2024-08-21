@@ -15,7 +15,7 @@ import { TryingnoteComponent } from './tryingnote/tryingnote.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/tryingnote', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'tryingnote', component: TryingnoteComponent },
   { path: 'statics', component: StaticsComponent },

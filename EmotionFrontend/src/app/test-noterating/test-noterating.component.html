@@ -54,13 +54,12 @@
                   <ng-container
                     *ngFor="let intensity of emoReadWrite.Intensity"
                   >
-                    <ng-container
-                      *ngIf="datasetLabel == 'Read'; else writeRating"
-                    >
+                    <ng-container *ngIf="datasetLabel === 'Read'; else writeRating">
                       <app-star-rating
-                        [intensity1]="intensity.value"
-                        [intensity]="intensity.value - 1"
-                      ></app-star-rating>
+                        [intensity_1star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 1)"
+                        [intensity_2star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 2)"
+                        [intensity_3star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 3)">
+                      </app-star-rating>
                     </ng-container>
                     <ng-template #writeRating>
                       <app-write-rating
