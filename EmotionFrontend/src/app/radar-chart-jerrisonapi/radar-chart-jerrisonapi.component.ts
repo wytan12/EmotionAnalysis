@@ -21,6 +21,7 @@ export class RadarChartJerrisonapiComponent {
     responsive: true,
     scales: {
       r: {
+        min: 0,
         pointLabels: {
           font: {
             size: 15,
