@@ -9,9 +9,9 @@ import { BaseChartDirective } from 'ng2-charts';
 import _default from 'chart.js/dist/plugins/plugin.legend';
 import labels = _default.defaults.labels;
 
-import { SharedTimeService } from '../shared-time.service';
-import { TitleService } from '../title.service';
-import { NoteVisibilityService } from '../note-visibility.service';
+import { SharedTimeService } from '../services/shared-time.service';
+import { TitleService } from '../services/title.service';
+import { NoteVisibilityService } from '../services/note-visibility.service';
 
 @Component({
   selector: 'app-bar-chart',

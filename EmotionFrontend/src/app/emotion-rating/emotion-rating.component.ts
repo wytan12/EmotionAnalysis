@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite} from "../services/emotion";
 import { TimeService } from '../services/time.service';
-import { SharedTimeService } from '../shared-time.service';
-import { TitleService } from '../title.service';
-import { SharedViewService } from '../shared-view.service';
+import { SharedTimeService } from '../services/shared-time.service';
+import { TitleService } from '../services/title.service';
+import { SharedViewService } from '../services/shared-view.service';
 import { combineLatest , of} from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { NoteVisibilityService } from '../note-visibility.service';
+import { NoteVisibilityService } from '../services/note-visibility.service';
 
 @Component({
   selector: 'app-emotion-rating',
