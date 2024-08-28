@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedTimeService } from '../shared-time.service';
+import { SharedTimeService } from '../services/shared-time.service';
 import {FormGroup, FormControl} from '@angular/forms';
 import {EmotionService} from "../services/emotion.service";
 import {TimeService} from "../services/time.service";

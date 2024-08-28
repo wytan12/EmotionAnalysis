@@ -3,10 +3,10 @@ import { ChartConfiguration, ChartData, ChartType, Ticks } from 'chart.js';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
 import { BaseChartDirective } from 'ng2-charts';
-import { SharedTimeService } from '../shared-time.service';
-import { SharedViewService } from '../shared-view.service';
-import { TitleService } from '../title.service';
-import { NoteVisibilityService } from '../note-visibility.service';
+import { SharedTimeService } from '../services/shared-time.service';
+import { SharedViewService } from '../services/shared-view.service';
+import { TitleService } from '../services/title.service';
+import { NoteVisibilityService } from '../services/note-visibility.service';
 
 @Component({
   selector: 'app-radar-chart-jerrisonapi',

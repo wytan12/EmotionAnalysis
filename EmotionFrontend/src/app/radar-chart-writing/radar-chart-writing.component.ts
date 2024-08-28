@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { EmotionService } from '../services/emotion.service';
 import { EmoReadWrite, EmoSurvey } from '../services/emotion';
 import { BaseChartDirective } from 'ng2-charts';
-import { SharedTimeService } from '../shared-time.service';
-import { SharedViewService } from '../shared-view.service';
+import { SharedTimeService } from '../services/shared-time.service';
+import { SharedViewService } from '../services/shared-view.service';
 
 @Component({
   selector: 'app-radar-chart-writing',

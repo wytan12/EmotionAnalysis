@@ -4,10 +4,10 @@ import {EmotionService} from "../services/emotion.service";
 import {EmoReadWrite, EmoSurvey} from "../services/emotion";
 import { TimeService } from '../services/time.service';
 import {map} from "rxjs/operators";
-import { TitleService } from '../title.service';
-import { SharedTimeService } from '../shared-time.service';
+import { TitleService } from '../services/title.service';
+import { SharedTimeService } from '../services/shared-time.service';
 import { Observable } from 'rxjs';
-import { NoteVisibilityService } from '../note-visibility.service';
+import { NoteVisibilityService } from '../services/note-visibility.service';
 
 @Component({
 	selector: "app-scrollspy",

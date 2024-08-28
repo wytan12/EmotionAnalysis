@@ -1,7 +1,7 @@
 import { Component, OnInit, Input,ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router'; // Import the Router module
 import { ExportService } from '../services/export.service';
-import { NoteVisibilityService } from '../note-visibility.service';
+import { NoteVisibilityService } from '../services/note-visibility.service';
 import { startWith } from 'rxjs';
 
 @Component({

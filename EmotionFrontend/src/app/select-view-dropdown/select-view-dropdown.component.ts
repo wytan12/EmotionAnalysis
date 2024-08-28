@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedViewService } from '../shared-view.service';
+import { SharedViewService } from '../services/shared-view.service';
 
 @Component({
   selector: 'app-select-view-dropdown',

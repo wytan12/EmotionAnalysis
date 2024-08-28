@@ -9,7 +9,7 @@ import {BaseChartDirective} from "ng2-charts";
 import _default from "chart.js/dist/plugins/plugin.legend";
 import labels = _default.defaults.labels;
 
-import { SharedTimeService } from '../shared-time.service';
+import { SharedTimeService } from '../services/shared-time.service';
 
 @Component({
   selector: 'app-stackbarchart',
