@@ -247,22 +247,41 @@ export class TestNoteratingComponent implements OnInit {
 
   filterList(selectedValue: string): void {
     if (selectedValue === 'Intensity') {
-      this.filteredEmoReadWrite.sort((a, b) => {
-        const intensityA = a.Intensity[0]?.value || 0;
-        const intensityB = b.Intensity[0]?.value || 0;
-        return intensityB - intensityA;
-      });
+      // Determine if the entire list is 'read' or 'write'
+      const isAllWrite = this.filteredEmoReadWrite.every(item => item.actionType === 'write');
+      const isAllRead = this.filteredEmoReadWrite.every(item => item.actionType === 'read');
+  
+      if (isAllWrite) {
+        this.filteredEmoReadWrite.sort((a, b) => {
+          const intensityA = a.Intensity?.[0]?.value || 0;
+          const intensityB = b.Intensity?.[0]?.value || 0;
+          return intensityB - intensityA;
+        });
+      } else if (isAllRead) {
+        this.filteredEmoReadWrite.sort((a, b) => {
+          const noteIdA = a.note._id;
+          const emotionIdA = a.ratings[0]?.emotionId;
+          const intensityCountA = this.getIntensityCount(noteIdA, emotionIdA, 3) * 3 + this.getIntensityCount(noteIdA, emotionIdA, 2) * 2 + this.getIntensityCount(noteIdA, emotionIdA, 1);
+  
+          const noteIdB = b.note._id;
+          const emotionIdB = b.ratings[0]?.emotionId;
+          const intensityCountB = this.getIntensityCount(noteIdB, emotionIdB, 3) * 3 + this.getIntensityCount(noteIdB, emotionIdB, 2) * 2 + this.getIntensityCount(noteIdB, emotionIdB, 1);
+          
+          return intensityCountB - intensityCountA;
+        });
+      }
     } else {
       this.filteredEmoReadWrite.sort(
         (a, b) =>
-          new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf()
+          new Date(b.created).valueOf() - new Date(a.created).valueOf()
       );
     }
-
+  
     // Update filteredUniqueEmoReadWrite after filtering
     this.updateUniqueEmoReadWrite();
     this.cdr.detectChanges(); // Trigger change detection
   }
+  
 
   closeEmotionNote(): void {
     this.visibilityService.setVisibility('EmotionNote', false);
