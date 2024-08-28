@@ -10,10 +10,31 @@ export class ExportService {
 
   constructor(private http: HttpClient) {}
 
-  exportToCsv() {
-    return this.http.get(`${this.baseUrl}/export/csv`, {
-      responseType: 'text',
-    });
+  async exportToCsv() {
+    try {
+      // Fetch JSON data
+      const data = await this.http.get<any[]>(`${this.baseUrl}/api/community-data`).toPromise();
+      // Convert JSON data to string
+      const jsonData = JSON.stringify(data, null, 2); // Pretty print with indentation
+      // Trigger download
+      this.downloadJson(jsonData, 'note-emotion.json');
+    } catch (error) {
+      console.error('Error exporting to JSON', error);
+    }
+  }
+
+  private downloadJson(jsonData: string, filename: string) {
+    const blob = new Blob([jsonData], { type: 'application/json;charset=utf-8;' });
+    const link = document.createElement('a');
+    if (link.download !== undefined) { // Feature detection
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   }
 
   exportSurveyToCsv() {
@@ -21,5 +42,9 @@ export class ExportService {
       responseType: 'text',
     });
   }
-  
+
+}
+
+function replacer(key: string, value: any): any {
+  return value === null ? '' : value.toString().replace(/"/g, '""');
 }

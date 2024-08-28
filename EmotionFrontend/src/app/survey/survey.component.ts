@@ -26,16 +26,13 @@ export class SurveyComponent implements OnInit {
     });
   }
 
-  exportToCsv() {
-    this.exportService.exportToCsv().subscribe((data) => {
-      const blob = new Blob([data], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'data.csv';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
+  async exportToCsv() {
+    try {
+      // Call the service method to handle the CSV export
+      await this.exportService.exportToCsv();
+    } catch (error) {
+      console.error('Error exporting to CSV', error);
+    }
   }
 
   exportSurveyToCsv() {
