@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { ChartConfiguration, ChartData, ChartType, Ticks } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
 import { BaseChartDirective } from 'ng2-charts';
@@ -48,6 +48,10 @@ export class RadarChartJerrisonapiComponent {
         padding: 15,
       },
     },
+    // interaction: {
+    //   mode: 'point',
+    //   intersect: true,
+    // },
   };
 
   public radarChartLabels: string[] = [
@@ -175,8 +179,21 @@ export class RadarChartJerrisonapiComponent {
     this.radarChartData.datasets[0].data = dataHttp['Read'];
     this.radarChartData.datasets[1].data = dataHttp['Write'];
 
-    if (this.chart) {
-      this.chart.update();
+    const allValuesZero = (data: (number | null)[]): boolean => {
+      // Filter out null values and check if all remaining values are zero
+      return data.filter((value): value is number => value !== null).every(value => value === 0);
+    };
+
+    const disableHover = 
+      allValuesZero(this.radarChartData.datasets[0].data) && 
+      allValuesZero(this.radarChartData.datasets[1].data);
+
+    if (this.radarChartOptions) {
+      this.radarChartOptions.plugins!.tooltip!.enabled = !disableHover;
+
+      if (this.chart) {
+        this.chart.update();
+      }
     }
     this.isLoading = false;
   }
