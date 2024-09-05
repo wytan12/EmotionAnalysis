@@ -42,19 +42,20 @@
               [id]="'example-' + (currentSectionNumber + i)"
               class="survey-section"
             >
-              <h3>Note {{ currentSectionNumber + i }}</h3>
-              <p>{{ emoReadWrite.created }}</p>
+              <!-- <h3>Note {{ currentSectionNumber + i }}</h3> -->
+              
               <div class="question-answer">
-                <p class="question">Title:</p>
-                <p>{{ emoReadWrite.note.title }}</p>
-                <p class="question">Content:</p>
+                <p class="question">Note Title: {{ emoReadWrite.note.title }}</p>
+                <!-- <p>{{ emoReadWrite.note.title }}</p> -->
+                <p>{{ emoReadWrite.created }}</p>
+                <p class="question">Note Content:</p>
                 <p [innerHTML]="emoReadWrite.note.data.body"></p>
                 <div>
-
                   <ng-container
                     *ngFor="let intensity of emoReadWrite.Intensity"
                   >
                     <ng-container *ngIf="datasetLabel === 'Read'; else writeRating">
+                      <p class="question">Reading Emotion Intensity:</p>
                       <app-star-rating
                         [intensity_1star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 1)"
                         [intensity_2star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 2)"
@@ -62,6 +63,7 @@
                       </app-star-rating>
                     </ng-container>
                     <ng-template #writeRating>
+                      <p class="question">Writing Emotion Intensity:</p>
                       <app-write-rating
                         [intensity]="intensity.value"
                       ></app-write-rating>
