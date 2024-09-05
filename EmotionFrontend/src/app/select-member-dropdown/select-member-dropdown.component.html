@@ -1,19 +1,8 @@
-<nz-select
-  nzMode="multiple"
-  (ngModelChange)="onUserSelected($event)"
-  (nzOnSearch)="onSearch($event)" 
-  nzPlaceHolder="Group Members:     [select authors]"
+<input
+  class="group-member-input"
+  type="text"
+  [(ngModel)]="selectedUserText"
+  (input)="onUserTextChanged($event)"
+  placeholder="Type in your Group Members names (e.g.: Alex, John)"
   nzAllowClear
-  nzShowSearch
-  nzServerSearch
-  [(ngModel)]="selectedUser"
-  (nzOnSearch)="onSearch($event)"
->
-  <ng-container *ngFor="let o of optionList">
-    <nz-option *ngIf="!isLoading" [nzValue]="o" [nzLabel]="o"></nz-option>
-  </ng-container>
-  <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
-    <span nz-icon nzType="loading" class="loading-icon"></span>
-    Loading Data...
-  </nz-option>
-</nz-select>
+/>
