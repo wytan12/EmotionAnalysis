@@ -10,7 +10,6 @@ import { ReflectHistoryComponent } from './reflect-history/reflect-history.compo
 import { EmotionRatingComponent } from './emotion-rating/emotion-rating.component';
 import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
 import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
-import { InconduciveComponent } from './inconducive/inconducive.component';
 import { TryingnoteComponent } from './tryingnote/tryingnote.component';
 
 
@@ -25,7 +24,6 @@ const routes: Routes = [
   { path: 'reflect-history', component: ReflectHistoryComponent},
   { path: 'survey-reason', component: SurveyReasonComponent},
   { path: 'emotion-rating', component: EmotionRatingComponent},
-  { path: 'inconducive-chart', component:InconduciveComponent },
   
 ];
 

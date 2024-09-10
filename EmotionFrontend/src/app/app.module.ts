@@ -29,7 +29,6 @@ import { EmotionButtonComponent } from './emotion-button/emotion-button.componen
 import { SelectTimeDropdownComponent } from './select-time-dropdown/select-time-dropdown.component';
 import { EmotionRatingComponent } from './emotion-rating/emotion-rating.component';
 import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
-import { InconduciveComponent } from './inconducive/inconducive.component';
 
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
@@ -109,7 +108,6 @@ import { TestNoteratingComponent } from './test-noterating/test-noterating.compo
     EmotionRatingComponent,
     SurveyReasonComponent,
     SelectMemberDropdownComponent,
-    InconduciveComponent,
     SelectViewDropdownComponent,
     StarRatingComponent,
     UserGuideButtonComponent,
