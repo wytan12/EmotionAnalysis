@@ -27,8 +27,6 @@ import { ScrollspyComponent } from './scrollspy/scrollspy.component';
 
 import { EmotionButtonComponent } from './emotion-button/emotion-button.component';
 import { SelectTimeDropdownComponent } from './select-time-dropdown/select-time-dropdown.component';
-import { EmotionRatingComponent } from './emotion-rating/emotion-rating.component';
-import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
 
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
@@ -55,7 +53,6 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ReportEmotionButtonComponent } from './report-emotion-button/report-emotion-button.component';
 import { ReportReadwriteButtonComponent } from './report-readwrite-button/report-readwrite-button.component';
-import { StackbarchartComponent } from './stackbarchart/stackbarchart.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import { TabComponent } from './tab/tab.component';
@@ -105,8 +102,6 @@ import { TestNoteratingComponent } from './test-noterating/test-noterating.compo
     EmotionButtonComponent,
     SelectTimeDropdownComponent,
     ScrollspyComponent,
-    EmotionRatingComponent,
-    SurveyReasonComponent,
     SelectMemberDropdownComponent,
     SelectViewDropdownComponent,
     StarRatingComponent,
@@ -114,7 +109,6 @@ import { TestNoteratingComponent } from './test-noterating/test-noterating.compo
     IntensityDropdownComponent,
     ReportEmotionButtonComponent,
     ReportReadwriteButtonComponent,
-    StackbarchartComponent,
     TabComponent,
     ReflectHistoryButtonComponent,
     WriteRatingComponent,
