@@ -13,13 +13,6 @@ import { EmotionService } from '../services/emotion.service';
   selector: 'app-reflect-form',
   templateUrl: './reflect-form.component.html',
   styleUrl: './reflect-form.component.css',
-  // animations: [
-  //   trigger('blockTransition', [
-  //     state('clear', style({ filter: 'blur(0)' })),
-  //     state('blur', style({ filter: 'blur(5px)' })),
-  //     transition('blur <=> clear', animate('0.5s ease-in-out')),
-  //   ]),
-  // ],
 })
 export class ReflectFormComponent {
   formData: any = {};
@@ -37,21 +30,21 @@ export class ReflectFormComponent {
       this.formData.Challenges &&
       this.formData.ImprovementWays &&
       this.formData.PositivePlan &&
-      this.formData.Action
+      this.formData.Action &&
+      this.selectedUsers.length > 0
     );
   }
 
   constructor(private router: Router, private emotionService: EmotionService) {}
-
-  // goToReflectHistory() {
-  //   this.router.navigate(['reflect-history']);
-  // }
 
   // Method to handle selected users from dropdown
   onUserSelected(selectedUsers: string[]) {
     this.selectedUsers = selectedUsers;
     this.formData.GroupMembers = selectedUsers;
     console.log("Ok received: ", selectedUsers);
+
+    // Trigger the check for all questions answered
+    this.checkIfAllQuestionsAnswered();
   }
 
   submit() {

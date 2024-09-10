@@ -10,41 +10,15 @@ import { catchError, debounceTime, map, switchMap } from 'rxjs/operators';
 })
 export class SelectMemberDropdownComponent {
   @Output() userSelected = new EventEmitter<string[]>();
+  selectedUserText = ''; // This will bind to the text input
 
-  randomUserUrl = 'https://api.randomuser.me/?results=5';
-  searchChange$ = new BehaviorSubject('');
-  optionList: string[] = [];
-  selectedUser?: string[];
-  isLoading = false;
+  constructor() {}
 
-  onSearch(value: string): void {
-    this.isLoading = true;
-    this.searchChange$.next(value);
-  }
-
-  constructor(private http: HttpClient) {}
-
-  onUserSelected(selectedUser: string[]) {
-    this.userSelected.emit(selectedUser);
-  }
-
-  ngOnInit(): void {
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    const getRandomNameList = (name: string): Observable<any> =>
-      this.http
-        .get(`${this.randomUserUrl}`)
-        .pipe(
-          catchError(() => of({ results: [] })),
-          map((res: any) => res.results)
-        )
-        .pipe(map((list: any) => list.map((item: any) => `${item.name.first} ${name}`)));
-    const optionList$: Observable<string[]> = this.searchChange$
-      .asObservable()
-      .pipe(debounceTime(500))
-      .pipe(switchMap(getRandomNameList));
-    optionList$.subscribe(data => {
-      this.optionList = data;
-      this.isLoading = false;
-    });
-  }
+  onUserTextChanged(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement && inputElement.value) {
+      const selectedUserArray = inputElement.value.split(',').map(name => name.trim());
+      this.userSelected.emit(selectedUserArray);
+    }
+  }  
 }

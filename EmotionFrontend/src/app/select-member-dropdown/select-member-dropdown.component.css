@@ -1,9 +1,29 @@
-nz-select {
-  width: 30%;
-  margin-top: 30px;
-  margin-left: 30px;
-}
-
 .loading-icon {
   margin-right: 8px;
+}
+
+.group-member-input {
+  margin-left: 30px;
+  margin-top: 10px;
+  width: 30%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 2px solid #000;
+  font-size: 16px;
+}
+
+.group-member-input:focus {
+  border-color: #40a9ff;
+  outline: none;
+  box-shadow: 0 0 3px rgba(24, 144, 255, 0.5);
+}
+
+.group-member-input::placeholder {
+  color: #a0a0a0;
+}
+
+.group-member-input[nzAllowClear] {
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  padding-right: 30px;
 }
