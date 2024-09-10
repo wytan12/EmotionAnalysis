@@ -10,14 +10,12 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSnackBarModule
 
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { StaticsComponent} from "./statics/statics.component";
 import { HeaderComponent } from './header/header.component';
 import { NgChartsModule } from 'ng2-charts';
 import { RadarChartComponent } from './radar-chart/radar-chart.component';
 import { SurveyComponent } from './survey/survey.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
-import { PopupComponent} from "./popup/popup.component";
 import { PopupWindowComponent} from "./popup-window/popup-window.component";
 import { ReflectFormComponent } from './reflect-form/reflect-form.component';
 import { ReflectButtonComponent } from './reflect-button/reflect-button.component';
@@ -25,11 +23,7 @@ import { NegativeBarchartComponent } from './negative-barchart/negative-barchart
 import { ReflectHistoryComponent } from './reflect-history/reflect-history.component';
 import { ScrollspyComponent } from './scrollspy/scrollspy.component';
 
-import { EmotionButtonComponent } from './emotion-button/emotion-button.component';
 import { SelectTimeDropdownComponent } from './select-time-dropdown/select-time-dropdown.component';
-import { EmotionRatingComponent } from './emotion-rating/emotion-rating.component';
-import { SurveyReasonComponent } from './survey-reason/survey-reason.component';
-import { InconduciveComponent } from './inconducive/inconducive.component';
 
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
@@ -46,7 +40,6 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
 
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 // import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
-import { RadarChartWritingComponent } from './radar-chart-writing/radar-chart-writing.component';
 import { UserGuideButtonComponent } from './user-guide-button/user-guide-button.component';
 import { IntensityDropdownComponent } from './intensity-dropdown/intensity-dropdown.component';
 
@@ -56,7 +49,6 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ReportEmotionButtonComponent } from './report-emotion-button/report-emotion-button.component';
 import { ReportReadwriteButtonComponent } from './report-readwrite-button/report-readwrite-button.component';
-import { StackbarchartComponent } from './stackbarchart/stackbarchart.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import { TabComponent } from './tab/tab.component';
@@ -90,33 +82,25 @@ import { TestNoteratingComponent } from './test-noterating/test-noterating.compo
   ],
   declarations: [
     AppComponent,
-    DashboardComponent,
     StaticsComponent,
     HeaderComponent,
     RadarChartComponent,
-    RadarChartWritingComponent,
     BarChartComponent,
     SurveyComponent,
     ReflectFormComponent,
     ReflectButtonComponent,
     ReflectHistoryComponent,
-    PopupComponent,
     PopupWindowComponent,
     NegativeBarchartComponent,
-    EmotionButtonComponent,
     SelectTimeDropdownComponent,
     ScrollspyComponent,
-    EmotionRatingComponent,
-    SurveyReasonComponent,
     SelectMemberDropdownComponent,
-    InconduciveComponent,
     SelectViewDropdownComponent,
     StarRatingComponent,
     UserGuideButtonComponent,
     IntensityDropdownComponent,
     ReportEmotionButtonComponent,
     ReportReadwriteButtonComponent,
-    StackbarchartComponent,
     TabComponent,
     ReflectHistoryButtonComponent,
     WriteRatingComponent,
