@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import {StaticsComponent} from "./statics/statics.component";
 import { SurveyComponent } from './survey/survey.component';
 import {BarChartComponent} from "./bar-chart/bar-chart.component";
@@ -13,7 +12,6 @@ import { TryingnoteComponent } from './tryingnote/tryingnote.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/tryingnote', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
   { path: 'tryingnote', component: TryingnoteComponent },
   { path: 'statics', component: StaticsComponent },
   { path: 'bar', component: BarChartComponent},
