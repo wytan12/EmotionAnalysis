@@ -169,6 +169,9 @@ export class TestNoteratingComponent implements OnInit {
             );
           });
 
+          // Sort the filtered list by timestamp in descending order
+          filteredList.sort((a, b) => new Date(b.created).valueOf() - new Date(a.created).valueOf());
+
           resolve(filteredList);
         });
     });
