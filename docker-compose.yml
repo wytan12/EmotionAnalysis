@@ -1,0 +1,39 @@
+services:
+  frontend:
+    build: ./EmotionFrontend
+    container_name: emotion_frontend
+    ports:
+      - "4200:80"  # Map port 4200 to Nginx
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build: ./EmotionBackend
+    container_name: emotion_backend
+    environment:
+      - MONGO_URI = mongodb+srv://liangluya:liangluya@cluster0.awhbvnl.mongodb.net/Emotion?retryWrites=true&w=majority
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"  # MongoDB default port
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:  # Persistent storage for MongoDB
+
+networks:
+  app-network:
+    driver: bridge
