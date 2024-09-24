@@ -21,6 +21,16 @@ services:
     networks:
       - app-network
 
+  form:
+    build: ./ReportEmotionForm
+    container_name: emotion_form
+    ports:
+      - "60312:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
   mongo:
     image: mongo:latest
     container_name: mongo
