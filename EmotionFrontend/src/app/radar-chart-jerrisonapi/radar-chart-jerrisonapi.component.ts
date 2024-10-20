@@ -212,7 +212,7 @@ export class RadarChartJerrisonapiComponent {
       write: new Set<string>(),
     };
 
-    this.http.get<any[]>('http://localhost:3000/api/community-data').subscribe(
+    this.http.get<any[]>('http://localhost/api/community-data').subscribe(
       (response: any[]) => {
         const intensityKeys = [
           'Joyful',

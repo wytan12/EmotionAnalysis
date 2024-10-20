@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ExportService {
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'http://localhost';
 
   constructor(private http: HttpClient) {}
 

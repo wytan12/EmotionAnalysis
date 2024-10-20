@@ -22,7 +22,7 @@ export class SharedViewService {
 
   getViews(): Observable<string[]> {
     return this.http
-      .get<any[]>('http://localhost:3000/api/community-data')
+      .get<any[]>('http://localhost/api/community-data')
       .pipe(
         map((data) => {
           const viewsSet = new Set<string>();
