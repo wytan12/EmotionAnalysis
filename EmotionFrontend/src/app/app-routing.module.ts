@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'survey', component: SurveyComponent},
   { path: 'reflect-form', component: ReflectFormComponent},
   { path: 'reflect-history', component: ReflectHistoryComponent},
-  
+  { path: '**', redirectTo: '/tryingnote' },
 ];
 
 @NgModule({

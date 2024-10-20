@@ -131,7 +131,7 @@ export class TestNoteratingComponent implements OnInit {
   ): Promise<any[]> {
     return new Promise<any[]>((resolve) => {
       this.http
-        .get<any[]>('http://localhost:3000/api/community-data')
+        .get<any[]>('http://localhost/api/community-data')
         .subscribe((dataList) => {
           const filteredList = dataList.filter((data) => {
             const action = data.actionType.toLowerCase();

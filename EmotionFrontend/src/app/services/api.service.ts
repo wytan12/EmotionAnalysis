@@ -46,7 +46,7 @@ export interface ProcessedData {
 })
 export class ApiService {
 
-  private apiUrl = 'http://localhost:3000/api/community-data';
+  private apiUrl = 'http://localhost/api/community-data';
 
   constructor(private http: HttpClient) {}
 

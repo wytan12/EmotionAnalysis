@@ -40,6 +40,6 @@ export class HeaderComponent {
   }
 
   goToTryingnote() {
-    this.router.navigate(['tryingnote']);
+    this.router.navigate(['']);
   }
 }
