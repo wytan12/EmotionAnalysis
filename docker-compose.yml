@@ -4,12 +4,13 @@ services:
     container_name: emotion_nginx
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf  # Custom Nginx config
-      - ./EmotionFrontend/dist/browser:/usr/share/nginx/html
+    #   - ./EmotionFrontend/dist/browser:/usr/share/nginx/html
     ports:
       - "80:80"  # Expose Nginx on port 80
     depends_on:
       - frontend
       - backend
+      - form
     networks:
       - app-network
     restart: always
@@ -17,8 +18,8 @@ services:
   frontend:
     build: ./EmotionFrontend
     container_name: emotion_frontend
-    # expose:
-    #   - "80"  # Map port 4200 to Nginx
+    expose:
+      - "80"  # Map port 4200 to Nginx
     depends_on:
       - backend
     networks:
@@ -39,8 +40,10 @@ services:
   form:
     build: ./ReportEmotionForm
     container_name: emotion_form
-    ports:
-      - "60312:80"
+    expose:
+      - "80"  # Map port 80 to Nginx
+    # ports:
+    #   - "60312:80"
     depends_on:
       - backend
     networks:
