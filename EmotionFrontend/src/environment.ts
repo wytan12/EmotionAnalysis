@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
-    apiUrl: 'http://localhost:60312/'
-  };
+  production: true,
+  apiUrl: 'http://localhost/form',  
+};
