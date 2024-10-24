@@ -39,6 +39,10 @@ export class RadarChartJerrisonapiComponent {
       },
       tooltip: {
         enabled: true,
+        filter: function (tooltipItem) {
+          // Only show tooltip if the value is not 0
+          return tooltipItem.raw !== 0;
+        },
         titleFont: {
           size: 15,
         },
@@ -181,11 +185,13 @@ export class RadarChartJerrisonapiComponent {
 
     const allValuesZero = (data: (number | null)[]): boolean => {
       // Filter out null values and check if all remaining values are zero
-      return data.filter((value): value is number => value !== null).every(value => value === 0);
+      return data
+        .filter((value): value is number => value !== null)
+        .every((value) => value === 0);
     };
 
-    const disableHover = 
-      allValuesZero(this.radarChartData.datasets[0].data) && 
+    const disableHover =
+      allValuesZero(this.radarChartData.datasets[0].data) &&
       allValuesZero(this.radarChartData.datasets[1].data);
 
     if (this.radarChartOptions) {
@@ -199,82 +205,82 @@ export class RadarChartJerrisonapiComponent {
   }
 
   public getDataHttp(
-  from: Date,
-  to: Date
-): Promise<{ [key: string]: number[] }> {
-  return new Promise<{ [key: string]: number[] }>((resolve) => {
-    const rdata: { [key: string]: number[] } = {
-      Read: [0, 0, 0, 0, 0, 0, 0],
-      Write: [0, 0, 0, 0, 0, 0, 0],
-    };
-    const totalEntries: { [key: string]: Set<string> } = {
-      read: new Set<string>(),
-      write: new Set<string>(),
-    };
+    from: Date,
+    to: Date
+  ): Promise<{ [key: string]: number[] }> {
+    return new Promise<{ [key: string]: number[] }>((resolve) => {
+      const rdata: { [key: string]: number[] } = {
+        Read: [0, 0, 0, 0, 0, 0, 0],
+        Write: [0, 0, 0, 0, 0, 0, 0],
+      };
+      const totalEntries: { [key: string]: Set<string> } = {
+        read: new Set<string>(),
+        write: new Set<string>(),
+      };
 
-    this.http.get<any[]>('http://localhost/api/community-data').subscribe(
-      (response: any[]) => {
-        const intensityKeys = [
-          'Joyful',
-          'Curious',
-          'Surprised',
-          'Confused',
-          'Anxious',
-          'Frustrated',
-          'Bored',
-        ];
+      this.http.get<any[]>('http://localhost/api/community-data').subscribe(
+        (response: any[]) => {
+          const intensityKeys = [
+            'Joyful',
+            'Curious',
+            'Surprised',
+            'Confused',
+            'Anxious',
+            'Frustrated',
+            'Bored',
+          ];
 
-        response.forEach((dataEntry) => {
-          const actionType = dataEntry['actionType'];
-          const timestamp = new Date(dataEntry['created']);
-          const _id = dataEntry['_id'];
+          response.forEach((dataEntry) => {
+            const actionType = dataEntry['actionType'];
+            const timestamp = new Date(dataEntry['created']);
+            const _id = dataEntry['_id'];
 
-          // Check if the entry matches the selected view
-          const viewsMatch = this.selectedView
-            ? dataEntry.inViews.some((view: any) =>
-                this.selectedView?.includes(view.title)
-              )
-            : true;
+            // Check if the entry matches the selected view
+            const viewsMatch = this.selectedView
+              ? dataEntry.inViews.some((view: any) =>
+                  this.selectedView?.includes(view.title)
+                )
+              : true;
 
-          if (timestamp >= from && timestamp <= to && viewsMatch) {
-            intensityKeys.forEach((key, index) => {
-              const emotionId = `eat_${key.toLowerCase()}`;
-              const rating = dataEntry['ratings']?.find(
-                (r: any) => r.emotionId === emotionId
-              );
-              const intensity = rating ? rating.intensity : 0;
+            if (timestamp >= from && timestamp <= to && viewsMatch) {
+              intensityKeys.forEach((key, index) => {
+                const emotionId = `eat_${key.toLowerCase()}`;
+                const rating = dataEntry['ratings']?.find(
+                  (r: any) => r.emotionId === emotionId
+                );
+                const intensity = rating ? rating.intensity : 0;
 
-              if (actionType === 'read' || actionType === 'write') {
-                const typeKey =
-                  actionType.charAt(0).toUpperCase() + actionType.slice(1);
-                if (rdata[typeKey]) {
-                  rdata[typeKey][index] += intensity;
-                  totalEntries[actionType].add(_id);
+                if (actionType === 'read' || actionType === 'write') {
+                  const typeKey =
+                    actionType.charAt(0).toUpperCase() + actionType.slice(1);
+                  if (rdata[typeKey]) {
+                    rdata[typeKey][index] += intensity;
+                    totalEntries[actionType].add(_id);
+                  }
                 }
-              }
-            });
-          }
-        });
+              });
+            }
+          });
 
-        // Convert Sets to counts
-        const readCount = totalEntries['read'].size;
-        const writeCount = totalEntries['write'].size;
+          // Convert Sets to counts
+          const readCount = totalEntries['read'].size;
+          const writeCount = totalEntries['write'].size;
 
-        intensityKeys.forEach((key, index) => {
-          rdata['Read'][index] /= readCount || 1;
-          rdata['Write'][index] /= writeCount || 1;
-        });
+          intensityKeys.forEach((key, index) => {
+            rdata['Read'][index] /= readCount || 1;
+            rdata['Write'][index] /= writeCount || 1;
+          });
 
-        resolve(rdata);
-      },
-      (error) => {
-        console.error('Error fetching data:', error);
-        resolve({
-          Reading: [0, 0, 0, 0, 0, 0, 0],
-          Writing: [0, 0, 0, 0, 0, 0, 0],
-        });
-      }
-    );
-  });
-}
+          resolve(rdata);
+        },
+        (error) => {
+          console.error('Error fetching data:', error);
+          resolve({
+            Reading: [0, 0, 0, 0, 0, 0, 0],
+            Writing: [0, 0, 0, 0, 0, 0, 0],
+          });
+        }
+      );
+    });
+  }
 }
