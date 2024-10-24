@@ -39,6 +39,9 @@ export class RadarChartJerrisonapiComponent {
       },
       tooltip: {
         enabled: true,
+        filter: function (tooltipItem) {
+          return tooltipItem.raw !== 0;
+        },
         titleFont: {
           size: 15,
         },
@@ -134,30 +137,47 @@ export class RadarChartJerrisonapiComponent {
   selectedView: string[] | null = null;
 
   ngOnInit() {
+    let selectedTimeRange: (Date | null)[] = [null, null]; // Store the last selected time range
+  
+    // Subscribe to the time range observable
     this.sharedTimeService.selectedTime$.subscribe((timeRange: number[]) => {
       if (timeRange && timeRange.length === 2) {
         const from = new Date(timeRange[0]);
-        console.log('From Date: ', from);
         const to = new Date(timeRange[1]);
+        console.log('From Date: ', from);
         console.log('To Date: ', to);
-        this.getData(from, to);
+        selectedTimeRange = [from, to]; // Update selected time range
+        this.getData(from, to); // Fetch data with the new time range
       } else {
-        this.getData(undefined, undefined);
+        selectedTimeRange = [null, null]; // Reset if time range is invalid
+        this.getData(null, null); // Adjusted for null
       }
     });
-
+  
+    // Subscribe to the view observable
     this.sharedViewService.selectedView$.subscribe((view: string | null) => {
       if (view) {
         this.selectedView = [view];
-        this.getData();
+        // Use the last selected time range when a view is selected
+        this.getData(selectedTimeRange[0], selectedTimeRange[1]);
       } else {
-        this.sharedViewService.getViews().subscribe((views: string[]) => {
-          this.selectedView = views; // Set all views as default
-          this.getData(); // Fetch data based on selected view
-        });
+        this.sharedViewService.getViews().subscribe(
+          (views: string[]) => {
+            this.selectedView = views; // Set all views as default
+            // Use the last selected time range when the views are set
+            this.getData(selectedTimeRange[0], selectedTimeRange[1]);
+          },
+          (error) => {
+            console.error('Failed to fetch views:', error);
+            // Handle error as needed
+          }
+        );
       }
     });
-  }
+  
+    // Optionally, fetch data with initial state if needed
+    this.getData(null, null); // Or use default time range
+  }  
 
   ngAfterViewInit() {
     if (this.chart) {
@@ -165,7 +185,7 @@ export class RadarChartJerrisonapiComponent {
     }
   }
 
-  async getData(from?: Date, to?: Date) {
+  async getData(from?: Date | null, to?: Date | null) {
     this.isLoading = true; // Start loading
     if (!from || !to) {
       const defaultFromDate = new Date();
