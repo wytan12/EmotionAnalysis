@@ -144,6 +144,7 @@ export class EmotionService {
     const a: EmoReg = new EmoReg(
       userID,
       timestamp,
+      EmotionData.ReflectionTitle,
       groupMembersString, // Assign the string value to GroupMembers
       EmotionData.Visualization,
       EmotionData.Challenges,

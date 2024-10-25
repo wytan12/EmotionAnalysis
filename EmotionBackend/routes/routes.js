@@ -144,6 +144,7 @@ APIrouter.post("/addReg", (req, res) => {
   const newReg = new EmoReg({
     UserID: req.body.UserID,
     Timestamp: req.body.Timestamp,
+    ReflectionTitle: req.body.ReflectionTitle,
     GroupMembers: req.body.GroupMembers,
     Visualization: req.body.Visualization,
     Challenges: req.body.Challenges,

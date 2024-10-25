@@ -57,6 +57,7 @@ import { WriteRatingComponent } from './write-rating/write-rating.component';
 import { TryingnoteComponent } from './tryingnote/tryingnote.component';
 import { RadarChartJerrisonapiComponent } from './radar-chart-jerrisonapi/radar-chart-jerrisonapi.component';
 import { TestNoteratingComponent } from './test-noterating/test-noterating.component';
+import { ReflectionTitleComponent } from './reflection-title/reflection-title.component';
 
 @NgModule({
   imports: [
@@ -90,6 +91,7 @@ import { TestNoteratingComponent } from './test-noterating/test-noterating.compo
     ReflectFormComponent,
     ReflectButtonComponent,
     ReflectHistoryComponent,
+    ReflectionTitleComponent,
     PopupWindowComponent,
     NegativeBarchartComponent,
     SelectTimeDropdownComponent,

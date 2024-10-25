@@ -26,6 +26,7 @@ export class ReflectFormComponent {
     console.log('Checking questions...');
     // Example: Check if all 5 inputs are not empty
     this.allQuestionsAnswered = !!(
+      this.formData.ReflectionTitle &&
       this.formData.Visualization &&
       this.formData.Challenges &&
       this.formData.ImprovementWays &&
@@ -46,6 +47,14 @@ export class ReflectFormComponent {
     // Trigger the check for all questions answered
     this.checkIfAllQuestionsAnswered();
   }
+
+  handleTitleSelected(title: string): void {
+    console.log('Selected Reflection Title:', title);
+    this.formData.ReflectionTitle = title; // Set the Reflection Title in formData
+
+    // Trigger the check for all questions answered
+    this.checkIfAllQuestionsAnswered();
+  } 
 
   submit() {
     console.log(this.formData);
