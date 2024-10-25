@@ -10,7 +10,8 @@
       <div class="scrollspy-example scrollspy-container">
         <div *ngFor="let emoReg of filteredEmoReg; let i = index">
           <section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + i" class="survey-section">
-            <h3>Reflection {{ i + 1 }}</h3>
+            <h3 *ngIf="!emoReg.ReflectionTitle">Reflection {{ i + 1 }}</h3>
+            <h3 *ngIf="emoReg.ReflectionTitle">{{ emoReg.ReflectionTitle }}</h3>
             <p>{{ emoReg.Timestamp }}</p>
             <div class="question-answer">
               <p class="question">Group Members:</p>
