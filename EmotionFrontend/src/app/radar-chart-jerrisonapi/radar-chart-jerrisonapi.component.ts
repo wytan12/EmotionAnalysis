@@ -139,34 +139,49 @@ export class RadarChartJerrisonapiComponent {
   ngOnInit() {
     this.resetViewFilter();
     let selectedTimeRange: (Date | null)[] = [null, null]; // Store the last selected time range
+    const defaultFullTimeRange: [Date, Date] = [
+      new Date(new Date().setFullYear(new Date().getFullYear() - 10)), // 10 years ago
+      new Date(), // Today
+    ];
 
     // Subscribe to the time range observable
-    this.sharedTimeService.selectedTime$.subscribe((timeRange: number[]) => {
-      if (timeRange && timeRange.length === 2) {
-        const from = new Date(timeRange[0]);
-        const to = new Date(timeRange[1]);
-        console.log('From Date: ', from);
-        console.log('To Date: ', to);
-        selectedTimeRange = [from, to]; // Update selected time range
-        this.getData(from, to); // Fetch data with the new time range
-      } else {
-        selectedTimeRange = [null, null]; // Reset if time range is invalid
-        this.getData(null, null); // Adjusted for null
+    this.sharedTimeService.selectedTime$.subscribe(
+      (timeRange: number[] | null) => {
+        if (timeRange && timeRange.length === 2) {
+          const from = new Date(timeRange[0]);
+          const to = new Date(timeRange[1]);
+          console.log('From Date:', from, 'To Date:', to);
+          selectedTimeRange = [from, to]; // Update selected time range
+          this.getData(from, to); // Fetch data with the new time range
+        } else {
+          console.log('Time Range Reset, using full range');
+          selectedTimeRange = [
+            defaultFullTimeRange[0],
+            defaultFullTimeRange[1],
+          ]; // Full time range if reset
+          this.getData(defaultFullTimeRange[0], defaultFullTimeRange[1]);
+        }
       }
-    });
+    );
 
     // Subscribe to the view observable
     this.sharedViewService.selectedView$.subscribe((view: string | null) => {
       if (view) {
         this.selectedView = [view];
         // Use the last selected time range when a view is selected
-        this.getData(selectedTimeRange[0], selectedTimeRange[1]);
+        this.getData(
+          selectedTimeRange[0] ?? defaultFullTimeRange[0],
+          selectedTimeRange[1] ?? defaultFullTimeRange[1]
+        );
       } else {
         this.sharedViewService.getViews().subscribe(
           (views: string[]) => {
             this.selectedView = views; // Set all views as default
-            // Use the last selected time range when the views are set
-            this.getData(selectedTimeRange[0], selectedTimeRange[1]);
+            // Use the last selected time range or default to full time range
+            this.getData(
+              selectedTimeRange[0] ?? defaultFullTimeRange[0],
+              selectedTimeRange[1] ?? defaultFullTimeRange[1]
+            );
           },
           (error) => {
             console.error('Failed to fetch views:', error);
@@ -177,13 +192,45 @@ export class RadarChartJerrisonapiComponent {
     });
 
     // Optionally, fetch data with initial state if needed
-    this.getData(null, null); // Or use default time range
+    this.getData(defaultFullTimeRange[0], defaultFullTimeRange[1]);
   }
 
   ngAfterViewInit() {
     if (this.chart) {
       this.chart.update();
     }
+  }
+
+  private subscribeToTimeAndView() {
+    let selectedTimeRange: (Date | null)[] = [null, null]; // Store the last selected time range
+
+    // Subscribe to the time range observable
+    this.sharedTimeService.selectedTime$.subscribe(
+      (timeRange: number[] | null) => {
+        if (timeRange && timeRange.length === 2) {
+          const from = new Date(timeRange[0]);
+          const to = new Date(timeRange[1]);
+          console.log('Time Range Changed - From Date:', from, 'To Date:', to);
+          selectedTimeRange = [from, to];
+          this.getData(from, to); // Fetch data with the new time range
+        } else {
+          console.log('Time Range Reset');
+          selectedTimeRange = [null, null]; // Reset time range
+          this.getData(null, null); // Fetch default data for reset time range
+        }
+      }
+    );
+
+    // Subscribe to the view observable
+    this.sharedViewService.selectedView$.subscribe((view: string | null) => {
+      if (view) {
+        this.selectedView = [view];
+        this.getData(selectedTimeRange[0], selectedTimeRange[1]);
+      } else {
+        this.resetViewFilter();
+        this.getData(selectedTimeRange[0], selectedTimeRange[1]);
+      }
+    });
   }
 
   async getData(from?: Date | null, to?: Date | null) {
