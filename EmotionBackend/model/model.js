@@ -161,6 +161,7 @@ const EmoSurveySchema = new mongoose.Schema({
 
 const EmoRegSchema = new mongoose.Schema({
   UserID: String,
+  ReflectionTitle: String,
   GroupMembers:String,
   Timestamp:Number,
   Visualization:String,
