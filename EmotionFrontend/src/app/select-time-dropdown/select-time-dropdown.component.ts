@@ -11,28 +11,36 @@ import {TimeService} from "../services/time.service";
   styleUrl: './select-time-dropdown.component.css'
 })
 export class SelectTimeDropdownComponent {
-  constructor(private timeService: TimeService, private sharedTimeService : SharedTimeService) {
-  }
+  constructor(private timeService: TimeService, private sharedTimeService: SharedTimeService) {}
+
   ngOnInit() {
-    this.range.valueChanges.subscribe(
-      value => {console.log('Value changed:', value);
+    this.range.valueChanges.subscribe(value => {
+      console.log('Value changed:', value);
     });
   }
+
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl()
   });
+
   date = null;
+
   onChange(result: Date[]): void {
     console.log('onChange: ', result);
-    const from = this.timeService.convertToTimeStamp(result[0]);
-    const to = this.timeService.convertToTimeStamp(result[1]);
+
+    // Define default range (10 years ago to today) if result is undefined or incomplete
+    const defaultFrom = new Date();
+    defaultFrom.setFullYear(defaultFrom.getFullYear() - 10); // 10 years ago
+    const from = result[0] ? this.timeService.convertToTimeStamp(result[0]) : this.timeService.convertToTimeStamp(defaultFrom);
+    const to = result[1] ? this.timeService.convertToTimeStamp(result[1]) : this.timeService.convertToTimeStamp(new Date());
+
     console.log('From number:', from);
     console.log('From:', this.timeService.convertToDate(from));
     console.log('To number:', to);
     console.log('To:', this.timeService.convertToDate(to));
-    if (result.length === 2 && result[0] && result[1]) {
-      this.sharedTimeService.setSelectedTime(from, to);
-    }
+
+    // Set the selected time range if both dates are present or using default range
+    this.sharedTimeService.setSelectedTime(from, to);
   }
 }

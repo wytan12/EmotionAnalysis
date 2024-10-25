@@ -1,7 +1,9 @@
 <app-header></app-header>
 
 <div class="container">
-  <section style="justify-content: center; align-content:center; margin-bottom: 25px;">
+  <section
+    style="justify-content: center; align-content: center; margin-bottom: 25px"
+  >
     <h3>Reflection History</h3>
   </section>
 
@@ -9,34 +11,45 @@
     <div class="col-10">
       <div class="scrollspy-example scrollspy-container">
         <div *ngFor="let emoReg of filteredEmoReg; let i = index">
-          <section [mdbScrollspyElement]="'scrollspy'" [id]="'example-' + i" class="survey-section">
-            <h3 *ngIf="!emoReg.ReflectionTitle">Reflection {{ i + 1 }}</h3>
-            <h3 *ngIf="emoReg.ReflectionTitle">{{ emoReg.ReflectionTitle }}</h3>
+          <section
+            [mdbScrollspyElement]="'scrollspy'"
+            [id]="'example-' + i"
+            class="survey-section"
+          >
+            <h3>Reflection {{ i + 1 }}</h3>
             <p>{{ emoReg.Timestamp }}</p>
             <div class="question-answer">
               <p class="question">Group Members:</p>
               <p class="answer">{{ emoReg.GroupMembers }}</p>
-              <p class="question">What is our specific action plan for creating a supportive emotional
-                environment?</p>
+              <p class="question">
+                What is our specific action plan for creating a supportive
+                emotional environment?
+              </p>
               <p class="answer">{{ emoReg.Action }}</p>
               <p class="question">What do you see in the visualizations?</p>
               <p class="answer">{{ emoReg.Visualization }}</p>
-              <p class="question">Based on the analysis results, what emotional challenges do we have
-                during the Knowledge Building?</p>
+              <p class="question">
+                Based on the analysis results, what emotional challenges do we
+                have during the Knowledge Building?
+              </p>
               <p class="answer">{{ emoReg.Challenges }}</p>
-              <p class="question">Which aspects do you think we can do better?</p>
+              <p class="question">
+                Which aspects do you think we can do better?
+              </p>
               <p class="answer">{{ emoReg.ImprovementWays }}</p>
-              <p class="question">How can we create a more positive emotional environment to support our
-                Knowledge Building?</p>
+              <p class="question">
+                How can we create a more positive emotional environment to
+                support our Knowledge Building?
+              </p>
               <p class="answer">{{ emoReg.PositivePlan }}</p>
-              <hr class="section-divider">
+              <hr class="section-divider" />
             </div>
           </section>
         </div>
       </div>
     </div>
 
-    <div class="col-2" style="position: sticky; top:0; justify-content: center; align-items: center;padding-left: 15px;">
+    <!-- <div class="col-2" style="position: sticky; top:0; justify-content: center; align-items: center;padding-left: 15px;">
       <div id="scrollspy"  style=" position: fixed; z-index: 1; height: 70%; overflow: auto;" class="sidebar">
         <ul [mdbScrollspy]="'scrollspy'" class="nav flex-column nav-pills menu-sidebar">
           <li class="nav-item" *ngFor="let emoReg of filteredEmoReg; let i = index">
@@ -46,6 +59,6 @@
           </li>
         </ul>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
