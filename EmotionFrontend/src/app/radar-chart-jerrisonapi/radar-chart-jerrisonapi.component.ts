@@ -137,6 +137,7 @@ export class RadarChartJerrisonapiComponent {
   selectedView: string[] | null = null;
 
   ngOnInit() {
+    this.resetViewFilter();
     let selectedTimeRange: (Date | null)[] = [null, null]; // Store the last selected time range
 
     // Subscribe to the time range observable
@@ -298,5 +299,19 @@ export class RadarChartJerrisonapiComponent {
         }
       );
     });
+  }
+
+  private resetViewFilter() {
+    // Set the selected view to a default or initial state
+    this.selectedView = null;
+    this.sharedViewService.getViews().subscribe(
+      (views: string[]) => {
+        this.selectedView = views; // Set all views as default if necessary
+        this.getData(); // Reload data with reset view
+      },
+      (error) => {
+        console.error('Failed to fetch views:', error);
+      }
+    );
   }
 }
