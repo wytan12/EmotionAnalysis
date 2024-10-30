@@ -175,16 +175,16 @@ export class BarChartComponent implements OnInit {
     },
   };
 
-  public handleChartClick(event: any) {
-    if (event.active && event.active.length > 0) {
-      const clickedLabel = event.active[0];
-      const value = this.barChartLabels[clickedLabel.index];
+  // public handleChartClick(event: any) {
+  //   if (event.active && event.active.length > 0) {
+  //     const clickedLabel = event.active[0];
+  //     const value = this.barChartLabels[clickedLabel.index];
 
-      // this.title = value;
-      this.visibilityService.setVisibility('SurveyNote', true);
-      this.titleService.selectedTitle = value;
-      console.log(value);
-      // this.router.navigate(['survey-reason'], { queryParams: { title: value } });
-    }
-  }
+  //     // this.title = value;
+  //     this.visibilityService.setVisibility('SurveyNote', true);
+  //     this.titleService.selectedTitle = value;
+  //     console.log(value);
+  //     // this.router.navigate(['survey-reason'], { queryParams: { title: value } });
+  //   }
+  // }
 }
