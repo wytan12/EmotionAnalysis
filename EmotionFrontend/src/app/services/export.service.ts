@@ -1,19 +1,20 @@
 // src/app/services/export.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API_ENDPOINTS } from '../shared/api-endpoints';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExportService {
-  private baseUrl = 'http://localhost';
+  private baseUrl = API_ENDPOINTS.base;
 
   constructor(private http: HttpClient) {}
 
   async exportToCsv() {
     try {
       // Fetch JSON data
-      const data = await this.http.get<any[]>(`${this.baseUrl}/api/community-data`).toPromise();
+      const data = await this.http.get<any[]>(API_ENDPOINTS.communityData).toPromise();
       // Convert JSON data to string
       const jsonData = JSON.stringify(data, null, 2); // Pretty print with indentation
       // Trigger download

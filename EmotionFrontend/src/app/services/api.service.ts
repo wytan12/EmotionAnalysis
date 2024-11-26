@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { API_ENDPOINTS } from '../shared/api-endpoints';
 
 export interface Rating {
   emotionId: string;
@@ -46,7 +47,7 @@ export interface ProcessedData {
 })
 export class ApiService {
 
-  private apiUrl = 'http://localhost/api/community-data';
+  private apiUrl = API_ENDPOINTS.communityData;
 
   constructor(private http: HttpClient) {}
 

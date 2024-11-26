@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { API_ENDPOINTS } from '../shared/api-endpoints';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class SharedViewService {
 
   getViews(): Observable<string[]> {
     return this.http
-      .get<any[]>('http://localhost/api/community-data')
+      .get<any[]>(API_ENDPOINTS.communityData)
       .pipe(
         map((data) => {
           const viewsSet = new Set<string>();

@@ -7,6 +7,7 @@ import { SharedTimeService } from '../services/shared-time.service';
 import { SharedViewService } from '../services/shared-view.service';
 import { TitleService } from '../services/title.service';
 import { NoteVisibilityService } from '../services/note-visibility.service';
+import { API_ENDPOINTS } from '../shared/api-endpoints';
 
 @Component({
   selector: 'app-radar-chart-jerrisonapi',
@@ -282,7 +283,8 @@ export class RadarChartJerrisonapiComponent {
         write: new Set<string>(),
       };
 
-      this.http.get<any[]>('http://localhost/api/community-data').subscribe(
+      //const API_BASE_URL = process.env['REACT_APP_COMMUNITY_DATA_URL'] || 'http://localhost/api';
+      this.http.get<any[]>(API_ENDPOINTS.communityData).subscribe(
         (response: any[]) => {
           const intensityKeys = [
             'Joyful',
