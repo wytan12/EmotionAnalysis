@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environment';
 import { ExportService } from '../services/export.service';
+import { API_ENDPOINTS } from '../shared/api-endpoints';
 
 @Component({
   selector: 'app-tryingnote',
@@ -14,6 +15,7 @@ export class TryingnoteComponent {
   ngOnInit(): void {}
 
   helpWindow() {
+    const apiUrl = API_ENDPOINTS.form;
     // Calculate the position to center the window
     const width = 1000;
     const height = 700;
@@ -22,7 +24,7 @@ export class TryingnoteComponent {
 
     // Open the window with the calculated position
     window.open(
-      environment.apiUrl,
+      apiUrl,
       '_blank',
       `location=yes,width=${width},height=${height},left=${left},top=${top},scrollbars=yes,status=yes`
     );

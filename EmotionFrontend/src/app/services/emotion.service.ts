@@ -5,11 +5,12 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, filter, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { EmoReadWrite, EmoReg, EmoSurvey, Emotion, Test } from './emotion';
+import { API_ENDPOINTS } from '../shared/api-endpoints';
 // import moment from 'moment';
 
 @Injectable({ providedIn: 'root' })
 export class EmotionService {
-  private EmotionesUrl = 'http:localhost/'; // URL to web api
+  private EmotionesUrl = API_ENDPOINTS.base; // URL to web api
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -21,7 +22,7 @@ export class EmotionService {
 
   /** GET Emotiones from the server */
   getTests(): Observable<Test[]> {
-    return this.http.get<Test[]>('api/tests').pipe(
+    return this.http.get<Test[]>(API_ENDPOINTS.tests).pipe(
       tap((_) => this.log('fetched Emotiones')),
       catchError(this.handleError<Test[]>('getEmotiones', []))
     );
@@ -29,7 +30,7 @@ export class EmotionService {
   
   getEmoReadWrite(): Observable<EmoReadWrite[]> {
     return this.http
-      .get<EmoReadWrite[]>('http://localhost/api/findAllEmoReadWrite')
+      .get<EmoReadWrite[]>(API_ENDPOINTS.findAllEmoReadWrite)
       .pipe(
         tap((_) => this.log('fetched Emotiones')),
         catchError(this.handleError<EmoReadWrite[]>('getEmotiones', []))
@@ -38,7 +39,7 @@ export class EmotionService {
   getEmoSurvey(): Observable<EmoSurvey[]> {
     console.log('api/findAllEmoSurvey');
     return this.http
-      .get<EmoSurvey[]>('http://localhost/api/findAllEmoSurvey')
+      .get<EmoSurvey[]>(API_ENDPOINTS.findAllEmoSurvey)
       .pipe(
         tap((_) => this.log('fetched EmoSurvey')),
         catchError(this.handleError<EmoSurvey[]>('EmoSurvey', []))
@@ -46,7 +47,7 @@ export class EmotionService {
   }
   getEmoReg(): Observable<EmoReg[]> {
     return this.http
-      .get<EmoReg[]>('http://localhost/api/findAllEmoReg')
+      .get<EmoReg[]>(API_ENDPOINTS.findAllEmoReg)
       .pipe(
         tap((_) => this.log('fetched EmoReg')),
         catchError(this.handleError<EmoReg[]>('EmoReg', []))
@@ -62,7 +63,7 @@ export class EmotionService {
     console.log(a);
     return this.http
       .post<Emotion>(
-        'http://localhost/api/addEmotion',
+        API_ENDPOINTS.addEmotion,
         a,
         this.httpOptions
       )
@@ -126,7 +127,7 @@ export class EmotionService {
     console.log(a);
     return this.http
       .post<EmoReadWrite>(
-        'http://localhost/api/addEmoReadWrite',
+        API_ENDPOINTS.addEmoReadWrite,
         a,
         this.httpOptions
       )
@@ -154,7 +155,7 @@ export class EmotionService {
     );
     console.log(a);
     return this.http
-      .post<EmoReg>('http://localhost/api/addReg', a, this.httpOptions)
+      .post<EmoReg>(API_ENDPOINTS.addReg, a, this.httpOptions)
       .pipe(
         // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
         catchError(this.handleError<EmoReg>('addaddReg'))
@@ -181,7 +182,7 @@ export class EmotionService {
     console.log(a);
 
     return this.http
-      .post<EmoSurvey>('http://localhost/api/addEmoSurvey', a, this.httpOptions)
+      .post<EmoSurvey>(API_ENDPOINTS.addEmoSurvey, a, this.httpOptions)
       .pipe(
         // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
         catchError(this.handleError<EmoSurvey>('addEmoSurvey'))

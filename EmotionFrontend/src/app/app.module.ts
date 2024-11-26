@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
@@ -58,6 +58,12 @@ import { TryingnoteComponent } from './tryingnote/tryingnote.component';
 import { RadarChartJerrisonapiComponent } from './radar-chart-jerrisonapi/radar-chart-jerrisonapi.component';
 import { TestNoteratingComponent } from './test-noterating/test-noterating.component';
 import { ReflectionTitleComponent } from './reflection-title/reflection-title.component';
+import { ConfigService } from './shared/config.service';
+import { initializeApiEndpoints } from './shared/api-endpoints';
+
+export function initializeApp(configService: ConfigService) {
+  return () => configService.loadConfig().then(() => initializeApiEndpoints(configService));
+}
 
 @NgModule({
   imports: [
@@ -114,6 +120,12 @@ import { ReflectionTitleComponent } from './reflection-title/reflection-title.co
   providers: [
     provideNzI18n(en_US),
     // { provide: NZ_ICONS, useValue: icons }
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [ConfigService], // Dependency injection for ConfigService
+      multi: true // Allows multiple initializers
+    }
   ]
 })
 export class AppModule { }
