@@ -48,8 +48,7 @@ APIrouter.get('/community-data', async (req, res) => {
       password: "HelloWorld322"
     });
     const token = loginResponse.data.token;
-    // console.log(token);
-    // res.send(token);
+    // query parameters(token will be given to us as a query parameter)
 
     // Fetch community data using the token
     const dataResponse = await axios.get('https://kf6.ualbany.org/api/analytics/emotions/note-emotions/community-id/668719a69d8dd4219c66ac03', {
@@ -63,25 +62,25 @@ APIrouter.get('/community-data', async (req, res) => {
   }
 });
 
-// APIrouter.get('/community-data/community-id/:communityId', async (req, res) => {
-//   const token = req.headers['authorization']; // Assume the token is already provided in the header
-//   const communityId = req.params.communityId;
+APIrouter.get('/community-data/community-id/:communityId', async (req, res) => {
+  const token = req.headers['authorization']; // Assume the token is already provided in the header
+  const communityId = req.params.communityId;
   
-//   console.log('Token:', token);
-//   console.log('Community ID:', communityId);
+  console.log('Token:', token);
+  console.log('Community ID:', communityId);
 
-//   try {
-//     // Fetch community data using the provided token
-//     const dataResponse = await axios.get(`https://kf6.ualbany.org/api/analytics/emotions/note-emotions/community-id/${communityId}`, {
-//       headers: { 'Authorization': token }
-//     });
+  try {
+    // Fetch community data using the provided token
+    const dataResponse = await axios.get(`https://kf6.ualbany.org/api/analytics/emotions/note-emotions/community-id/${communityId}`, {
+      headers: { 'Authorization': token }
+    });
 
-//     res.status(200).json(dataResponse.data);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Error processing request', error: error.message });
-//   }
-// });
+    res.status(200).json(dataResponse.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error processing request', error: error.message });
+  }
+});
 
 // //Post Method
 

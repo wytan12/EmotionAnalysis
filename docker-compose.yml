@@ -18,8 +18,11 @@ services:
   frontend:
     build: ./EmotionFrontend
     container_name: emotion_frontend
-    expose:
-      - "80"  # Map port 4200 to Nginx
+    restart: always
+    ports:
+      - "4200:80"
+    # expose:
+    #   - "80"  # Map port 4200 to Nginx
     depends_on:
       - backend
     networks:
@@ -30,8 +33,10 @@ services:
     container_name: emotion_backend
     environment:
       - MONGO_URI = mongodb+srv://liangluya:liangluya@cluster0.awhbvnl.mongodb.net/Emotion?retryWrites=true&w=majority
-    expose:
-      - "3000"
+    ports:
+      - "3000:3000"
+    # expose:
+    #   - "3000"
     depends_on:
       - mongo
     networks:
@@ -40,8 +45,11 @@ services:
   form:
     build: ./ReportEmotionForm
     container_name: emotion_form
-    expose:
-      - "80"  # Map port 80 to Nginx
+    restart: always
+    ports:
+      - "60312:80"
+    # expose:
+    #   - "80"  # Map port 80 to Nginx
     # ports:
     #   - "60312:80"
     depends_on:
@@ -52,17 +60,21 @@ services:
   mongo:
     image: mongo:latest
     container_name: mongo
-    ports:
-      - "27017:27017"  # MongoDB default port
+    restart: always
+    # ports:
+    #   - "27017:27017"  # MongoDB default port
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: liangluya
+      MONGO_INITDB_DATABASE: Emotion
     volumes:
-      - mongo-data:/data/db
+      - ./mongo-data:/data/db
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-   
     networks:
       - app-network
 
-volumes:
-  mongo-data:  # Persistent storage for MongoDB
+# volumes:
+#   mongo-data:  # Persistent storage for MongoDB
 
 networks:
   app-network:
