@@ -40,29 +40,6 @@ APIrouter.get("/tests", (req, res) => {
     });
 });
 
-// APIrouter.get('/community-data', async (req, res) => {
-//   try {
-//     // Login to get the token (check)
-//     const loginResponse = await axios.post('https://kf6.ualbany.org/auth/local', {
-//       userName: "bron322",
-//       password: "HelloWorld322"
-//     });
-//     const token = loginResponse.data.token;
-//     // console.log(token);
-//     // res.send(token);
-
-//     // Fetch community data using the token
-//     const dataResponse = await axios.get('https://kf6.ualbany.org/api/analytics/emotions/note-emotions/community-id/668719a69d8dd4219c66ac03', {
-//       headers: { 'Authorization': `Bearer ${token}` }
-//     });
-
-//     res.status(200).json(dataResponse.data);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Error processing request', error: error });
-//   }
-// });
-
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
   //const defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njg3NmRlNTlkOGRkNGYyZTM2NmI3NGQiLCJpYXQiOjE3MzI1NjgyMDYsImV4cCI6MTczMjU4NjIwNn0.G8B9SowUgumZO07H2FlDZZsaWy6zGwmxJy6KhAy6cAg";
   //const token = req.headers['authorization']; // Assume the token is already provided in the header
