@@ -18,6 +18,11 @@ services:
   frontend:
     build: ./EmotionFrontend
     container_name: emotion_frontend
+    environment:
+      BASE_URL: http://localhost
+      API_URL: http://localhost/api
+      COMMUNITY_DATA_URL: http://localhost/api/community-data/community-id/${communityId}
+      FORM_URL: http://localhost/form
     restart: always
     ports:
       - "4200:80"
@@ -32,7 +37,9 @@ services:
     build: ./EmotionBackend
     container_name: emotion_backend
     environment:
-      - MONGO_URI = mongodb+srv://liangluya:liangluya@cluster0.awhbvnl.mongodb.net/Emotion?retryWrites=true&w=majority
+      MONGO_URI: mongodb://liang:luya@mongo:27017/Emotion?retryWrites=true&w=majority
+      DEFAULT_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njg3NmRlNTlkOGRkNGYyZTM2NmI3NGQiLCJpYXQiOjE3MzI1ODQxOTMsImV4cCI6MTczMjYwMjE5M30.LvUctJkj36S057aysjEZvNzx4tzAzrss961qwGgz8qI
+      DEFAULT_COMMUNITY_ID: 668719a69d8dd4219c66ac03
     ports:
       - "3000:3000"
     # expose:
@@ -45,6 +52,9 @@ services:
   form:
     build: ./ReportEmotionForm
     container_name: emotion_form
+    environment:
+      BASE_URL: http://localhost
+      API_URL: http://localhost/api
     restart: always
     ports:
       - "60312:80"
