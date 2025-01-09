@@ -18,11 +18,12 @@ services:
   frontend:
     build: ./EmotionFrontend
     container_name: emotion_frontend
-    environment:
-      BASE_URL: http://localhost
-      API_URL: http://localhost/api
-      COMMUNITY_DATA_URL: http://localhost/api/community-data/community-id/${communityId}
-      FORM_URL: http://localhost/form
+    # refer src/assets/config.json
+    # environment:
+    #   BASE_URL: http://localhost
+    #   API_URL: http://localhost/api
+    #   COMMUNITY_DATA_URL: http://localhost/api/community-data/community-id/${communityId}
+    #   FORM_URL: http://localhost/form
     restart: always
     ports:
       - "4200:80"
@@ -52,9 +53,10 @@ services:
   form:
     build: ./ReportEmotionForm
     container_name: emotion_form
-    environment:
-      BASE_URL: http://localhost
-      API_URL: http://localhost/api
+    # refer src/assets/config.json
+    # environment:
+    #   BASE_URL: http://localhost
+    #   API_URL: http://localhost/api
     restart: always
     ports:
       - "60312:80"
