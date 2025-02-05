@@ -1,6 +1,7 @@
 import express from "express";
 import {Test, EmoReadWrite, EmoReg, EmoSurvey, Emotion,EmoLogData} from "../model/model.js";
 import axios from 'axios';
+
 const APIrouter = express.Router();
 
 APIrouter.get("/newtest", (req, res) => {
@@ -41,20 +42,18 @@ APIrouter.get("/tests", (req, res) => {
 });
 
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
-  //const defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njg3NmRlNTlkOGRkNGYyZTM2NmI3NGQiLCJpYXQiOjE3MzI1NjgyMDYsImV4cCI6MTczMjU4NjIwNn0.G8B9SowUgumZO07H2FlDZZsaWy6zGwmxJy6KhAy6cAg";
-  //const token = req.headers['authorization']; // Assume the token is already provided in the header
-  //const defaultCommunityId = "668719a69d8dd4219c66ac03";
   const defaultToken = process.env.DEFAULT_TOKEN;
   const defaultCommunityId = process.env.DEFAULT_COMMUNITY_ID;
   const token = req.headers['authorization'] || defaultToken;
   const communityId = req.params.communityId || defaultCommunityId;
+  const API_HOST = process.env.API_HOST;
   
   console.log('Token:', token);
   console.log('Community ID:', communityId);
 
   try {
     // Fetch community data using the provided token
-    const dataResponse = await axios.get(`https://kf6.ualbany.org/api/analytics/emotions/note-emotions/community-id/${communityId}`, {
+    const dataResponse = await axios.get(`${API_HOST}/${communityId}`, {
       headers: { 'Authorization': `Bearer ${token}`}
     });
 
