@@ -8,6 +8,7 @@ import { SharedViewService } from '../services/shared-view.service';
 import { combineLatest, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { NoteVisibilityService } from '../services/note-visibility.service';
+import { API_ENDPOINTS } from '../shared/api-endpoints';
 
 @Component({
   selector: 'app-test-noterating',
@@ -47,7 +48,7 @@ export class TestNoteratingComponent implements OnInit {
     private titleService: TitleService,
     private sharedViewService: SharedViewService,
     private visibilityService: NoteVisibilityService,
-    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+    private cdr: ChangeDetectorRef, // Inject ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -131,7 +132,7 @@ export class TestNoteratingComponent implements OnInit {
   ): Promise<any[]> {
     return new Promise<any[]>((resolve) => {
       this.http
-        .get<any[]>('http://localhost/api/community-data')
+        .get<any[]>(API_ENDPOINTS.communityData)
         .subscribe((dataList) => {
           const filteredList = dataList.filter((data) => {
             const action = data.actionType.toLowerCase();
