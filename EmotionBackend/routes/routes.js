@@ -42,10 +42,10 @@ APIrouter.get("/tests", (req, res) => {
 });
 
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
-  const defaultToken = process.env.DEFAULT_TOKEN;
-  const defaultCommunityId = process.env.DEFAULT_COMMUNITY_ID;
-  const token = req.headers['authorization'] || defaultToken;
-  const communityId = req.params.communityId || defaultCommunityId;
+  // const defaultToken = process.env.DEFAULT_TOKEN;
+  // const defaultCommunityId = process.env.DEFAULT_COMMUNITY_ID;
+  const token = req.headers['authorization'];
+  const communityId = req.params.communityId;
   const API_HOST = process.env.API_HOST;
   
   console.log('Token:', token);
