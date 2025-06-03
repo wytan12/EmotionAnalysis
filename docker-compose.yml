@@ -39,8 +39,6 @@ services:
     container_name: emotion_backend
     environment:
       MONGO_URI: mongodb://liang:luya@mongo:27017/Emotion?retryWrites=true&w=majority
-      DEFAULT_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njg3NmRlNTlkOGRkNGYyZTM2NmI3NGQiLCJpYXQiOjE3MzI1ODQxOTMsImV4cCI6MTczMjYwMjE5M30.LvUctJkj36S057aysjEZvNzx4tzAzrss961qwGgz8qI
-      DEFAULT_COMMUNITY_ID: 668719a69d8dd4219c66ac03
       API_HOST: https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id
     ports:
       - "3000:3000"
