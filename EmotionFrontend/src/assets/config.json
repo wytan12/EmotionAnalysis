@@ -1,6 +1,6 @@
 {
-    "communityDataUrl": "http://localhost/api/community-data/community-id/668719a69d8dd4219c66ac03",
-    "baseUrl": "http://localhost",
-    "apiUrl": "http://localhost/api",
-    "formUrl": "http://localhost/form"
+    "communityDataUrl": "https://kf6.rdc.nie.edu.sg/api/community-data/community-id/668719a69d8dd4219c66ac03",
+    "baseUrl": "https://kf6.rdc.nie.edu.sg",
+    "apiUrl": "https://kf6.rdc.nie.edu.sg/api",
+    "formUrl": "https://kf6.rdc.nie.edu.sg/form"
 }
