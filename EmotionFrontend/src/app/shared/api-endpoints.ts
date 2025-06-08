@@ -1,7 +1,6 @@
-import { ConfigService } from "./config.service";
+// import { ConfigService } from "./config.service";
 
 export let API_ENDPOINTS = {
-    base: '',
     communityData: '',
     form: '',
     findAllEmoReadWrite: '',
@@ -14,18 +13,17 @@ export let API_ENDPOINTS = {
     tests: '',
   };
   
-  export function initializeApiEndpoints(configService: ConfigService): void {
-    const baseUrl = configService.get('baseUrl') || 'http://localhost'; // Default base URL
-    const apiUrl = configService.get('apiUrl') || `${baseUrl}/api`; // Default API URL
-    const communityDataUrl = configService.get('communityDataUrl') || `${apiUrl}/community-data`;
-    const formUrl = configService.get('formUrl') || `${baseUrl}/form`;
+  export function initializeApiEndpoints(): void {
+    // const baseUrl = configService.get('baseUrl') || 'http://localhost'; // Default base URL
+    const apiUrl = `/api`; // Default API URL
+    const communityDataUrl = `${apiUrl}/community-data`;
+    const formUrl = `/form`;
 
-    if (!baseUrl || !apiUrl || !communityDataUrl|| !formUrl) {
+    if (!apiUrl || !communityDataUrl|| !formUrl) {
         console.error('config keys are missing');
       }
 
       API_ENDPOINTS = {
-        base: baseUrl,
         form: formUrl,
         communityData: communityDataUrl,
         findAllEmoReadWrite: `${apiUrl}/findAllEmoReadWrite`,

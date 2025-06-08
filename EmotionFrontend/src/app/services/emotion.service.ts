@@ -10,7 +10,7 @@ import { API_ENDPOINTS } from '../shared/api-endpoints';
 
 @Injectable({ providedIn: 'root' })
 export class EmotionService {
-  private EmotionesUrl = API_ENDPOINTS.base; // URL to web api
+  // private EmotionesUrl = API_ENDPOINTS; // URL to web api
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -192,7 +192,7 @@ export class EmotionService {
   // --------------------------------------------------------
   /** DELETE: delete the Emotion from the server */
   deleteEmotion(id: number): Observable<Emotion> {
-    const url = `${this.EmotionesUrl}/${id}`;
+    const url = `${API_ENDPOINTS.addEmotion}/${id}`;
 
     return this.http.delete<Emotion>(url, this.httpOptions).pipe(
       tap((_) => this.log(`deleted Emotion id=${id}`)),
@@ -202,7 +202,7 @@ export class EmotionService {
 
   /** PUT: update the Emotion on the server */
   updateEmotion(Emotion: Emotion): Observable<any> {
-    return this.http.put(this.EmotionesUrl, Emotion, this.httpOptions).pipe(
+    return this.http.put(API_ENDPOINTS.addEmotion, Emotion, this.httpOptions).pipe(
       tap((_) => this.log(`updated Emotion id=${Emotion.id}`)),
       catchError(this.handleError<any>('updateEmotion'))
     );
@@ -210,7 +210,7 @@ export class EmotionService {
 
   /** GET Emotion by id. Return `undefined` when id not found */
   getEmotionNo404<Data>(id: number): Observable<Emotion> {
-    const url = `${this.EmotionesUrl}/?id=${id}`;
+    const url = `${API_ENDPOINTS.addEmotion}/?id=${id}`;
     return this.http.get<Emotion[]>(url).pipe(
       map((Emotiones) => Emotiones[0]), // returns a {0|1} element array
       tap((h) => {
@@ -223,7 +223,7 @@ export class EmotionService {
 
   /** GET Emotion by id. Will 404 if id not found */
   getEmotion(id: number): Observable<Emotion> {
-    const url = `${this.EmotionesUrl}/${id}`;
+    const url = `${API_ENDPOINTS.addEmotion}/${id}`;
     return this.http.get<Emotion>(url).pipe(
       tap((_) => this.log(`fetched Emotion id=${id}`)),
       catchError(this.handleError<Emotion>(`getEmotion id=${id}`))
@@ -236,7 +236,7 @@ export class EmotionService {
       // if not search term, return empty Emotion array.
       return of([]);
     }
-    return this.http.get<Emotion[]>(`${this.EmotionesUrl}/?name=${term}`).pipe(
+    return this.http.get<Emotion[]>(`${API_ENDPOINTS.addEmotion}/?name=${term}`).pipe(
       tap((x) =>
         x.length
           ? this.log(`found Emotiones matching "${term}"`)

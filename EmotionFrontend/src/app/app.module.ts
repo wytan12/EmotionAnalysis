@@ -58,11 +58,10 @@ import { TryingnoteComponent } from './tryingnote/tryingnote.component';
 import { RadarChartJerrisonapiComponent } from './radar-chart-jerrisonapi/radar-chart-jerrisonapi.component';
 import { TestNoteratingComponent } from './test-noterating/test-noterating.component';
 import { ReflectionTitleComponent } from './reflection-title/reflection-title.component';
-import { ConfigService } from './shared/config.service';
 import { initializeApiEndpoints } from './shared/api-endpoints';
 
-export function initializeApp(configService: ConfigService) {
-  return () => configService.loadConfig().then(() => initializeApiEndpoints(configService));
+export function initializeApp() {
+  return () => initializeApiEndpoints();
 }
 
 @NgModule({
@@ -123,7 +122,7 @@ export function initializeApp(configService: ConfigService) {
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
-      deps: [ConfigService], // Dependency injection for ConfigService
+      deps: [],
       multi: true // Allows multiple initializers
     }
   ]

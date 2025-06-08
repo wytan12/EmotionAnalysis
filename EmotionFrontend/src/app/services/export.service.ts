@@ -7,8 +7,6 @@ import { API_ENDPOINTS } from '../shared/api-endpoints';
   providedIn: 'root',
 })
 export class ExportService {
-  private baseUrl = API_ENDPOINTS.base;
-
   constructor(private http: HttpClient) {}
 
   async exportToCsv() {
@@ -39,7 +37,7 @@ export class ExportService {
   }
 
   exportSurveyToCsv() {
-    return this.http.get(`${this.baseUrl}/export/survey/csv`, {
+    return this.http.get(`${API_ENDPOINTS}/export/survey/csv`, {
       responseType: 'text',
     });
   }

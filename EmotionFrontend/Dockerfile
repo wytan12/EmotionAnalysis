@@ -1,10 +1,10 @@
-FROM node:18 AS build
+FROM node:20 AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install --legacy-peer-deps
 RUN npm install -g @angular/cli
 COPY . .
-RUN npm run build --prod
+RUN npm run build -- --configuration production
 FROM nginx:alpine
 COPY --from=build /app/dist/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
