@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost/form',  
+  apiUrl: 'https://emotion-analysis.rdc.nie.edu.sg/form',  
 };
