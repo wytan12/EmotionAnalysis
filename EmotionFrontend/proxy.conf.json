@@ -1,6 +1,6 @@
 {
   "/api":{
-    "target": "http://localhost",
+    "target": "http://emotion-analysis.rdc.nie.edu.sg",
     "secure":false
   }
 }
