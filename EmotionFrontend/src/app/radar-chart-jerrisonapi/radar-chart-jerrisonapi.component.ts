@@ -284,7 +284,9 @@ export class RadarChartJerrisonapiComponent {
       };
 
       //const API_BASE_URL = process.env['REACT_APP_COMMUNITY_DATA_URL'] || 'http://localhost/api';
-      this.http.get<any[]>(API_ENDPOINTS.communityData).subscribe(
+      this.http.get<any[]>(
+        API_ENDPOINTS.communityData,
+      ).subscribe(
         (response: any[]) => {
           const intensityKeys = [
             'Joyful',

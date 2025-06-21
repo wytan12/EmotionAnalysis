@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environment';
 import { ExportService } from '../services/export.service';
 import { API_ENDPOINTS } from '../shared/api-endpoints';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tryingnote',
@@ -10,9 +11,22 @@ import { API_ENDPOINTS } from '../shared/api-endpoints';
   styleUrl: './tryingnote.component.css',
 })
 export class TryingnoteComponent {
-  constructor(private router: Router, private exportService: ExportService) {}
+  communityId: string = '';
 
-  ngOnInit(): void {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute, // ✅ Inject ActivatedRoute
+    private exportService: ExportService
+  ) {}
+
+  ngOnInit(): void {
+    // ✅ Extract communityId from the route parameter
+    this.communityId = this.route.snapshot.paramMap.get('communityId') || '';
+    console.log('Loaded communityId:', this.communityId);
+
+    // If needed: pass communityId to a service or fetch data
+    // this.myService.fetchCommunityData(this.communityId).subscribe(...)
+  }
 
   helpWindow() {
     const apiUrl = API_ENDPOINTS.form;

@@ -16,7 +16,7 @@ export let API_ENDPOINTS = {
   
   export function initializeApiEndpoints(configService: ConfigService): void {
     const baseUrl = configService.get('baseUrl') || 'http://localhost'; // Default base URL
-    const apiUrl = configService.get('apiUrl') || `${baseUrl}/api`; // Default API URL
+    const apiUrl = `${baseUrl}/api`; // Default API URL
     const communityDataUrl = configService.get('communityDataUrl') || `${apiUrl}/community-data/community-id`;
     const formUrl = configService.get('formUrl') || `${baseUrl}/form`;
 
