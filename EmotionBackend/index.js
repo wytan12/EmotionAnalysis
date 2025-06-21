@@ -32,9 +32,9 @@ var corsOptions = {
 console.log(`Backend Start`);
 //////////////////////////////////////////////////  mongoDB ///////////////////////////////////////////////////
 
-// const mongoURLString = "mongodb+srv://liangluya:liangluya@cluster0.awhbvnl.mongodb.net/Emotion?retryWrites=true&w=majority";
+const mongoURLString = "mongodb+srv://liangluya:liangluya@cluster0.awhbvnl.mongodb.net/Emotion?retryWrites=true&w=majority";
 dotenv.config();
-const mongoURLString = process.env.MONGO_URI;
+// const mongoURLString = process.env.MONGO_URI;
 console.log(`mongoURLString: ${mongoURLString}`);
 
 const connectDB = async () => {

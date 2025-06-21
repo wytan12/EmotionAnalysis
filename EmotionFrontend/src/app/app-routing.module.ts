@@ -11,8 +11,9 @@ import { TryingnoteComponent } from './tryingnote/tryingnote.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/tryingnote', pathMatch: 'full' },
-  { path: 'tryingnote', component: TryingnoteComponent },
+  { path: '', redirectTo: '/tryingnote/6645ab836782b352b64ea86c', pathMatch: 'full' },
+  //{ path: 'view/:communityId', redirectTo: 'tryingnote/:communityId', pathMatch: 'full' }，
+  { path: 'tryingnote/:communityId', component: TryingnoteComponent },
   { path: 'statics', component: StaticsComponent },
   { path: 'bar', component: BarChartComponent},
   { path: 'survey', component: SurveyComponent},

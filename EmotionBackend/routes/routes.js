@@ -4,6 +4,32 @@ import axios from 'axios';
 
 const APIrouter = express.Router();
 
+let cachedToken = null;
+let tokenExpiry = null;
+
+async function getAuthToken() {
+  const now = Date.now();
+
+  // Return cached token if still valid (e.g., expires in 1 hour)
+  if (cachedToken && tokenExpiry && now < tokenExpiry) {
+    return cachedToken;
+  }
+
+  try {
+    const response = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', {
+      userName: 'gaoxiazhu',
+      password: 'Testemotionanalytics',
+    });
+
+    cachedToken = response.data.token;
+    tokenExpiry = now + 55 * 60 * 1000; // cache for 55 minutes
+    return cachedToken;
+  } catch (error) {
+    console.error('Error fetching auth token:', error.message);
+    throw new Error('Authentication failed');
+  }
+}
+
 APIrouter.get("/newtest", (req, res) => {
   const newTest = new Test({
     testID: "liang"+Date.now(),
@@ -42,25 +68,20 @@ APIrouter.get("/tests", (req, res) => {
 });
 
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
-  // const defaultToken = process.env.DEFAULT_TOKEN;
-  // const defaultCommunityId = process.env.DEFAULT_COMMUNITY_ID;
-  const token = req.headers['authorization'];
-  const communityId = req.params.communityId;
-  const API_HOST = process.env.API_HOST;
-  
-  console.log('Token:', token);
-  console.log('Community ID:', communityId);
+  const communityId = req.params.communityId || "6645ab836782b352b64ea86c";
+  const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
 
   try {
-    // Fetch community data using the provided token
+    const token = await getAuthToken(); // dynamically fetch token
+
     const dataResponse = await axios.get(`${API_HOST}/${communityId}`, {
-      headers: { 'Authorization': `Bearer ${token}`}
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     res.status(200).json(dataResponse.data);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error processing request', error: error.message });
+    console.error('Community data fetch error:', error.message);
+    res.status(500).json({ message: 'Error fetching community data', error: error.message });
   }
 });
 
