@@ -7,29 +7,6 @@ const APIrouter = express.Router();
 let cachedToken = null;
 let tokenExpiry = null;
 
-async function getAuthToken() {
-  const now = Date.now();
-
-  // Return cached token if still valid (e.g., expires in 1 hour)
-  if (cachedToken && tokenExpiry && now < tokenExpiry) {
-    return cachedToken;
-  }
-
-  try {
-    const response = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', {
-      userName: 'gaoxiazhu',
-      password: 'Testemotionanalytics',
-    });
-
-    cachedToken = response.data.token;
-    tokenExpiry = now + 55 * 60 * 1000; // cache for 55 minutes
-    return cachedToken;
-  } catch (error) {
-    console.error('Error fetching auth token:', error.message);
-    throw new Error('Authentication failed');
-  }
-}
-
 APIrouter.get("/newtest", (req, res) => {
   const newTest = new Test({
     testID: "liang"+Date.now(),
@@ -69,10 +46,10 @@ APIrouter.get("/tests", (req, res) => {
 
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
   const communityId = req.params.communityId;
-  const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
+  const API_HOST = process.env.API_HOST;
 
   try {
-    const token = await getAuthToken(); // dynamically fetch token
+    const token = req.headers['authorization']; // dynamically fetch token
 
     const dataResponse = await axios.get(`${API_HOST}/${communityId}`, {
       headers: { Authorization: `Bearer ${token}` },
