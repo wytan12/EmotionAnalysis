@@ -68,7 +68,7 @@ APIrouter.get("/tests", (req, res) => {
 });
 
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
-  const communityId = req.params.communityId || "6645ab836782b352b64ea86c";
+  const communityId = req.params.communityId;
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
 
   try {
