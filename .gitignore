@@ -1,1 +1,3 @@
 /mongo-data
+# MongoDB dump folders
+atlas-dump/
