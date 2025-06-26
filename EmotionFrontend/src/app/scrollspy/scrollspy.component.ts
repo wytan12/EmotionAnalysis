@@ -1,124 +1,107 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {EmotionService} from "../services/emotion.service";
-import {EmoReadWrite, EmoSurvey} from "../services/emotion";
+import { EmotionService } from '../services/emotion.service';
+import { EmoSurvey } from '../services/emotion';
 import { TimeService } from '../services/time.service';
-import {map} from "rxjs/operators";
 import { TitleService } from '../services/title.service';
 import { SharedTimeService } from '../services/shared-time.service';
-import { Observable } from 'rxjs';
 import { NoteVisibilityService } from '../services/note-visibility.service';
 
 @Component({
-	selector: "app-scrollspy",
-	templateUrl: "./scrollspy.component.html",
-	styleUrls: ["./scrollspy.component.css"]
-  })
-
-export class ScrollspyComponent {
-	title: string = '';
+  selector: 'app-scrollspy',
+  templateUrl: './scrollspy.component.html',
+  styleUrls: ['./scrollspy.component.css']
+})
+export class ScrollspyComponent implements OnInit {
+  title: string = '';
   filteredEmoSurveys: EmoSurvey[] = [];
   selectedTimeRange: [Date | null, Date | null] = [null, null];
   isVisible = true;
+  activeSection: number = 0;
+  currentSectionNumber: number = 1;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private emotionService: EmotionService,
     private timeService: TimeService,
     private sharedTimeService: SharedTimeService,
     private titleService: TitleService,
-    private visibilityService: NoteVisibilityService) {
-      
-     }
+    private visibilityService: NoteVisibilityService
+  ) {}
 
-  ngOnInit() {
-    // // Subscribe to changes in the route parameters
-    // this.route.queryParams.subscribe(params => {
-    //   // Retrieve the 'title' parameter from the query parameters
-    //   this.title = params['title'];
+  ngOnInit(): void {
     this.visibilityService.getVisibilityObservable('SurveyNote').subscribe(visible => {
       this.isVisible = visible;
     });
-    this.titleService.selectedTitle$.subscribe((title: string| null) => {
-      if(title){
-        console.log('Title received:', title);
+
+    this.titleService.selectedTitle$.subscribe((title: string | null) => {
+      if (title) {
         this.title = title;
-        this.getData(); // Fetch data with the current time range
-        // this.getEmoSurveyByEmotionTitle(this.title).then(filteredData => {
-        //   this.filteredEmoSurveys = filteredData;
-        // });
+        this.tryFetchData();
       }
-       // Set the title in the component property
     });
-    
-    // Time service subscription
+
     this.sharedTimeService.selectedTime$.subscribe((timeRange: number[]) => {
       if (timeRange && timeRange.length === 2) {
-          const from = new Date(timeRange[0]);
-          console.log("From Date: ", from);
-          const to = new Date(timeRange[1]);
-          console.log("To Date: ", to);
-          this.selectedTimeRange = [from, to];
-          this.getData(from, to);
+        const from = new Date(timeRange[0]);
+        const to = new Date(timeRange[1]);
+        this.selectedTimeRange = [from, to];
       } else {
-          this.selectedTimeRange = [null, null];
-          this.getData();
+        this.selectedTimeRange = [null, null];
       }
+      this.tryFetchData();
     });
-
-    // this.sharedTimeService.selectedTime$.subscribe((timeRange: number[]) => {
-    //   console.log('Selected time range:', timeRange);
-    // });
-   
   }
 
-  activeSection: number = 0 ;
-  setActiveSection(sectionIndex: number) {
+  setActiveSection(sectionIndex: number): void {
     this.activeSection = sectionIndex;
   }
 
-  currentSectionNumber: number = 1;
-
-
-  getEmoSurveyByEmotionTitle(emotionTitle: string, fromDate?: Date, toDate?: Date): Promise<EmoSurvey[]> {
-    return new Promise<EmoSurvey[]>(resolve => {
-        this.emotionService.getEmoSurvey().subscribe(emoSurveyList => {
-            // Filter the list based on the emotion title and timestamp range
-            const filteredList = emoSurveyList.filter(emoSurvey => {
-                emoSurvey.Timestamp = this.timeService.convertToDate(Number(emoSurvey.Timestamp) * 1000);
-                console.log(emoSurvey.Timestamp);
-
-                const isEmotionMatch = emoSurvey.Inconducive.includes(emotionTitle);
-                const isWithinDateRange = (!fromDate || new Date(emoSurvey.Timestamp) >= fromDate) && 
-                                           (!toDate || new Date(emoSurvey.Timestamp) <= toDate);
-                
-                return isEmotionMatch && isWithinDateRange;
-            });
-
-            // Sort the filtered list by timestamp in descending order
-            filteredList.sort((a, b) => new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf());
-
-            resolve(filteredList);
-        });
-    });
+  convertTimestampToDate(timestamp: string): string {
+    const ms = Number(timestamp) * 1000;
+    return new Date(ms).toLocaleString(); // or use Angular DatePipe if needed
   }
-
-  getData(from?: Date, to?: Date) {
+  
+  private tryFetchData(): void {
     if (this.title) {
-      const [storedFromDate, storedToDate] = this.selectedTimeRange;
-      this.getEmoSurveyByEmotionTitle(
-        this.title, 
-        from || (storedFromDate !== null ? storedFromDate : undefined), 
-        to || (storedToDate !== null ? storedToDate : undefined)
-      ).then(filteredList => {
-        this.filteredEmoSurveys = filteredList;
-      });
+      const [from, to] = this.selectedTimeRange;
+      this.getData(from ?? undefined, to ?? undefined);
     }
   }
 
-  
+  private getEmoSurveyByEmotionTitle(
+    emotionTitle: string,
+    fromDate?: Date,
+    toDate?: Date
+  ): Promise<EmoSurvey[]> {
+    return new Promise<EmoSurvey[]>(resolve => {
+      this.emotionService.getEmoSurvey().subscribe(emoSurveyList => {
+        const filteredList = emoSurveyList
+          .filter(emoSurvey => {
+            const timestampDate = new Date(Number(emoSurvey.Timestamp) * 1000);
+            const matchesEmotion = emoSurvey.Inconducive.includes(emotionTitle);
+            const inRange =
+              (!fromDate || timestampDate >= fromDate) &&
+              (!toDate || timestampDate <= toDate);
+            return matchesEmotion && inRange;
+          })
+          .sort((a, b) =>
+            new Date(Number(b.Timestamp) * 1000).getTime() -
+            new Date(Number(a.Timestamp) * 1000).getTime()
+          );
 
+        resolve(filteredList);
+      });
+    });
+  }
 
+  private getData(from?: Date, to?: Date): void {
+    const [storedFrom, storedTo] = this.selectedTimeRange;
+    const start = from || storedFrom || undefined;
+    const end = to || storedTo || undefined;
 
-
+    this.getEmoSurveyByEmotionTitle(this.title, start, end).then(filtered => {
+      this.filteredEmoSurveys = filtered;
+    });
+  }
 }
-

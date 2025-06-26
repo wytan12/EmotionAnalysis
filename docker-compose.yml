@@ -38,7 +38,7 @@ services:
     build: ./EmotionBackend
     container_name: emotion_backend
     environment:
-      MONGO_URI: mongodb://liangluya:liangluya@mongo:27017/Emotion?authSource=Emotion
+      MONGO_URI: mongodb://liangluya:liangluya@mongo:27017/Emotion?authSource=admin
       API_HOST: https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id
     ports:
       - "3000:3000"
@@ -79,13 +79,13 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: liangluya
       MONGO_INITDB_DATABASE: Emotion
     volumes:
-      # - ./mongo-data:/data/db
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongo-data:/data/db
+      # - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - app-network
 
-# volumes:
-#   mongo-data:  # Persistent storage for MongoDB
+volumes:
+  mongo-data:  # Persistent storage for MongoDB
 
 networks:
   app-network:

@@ -84,65 +84,54 @@ emoSurvey: EmoSurvey[] = [];
   }
 
   async getData(from?: Date, to?: Date) {
-    //setting default value
+    let fromDate = from;
+    let toDate = to;
+  
+    // If no date range provided, determine bounds from data
     if (!from || !to) {
-      // Set default values for from and to if not provided
-      const defaultFromDate = new Date(); // Default to current date/time
-      const defaultToDate = new Date(); // Default to current date/time
-      defaultFromDate.setDate(defaultFromDate.getDate() - 500); // Default to one month ago
-      this.getData(defaultFromDate, defaultToDate);
-      return; // Exit function to prevent further execution
+      const allData = await this.emotionService.getEmoSurvey().toPromise();
+      if (!allData || allData.length === 0) {
+        this.data = [0, 0, 0, 0, 0, 0, 0];
+        this.barChartData[0].data = this.data;
+        this.chart?.update();
+        return;
+      }
+  
+      const timestamps = allData.map(es => new Date(Number(es.Timestamp) * 1000));
+      fromDate = new Date(Math.min(...timestamps.map(d => d.getTime())));
+      toDate = new Date(Math.max(...timestamps.map(d => d.getTime())));
     }
-
-    const dataHttp = await this.getDataHttp(from, to);
+  
+    const dataHttp = await this.getDataHttp(fromDate!, toDate!);
     this.data = dataHttp;
-    console.log(this.data);
-    this.barChartData[0].data= this.data;
-    if (this.chart) {
-      this.chart.update();
-    }
-    // this.chart?.update();
+    this.barChartData[0].data = this.data;
+    this.chart?.update();
   }
+  
 
   public getDataHttp(from: Date, to: Date): Promise<number[]> {
     return new Promise<number[]>(resolve => {
       const rdata: number[] = [0, 0, 0, 0, 0, 0, 0];
-
+  
       this.emotionService.getEmoSurvey().subscribe(emoSurvey => {
-        for (let i = 0; i < emoSurvey.length; i++) {
-          const es: EmoSurvey = emoSurvey[i];
-          const timestampnumber = es['Timestamp'];
-          const timestamp = new Date(Number(timestampnumber) * 1000);
+        for (const es of emoSurvey) {
+          const timestamp = new Date(Number(es.Timestamp) * 1000);
           if (timestamp >= from && timestamp <= to) {
-            if (es.Inconducive.includes('Joyful')) {
-              rdata[0]++;
-            }
-            if (es.Inconducive.includes('Curious')) {
-              rdata[1]++;
-            }
-            if (es.Inconducive.includes('Surprised')) {
-              rdata[2]++;
-            }
-            if (es.Inconducive.includes('Confused')) {
-              rdata[3]++;
-            }
-            if (es.Inconducive.includes('Anxious')) {
-              rdata[4]++;
-            }
-            if (es.Inconducive.includes('Frustrated')) {
-              rdata[5]++;
-            }
-            if (es.Inconducive.includes('Bored')) {
-              rdata[6]++;
-            }
+            if (es.Inconducive.includes('Joyful')) rdata[0]++;
+            if (es.Inconducive.includes('Curious')) rdata[1]++;
+            if (es.Inconducive.includes('Surprised')) rdata[2]++;
+            if (es.Inconducive.includes('Confused')) rdata[3]++;
+            if (es.Inconducive.includes('Anxious')) rdata[4]++;
+            if (es.Inconducive.includes('Frustrated')) rdata[5]++;
+            if (es.Inconducive.includes('Bored')) rdata[6]++;
           }
         }
-
+  
         resolve(rdata);
         console.log("Final array:", rdata);
       });
     });
-  }
+  }  
 
   public barChartOptions: ChartOptions = {
     responsive: true,
