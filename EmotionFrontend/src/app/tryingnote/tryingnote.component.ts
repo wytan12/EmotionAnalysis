@@ -53,15 +53,12 @@ export class TryingnoteComponent {
     }
   }
 
-  exportSurveyToCsv() {
-    this.exportService.exportSurveyToCsv().subscribe((data) => {
-      const blob = new Blob([data], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'survey_data.csv';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
+  async exportSurveyToCsv() {
+    try {
+      // Call the service method to handle the CSV export
+      await this.exportService.exportSurveyJson();
+    } catch (error) {
+      console.error('Error exporting Survey', error);
+    }
   }
 }

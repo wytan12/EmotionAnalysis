@@ -48,7 +48,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ReportEmotionButtonComponent } from './report-emotion-button/report-emotion-button.component';
-import { ReportReadwriteButtonComponent } from './report-readwrite-button/report-readwrite-button.component';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import { TabComponent } from './tab/tab.component';
@@ -108,7 +107,6 @@ export function initializeApp(configService: ConfigService) {
     UserGuideButtonComponent,
     IntensityDropdownComponent,
     ReportEmotionButtonComponent,
-    ReportReadwriteButtonComponent,
     TabComponent,
     ReflectHistoryButtonComponent,
     WriteRatingComponent,

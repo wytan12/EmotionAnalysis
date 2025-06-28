@@ -38,12 +38,15 @@ export class ExportService {
     }
   }
 
-  exportSurveyToCsv() {
-    return this.http.get(`${this.baseUrl}/export/survey/csv`, {
-      responseType: 'text',
-    });
+  async exportSurveyJson() {
+    try {
+      const data = await this.http.get<any[]>(API_ENDPOINTS.findAllEmoSurvey).toPromise();
+      const jsonData = JSON.stringify(data, null, 2);
+      this.downloadJson(jsonData, 'emo-survey.json');
+    } catch (error) {
+      console.error('Failed to export survey JSON', error);
+    }
   }
-
 }
 
 function replacer(key: string, value: any): any {
