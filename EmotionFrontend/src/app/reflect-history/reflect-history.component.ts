@@ -58,7 +58,7 @@ export class ReflectHistoryComponent {
     });
   }
 
-    getEmoReg(): void {
+  getEmoReg(): void {
     this.emotionService.getEmoReg().subscribe(
       emoRegList => {
         this.filteredEmoReg = emoRegList
@@ -74,4 +74,24 @@ export class ReflectHistoryComponent {
       }
     );
   }
+
+  // getEmoReg(): void {
+  //   // Call the service to retrieve EmoReg objects
+  //   this.emotionService.getEmoReg().subscribe(
+  //     emoRegList => {
+  //       // Store the retrieved EmoReg objects in filteredEmoRegAdd commentMore actions
+  //       this.filteredEmoReg = emoRegList.map(emoReg => ({
+  //         ...emoReg,
+  //         Timestamp: this.timeService.convertToDate(Number(emoReg.Timestamp))
+  //       }));
+  //       // Sort the EmoReg objects by Timestamp in descending order
+  //       this.sortReflectionsByTimestamp();
+  //     },
+  //     error => {
+  //       // Handle error
+  //       console.error('Error fetching EmoReg objects:', error);
+  //     }
+  //   );
+  // }
+
 }
