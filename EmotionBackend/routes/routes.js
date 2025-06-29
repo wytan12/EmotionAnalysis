@@ -67,6 +67,22 @@ APIrouter.get("/tests", (req, res) => {
     });
 });
 
+APIrouter.get("/user-info", async (req, res) => {
+  const API_HOST = "https://kf6.rdc.nie.edu.sg/api/users/me";
+  try {
+    const token = await getAuthToken(); // dynamically fetch token
+
+    const userData = await axios.get(API_HOST, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    res.status(200).json(userData.data);
+  } catch (error) {
+    console.error('User info fetch error:', error.message);
+    res.status(500).json({ message: 'Error fetching user info', error: error.message });
+  }
+});
+
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
   const communityId = req.params.communityId;
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";

@@ -12,6 +12,7 @@ export let API_ENDPOINTS = {
     addReg: '',
     addEmoSurvey: '',
     tests: '',
+    userData: ''
   };
   
   export function initializeApiEndpoints(configService: ConfigService): void {
@@ -36,6 +37,7 @@ export let API_ENDPOINTS = {
         addReg: `${apiUrl}/addReg`,
         addEmoSurvey: `${apiUrl}/addEmoSurvey`,
         tests: `${apiUrl}/tests`,
+        userData: `${apiUrl}/user-info`,
       };
     
       console.log('API Endpoints initialized:', API_ENDPOINTS);
