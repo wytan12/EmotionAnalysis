@@ -47,7 +47,7 @@ APIrouter.get("/tests", (req, res) => {
 APIrouter.get("/user-info", async (req, res) => {
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/users/me";
   try {
-    const token = await getAuthToken(); // dynamically fetch token
+    const token = req.headers['authorization']; // dynamically fetch token
 
     const userData = await axios.get(API_HOST, {
       headers: { Authorization: `Bearer ${token}` },
