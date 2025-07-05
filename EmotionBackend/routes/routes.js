@@ -47,7 +47,12 @@ APIrouter.get("/tests", (req, res) => {
 APIrouter.get("/user-info", async (req, res) => {
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/users/me";
   try {
-    const token = req.headers['authorization']; // dynamically fetch token
+    const authHeader = req.headers['authorization'];
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'Missing or invalid authorization header' });
+    }
+
+    const token = authHeader.split(' ')[1]; // Extract token after "Bearer "
 
     const userData = await axios.get(API_HOST, {
       headers: { Authorization: `Bearer ${token}` },
@@ -64,9 +69,17 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
   const communityId = req.params.communityId;
   const API_HOST = process.env.API_HOST;
 
-  try {
-    const token = req.headers['authorization']; // dynamically fetch token
+  const authHeader = req.headers['authorization'];
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Missing or invalid authorization header' });
+  }
+  const token = authHeader.split(' ')[1];
 
+  if (!communityId) {
+    return res.status(400).json({ message: 'communityId is required' });
+  }
+
+  try {
     const dataResponse = await axios.get(`${API_HOST}/${communityId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
