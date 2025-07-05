@@ -54,6 +54,13 @@ export class EmotionService {
       );
   }
 
+  getUserData(): Observable<any> {
+    return this.http.get<any>(API_ENDPOINTS.userData).pipe(
+      tap(() => this.log('fetched userData')),
+      catchError(this.handleError<any>('userData', {}))
+    );
+  }
+
   //////// Save methods //////////
 
   /** POST: add a new Emotion to the server */

@@ -15,6 +15,7 @@ export class ReflectHistoryComponent {
   filteredEmoReg: EmoReg[] = []; // Initialize the array to store EmoReg objects
   activeSection: number = 0;
   currentSectionNumber: number = 1;
+  userFirstName: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -28,8 +29,10 @@ export class ReflectHistoryComponent {
       // Retrieve the 'a' parameter from the query parameters
       this.title = params['a'];
 
+      this.fetchUserDataAndEmoReg();
+
       // Call the function to retrieve EmoReg objects
-      this.getEmoReg();
+      // this.getEmoReg();
     });
   }
 
@@ -37,23 +40,16 @@ export class ReflectHistoryComponent {
     this.activeSection = sectionIndex;
   }
 
-  getEmoReg(): void {
-    // Call the service to retrieve EmoReg objects
-    this.emotionService.getEmoReg().subscribe(
-      emoRegList => {
-        // Store the retrieved EmoReg objects in filteredEmoReg
-        this.filteredEmoReg = emoRegList.map(emoReg => ({
-          ...emoReg,
-          Timestamp: this.timeService.convertToDate(Number(emoReg.Timestamp))
-        }));
-        // Sort the EmoReg objects by Timestamp in descending order
-        this.sortReflectionsByTimestamp();
+  fetchUserDataAndEmoReg(): void {
+    this.emotionService.getUserData().subscribe({
+      next: (userData) => {
+        this.userFirstName = userData.firstName;  // directly use firstName field
+        this.getEmoReg();  // Once user is fetched, load EmoReg
       },
-      error => {
-        // Handle error
-        console.error('Error fetching EmoReg objects:', error);
+      error: (err) => {
+        console.error('Error fetching user data:', err);
       }
-    );
+    });
   }
 
   sortReflectionsByTimestamp(): void {
@@ -61,4 +57,24 @@ export class ReflectHistoryComponent {
       return new Date(b.Timestamp).getTime() - new Date(a.Timestamp).getTime();
     });
   }
+
+  getEmoReg(): void {
+    this.emotionService.getEmoReg().subscribe(
+      emoRegList => {
+        this.filteredEmoReg = emoRegList
+          .filter(emoReg => 
+            emoReg.GroupMembers?.toLowerCase().includes(this.userFirstName.toLowerCase())
+          )
+          .map(emoReg => ({
+            ...emoReg,
+            Timestamp: this.timeService.convertToDate(Number(emoReg.Timestamp))
+          }));
+        this.sortReflectionsByTimestamp();
+      },
+      error => {
+        console.error('Error fetching EmoReg objects:', error);
+      }
+    );
+  }  
+
 }
