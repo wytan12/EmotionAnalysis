@@ -8,6 +8,7 @@ import { SharedViewService } from '../services/shared-view.service';
 import { TitleService } from '../services/title.service';
 import { NoteVisibilityService } from '../services/note-visibility.service';
 import { API_ENDPOINTS } from '../shared/api-endpoints';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-radar-chart-jerrisonapi',
@@ -94,14 +95,14 @@ export class RadarChartJerrisonapiComponent {
   public radarChartType: ChartType = 'radar';
 
   constructor(
-    private router: Router,
+    private route: ActivatedRoute, 
     private http: HttpClient, // Inject HttpClient
     private sharedTimeService: SharedTimeService,
     private sharedViewService: SharedViewService,
     private titleService: TitleService,
     private visibilityService: NoteVisibilityService
   ) {}
-
+  
   public handleChartClick(event: any) {
     if (event.active && event.active.length > 0) {
       const clickedLabel = event.active[0];
@@ -283,10 +284,11 @@ export class RadarChartJerrisonapiComponent {
         write: new Set<string>(),
       };
 
+      const communityId = this.route.snapshot.paramMap.get('communityId');
+      const url = `${API_ENDPOINTS.communityData}/${communityId}`;
+
       //const API_BASE_URL = process.env['REACT_APP_COMMUNITY_DATA_URL'] || 'http://localhost/api';
-      this.http.get<any[]>(
-        API_ENDPOINTS.communityData,
-      ).subscribe(
+      this.http.get<any[]>(url).subscribe(
         (response: any[]) => {
           const intensityKeys = [
             'Joyful',

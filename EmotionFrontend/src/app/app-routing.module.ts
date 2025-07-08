@@ -5,21 +5,27 @@ import { SurveyComponent } from './survey/survey.component';
 import {BarChartComponent} from "./bar-chart/bar-chart.component";
 import { ReflectFormComponent } from './reflect-form/reflect-form.component';
 import { ReflectHistoryComponent } from './reflect-history/reflect-history.component';
-// import { ScrollspyComponent } from './scrollspy/scrollspy.component';
-import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
 import { TryingnoteComponent } from './tryingnote/tryingnote.component';
+import { RedirectComponent } from './redirect/redirect.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/tryingnote/6645ab836782b352b64ea86c', pathMatch: 'full' },
-  //{ path: 'view/:communityId', redirectTo: 'tryingnote/:communityId', pathMatch: 'full' }，
+  // Main dynamic redirect from base URL or from view/:id
+  { path: '', component: RedirectComponent },
+  { path: 'view/:communityId', component: RedirectComponent },
+
+  // Dashboard route
   { path: 'tryingnote/:communityId', component: TryingnoteComponent },
+
+  // Other pages
   { path: 'statics', component: StaticsComponent },
-  { path: 'bar', component: BarChartComponent},
-  { path: 'survey', component: SurveyComponent},
-  { path: 'reflect-form', component: ReflectFormComponent},
-  { path: 'reflect-history', component: ReflectHistoryComponent},
-  { path: '**', redirectTo: '/tryingnote' },
+  { path: 'bar', component: BarChartComponent },
+  { path: 'survey', component: SurveyComponent },
+  { path: 'reflect-form', component: ReflectFormComponent },
+  { path: 'reflect-history', component: ReflectHistoryComponent },
+
+  // Fallback to base (which leads to redirect)
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({
