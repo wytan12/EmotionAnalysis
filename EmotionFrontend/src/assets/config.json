@@ -1,5 +1,5 @@
 {
-  "communityDataUrl": "https://emotion-analysis.rdc.nie.edu.sg/api/community-data/community-id/6645ab836782b352b64ea86c",
+  "communityDataUrl": "https://emotion-analysis.rdc.nie.edu.sg/api/community-data/community-id",
   "baseUrl": "https://emotion-analysis.rdc.nie.edu.sg",
   "formUrl": "https://emotion-analysis.rdc.nie.edu.sg/form"
 }
