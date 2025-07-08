@@ -131,50 +131,51 @@ export class TestNoteratingComponent implements OnInit {
     views?: string[]
   ): Promise<any[]> {
     return new Promise<any[]>((resolve) => {
-      this.http
-        .get<any[]>(API_ENDPOINTS.communityData)
-        .subscribe((dataList) => {
+      const communityId = this.route.snapshot.paramMap.get('communityId');
+      const url = `${API_ENDPOINTS.communityData}/${communityId}`;
+
+      this.http.get<any[]>(url).subscribe((dataList) => {
           const filteredList = dataList.filter((data) => {
-            const action = data.actionType.toLowerCase();
-            const isActionTypeMatch = action === emotionLabel.toLowerCase();
+          const action = data.actionType.toLowerCase();
+          const isActionTypeMatch = action === emotionLabel.toLowerCase();
 
-            const createdDate = new Date(data.created);
-            const isWithinDateRange =
-              (!fromDate || createdDate >= fromDate) &&
-              (!toDate || createdDate <= toDate);
+          const createdDate = new Date(data.created);
+          const isWithinDateRange =
+            (!fromDate || createdDate >= fromDate) &&
+            (!toDate || createdDate <= toDate);
 
-            const hasMatchingEmotion = data.ratings.some((rating: any) => {
-              if (
-                rating.emotionId
-                  .toLowerCase()
-                  .includes(emotionTitle.toLowerCase())
-              ) {
-                data.Intensity = data.Intensity || [];
-                data.Intensity.push({
-                  key: `${rating.emotionId}_Intensity`,
-                  value: rating.intensity,
-                });
-                return true;
-              }
-              return false;
-            });
-
-            const title = data.inViews[0]?.title;
-            const isInView = views == undefined || views.includes(title);
-
-            return (
-              isActionTypeMatch &&
-              hasMatchingEmotion &&
-              isWithinDateRange &&
-              isInView
-            );
+          const hasMatchingEmotion = data.ratings.some((rating: any) => {
+            if (
+              rating.emotionId
+                .toLowerCase()
+                .includes(emotionTitle.toLowerCase())
+            ) {
+              data.Intensity = data.Intensity || [];
+              data.Intensity.push({
+                key: `${rating.emotionId}_Intensity`,
+                value: rating.intensity,
+              });
+              return true;
+            }
+            return false;
           });
 
-          // Sort the filtered list by timestamp in descending order
-          filteredList.sort((a, b) => new Date(b.created).valueOf() - new Date(a.created).valueOf());
+          const title = data.inViews[0]?.title;
+          const isInView = views == undefined || views.includes(title);
 
-          resolve(filteredList);
+          return (
+            isActionTypeMatch &&
+            hasMatchingEmotion &&
+            isWithinDateRange &&
+            isInView
+          );
         });
+
+        // Sort the filtered list by timestamp in descending order
+        filteredList.sort((a, b) => new Date(b.created).valueOf() - new Date(a.created).valueOf());
+
+        resolve(filteredList);
+      });
     });
   }
 
