@@ -47,12 +47,11 @@ APIrouter.get("/tests", (req, res) => {
 APIrouter.get("/user-info", async (req, res) => {
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/users/me";
   try {
-    const authHeader = req.headers['authorization'];
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ message: 'Missing or invalid authorization header' });
+    const token = req.headers['authorization']; // dynamically fetch token
+    if (!token) {
+      console.error('Authorization token is missing');
+      return res.status(401).json({ message: 'Authorization token is required' });
     }
-
-    const token = authHeader.split(' ')[1]; // Extract token after "Bearer "
 
     const userData = await axios.get(API_HOST, {
       headers: { Authorization: `Bearer ${token}` },
@@ -67,19 +66,20 @@ APIrouter.get("/user-info", async (req, res) => {
 
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
   const communityId = req.params.communityId;
-  const API_HOST = process.env.API_HOST;
-
-  const authHeader = req.headers['authorization'];
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Missing or invalid authorization header' });
-  }
-  const token = authHeader.split(' ')[1];
-
-  if (!communityId) {
-    return res.status(400).json({ message: 'communityId is required' });
-  }
+  const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
 
   try {
+    const token = req.headers['authorization']; // dynamically fetch token
+    if (!communityId) {
+      console.error('Community ID is missing');
+      return res.status(400).json({ message: 'Community ID is required' });
+    }
+    // Check if token is cached and valid
+    if (!token) {
+      console.error('Authorization token is missing');
+      return res.status(401).json({ message: 'Authorization token is required' });
+    }
+
     const dataResponse = await axios.get(`${API_HOST}/${communityId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
