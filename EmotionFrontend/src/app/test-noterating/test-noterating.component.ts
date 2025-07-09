@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TimeService } from '../services/time.service';
 import { SharedTimeService } from '../services/shared-time.service';
 import { TitleService } from '../services/title.service';
