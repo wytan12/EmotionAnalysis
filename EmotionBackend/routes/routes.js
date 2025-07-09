@@ -64,7 +64,7 @@ APIrouter.get("/user-info", async (req, res) => {
   }
 });
 
-APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
+APIrouter.get('/community-data/community-id/:communityId', async (req, res) => {
   const communityId = req.params.communityId;
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
 
@@ -80,8 +80,12 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
       return res.status(401).json({ message: 'Authorization token is required' });
     }
 
-    const dataResponse = await axios.get(`${API_HOST}/${communityId}`, {
+    const fullUrl = `${API_HOST}/${communityId}`;
+    console.log('✅ Fetching:', fullUrl);
+
+    const dataResponse = await axios.get(fullUrl, {
       headers: { Authorization: `Bearer ${token}` },
+      timeout: 5000,
     });
 
     res.status(200).json(dataResponse.data);
