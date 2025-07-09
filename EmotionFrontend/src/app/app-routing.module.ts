@@ -10,6 +10,9 @@ import { RedirectComponent } from './redirect/redirect.component';
 
 
 const routes: Routes = [
+  // Accept redirect pattern with token in query param
+  { path: 'community-data/community-id/:communityId', component: RedirectComponent },
+  
   // Main dynamic redirect from base URL or from view/:id
   { path: '', component: RedirectComponent },
   { path: 'view/:communityId', component: RedirectComponent },
