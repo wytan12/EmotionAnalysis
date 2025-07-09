@@ -289,8 +289,8 @@ export class RadarChartJerrisonapiComponent {
       const url = `${API_ENDPOINTS.communityData}/${communityId}`;
 
       const headers = token
-        ? { Authorization: `Bearer ${token}` }
-        : {};
+      ? new HttpHeaders({ Authorization: `Bearer ${token}` })
+      : new HttpHeaders();
 
       this.http.get<any[]>(url, { headers }).subscribe(
         (response: any[]) => {
