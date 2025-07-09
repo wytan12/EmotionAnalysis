@@ -134,7 +134,10 @@ export class TestNoteratingComponent implements OnInit {
       const communityId = this.route.snapshot.paramMap.get('communityId');
       const url = `${API_ENDPOINTS.communityData}/${communityId}`;
 
-      this.http.get<any[]>(url).subscribe((dataList) => {
+      const token = localStorage.getItem('token'); // ✅ Get token
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+      this.http.get<any[]>(url, { headers }).subscribe((dataList) => {
           const filteredList = dataList.filter((data) => {
           const action = data.actionType.toLowerCase();
           const isActionTypeMatch = action === emotionLabel.toLowerCase();
