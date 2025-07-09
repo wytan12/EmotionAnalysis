@@ -135,7 +135,9 @@ export class TestNoteratingComponent implements OnInit {
       const url = `${API_ENDPOINTS.communityData}/${communityId}`;
 
       const token = localStorage.getItem('token'); // ✅ Get token
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const headers = token
+      ? new HttpHeaders({ Authorization: `Bearer ${token}` })
+      : new HttpHeaders();
 
       this.http.get<any[]>(url, { headers }).subscribe((dataList) => {
           const filteredList = dataList.filter((data) => {
