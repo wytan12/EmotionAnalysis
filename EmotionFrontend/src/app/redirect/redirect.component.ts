@@ -16,7 +16,7 @@ export class RedirectComponent implements OnInit {
     const token = this.route.snapshot.queryParamMap.get('access_token');
 
     if (token) {
-      localStorage.setItem('access_token', token);
+      localStorage.setItem('token', token);
     }
 
     if (communityId) {
