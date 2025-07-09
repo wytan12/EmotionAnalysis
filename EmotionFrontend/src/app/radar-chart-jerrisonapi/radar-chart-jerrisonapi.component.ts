@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseChartDirective } from 'ng2-charts';
 import { SharedTimeService } from '../services/shared-time.service';
 import { SharedViewService } from '../services/shared-view.service';
