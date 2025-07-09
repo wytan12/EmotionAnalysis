@@ -283,12 +283,16 @@ export class RadarChartJerrisonapiComponent {
         read: new Set<string>(),
         write: new Set<string>(),
       };
-
+      
       const communityId = this.route.snapshot.paramMap.get('communityId');
+      const token = localStorage.getItem('token'); // ✅ Get token from localStorage
       const url = `${API_ENDPOINTS.communityData}/${communityId}`;
 
-      //const API_BASE_URL = process.env['REACT_APP_COMMUNITY_DATA_URL'] || 'http://localhost/api';
-      this.http.get<any[]>(url).subscribe(
+      const headers = token
+        ? { Authorization: `Bearer ${token}` }
+        : {};
+
+      this.http.get<any[]>(url, { headers }).subscribe(
         (response: any[]) => {
           const intensityKeys = [
             'Joyful',
