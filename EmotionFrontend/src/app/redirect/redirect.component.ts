@@ -9,10 +9,7 @@ export class RedirectComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    const communityId =
-      this.route.snapshot.queryParamMap.get('communityId') ||
-      this.route.snapshot.paramMap.get('communityId');
-
+    const communityId = this.route.snapshot.paramMap.get('communityId');
     const token = this.route.snapshot.queryParamMap.get('access_token');
 
     console.log('Redirecting with communityId:', communityId);
