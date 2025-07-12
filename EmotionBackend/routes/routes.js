@@ -1,8 +1,19 @@
 import express from "express";
 import {Test, EmoReadWrite, EmoReg, EmoSurvey, Emotion,EmoLogData} from "../model/model.js";
 import axios from 'axios';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 
+const proxyUrl = process.env.HTTPS_PROXY;
+const proxyAgent = proxyUrl ? new HttpsProxyAgent(proxyUrl) : undefined;
 const APIrouter = express.Router();
+
+if (!proxyUrl) {
+  console.error('HTTPS_PROXY environment variable is not set. Please set it to your proxy URL.');
+  process.exit(1);  // Exit if proxy is not configured
+}
+else {
+  console.log(`Using proxy: ${proxyUrl}`);   
+}
 
 let cachedToken = null;
 let tokenExpiry = null;
@@ -47,10 +58,11 @@ APIrouter.get("/tests", (req, res) => {
 APIrouter.get("/user-info", async (req, res) => {
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/users/me";
   try {
-    const token = req.headers['authorization']; // dynamically fetch token
+    // const token = await getAuthToken(); // dynamically fetch token
+    const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
-      console.error('Authorization token is missing');
-      return res.status(401).json({ message: 'Authorization token is required' });
+      console.error("[TOKEN] No token found — aborting");
+      return res.status(401).json({ message: "Missing authorization token" });
     }
 
     const userData = await axios.get(API_HOST, {
@@ -64,33 +76,56 @@ APIrouter.get("/user-info", async (req, res) => {
   }
 });
 
-APIrouter.get('/community-data/community-id/:communityId', async (req, res) => {
+// APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
+//   const communityId = req.params.communityId;
+//   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
+
+//   try {
+//     const token = await getAuthToken(); // dynamically fetch token
+
+//     const dataResponse = await axios.get(`${API_HOST}/${communityId}`, {
+//       headers: { Authorization: `Bearer ${token}` },
+//     });
+
+//     res.status(200).json(dataResponse.data);
+//   } catch (error) {
+//     console.error('Community data fetch error:', error.message);
+//     res.status(500).json({ message: 'Error fetching community data', error: error.message });
+//   }
+// });
+
+APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
   const communityId = req.params.communityId;
+  console.log(`[DEBUG] communityId received: ${req.params.communityId}`);
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
 
   try {
-    const token = req.headers['authorization']; // dynamically fetch token
-    if (!communityId) {
-      console.error('Community ID is missing');
-      return res.status(400).json({ message: 'Community ID is required' });
-    }
-    // Check if token is cached and valid
+    console.log(`[REQUEST] Fetching data for community ID: ${communityId}`);
+    // const token = await getAuthToken(); // dynamically fetch token
+    const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
-      console.error('Authorization token is missing');
-      return res.status(401).json({ message: 'Authorization token is required' });
+      console.error("[TOKEN] No token found — aborting");
+      return res.status(401).json({ message: "Missing authorization token" });
     }
-
     const fullUrl = `${API_HOST}/${communityId}`;
-    console.log('✅ Fetching:', fullUrl);
+    console.log('Fetching:', fullUrl);
 
     const dataResponse = await axios.get(fullUrl, {
-      headers: { Authorization: `Bearer ${token}` },
-      timeout: 5000,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      httpsAgent: proxyAgent, // 👈 critical for HTTPS requests via proxy
+      proxy: false  // Disable axios proxy if using HttpsProxyAgent
     });
 
+    console.log(`[SUCCESS] Data received: ${JSON.stringify(dataResponse.data).slice(0, 100)}...`);
     res.status(200).json(dataResponse.data);
   } catch (error) {
     console.error('Community data fetch error:', error.message);
+    if (error.response) {
+      console.error(`[ERROR] Status: ${error.response.status}`);
+      console.error(`[ERROR] Response: ${JSON.stringify(error.response.data)}`);
+    }
     res.status(500).json({ message: 'Error fetching community data', error: error.message });
   }
 });
