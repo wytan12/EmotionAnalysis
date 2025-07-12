@@ -76,24 +76,6 @@ APIrouter.get("/user-info", async (req, res) => {
   }
 });
 
-// APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
-//   const communityId = req.params.communityId;
-//   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
-
-//   try {
-//     const token = await getAuthToken(); // dynamically fetch token
-
-//     const dataResponse = await axios.get(`${API_HOST}/${communityId}`, {
-//       headers: { Authorization: `Bearer ${token}` },
-//     });
-
-//     res.status(200).json(dataResponse.data);
-//   } catch (error) {
-//     console.error('Community data fetch error:', error.message);
-//     res.status(500).json({ message: 'Error fetching community data', error: error.message });
-//   }
-// });
-
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
   const communityId = req.params.communityId;
   console.log(`[DEBUG] communityId received: ${req.params.communityId}`);
