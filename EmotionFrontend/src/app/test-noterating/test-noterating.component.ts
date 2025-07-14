@@ -82,16 +82,23 @@ export class TestNoteratingComponent implements OnInit {
               timeRange && timeRange.length === 2
                 ? new Date(timeRange[1])
                 : undefined;
-
+            
+            const communityId = this.route.snapshot.paramMap.get('communityId');
             // this.selectedView = Array.isArray(view) ? view : view ? [view] : [];
             if (view) {
               this.selectedView = view.includes(',')
                 ? view.split(',').map((v) => v.trim())
                 : [view.trim()];
             } else {
-              this.sharedViewService.getViews().subscribe((views: string[]) => {
-                this.selectedView = views;
-              });
+              
+              if (communityId) {
+                this.sharedViewService.getViews(communityId).subscribe((views: string[]) => {
+                  this.selectedView = views;
+                });
+              } else {
+                console.error('Community ID not found in route.');
+              }
+
             }
 
             console.log('Selected views:', this.selectedView);
@@ -134,12 +141,13 @@ export class TestNoteratingComponent implements OnInit {
       const communityId = this.route.snapshot.paramMap.get('communityId');
       const url = `${API_ENDPOINTS.communityData}/${communityId}`;
 
-      const token = localStorage.getItem('token'); // ✅ Get token
-      const headers = token
-      ? new HttpHeaders({ Authorization: `Bearer ${token}` })
-      : new HttpHeaders();
+      // const token = localStorage.getItem('token'); // ✅ Get token
+      // const headers = token
+      // : new HttpHeaders();
 
-      this.http.get<any[]>(url, { headers }).subscribe((dataList) => {
+      // this.http.get<any[]>(url, { headers }).subscribe((dataList) => {
+      this.http.get<any[]>(url).subscribe((dataList) => {
+          console.log('Data List:', dataList); // Log the fetched data
           const filteredList = dataList.filter((data) => {
           const action = data.actionType.toLowerCase();
           const isActionTypeMatch = action === emotionLabel.toLowerCase();

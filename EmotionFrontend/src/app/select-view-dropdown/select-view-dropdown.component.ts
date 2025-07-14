@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedViewService } from '../services/shared-view.service';
+import { SharedViewService} from '../services/shared-view.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-select-view-dropdown',
@@ -10,16 +11,22 @@ export class SelectViewDropdownComponent implements OnInit {
   public selectedView: string | null = null;
   public views: string[] = [];
 
-  constructor(private sharedViewService: SharedViewService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private sharedViewService: SharedViewService
+  ) {}
 
-  ngOnInit() {
-    this.sharedViewService.getViews().subscribe((views: string[]) => {
-      this.views = views;
-      if (views.length > 0) {
-        this.selectedView = views.join(', '); // Optionally set the first view as default
-        this.onChange(this.selectedView);
-      }
-    });
+  ngOnInit(): void {
+    const communityId = this.route.snapshot.paramMap.get('communityId');
+    if (communityId) {
+      this.sharedViewService.getViews(communityId).subscribe((views: string[]) => {
+        this.views = views;
+        if (views.length > 0) {
+          this.selectedView = views[0]; // ✅ Use the first view as default
+          this.onChange(this.selectedView);
+        }
+      });
+    }
   }
 
   onChange(selectedView: string | null): void {

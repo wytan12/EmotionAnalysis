@@ -21,19 +21,18 @@ export class SharedViewService {
     this.selectedViewSubject.next(view);
   }
 
-  getViews(): Observable<string[]> {
-    return this.http
-      .get<any[]>(API_ENDPOINTS.communityData)
-      .pipe(
-        map((data) => {
-          const viewsSet = new Set<string>();
-          data.forEach((entry) => {
-            entry.inViews.forEach((view: any) => {
-              viewsSet.add(view.title);
-            });
+  getViews(communityId: string): Observable<string[]> {
+    const url = `${API_ENDPOINTS.communityData}/${communityId}`;
+    return this.http.get<any[]>(url).pipe(
+      map((data) => {
+        const viewsSet = new Set<string>();
+        data.forEach((entry) => {
+          entry.inViews.forEach((view: any) => {
+            viewsSet.add(view.title);
           });
-          return Array.from(viewsSet);
-        })
-      );
+        });
+        return Array.from(viewsSet);
+      })
+    );
   }
 }

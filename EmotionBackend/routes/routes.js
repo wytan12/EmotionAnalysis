@@ -67,6 +67,8 @@ APIrouter.get("/user-info", async (req, res) => {
 
     const userData = await axios.get(API_HOST, {
       headers: { Authorization: `Bearer ${token}` },
+      httpsAgent: proxyAgent, // 👈 critical for HTTPS requests via proxy
+      proxy: false  // Disable axios proxy if using HttpsProxyAgent
     });
 
     res.status(200).json(userData.data);

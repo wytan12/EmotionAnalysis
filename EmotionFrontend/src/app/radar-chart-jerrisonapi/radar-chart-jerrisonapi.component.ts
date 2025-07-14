@@ -176,7 +176,12 @@ export class RadarChartJerrisonapiComponent {
           selectedTimeRange[1] ?? defaultFullTimeRange[1]
         );
       } else {
-        this.sharedViewService.getViews().subscribe(
+        const communityId = this.route.snapshot.paramMap.get('communityId');
+        if (!communityId) {
+          console.error('Community ID is not available in the route parameters.'); 
+          return;
+        }
+        this.sharedViewService.getViews(communityId).subscribe(
           (views: string[]) => {
             this.selectedView = views; // Set all views as default
             // Use the last selected time range or default to full time range
@@ -284,15 +289,22 @@ export class RadarChartJerrisonapiComponent {
         write: new Set<string>(),
       };
       
+      // const communityId = this.route.snapshot.paramMap.get('communityId');
+      // const token = localStorage.getItem('token'); // ✅ Get token from localStorage
+      // const url = `${API_ENDPOINTS.communityData}/${communityId}`;
+
+      // const headers = token
+      // ? new HttpHeaders({ Authorization: `Bearer ${token}` })
+      // : new HttpHeaders();
+
       const communityId = this.route.snapshot.paramMap.get('communityId');
-      const token = localStorage.getItem('token'); // ✅ Get token from localStorage
+
       const url = `${API_ENDPOINTS.communityData}/${communityId}`;
 
-      const headers = token
-      ? new HttpHeaders({ Authorization: `Bearer ${token}` })
-      : new HttpHeaders();
+      //const API_BASE_URL = process.env['REACT_APP_COMMUNITY_DATA_URL'] || 'http://localhost/api';
+      this.http.get<any[]>(url).subscribe(
 
-      this.http.get<any[]>(url, { headers }).subscribe(
+      // this.http.get<any[]>(url, { headers }).subscribe(
         (response: any[]) => {
           const intensityKeys = [
             'Joyful',
@@ -360,8 +372,13 @@ export class RadarChartJerrisonapiComponent {
 
   private resetViewFilter() {
     // Set the selected view to a default or initial state
+    const communityId = this.route.snapshot.paramMap.get('communityId');
     this.selectedView = null;
-    this.sharedViewService.getViews().subscribe(
+    if (!communityId) {
+      console.error('Community ID is not available in the route parameters.'); 
+      return;
+    }
+    this.sharedViewService.getViews(communityId).subscribe(
       (views: string[]) => {
         this.selectedView = views; // Set all views as default if necessary
         this.getData(); // Reload data with reset view

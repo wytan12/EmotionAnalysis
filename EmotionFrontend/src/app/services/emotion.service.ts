@@ -55,12 +55,13 @@ export class EmotionService {
   }
 
   getUserData(): Observable<any> {
-    const token = localStorage.getItem('token'); // ✅ Retrieve token
-    const headers = token
-      ? new HttpHeaders().set('Authorization', `Bearer ${token}`)
-      : new HttpHeaders();
+    // const token = localStorage.getItem('token'); // ✅ Retrieve token
+    // const headers = token
+    //   ? new HttpHeaders().set('Authorization', `Bearer ${token}`)
+    //   : new HttpHeaders();
   
-    return this.http.get<any>(API_ENDPOINTS.userData, { headers }).pipe(
+    // return this.http.get<any>(API_ENDPOINTS.userData, { headers }).pipe(
+    return this.http.get<any>(API_ENDPOINTS.userData).pipe(
       tap(() => this.log('fetched userData')),
       catchError(this.handleError<any>('userData', {}))
     );
