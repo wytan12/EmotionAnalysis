@@ -18,6 +18,39 @@ else {
 let cachedToken = null;
 let tokenExpiry = null;
 
+// Function to authenticate and get token from external API
+async function getAuthToken() {
+  // Check if we have a valid cached token
+  if (cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
+    console.log('[AUTH] Using cached token');
+    return cachedToken;
+  }
+
+  try {
+    console.log('[AUTH] Fetching new token...');
+    const authResponse = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', {
+      userName: 'gaoxiazhu',
+      password: 'Testemotionanalytics'
+    }, {
+      httpsAgent: proxyAgent,
+      proxy: false
+    });
+
+    if (authResponse.data && authResponse.data.token) {
+      cachedToken = authResponse.data.token;
+      // Set expiry to 23 hours from now (assuming 24h token validity)
+      tokenExpiry = Date.now() + (23 * 60 * 60 * 1000);
+      console.log('[AUTH] Token obtained and cached');
+      return cachedToken;
+    } else {
+      throw new Error('No token received from auth endpoint');
+    }
+  } catch (error) {
+    console.error('[AUTH] Failed to get token:', error.message);
+    throw error;
+  }
+}
+
 APIrouter.get("/newtest", (req, res) => {
   const newTest = new Test({
     testID: "liang"+Date.now(),
@@ -58,13 +91,8 @@ APIrouter.get("/tests", (req, res) => {
 APIrouter.get("/user-info", async (req, res) => {
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/users/me";
   try {
-    // const token = await getAuthToken(); // dynamically fetch token
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) {
-      console.error("[TOKEN] No token found — aborting");
-      return res.status(401).json({ message: "Missing authorization token" });
-    }
-
+    const token = await getAuthToken(); // dynamically fetch token
+    
     const userData = await axios.get(API_HOST, {
       headers: { Authorization: `Bearer ${token}` },
       httpsAgent: proxyAgent, // 👈 critical for HTTPS requests via proxy
@@ -85,12 +113,8 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
 
   try {
     console.log(`[REQUEST] Fetching data for community ID: ${communityId}`);
-    // const token = await getAuthToken(); // dynamically fetch token
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) {
-      console.error("[TOKEN] No token found — aborting");
-      return res.status(401).json({ message: "Missing authorization token" });
-    }
+    const token = await getAuthToken(); // dynamically fetch token
+    
     const fullUrl = `${API_HOST}/${communityId}`;
     console.log('Fetching:', fullUrl);
 

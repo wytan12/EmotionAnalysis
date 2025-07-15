@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { API_ENDPOINTS } from '../shared/api-endpoints';
@@ -52,10 +52,7 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getCommunityData(): Observable<ProcessedData[]> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    return this.http.get<Action[]>(this.apiUrl, { headers }).pipe(
+    return this.http.get<Action[]>(this.apiUrl).pipe(
       map(data => this.processData(data))
     );
   }
