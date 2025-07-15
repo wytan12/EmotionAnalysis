@@ -43,23 +43,22 @@ export interface ProcessedData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-
   private apiUrl = API_ENDPOINTS.communityData;
 
   constructor(private http: HttpClient) {}
 
   getCommunityData(): Observable<ProcessedData[]> {
-    return this.http.get<Action[]>(this.apiUrl).pipe(
-      map(data => this.processData(data))
-    );
+    return this.http
+      .get<Action[]>(this.apiUrl)
+      .pipe(map((data) => this.processData(data)));
   }
 
   private processData(data: Action[]): ProcessedData[] {
     // Filter the data to include only `actionType = read`
-    const readActions = data.filter(item => item.actionType === 'read');
+    const readActions = data.filter((item) => item.actionType === 'read');
 
     // Group by `note_id` and count intensities
     const result = readActions.reduce((acc: any, curr: Action) => {
@@ -68,11 +67,11 @@ export class ApiService {
       if (!acc[noteId]) {
         acc[noteId] = {
           noteId: noteId,
-          intensities: {}
+          intensities: {},
         };
       }
 
-      curr.ratings.forEach(rating => {
+      curr.ratings.forEach((rating) => {
         const emotion = rating.emotionId;
         const intensity = rating.intensity;
 
@@ -80,7 +79,7 @@ export class ApiService {
           acc[noteId].intensities[emotion] = {
             intensity_1star: 0,
             intensity_2star: 0,
-            intensity_3star: 0
+            intensity_3star: 0,
           };
         }
 
