@@ -1,19 +1,9 @@
 import express from "express";
 import {Test, EmoReadWrite, EmoReg, EmoSurvey, Emotion,EmoLogData} from "../model/model.js";
 import axios from 'axios';
-import { HttpsProxyAgent } from 'https-proxy-agent';
 
-const proxyUrl = process.env.HTTPS_PROXY;
-const proxyAgent = proxyUrl ? new HttpsProxyAgent(proxyUrl) : undefined;
 const APIrouter = express.Router();
-
-if (!proxyUrl) {
-  console.error('HTTPS_PROXY environment variable is not set. Please set it to your proxy URL.');
-  process.exit(1);  // Exit if proxy is not configured
-}
-else {
-  console.log(`Using proxy: ${proxyUrl}`);   
-}
+console.log('Starting backend without proxy');
 
 let cachedToken = null;
 let tokenExpiry = null;
@@ -31,9 +21,6 @@ async function getAuthToken() {
     const authResponse = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', {
       userName: 'gaoxiazhu',
       password: 'Testemotionanalytics'
-    }, {
-      httpsAgent: proxyAgent,
-      proxy: false
     });
 
     if (authResponse.data && authResponse.data.token) {
@@ -94,9 +81,7 @@ APIrouter.get("/user-info", async (req, res) => {
     const token = await getAuthToken(); // dynamically fetch token
     
     const userData = await axios.get(API_HOST, {
-      headers: { Authorization: `Bearer ${token}` },
-      httpsAgent: proxyAgent, // 👈 critical for HTTPS requests via proxy
-      proxy: false  // Disable axios proxy if using HttpsProxyAgent
+      headers: { Authorization: `Bearer ${token}` }
     });
 
     res.status(200).json(userData.data);
@@ -121,9 +106,7 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
     const dataResponse = await axios.get(fullUrl, {
       headers: {
         Authorization: `Bearer ${token}`
-      },
-      httpsAgent: proxyAgent, // 👈 critical for HTTPS requests via proxy
-      proxy: false  // Disable axios proxy if using HttpsProxyAgent
+      }
     });
 
     console.log(`[SUCCESS] Data received: ${JSON.stringify(dataResponse.data).slice(0, 100)}...`);
