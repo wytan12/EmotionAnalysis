@@ -1,3 +1,6 @@
 /mongo-data
 # MongoDB dump folders
 atlas-dump/
+
+# Node.js dependencies
+node_modules/
