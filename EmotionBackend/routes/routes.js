@@ -19,8 +19,8 @@ async function getAuthToken() {
   try {
     console.log('[AUTH] Fetching new token...');
     const authResponse = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', {
-      userName: 'gaoxiazhu',
-      password: 'Testemotionanalytics'
+      userName: process.env.RDC_USERNAME,
+      password: process.env.RDC_PASSWORD
     });
 
     if (authResponse.data && authResponse.data.token) {
