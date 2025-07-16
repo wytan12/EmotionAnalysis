@@ -7,16 +7,51 @@ const proxyUrl = process.env.HTTPS_PROXY;
 const proxyAgent = proxyUrl ? new HttpsProxyAgent(proxyUrl) : undefined;
 const APIrouter = express.Router();
 
-if (!proxyUrl) {
-  console.error('HTTPS_PROXY environment variable is not set. Please set it to your proxy URL.');
-  process.exit(1);  // Exit if proxy is not configured
-}
-else {
-  console.log(`Using proxy: ${proxyUrl}`);   
+if (proxyUrl) {
+  console.log(`[PROXY] Using proxy: ${proxyUrl}`);
+} else {
+  console.log('[PROXY] No HTTPS_PROXY configured. Requests will be sent directly.');
 }
 
 let cachedToken = null;
 let tokenExpiry = null;
+
+// Function to authenticate and get token from external API
+async function getAuthToken() {
+  // Check if we have a valid cached token
+  if (cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
+    console.log('[AUTH] Using cached token');
+    return cachedToken;
+  }
+
+  try {
+    console.log('[AUTH] Fetching new token...');
+    const axiosConfig = {
+      headers: {},
+      proxy: false
+    };
+    if (proxyAgent) {
+      axiosConfig.httpsAgent = proxyAgent;
+    }
+    const authResponse = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', {
+      userName: process.env.RDC_USERNAME,
+      password: process.env.RDC_PASSWORD
+    }, axiosConfig);
+
+    if (authResponse.data && authResponse.data.token) {
+      cachedToken = authResponse.data.token;
+      // Set expiry to 23 hours from now (assuming 24h token validity)
+      tokenExpiry = Date.now() + (23 * 60 * 60 * 1000);
+      console.log('[AUTH] Token obtained and cached');
+      return cachedToken;
+    } else {
+      throw new Error('No token received from auth endpoint');
+    }
+  } catch (error) {
+    console.error('[AUTH] Failed to get token:', error.message);
+    throw error;
+  }
+}
 
 APIrouter.get("/newtest", (req, res) => {
   const newTest = new Test({
@@ -58,18 +93,16 @@ APIrouter.get("/tests", (req, res) => {
 APIrouter.get("/user-info", async (req, res) => {
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/users/me";
   try {
-    // const token = await getAuthToken(); // dynamically fetch token
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) {
-      console.error("[TOKEN] No token found — aborting");
-      return res.status(401).json({ message: "Missing authorization token" });
-    }
-
-    const userData = await axios.get(API_HOST, {
+    const token = await getAuthToken(); // dynamically fetch token
+    
+    const axiosConfig = {
       headers: { Authorization: `Bearer ${token}` },
-      httpsAgent: proxyAgent, // 👈 critical for HTTPS requests via proxy
-      proxy: false  // Disable axios proxy if using HttpsProxyAgent
-    });
+      proxy: false
+    };
+    if (proxyAgent) {
+      axiosConfig.httpsAgent = proxyAgent;
+    }
+    const userData = await axios.get(API_HOST, axiosConfig);
 
     res.status(200).json(userData.data);
   } catch (error) {
@@ -85,22 +118,21 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
 
   try {
     console.log(`[REQUEST] Fetching data for community ID: ${communityId}`);
-    // const token = await getAuthToken(); // dynamically fetch token
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) {
-      console.error("[TOKEN] No token found — aborting");
-      return res.status(401).json({ message: "Missing authorization token" });
-    }
+    const token = await getAuthToken(); // dynamically fetch token
+    
     const fullUrl = `${API_HOST}/${communityId}`;
     console.log('Fetching:', fullUrl);
 
-    const dataResponse = await axios.get(fullUrl, {
+    const axiosConfig = {
       headers: {
         Authorization: `Bearer ${token}`
       },
-      httpsAgent: proxyAgent, // 👈 critical for HTTPS requests via proxy
-      proxy: false  // Disable axios proxy if using HttpsProxyAgent
-    });
+      proxy: false
+    };
+    if (proxyAgent) {
+      axiosConfig.httpsAgent = proxyAgent;
+    }
+    const dataResponse = await axios.get(fullUrl, axiosConfig);
 
     console.log(`[SUCCESS] Data received: ${JSON.stringify(dataResponse.data).slice(0, 100)}...`);
     res.status(200).json(dataResponse.data);
