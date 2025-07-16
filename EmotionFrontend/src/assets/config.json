@@ -1,5 +1,5 @@
 {
-  "communityDataUrl": "http://localhost/api/community-data/community-id",
-  "baseUrl": "http://localhost",
-  "formUrl": "http://localhost/form"
+  "communityDataUrl": "https://emotion-analysis.rdc.nie.edu.sg/api/community-data/community-id",
+  "baseUrl": "https://emotion-analysis.rdc.nie.edu.sg",
+  "formUrl": "https://emotion-analysis.rdc.nie.edu.sg/form"
 }
