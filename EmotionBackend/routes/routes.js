@@ -7,12 +7,10 @@ const proxyUrl = process.env.HTTPS_PROXY;
 const proxyAgent = proxyUrl ? new HttpsProxyAgent(proxyUrl) : undefined;
 const APIrouter = express.Router();
 
-if (!proxyUrl) {
-  console.error('HTTPS_PROXY environment variable is not set. Please set it to your proxy URL.');
-  process.exit(1);  // Exit if proxy is not configured
-}
-else {
-  console.log(`Using proxy: ${proxyUrl}`);   
+if (proxyUrl) {
+  console.log(`[PROXY] Using proxy: ${proxyUrl}`);
+} else {
+  console.log('[PROXY] No HTTPS_PROXY configured. Requests will be sent directly.');
 }
 
 let cachedToken = null;
@@ -28,10 +26,17 @@ async function getAuthToken() {
 
   try {
     console.log('[AUTH] Fetching new token...');
+    const axiosConfig = {
+      headers: {},
+      proxy: false
+    };
+    if (proxyAgent) {
+      axiosConfig.httpsAgent = proxyAgent;
+    }
     const authResponse = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', {
       userName: process.env.RDC_USERNAME,
       password: process.env.RDC_PASSWORD
-    });
+    }, axiosConfig);
 
     if (authResponse.data && authResponse.data.token) {
       cachedToken = authResponse.data.token;
@@ -90,11 +95,14 @@ APIrouter.get("/user-info", async (req, res) => {
   try {
     const token = await getAuthToken(); // dynamically fetch token
     
-    const userData = await axios.get(API_HOST, {
+    const axiosConfig = {
       headers: { Authorization: `Bearer ${token}` },
-      httpsAgent: proxyAgent, // 👈 critical for HTTPS requests via proxy
-      proxy: false  // Disable axios proxy if using HttpsProxyAgent
-    });
+      proxy: false
+    };
+    if (proxyAgent) {
+      axiosConfig.httpsAgent = proxyAgent;
+    }
+    const userData = await axios.get(API_HOST, axiosConfig);
 
     res.status(200).json(userData.data);
   } catch (error) {
@@ -115,13 +123,16 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
     const fullUrl = `${API_HOST}/${communityId}`;
     console.log('Fetching:', fullUrl);
 
-    const dataResponse = await axios.get(fullUrl, {
+    const axiosConfig = {
       headers: {
         Authorization: `Bearer ${token}`
       },
-      httpsAgent: proxyAgent, // 👈 critical for HTTPS requests via proxy
-      proxy: false  // Disable axios proxy if using HttpsProxyAgent
-    });
+      proxy: false
+    };
+    if (proxyAgent) {
+      axiosConfig.httpsAgent = proxyAgent;
+    }
+    const dataResponse = await axios.get(fullUrl, axiosConfig);
 
     console.log(`[SUCCESS] Data received: ${JSON.stringify(dataResponse.data).slice(0, 100)}...`);
     res.status(200).json(dataResponse.data);
