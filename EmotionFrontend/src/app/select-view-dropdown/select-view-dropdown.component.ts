@@ -21,10 +21,6 @@ export class SelectViewDropdownComponent implements OnInit {
     if (communityId) {
       this.sharedViewService.getViews(communityId).subscribe((views: string[]) => {
         this.views = views;
-        if (views.length > 0) {
-          this.selectedView = views[0]; // ✅ Use the first view as default
-          this.onChange(this.selectedView);
-        }
       });
     }
   }
