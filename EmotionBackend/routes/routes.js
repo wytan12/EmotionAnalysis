@@ -24,8 +24,9 @@ let tokenExpiry = null;
 
 // Function to authenticate and get token from external API
 async function getAuthToken(forceRefresh = false) {
-  // Check if we have a valid cached token
-  if (!forceRefresh && cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
+  // Check if we should disable token cache via env var
+  const disableCache = process.env.DISABLE_TOKEN_CACHE === 'true';
+  if (!forceRefresh && !disableCache && cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
     console.log('[AUTH] Using cached token');
     return cachedToken;
   }
