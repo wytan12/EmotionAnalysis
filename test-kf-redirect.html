@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test KF Redirect - Emotion Analysis</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .example { background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .code { font-family: monospace; background: #e8e8e8; padding: 5px; border-radius: 3px; }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Test KF Token-Based Authentication</h1>
+    
+    <h2>How it works:</h2>
+    <div class="example">
+        <p><strong>Step 1:</strong> KF redirects users to your system with a token in the URL:</p>
+        <p class="code">https://emotion-analysis.rdc.nie.edu.sg/api/auth/kf-redirect?access_token=REAL_TOKEN&community_id=6645ab836782b352b64ea86c</p>
+    </div>
+    
+    <div class="example">
+        <p><strong>Step 2:</strong> Your backend stores the token in the user's session and redirects to the frontend.</p>
+        <p><strong>Step 3:</strong> Future API calls use the token from the session or Authorization header.</p>
+    </div>
+
+    <h2>Test Endpoints:</h2>
+    
+    <button onclick="testKFRedirect()">Test KF Redirect Handler (gaoxiazhu token)</button>
+    <div class="example">
+        <strong>Current RDC Token (gaoxiazhu):</strong>
+        <div class="code" style="word-break:break-all;">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTMxNzY2NzcsImV4cCI6MTc1MzE5NDY3N30.fyw4GTzt_5VVsYA9UFeEL7X8dA7jQosAzQTiBG-N8xc</div>
+        <div><strong>Test Redirect URL:</strong></div>
+        <div class="code" style="word-break:break-all;">http://localhost:3000/api/auth/kf-redirect?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTMxNzY2NzcsImV4cCI6MTc1MzE5NDY3N30.fyw4GTzt_5VVsYA9UFeEL7X8dA7jQosAzQTiBG-N8xc&community_id=6645ab836782b352b64ea86c</div>
+    </div>
+    <button onclick="testCommunityDataWithToken()">Test Community Data with Token</button>
+    <button onclick="testUserInfo()">Test User Info</button>
+    
+    <div id="result"></div>
+
+    <h2>Current Implementation:</h2>
+    <div class="example">
+        <h3>✅ Token Sources (in order of priority):</h3>
+        <ol>
+            <li><strong>Query Parameters:</strong> <span class="code">?access_token=TOKEN</span></li>
+            <li><strong>Authorization Header:</strong> <span class="code">Authorization: Bearer TOKEN</span></li>
+            <li><strong>Session Storage:</strong> Stored after KF redirect</li>
+        </ol>
+        
+        <h3>✅ New Endpoints:</h3>
+        <ul>
+            <li><span class="code">GET /api/auth/kf-redirect</span> - Handles KF redirects and stores tokens</li>
+            <li><span class="code">GET /api/community-data/community-id/:id</span> - Now uses user tokens</li>
+            <li><span class="code">GET /api/user-info</span> - Now uses user tokens</li>
+        </ul>
+        
+        <h3>✅ Session Management:</h3>
+        <ul>
+            <li>Express sessions with secure cookies</li>
+            <li>24-hour token storage</li>
+            <li>Automatic session cleanup</li>
+        </ul>
+    </div>
+
+    <script>
+        function testKFRedirect() {
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTMxNzY2NzcsImV4cCI6MTc1MzE5NDY3N30.fyw4GTzt_5VVsYA9UFeEL7X8dA7jQosAzQTiBG-N8xc';
+            const communityId = '6645ab836782b352b64ea86c';
+            const url = `http://localhost:3000/api/auth/kf-redirect?access_token=${token}&community_id=${communityId}`;
+            window.open(url, '_blank');
+        }
+
+        function testCommunityDataWithToken() {
+            const token = prompt('Enter a real RDC token (or use test_token_123 to see error handling):');
+            if (token) {
+                fetch(`http://localhost:3000/api/community-data/community-id/6645ab836782b352b64ea86c?access_token=${token}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('result').innerHTML = 
+                            `<h3>Community Data Response:</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    })
+                    .catch(error => {
+                        document.getElementById('result').innerHTML = 
+                            `<h3 class="error">Error:</h3><pre>${error}</pre>`;
+                    });
+            }
+        }
+
+        function testUserInfo() {
+            const token = prompt('Enter a real RDC token:');
+            if (token) {
+                fetch('http://localhost:3000/api/user-info', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('result').innerHTML = 
+                            `<h3>User Info Response:</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    })
+                    .catch(error => {
+                        document.getElementById('result').innerHTML = 
+                            `<h3 class="error">Error:</h3><pre>${error}</pre>`;
+                    });
+            }
+        }
+    </script>
+</body>
+</html>
