@@ -40,7 +40,6 @@ services:
     environment:
       MONGO_URI: mongodb://liang:luya@mongo:27017/Emotion?retryWrites=true&w=majority
       API_HOST: https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id
-      # HTTP_PROXY: http://squid:3128
       HTTPS_PROXY: http://squid:3128
       RDC_USERNAME: gaoxiazhu
       RDC_PASSWORD: Testemotionanalytics
@@ -50,6 +49,7 @@ services:
     #   - "3000"
     depends_on:
       - mongo
+      - squid
     networks:
       - app-network
 
@@ -88,8 +88,19 @@ services:
     networks:
       - app-network
 
-# volumes:
-#   mongo-data:  # Persistent storage for MongoDB
+  # volumes:
+  #   mongo-data:  # Persistent storage for MongoDB
+
+  squid:
+    image: ubuntu/squid:latest
+    container_name: squid_proxy
+    ports:
+      - "3128:3128"
+    networks:
+      - app-network
+    restart: always
+    volumes:
+      - ./squid.conf:/etc/squid/squid.conf:ro
 
 networks:
   app-network:
