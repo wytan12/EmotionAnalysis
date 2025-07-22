@@ -84,22 +84,24 @@ export class TestNoteratingComponent implements OnInit {
                 : undefined;
             
             const communityId = this.route.snapshot.paramMap.get('communityId');
-            // this.selectedView = Array.isArray(view) ? view : view ? [view] : [];
-            if (view) {
-              this.selectedView = view.includes(',')
-                ? view.split(',').map((v) => v.trim())
-                : [view.trim()];
-            } else {
-              
-              if (communityId) {
-                this.sharedViewService.getViews(communityId).subscribe((views: string[]) => {
-                  this.selectedView = views;
-                });
-              } else {
+            
+            // 🧠 Default to all views if none selected
+            if (!view || view.length === 0) {
+              if (!communityId) {
                 console.error('Community ID not found in route.');
+                return of([]); // Return empty observable to short-circuit
               }
 
+              return this.sharedViewService.getViews(communityId).pipe(
+                switchMap((views: string[]) => {
+                  this.selectedView = views;
+                  return this.getEmoReadWriteByEmotionTitle(title, datasetLabel, from, to, this.selectedView);
+                })
+              );
             }
+
+            // ✅ If view already exists
+            this.selectedView = Array.isArray(view) ? view : [view];
 
             console.log('Selected views:', this.selectedView);
 
