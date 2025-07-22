@@ -43,6 +43,7 @@ services:
       HTTPS_PROXY: http://squid:3128
       RDC_USERNAME: gaoxiazhu
       RDC_PASSWORD: Testemotionanalytics
+      DISABLE_TOKEN_CACHE: "true"
     ports:
       - "3000:3000"
     # expose:
