@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
+import session from "express-session";
 // import "dotenv/config";
 import dotenv from 'dotenv';
 import { APIrouter } from "./routes/routes.js";
@@ -10,25 +11,39 @@ import path from "path";
 import { Parser } from "json2csv";
 import { EmoReadWrite, EmoSurvey } from "./model/model.js";
 
+///////////////////////////////////////////////// cors set-up //////////////////////////////////////////////////
+var corsOptions = {
+  origin: ['http://localhost:80', 'http://localhost:60312', 'http://localhost:4200', 'https://emotion-analysis.rdc.nie.edu.sg'],
+  credentials: true,
+  optionsSuccessStatus: 200,
+  headers: {
+    "Access-Control-Allow-Origin": "*", // Allow CORS from configured origins
+    "Access-Control-Allow-Methods": "GET, HEAD, POST, PUT, DELETE, OPTIONS", // Allow all HTTP methods
+    "Access-Control-Allow-Headers": "*", // Allow specified headers
+  },
+};
+
 ///////////////////////////////////////////////// app set-up //////////////////////////////////////////////////
 const app = express();
+
+// Configure session middleware before other middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'emotion-analysis-session-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { 
+    secure: false, // Set to true in production with HTTPS
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use("/api", APIrouter);
 
-///////////////////////////////////////////////// cors set-up //////////////////////////////////////////////////
-var corsOptions = {
-  origin: ['http://localhost:80', 'http://localhost:60312'],
-  credentials: true,
-  optionsSuccessStatus: 200,
-  headers: {
-    "Access-Control-Allow-Origin": "http://localhost:60312", // Allow CORS from any origin
-    "Access-Control-Allow-Methods": "GET, HEAD, POST, PUT, DELETE, OPTIONS", // Allow all HTTP methods
-    "Access-Control-Allow-Headers": "*", // Allow specified headers
-  },
-};
 console.log(`Backend Start`);
 //////////////////////////////////////////////////  mongoDB ///////////////////////////////////////////////////
 

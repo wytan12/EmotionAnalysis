@@ -19,67 +19,71 @@ if (proxyUrl) {
   console.log('[PROXY] No HTTPS_PROXY configured. Requests will be sent directly.');
 }
 
-let cachedToken = null;
-let tokenExpiry = null;
+// Store user sessions with tokens
+const userSessions = new Map(); // In production, use Redis or database
 
-// Function to authenticate and get token from external API
-async function getAuthToken(forceRefresh = false) {
-  // Check if we should disable token cache via env var
-  const disableCache = process.env.DISABLE_TOKEN_CACHE === 'true';
-  if (!forceRefresh && !disableCache && cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
-    console.log('[AUTH] Using cached token');
-    return cachedToken;
+// Extract token from request (query param, header, or session)
+function getTokenFromRequest(req) {
+  // First check query parameters (for KF redirects)
+  if (req.query.access_token) {
+    console.log('[AUTH] Token found in query parameters');
+    return req.query.access_token;
   }
-
-  try {
-    console.log('[AUTH] Fetching new token...');
-    console.log(`[AUTH] Using proxy: ${proxyUrl || 'none'}`);
-    
-    const axiosConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'EmotionAnalysis-Backend/1.0'
-      },
-      timeout: 30000, // 30 second timeout
-      proxy: false // Disable axios built-in proxy handling
-    };
-    
-    // Add proxy agent if configured
-    if (proxyAgent) {
-      axiosConfig.httpsAgent = proxyAgent;
-      console.log('[AUTH] Using HTTPS proxy agent for authentication');
-    }
-    
-    const authResponse = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', {
-      userName: process.env.RDC_USERNAME,
-      password: process.env.RDC_PASSWORD
-    }, axiosConfig);
-
-    console.log('[AUTH] Auth response status:', authResponse.status);
-    console.log('[AUTH] Auth response data keys:', Object.keys(authResponse.data || {}));
-    
-    if (authResponse.data && authResponse.data.token) {
-      cachedToken = authResponse.data.token;
-      // Set expiry to 23 hours from now (assuming 24h token validity)
-      tokenExpiry = Date.now() + (23 * 60 * 60 * 1000);
-      console.log('[AUTH] Token obtained and cached:', cachedToken.substring(0, 50) + '...');
-      return cachedToken;
-    } else {
-      console.error('[AUTH] Unexpected response structure:', authResponse.data);
-      throw new Error('No token received from auth endpoint');
-    }
-  } catch (error) {
-    console.error('[AUTH] Failed to get token:', error.message);
-    if (error.response) {
-      console.error(`[AUTH] Auth failed with status: ${error.response.status}`);
-      console.error(`[AUTH] Auth error data:`, error.response.data);
-    } else if (error.request) {
-      console.error(`[AUTH] No response from auth server - possible network/proxy issue`);
-      console.error(`[AUTH] Error code:`, error.code);
-    }
-    throw error;
+  
+  // Check Authorization header
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    console.log('[AUTH] Token found in Authorization header');
+    return authHeader.substring(7);
   }
+  
+  // Check session if available
+  if (req.session && req.session.access_token) {
+    console.log('[AUTH] Token found in session');
+    return req.session.access_token;
+  }
+  
+  return null;
 }
+
+// Store token in session for future requests
+function storeTokenInSession(req, token, communityId) {
+  if (!req.session) {
+    console.warn('[SESSION] Session not available, cannot store token');
+    return;
+  }
+  
+  req.session.access_token = token;
+  req.session.community_id = communityId;
+  req.session.token_stored_at = Date.now();
+  console.log('[SESSION] Token and community ID stored in session');
+}
+
+// Handle KF redirect with token - this should be the landing page endpoint
+APIrouter.get("/auth/kf-redirect", (req, res) => {
+  const { access_token, community_id } = req.query;
+  
+  if (!access_token) {
+    console.error('[KF_REDIRECT] No access token in redirect URL');
+    return res.status(400).json({ 
+      message: 'Access token required',
+      error: 'No access_token found in URL parameters'
+    });
+  }
+  
+  // Store token and community ID in session
+  storeTokenInSession(req, access_token, community_id);
+  
+  console.log(`[KF_REDIRECT] Successfully stored token and community ID: ${community_id || 'not provided'}`);
+  
+  // Redirect to your frontend with success
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost';
+  const redirectPath = community_id ? 
+    `/community-data/community-id/${community_id}` : 
+    '/dashboard';
+    
+  res.redirect(`${frontendUrl}${redirectPath}`);
+});
 
 APIrouter.get("/newtest", (req, res) => {
   const newTest = new Test({
@@ -121,7 +125,18 @@ APIrouter.get("/tests", (req, res) => {
 APIrouter.get("/user-info", async (req, res) => {
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/users/me";
   try {
-    const token = await getAuthToken(); // dynamically fetch token
+    // Extract token from request (query params, headers, or session)
+    const token = getTokenFromRequest(req);
+    
+    if (!token) {
+      console.error('[AUTH] No access token found in user-info request');
+      return res.status(401).json({ 
+        message: 'Access token required', 
+        error: 'No access_token found in query parameters, Authorization header, or session'
+      });
+    }
+    
+    console.log(`[DEBUG] Using token for user-info: ${token.substring(0, 20)}...`);
     
     const axiosConfig = {
       headers: { Authorization: `Bearer ${token}` },
@@ -135,23 +150,39 @@ APIrouter.get("/user-info", async (req, res) => {
     res.status(200).json(userData.data);
   } catch (error) {
     console.error('User info fetch error:', error.message);
-    res.status(500).json({ message: 'Error fetching user info', error: error.message });
+    if (error.response && error.response.status === 401) {
+      res.status(401).json({ message: 'Invalid or expired token', error: error.message });
+    } else {
+      res.status(500).json({ message: 'Error fetching user info', error: error.message });
+    }
   }
 });
 
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
-  const communityId = req.params.communityId;
-  console.log(`[DEBUG] communityId received: ${req.params.communityId}`);
+  const communityId = req.params.communityId || req.query.community_id;
+  console.log(`[DEBUG] communityId received: ${communityId}`);
   const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
 
   try {
     console.log(`[REQUEST] Fetching data for community ID: ${communityId}`);
-    console.log(`[DEBUG] Environment check - RDC_USERNAME: ${process.env.RDC_USERNAME ? 'SET' : 'NOT SET'}`);
-    console.log(`[DEBUG] Environment check - RDC_PASSWORD: ${process.env.RDC_PASSWORD ? 'SET' : 'NOT SET'}`);
-    console.log(`[DEBUG] Proxy configuration: ${proxyUrl || 'No proxy configured'}`);
     
-    const token = await getAuthToken(true); // force fresh token for debugging
-    console.log(`[DEBUG] Using token: ${token ? token.substring(0, 20) + '...' : 'null'}`);
+    // Extract token from request (query params, headers, or session)
+    const token = getTokenFromRequest(req);
+    
+    if (!token) {
+      console.error('[AUTH] No access token found in request');
+      return res.status(401).json({ 
+        message: 'Access token required', 
+        error: 'No access_token found in query parameters, Authorization header, or session'
+      });
+    }
+    
+    console.log(`[DEBUG] Using token from request: ${token.substring(0, 20)}...`);
+    
+    // Store token and community ID in session for future requests
+    if (req.query.access_token && communityId) {
+      storeTokenInSession(req, token, communityId);
+    }
     
     const fullUrl = `${API_HOST}/${communityId}`;
     console.log('[DEBUG] Full URL:', fullUrl);
@@ -176,7 +207,10 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
     
     console.log('[DEBUG] Request config:', {
       ...axiosConfig,
-      headers: axiosConfig.headers
+      headers: {
+        ...axiosConfig.headers,
+        Authorization: `Bearer ${token.substring(0, 20)}...`
+      }
     });
     
     const dataResponse = await axios.get(fullUrl, axiosConfig);
