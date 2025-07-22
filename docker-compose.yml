@@ -49,7 +49,6 @@ services:
     #   - "3000"
     depends_on:
       - mongo
-      - squid
     networks:
       - app-network
 
@@ -90,17 +89,6 @@ services:
 
   # volumes:
   #   mongo-data:  # Persistent storage for MongoDB
-
-  squid:
-    image: ubuntu/squid:latest
-    container_name: squid_proxy
-    ports:
-      - "3128:3128"
-    networks:
-      - app-network
-    restart: always
-    volumes:
-      - ./squid.conf:/etc/squid/squid.conf:ro
 
 networks:
   app-network:
