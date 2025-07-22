@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    environment:
+      MONGO_URI: mongodb://liang:luya@mongo:27017/Emotion?retryWrites=true&w=majority
+      API_HOST: https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id
+      HTTPS_PROXY: http://squid:3128
+      RDC_USERNAME: gaoxiazhu
+      RDC_PASSWORD: Testemotionanalytics
+      NODE_ENV: development
+      DEBUG: axios:*
+    volumes:
+      - ./EmotionBackend:/app
+    command: >
+      sh -c "npm install && 
+             echo 'Testing proxy connectivity...' &&
+             curl -I --connect-timeout 10 --proxy squid:3128 https://kf6.rdc.nie.edu.sg 2>/dev/null || echo 'Proxy test failed' &&
+             echo 'Starting application...' &&
+             node index.js"
+
+  squid:
+    volumes:
+      - ./squid.conf:/etc/squid/squid.conf:ro
+      - squid_logs:/var/log/squid
+    command: >
+      sh -c "squid -N -d1"
+
+volumes:
+  squid_logs:
