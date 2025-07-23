@@ -9,6 +9,12 @@ export class AuthInterceptor implements HttpInterceptor {
     // Get token from localStorage
     const token = localStorage.getItem('access_token');
     
+    console.log('[INTERCEPTOR] Request URL:', req.url);
+    console.log('[INTERCEPTOR] Token available:', token ? 'Yes' : 'No');
+    if (token) {
+      console.log('[INTERCEPTOR] Token preview:', token.substring(0, 20) + '...');
+    }
+    
     // Clone the request and add Authorization header if token exists
     if (token) {
       const authReq = req.clone({
@@ -18,6 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
         // Include credentials for session cookies
         withCredentials: true
       });
+      console.log('[INTERCEPTOR] Added Authorization header');
       return next.handle(authReq);
     }
     
@@ -26,6 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
       withCredentials: true
     });
     
+    console.log('[INTERCEPTOR] No token, sending with credentials only');
     return next.handle(credReq);
   }
 }
