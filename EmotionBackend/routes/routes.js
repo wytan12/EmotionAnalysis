@@ -76,13 +76,36 @@ APIrouter.get("/auth/kf-redirect", (req, res) => {
   
   console.log(`[KF_REDIRECT] Successfully stored token and community ID: ${community_id || 'not provided'}`);
   
-  // Redirect to your frontend with success
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost';
+  // Redirect to Angular frontend with token in URL so frontend can also store it
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
   const redirectPath = community_id ? 
-    `/community-data/community-id/${community_id}` : 
-    '/dashboard';
+    `/redirect/${community_id}?access_token=${access_token}` : 
+    `/redirect?access_token=${access_token}`;
     
   res.redirect(`${frontendUrl}${redirectPath}`);
+});
+
+// Initialize session from frontend token
+APIrouter.post("/auth/initialize-session", (req, res) => {
+  const { access_token } = req.body;
+  
+  if (!access_token) {
+    console.error('[INIT_SESSION] No access token provided');
+    return res.status(400).json({ 
+      message: 'Access token required',
+      error: 'No access_token found in request body'
+    });
+  }
+  
+  // Store token in session
+  storeTokenInSession(req, access_token, null);
+  
+  console.log('[INIT_SESSION] Session initialized with frontend token');
+  
+  res.status(200).json({ 
+    message: 'Session initialized successfully',
+    sessionId: req.sessionID
+  });
 });
 
 APIrouter.get("/newtest", (req, res) => {
