@@ -1,7 +1,7 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -59,6 +59,8 @@ import { TestNoteratingComponent } from './test-noterating/test-noterating.compo
 import { ReflectionTitleComponent } from './reflection-title/reflection-title.component';
 import { ConfigService } from './shared/config.service';
 import { initializeApiEndpoints } from './shared/api-endpoints';
+import { RedirectComponent } from './redirect/redirect.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 export function initializeApp(configService: ConfigService) {
   return () => configService.loadConfig().then(() => initializeApiEndpoints(configService));
@@ -112,7 +114,8 @@ export function initializeApp(configService: ConfigService) {
     WriteRatingComponent,
     TryingnoteComponent,
     RadarChartJerrisonapiComponent,
-    TestNoteratingComponent
+    TestNoteratingComponent,
+    RedirectComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [
@@ -123,6 +126,11 @@ export function initializeApp(configService: ConfigService) {
       useFactory: initializeApp,
       deps: [ConfigService], // Dependency injection for ConfigService
       multi: true // Allows multiple initializers
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
     }
   ]
 })
