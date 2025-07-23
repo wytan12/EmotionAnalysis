@@ -205,6 +205,15 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
     // Store token and community ID in session for future requests
     if (req.query.access_token && communityId) {
       storeTokenInSession(req, token, communityId);
+      console.log('[AUTH] Initial authentication detected - stored token in session');
+      
+      // For initial authentication via direct URL, redirect to frontend
+      // This handles the case where external sites link directly to API endpoints
+      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
+      const redirectPath = `/redirect/${communityId}?access_token=${token}`;
+      
+      console.log(`[REDIRECT] Redirecting to frontend: ${frontendUrl}${redirectPath}`);
+      return res.redirect(`${frontendUrl}${redirectPath}`);
     }
     
     const fullUrl = `${API_HOST}/${communityId}`;
