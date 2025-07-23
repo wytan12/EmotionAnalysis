@@ -16,15 +16,16 @@
 <body>
     <h1>Test KF Token-Based Authentication</h1>
     
-    <h2>How it works:</h2>
+    <h2>How it works (Corrected Flow):</h2>
     <div class="example">
-        <p><strong>Step 1:</strong> KF redirects users to your system with a token in the URL:</p>
+        <p><strong>Step 1:</strong> KF redirects users to your backend:</p>
         <p class="code">https://emotion-analysis.rdc.nie.edu.sg/api/auth/kf-redirect?access_token=REAL_TOKEN&community_id=6645ab836782b352b64ea86c</p>
-    </div>
-    
-    <div class="example">
-        <p><strong>Step 2:</strong> Your backend stores the token in the user's session and redirects to the frontend.</p>
-        <p><strong>Step 3:</strong> Future API calls use the token from the session or Authorization header.</p>
+        
+        <p><strong>Step 2:</strong> Backend stores token in session and redirects to Angular frontend:</p>
+        <p class="code">http://localhost:4200/redirect/6645ab836782b352b64ea86c?access_token=REAL_TOKEN</p>
+        
+        <p><strong>Step 3:</strong> Angular stores token in localStorage and navigates to final destination.</p>
+        <p><strong>Step 4:</strong> All future API calls work with BOTH session (backend) and localStorage (frontend).</p>
     </div>
 
     <h2>Test Endpoints:</h2>
@@ -32,9 +33,9 @@
     <button onclick="testKFRedirect()">Test KF Redirect Handler (gaoxiazhu token)</button>
     <div class="example">
         <strong>Current RDC Token (gaoxiazhu):</strong>
-        <div class="code" style="word-break:break-all;">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTMxNzY2NzcsImV4cCI6MTc1MzE5NDY3N30.fyw4GTzt_5VVsYA9UFeEL7X8dA7jQosAzQTiBG-N8xc</div>
+        <div class="code" style="word-break:break-all;">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTMyMzQ1MDYsImV4cCI6MTc1MzI1MjUwNn0.GnBFRXnpfFFaOXMNFkywDl5VKydINpkDfzcLMxm1f_Y</div>
         <div><strong>Test Redirect URL:</strong></div>
-        <div class="code" style="word-break:break-all;">http://localhost:3000/api/auth/kf-redirect?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTMxNzY2NzcsImV4cCI6MTc1MzE5NDY3N30.fyw4GTzt_5VVsYA9UFeEL7X8dA7jQosAzQTiBG-N8xc&community_id=6645ab836782b352b64ea86c</div>
+        <div class="code" style="word-break:break-all;">http://localhost:3000/api/auth/kf-redirect?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTMyMzQ1MDYsImV4cCI6MTc1MzI1MjUwNn0.GnBFRXnpfFFaOXMNFkywDl5VKydINpkDfzcLMxm1f_Y&community_id=6645ab836782b352b64ea86c</div>
     </div>
     <button onclick="testCommunityDataWithToken()">Test Community Data with Token</button>
     <button onclick="testUserInfo()">Test User Info</button>
@@ -67,7 +68,7 @@
 
     <script>
         function testKFRedirect() {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTMxNzY2NzcsImV4cCI6MTc1MzE5NDY3N30.fyw4GTzt_5VVsYA9UFeEL7X8dA7jQosAzQTiBG-N8xc';
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTMyMzQ1MDYsImV4cCI6MTc1MzI1MjUwNn0.GnBFRXnpfFFaOXMNFkywDl5VKydINpkDfzcLMxm1f_Y';
             const communityId = '6645ab836782b352b64ea86c';
             const url = `http://localhost:3000/api/auth/kf-redirect?access_token=${token}&community_id=${communityId}`;
             window.open(url, '_blank');
