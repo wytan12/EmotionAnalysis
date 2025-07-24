@@ -41,8 +41,6 @@ services:
       MONGO_URI: mongodb://liang:luya@mongo:27017/Emotion?retryWrites=true&w=majority
       API_HOST: https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id
       HTTPS_PROXY: http://squid:3128
-      RDC_USERNAME: gaoxiazhu
-      RDC_PASSWORD: Testemotionanalytics
       DISABLE_TOKEN_CACHE: "true"
     ports:
       - "3000:3000"
