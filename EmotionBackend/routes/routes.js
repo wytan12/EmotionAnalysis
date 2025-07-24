@@ -12,6 +12,7 @@ console.log('[DEBUG] Environment variables:');
 console.log('RDC_USERNAME:', process.env.RDC_USERNAME);
 console.log('RDC_PASSWORD:', process.env.RDC_PASSWORD ? '***' : 'undefined');
 console.log('HTTPS_PROXY:', process.env.HTTPS_PROXY);
+console.log('API_HOST:', process.env.API_HOST);
 
 if (proxyUrl) {
   console.log(`[PROXY] Using proxy: ${proxyUrl}`);
@@ -146,7 +147,10 @@ APIrouter.get("/tests", (req, res) => {
 });
 
 APIrouter.get("/user-info", async (req, res) => {
-  const API_HOST = "https://kf6.rdc.nie.edu.sg/api/users/me";
+  // Use base API host and construct user endpoint
+  const baseApiHost = process.env.API_HOST || "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
+  const userApiHost = baseApiHost.replace('/analytics/emotions/note-emotions/community-id', '/users/me');
+  
   try {
     // Extract token from request (query params, headers, or session)
     const token = getTokenFromRequest(req);
@@ -160,6 +164,7 @@ APIrouter.get("/user-info", async (req, res) => {
     }
     
     console.log(`[DEBUG] Using token for user-info: ${token.substring(0, 20)}...`);
+    console.log(`[DEBUG] User API endpoint: ${userApiHost}`);
     
     const axiosConfig = {
       headers: { Authorization: `Bearer ${token}` },
@@ -168,7 +173,7 @@ APIrouter.get("/user-info", async (req, res) => {
     if (proxyAgent) {
       axiosConfig.httpsAgent = proxyAgent;
     }
-    const userData = await axios.get(API_HOST, axiosConfig);
+    const userData = await axios.get(userApiHost, axiosConfig);
 
     res.status(200).json(userData.data);
   } catch (error) {
@@ -184,7 +189,8 @@ APIrouter.get("/user-info", async (req, res) => {
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
   const communityId = req.params.communityId || req.query.community_id;
   console.log(`[DEBUG] communityId received: ${communityId}`);
-  const API_HOST = "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
+  const API_HOST = process.env.API_HOST || "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
+  console.log(`[DEBUG] Using API_HOST from environment: ${API_HOST}`);
 
   try {
     console.log(`[REQUEST] Fetching data for community ID: ${communityId}`);
@@ -207,11 +213,9 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
       storeTokenInSession(req, token, communityId);
       console.log('[AUTH] Initial authentication detected - stored token in session');
       
-      // For initial authentication via direct URL, redirect to frontend
-      // This handles the case where external sites link directly to API endpoints
+      // If this is a direct API hit with token (from external redirect), redirect to frontend
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
       const redirectPath = `/redirect/${communityId}?access_token=${token}`;
-      
       console.log(`[REDIRECT] Redirecting to frontend: ${frontendUrl}${redirectPath}`);
       return res.redirect(`${frontendUrl}${redirectPath}`);
     }
