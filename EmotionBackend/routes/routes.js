@@ -432,4 +432,44 @@ APIrouter.get("/findAllEmoSurvey", (req, res) => {
     });
 });
 
+// Community-specific endpoints
+APIrouter.get("/findAllEmoSurvey/:communityId", (req, res) => {
+  const communityId = req.params.communityId;
+  console.log("findAllEmoSurvey for community:", communityId);
+  EmoSurvey.find({ communityId: communityId })
+    .then((found) => {
+      res.send(found);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+
+APIrouter.get("/findAllEmoReadWrite/:communityId", (req, res) => {
+  const communityId = req.params.communityId;
+  console.log("findAllEmoReadWrite for community:", communityId);
+  EmoReadWrite.find({ communityId: communityId })
+    .then((found) => {
+      res.send(found);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+
+APIrouter.get("/findAllEmoReg/:communityId", (req, res) => {
+  const communityId = req.params.communityId;
+  console.log("findAllEmoReg for community:", communityId);
+  EmoReg.find({ communityId: communityId })
+    .then((found) => {
+      res.send(found);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+
 export { APIrouter };

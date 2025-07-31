@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { CommunityService } from '../services/community.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,10 @@ export class HeaderComponent {
 
   activePage: string = ''; // Initialize with a default value
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private communityService: CommunityService
+  ) {
     this.router.events.subscribe((val) => {
       this.setActivePage();
     });
@@ -32,14 +36,17 @@ export class HeaderComponent {
   }
   
   goToHome() {
-    this.router.navigate(['dashboard']);
+    // Navigate while preserving community context
+    this.communityService.navigateInCommunity('dashboard');
   }
 
   goToSurvey() {
-    this.router.navigate(['survey']);
+    // Navigate while preserving community context
+    this.communityService.navigateInCommunity('survey');
   }
 
   goToTryingnote() {
-    this.router.navigate(['']);
+    // Navigate back to the main tryingnote page for current community
+    this.communityService.navigateToTryingnote();
   }
 }

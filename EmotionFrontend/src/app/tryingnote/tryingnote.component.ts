@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environment';
 import { ExportService } from '../services/export.service';
+import { CommunityService } from '../services/community.service';
 import { API_ENDPOINTS } from '../shared/api-endpoints';
 import { ActivatedRoute } from '@angular/router';
 
@@ -16,13 +17,19 @@ export class TryingnoteComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute, // ✅ Inject ActivatedRoute
-    private exportService: ExportService
+    private exportService: ExportService,
+    private communityService: CommunityService
   ) {}
 
   ngOnInit(): void {
     // ✅ Extract communityId from the route parameter
     this.communityId = this.route.snapshot.paramMap.get('communityId') || '';
     console.log('Loaded communityId:', this.communityId);
+
+    // Set the community ID in the community service for global access
+    if (this.communityId) {
+      this.communityService.setCommunityId(this.communityId);
+    }
 
     // If needed: pass communityId to a service or fetch data
     // this.myService.fetchCommunityData(this.communityId).subscribe(...)

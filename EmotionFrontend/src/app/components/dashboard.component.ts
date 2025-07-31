@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { CommunityService } from '../services/community.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,7 +39,10 @@ export class DashboardComponent implements OnInit {
   communityData: any = null;
   error: any = null;
 
-  constructor(public authService: AuthService) {}
+  constructor(
+    public authService: AuthService,
+    private communityService: CommunityService
+  ) {}
 
   ngOnInit(): void {
     // Automatically initialize session if token exists
@@ -70,7 +74,15 @@ export class DashboardComponent implements OnInit {
 
   getCommunityData(): void {
     this.error = null;
-    this.authService.getCommunityData('6645ab836782b352b64ea86c').subscribe({
+    const communityId = this.communityService.getCurrentCommunityId();
+    
+    if (!communityId) {
+      this.error = 'No community ID available. Please access through a valid community link.';
+      console.error('No community ID set in dashboard');
+      return;
+    }
+    
+    this.authService.getCommunityData(communityId).subscribe({
       next: (data) => {
         this.communityData = data;
         console.log('Community data received:', data);

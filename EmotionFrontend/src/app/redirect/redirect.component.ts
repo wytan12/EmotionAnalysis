@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { CommunityService } from '../services/community.service';
 
 @Component({
   selector: 'app-redirect',
@@ -17,7 +18,8 @@ export class RedirectComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private communityService: CommunityService
   ) {}
 
   ngOnInit(): void {
@@ -54,9 +56,15 @@ export class RedirectComponent implements OnInit {
 
   private navigateToDestination(communityId: string | null): void {
     if (communityId) {
+      // Set the community ID in the service before navigation
+      this.communityService.setCommunityId(communityId);
       this.router.navigate(['/tryingnote', communityId]);
     } else {
-      this.router.navigate(['/tryingnote/6645ab836782b352b64ea86c']);
+      // If no community ID is provided, redirect to a default page or show an error
+      console.error('No community ID provided in redirect');
+      this.status = 'Error: No community specified. Please access the application through a valid community link.';
+      // Could redirect to an error page or community selection page instead
+      // this.router.navigate(['/error', 'no-community']);
     }
   }
 }

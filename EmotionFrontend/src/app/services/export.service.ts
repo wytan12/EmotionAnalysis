@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_ENDPOINTS } from '../shared/api-endpoints';
+import { CommunityService } from './community.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,12 +10,21 @@ import { API_ENDPOINTS } from '../shared/api-endpoints';
 export class ExportService {
   private baseUrl = API_ENDPOINTS.base;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private communityService: CommunityService
+  ) {}
 
   async exportToCsv() {
     try {
-      // Fetch JSON data
-      const data = await this.http.get<any[]>(API_ENDPOINTS.communityData).toPromise();
+      const communityId = this.communityService.getCurrentCommunityId();
+      if (!communityId) {
+        console.error('No community ID available for export');
+        return;
+      }
+      
+      // Fetch JSON data for the current community
+      const data = await this.http.get<any[]>(`${API_ENDPOINTS.communityData}/${communityId}`).toPromise();
       // Convert JSON data to string
       const jsonData = JSON.stringify(data, null, 2); // Pretty print with indentation
       // Trigger download
@@ -40,7 +50,14 @@ export class ExportService {
 
   async exportSurveyJson() {
     try {
-      const data = await this.http.get<any[]>(API_ENDPOINTS.findAllEmoSurvey).toPromise();
+      const communityId = this.communityService.getCurrentCommunityId();
+      if (!communityId) {
+        console.error('No community ID available for survey export');
+        return;
+      }
+      
+      // Use community-specific endpoint for survey data
+      const data = await this.http.get<any[]>(`${API_ENDPOINTS.findAllEmoSurvey}/${communityId}`).toPromise();
       const jsonData = JSON.stringify(data, null, 2);
       this.downloadJson(jsonData, 'emo-survey.json');
     } catch (error) {

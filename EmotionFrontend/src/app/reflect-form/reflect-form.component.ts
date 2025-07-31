@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommunityService } from '../services/community.service';
 import {
   trigger,
   state,
@@ -36,7 +37,11 @@ export class ReflectFormComponent {
     );
   }
 
-  constructor(private router: Router, private emotionService: EmotionService) {}
+  constructor(
+    private router: Router, 
+    private emotionService: EmotionService,
+    private communityService: CommunityService
+  ) {}
 
   // Method to handle selected users from dropdown
   onUserSelected(selectedUsers: string[]) {
@@ -59,7 +64,8 @@ export class ReflectFormComponent {
   submit() {
     console.log(this.formData);
     this.emotionService.addReg(this.formData).subscribe(() => {
-      this.router.navigate(['reflect-history']);
+      // Navigate while preserving community context
+      this.communityService.navigateInCommunity('reflect-history');
     }, error => {
       console.error('Error submitting form data:', error);
     });
