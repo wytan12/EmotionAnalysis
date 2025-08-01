@@ -1,5 +1,6 @@
 import { Component, OnInit, Input,ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router'; // Import the Router module
+import { CommunityService } from '../services/community.service';
 import { ExportService } from '../services/export.service';
 import { NoteVisibilityService } from '../services/note-visibility.service';
 import { startWith } from 'rxjs';
@@ -12,9 +13,13 @@ import { startWith } from 'rxjs';
 export class SurveyComponent implements OnInit {
   isVisible = false;
   
-  constructor(private router: Router, private exportService: ExportService,
+  constructor(
+    private router: Router, 
+    private exportService: ExportService,
     private visibilityService: NoteVisibilityService,
-    private cdr: ChangeDetectorRef) { }
+    private cdr: ChangeDetectorRef,
+    private communityService: CommunityService
+  ) { }
 
   ngOnInit() {
     this.visibilityService.getVisibilityObservable('SurveyNote').pipe(
@@ -57,7 +62,8 @@ export class SurveyComponent implements OnInit {
   // }
 
   navigate() {
-    this.router.navigate(['inconducive-chart']);
+    // Navigate while preserving community context
+    this.communityService.navigateInCommunity('inconducive-chart');
   }
 
   closeSurveyNote(): void {

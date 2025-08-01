@@ -6,6 +6,7 @@ import { catchError, map, filter, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { EmoReadWrite, EmoReg, EmoSurvey, Emotion, Test } from './emotion';
 import { API_ENDPOINTS } from '../shared/api-endpoints';
+import { CommunityService } from './community.service';
 // import moment from 'moment';
 
 @Injectable({ providedIn: 'root' })
@@ -17,7 +18,8 @@ export class EmotionService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private communityService: CommunityService
   ) {}
 
   /** GET Emotiones from the server */
@@ -29,28 +31,46 @@ export class EmotionService {
   }
   
   getEmoReadWrite(): Observable<EmoReadWrite[]> {
+    const communityId = this.communityService.getCurrentCommunityId();
+    if (!communityId) {
+      console.error('No community ID available for getEmoReadWrite');
+      return of([]);
+    }
+    
     return this.http
-      .get<EmoReadWrite[]>(API_ENDPOINTS.findAllEmoReadWrite)
+      .get<EmoReadWrite[]>(`${API_ENDPOINTS.findAllEmoReadWrite}/${communityId}`)
       .pipe(
-        tap((_) => this.log('fetched Emotiones')),
-        catchError(this.handleError<EmoReadWrite[]>('getEmotiones', []))
+        tap((_) => this.log('fetched EmoReadWrite for community: ' + communityId)),
+        catchError(this.handleError<EmoReadWrite[]>('getEmoReadWrite', []))
       );
   }
   getEmoSurvey(): Observable<EmoSurvey[]> {
-    console.log('api/findAllEmoSurvey');
+    const communityId = this.communityService.getCurrentCommunityId();
+    if (!communityId) {
+      console.error('No community ID available for getEmoSurvey');
+      return of([]);
+    }
+    
+    console.log('api/findAllEmoSurvey for community:', communityId);
     return this.http
-      .get<EmoSurvey[]>(API_ENDPOINTS.findAllEmoSurvey)
+      .get<EmoSurvey[]>(`${API_ENDPOINTS.findAllEmoSurvey}/${communityId}`)
       .pipe(
-        tap((_) => this.log('fetched EmoSurvey')),
+        tap((_) => this.log('fetched EmoSurvey for community: ' + communityId)),
         catchError(this.handleError<EmoSurvey[]>('EmoSurvey', []))
       );
   }
   getEmoReg(): Observable<EmoReg[]> {
+    const communityId = this.communityService.getCurrentCommunityId();
+    if (!communityId) {
+      console.error('No community ID available for getEmoReg');
+      return of([]);
+    }
+    
     return this.http
-      .get<EmoReg[]>(API_ENDPOINTS.findAllEmoReg)
+      .get<EmoReg[]>(`${API_ENDPOINTS.findAllEmoReg}/${communityId}`)
       .pipe(
-        tap((_) => this.log('fetched EmoReg')),
-        catchError(this.handleError<EmoReg[]>('EmoReg', []))
+        tap((_) => this.log('fetched EmoReg for community: ' + communityId)),
+        catchError(this.handleError<EmoReg[]>('getEmoReg', []))
       );
   }
 
