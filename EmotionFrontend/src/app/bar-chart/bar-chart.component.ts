@@ -12,6 +12,9 @@ import labels = _default.defaults.labels;
 import { SharedTimeService } from '../services/shared-time.service';
 import { TitleService } from '../services/title.service';
 import { NoteVisibilityService } from '../services/note-visibility.service';
+import { CommunityService } from '../services/community.service';
+
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-bar-chart',
@@ -26,7 +29,9 @@ export class BarChartComponent implements OnInit {
     private emotionService: EmotionService,
     private sharedTimeService: SharedTimeService,
     private titleService: TitleService,
-    private visibilityService: NoteVisibilityService
+    private visibilityService: NoteVisibilityService,
+    private communityService: CommunityService,
+    private route: ActivatedRoute
   ) {}
 
   public data: number[] = [];
@@ -113,6 +118,11 @@ export class BarChartComponent implements OnInit {
     return new Promise<number[]>((resolve) => {
       const rdata: number[] = [0, 0, 0, 0, 0, 0, 0];
       let totalEntries = 0;
+
+      const communityId = this.route.snapshot.paramMap.get('communityId');
+      if (communityId) {
+        this.communityService.setCommunityId(communityId);
+      }
 
       this.emotionService.getEmoSurvey().subscribe((emoSurvey) => {
         for (let i = 0; i < emoSurvey.length; i++) {

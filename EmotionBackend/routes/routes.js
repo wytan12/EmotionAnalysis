@@ -78,7 +78,7 @@ APIrouter.get("/auth/kf-redirect", (req, res) => {
   console.log(`[KF_REDIRECT] Successfully stored token and community ID: ${community_id || 'not provided'}`);
   
   // Redirect to Angular frontend with token in URL so frontend can also store it
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost';
   const redirectPath = community_id ? 
     `/redirect/${community_id}?access_token=${access_token}` : 
     `/redirect?access_token=${access_token}`;
@@ -213,11 +213,11 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
       storeTokenInSession(req, token, communityId);
       console.log('[AUTH] Initial authentication detected - stored token in session');
       
-      // If this is a direct API hit with token (from external redirect), redirect to frontend
-      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
-      const redirectPath = `/redirect/${communityId}?access_token=${token}`;
-      console.log(`[REDIRECT] Redirecting to frontend: ${frontendUrl}${redirectPath}`);
-      return res.redirect(`${frontendUrl}${redirectPath}`);
+      // // If this is a direct API hit with token (from external redirect), redirect to frontend
+      // const frontendUrl = process.env.FRONTEND_URL || 'http://localhost';
+      // const redirectPath = `/redirect/${communityId}?access_token=${token}`;
+      // console.log(`[REDIRECT] Redirecting to frontend: ${frontendUrl}${redirectPath}`);
+      // return res.redirect(`${frontendUrl}${redirectPath}`);
     }
     
     const fullUrl = `${API_HOST}/${communityId}`;
@@ -381,6 +381,7 @@ APIrouter.post("/addEmoSurvey", (req, res) => {
     Inconducive:req.body.Inconducive,
     Reason:req.body.Reason,
     Remarks:req.body.Remarks,
+    communityID: req.body.communityID,
   });
   newEmoSurvey
     .save()
@@ -423,6 +424,46 @@ APIrouter.get("/findAllEmoReg", (req, res) => {
 APIrouter.get("/findAllEmoSurvey", (req, res) => {
   console.log("findAllEmoSurvey");
   EmoSurvey.find()
+    .then((found) => {
+      res.send(found);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+
+// Community-specific endpoints
+APIrouter.get("/findAllEmoSurvey/:communityId", (req, res) => {
+  const communityId = req.params.communityId;
+  console.log("findAllEmoSurvey for community:", communityId);
+  EmoSurvey.find({ communityID: communityId })
+    .then((found) => {
+      res.send(found);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+
+APIrouter.get("/findAllEmoReadWrite/:communityId", (req, res) => {
+  const communityId = req.params.communityId;
+  console.log("findAllEmoReadWrite for community:", communityId);
+  EmoReadWrite.find({ communityID: communityId })
+    .then((found) => {
+      res.send(found);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err.message);
+    });
+});
+
+APIrouter.get("/findAllEmoReg/:communityId", (req, res) => {
+  const communityId = req.params.communityId;
+  console.log("findAllEmoReg for community:", communityId);
+  EmoReg.find({ communityID: communityId })
     .then((found) => {
       res.send(found);
     })

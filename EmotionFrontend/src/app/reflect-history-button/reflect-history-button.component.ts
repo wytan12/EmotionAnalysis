@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommunityService } from '../services/community.service';
 
 @Component({
   selector: 'app-reflect-history-button',
@@ -7,9 +8,13 @@ import { Router } from '@angular/router';
   styleUrl: './reflect-history-button.component.css'
 })
 export class ReflectHistoryButtonComponent {
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private communityService: CommunityService
+  ) { }
 
   goToReflectForm() {
-    this.router.navigate(['reflect-history']);
+    // Navigate while preserving community context
+    this.communityService.navigateInCommunity('reflect-history');
   }
 }

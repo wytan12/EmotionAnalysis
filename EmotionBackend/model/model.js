@@ -157,6 +157,7 @@ const EmoSurveySchema = new mongoose.Schema({
   },
   Reason: String,
   Remarks: String,
+  communityID: String,
 });
 
 const EmoRegSchema = new mongoose.Schema({
@@ -169,6 +170,7 @@ const EmoRegSchema = new mongoose.Schema({
   ImprovementWays:String,
   PositivePlan:String,
   Action:String,
+  communityID: String,
 });
 
 const EmoLogDataSchema = new mongoose.Schema({

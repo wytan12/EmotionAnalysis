@@ -19,11 +19,11 @@
     <h2>How it works (Corrected Flow):</h2>
     <div class="example">
         <p><strong>Step 1:</strong> KF redirects users to your backend:</p>
-        <p class="code">https://emotion-analysis.rdc.nie.edu.sg/api/auth/kf-redirect?access_token=REAL_TOKEN&community_id=6645ab836782b352b64ea86c</p>
+        <p class="code">https://emotion-analysis.rdc.nie.edu.sg/api/auth/kf-redirect?access_token=REAL_TOKEN&community_id=6645ab836782b3cc494ea88f</p>
         
         <p><strong>Step 2:</strong> Backend stores token in session and redirects to Angular frontend:</p>
         <p class="code">http://localhost:4200/redirect/6645ab836782b352b64ea86c?access_token=REAL_TOKEN</p>
-        
+
         <p><strong>Step 3:</strong> Angular stores token in localStorage and navigates to final destination.</p>
         <p><strong>Step 4:</strong> All future API calls work with BOTH session (backend) and localStorage (frontend).</p>
     </div>

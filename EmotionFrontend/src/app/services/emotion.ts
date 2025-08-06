@@ -185,6 +185,7 @@ export interface EmoSurvey {
   Inconducive: string[];
   Reason: string;
   Remarks: string;
+  communityID: string;
 }
 
 export class EmoSurvey implements EmoSurvey{
@@ -199,7 +200,8 @@ export class EmoSurvey implements EmoSurvey{
               Bored: number,
               Inconducive: string[],
               Reason: string,
-              Remarks: string) {
+              Remarks: string,
+              communityID: string) {
     this.UserID = UserID;
     this.Timestamp = Timestamp;
     this.Joyful = Joyful;
@@ -212,6 +214,7 @@ export class EmoSurvey implements EmoSurvey{
     this.Inconducive = Inconducive;
     this.Reason = Reason;
     this.Remarks = Remarks;
+    this.communityID = communityID;
   }
 
 }
@@ -227,6 +230,7 @@ export interface EmoReg {
   ImprovementWays: string;
   PositivePlan: string;
   Action: string;
+  communityID: string;
 }
 
 export class EmoReg implements EmoReg{
@@ -238,7 +242,8 @@ export class EmoReg implements EmoReg{
               Challenges: string,
               ImprovementWays: string,
               PositivePlan: string,
-              Action: string) {
+              Action: string,
+              communityID: string) {
     this.UserID = UserID;
     this.ReflectionTitle = ReflectionTitle;
     this.Timestamp = Timestamp;
@@ -248,6 +253,7 @@ export class EmoReg implements EmoReg{
     this.ImprovementWays = ImprovementWays;
     this.PositivePlan = PositivePlan;
     this.Action = Action;
+    this.communityID = communityID;
   }
 }
 
