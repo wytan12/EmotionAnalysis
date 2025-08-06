@@ -62,6 +62,13 @@ export class ReflectFormComponent {
   } 
 
   submit() {
+    const communityId = this.communityService.getCurrentCommunityId();
+
+    if (communityId) {
+      this.formData.communityID = communityId;  // 👈 add it here
+    } else {
+      console.error('No community ID set. Cannot submit with community context.');
+    }
     console.log(this.formData);
     this.emotionService.addReg(this.formData).subscribe(() => {
       // Navigate while preserving community context

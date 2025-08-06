@@ -184,7 +184,8 @@ export class EmotionService {
       EmotionData.Challenges,
       EmotionData.ImprovementWays,
       EmotionData.PositivePlan,
-      EmotionData.Action
+      EmotionData.Action,
+      EmotionData.communityID // Include communityId in the EmoReg object
     );
     console.log(a);
     return this.http
@@ -210,7 +211,8 @@ export class EmotionService {
       EmotionData.Bored,
       EmotionData.Inconducive,
       EmotionData.Reason,
-      EmotionData.Remarks
+      EmotionData.Remarks,
+      EmotionData.communityID // Include communityId in the EmoSurvey object
     );
     console.log(a);
 

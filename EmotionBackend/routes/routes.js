@@ -357,6 +357,7 @@ APIrouter.post("/addReg", (req, res) => {
     ImprovementWays: req.body.ImprovementWays,
     PositivePlan: req.body.PositivePlan,
     Action: req.body.Action,
+    communityID: req.body.communityID,
   });
   newReg
     .save()
@@ -381,6 +382,7 @@ APIrouter.post("/addEmoSurvey", (req, res) => {
     Inconducive:req.body.Inconducive,
     Reason:req.body.Reason,
     Remarks:req.body.Remarks,
+    communityID: req.body.communityID,
   });
   newEmoSurvey
     .save()
@@ -449,7 +451,7 @@ APIrouter.get("/findAllEmoSurvey/:communityId", (req, res) => {
 APIrouter.get("/findAllEmoReadWrite/:communityId", (req, res) => {
   const communityId = req.params.communityId;
   console.log("findAllEmoReadWrite for community:", communityId);
-  EmoReadWrite.find({ communityId: communityId })
+  EmoReadWrite.find({ communityID: communityId })
     .then((found) => {
       res.send(found);
     })
