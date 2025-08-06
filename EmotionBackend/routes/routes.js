@@ -357,6 +357,7 @@ APIrouter.post("/addReg", (req, res) => {
     ImprovementWays: req.body.ImprovementWays,
     PositivePlan: req.body.PositivePlan,
     Action: req.body.Action,
+    communityID: req.body.communityID,
   });
   newReg
     .save()
