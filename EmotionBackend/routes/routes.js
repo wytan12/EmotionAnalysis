@@ -233,37 +233,17 @@ APIrouter.get("/tests", (req, res) => {
 // Test endpoint to verify RDC authentication works
 APIrouter.get("/test-auth", async (req, res) => {
   try {
-    console.log('[TEST-AUTH] Testing RDC authentication...');
+    console.log('[TEST-AUTH] Local development authentication');
     
-    // For local development, check if we should use a mock token
-    const isDevelopment = process.env.NODE_ENV === 'development' || process.env.DISABLE_TOKEN_CACHE === 'true';
-    console.log('[TEST-AUTH] NODE_ENV:', process.env.NODE_ENV);
-    console.log('[TEST-AUTH] DISABLE_TOKEN_CACHE:', process.env.DISABLE_TOKEN_CACHE);
-    console.log('[TEST-AUTH] isDevelopment:', isDevelopment);
-    
-    if (isDevelopment) {
-      // Use a mock token for local development
-      const mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE2MjM5MDIyfQ.mock_token_for_local_development';
-      console.log('[TEST-AUTH] Using mock token for local development');
-      
-      res.status(200).json({
-        message: 'Authentication successful (development mode)',
-        token: mockToken,
-        tokenPreview: mockToken.substring(0, 20) + '...',
-        timestamp: new Date().toISOString(),
-        mode: 'development'
-      });
-      return;
-    }
-    
-    // Production mode - try real KF6 authentication
-    const token = await getValidToken();
+    // Always return a mock token for local development
+    const mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTQ2MzgzODksImV4cCI6MTc1NDY1NjM4OX0.mock_token_for_local_development';
     
     res.status(200).json({
-      message: 'Authentication successful',
-      token: token, // Return the actual token for local development
-      tokenPreview: token.substring(0, 20) + '...',
-      timestamp: new Date().toISOString()
+      message: 'Local development authentication successful',
+      token: mockToken,
+      tokenPreview: mockToken.substring(0, 20) + '...',
+      timestamp: new Date().toISOString(),
+      mode: 'development'
     });
   } catch (error) {
     console.error('[TEST-AUTH] Authentication failed:', error.message);

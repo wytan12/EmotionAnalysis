@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private baseUrl = environment.apiUrl; // Use environment configuration
@@ -35,8 +35,8 @@ export class AuthService {
   private getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
     return new HttpHeaders({
-      'Authorization': token ? `Bearer ${token}` : '',
-      'Content-Type': 'application/json'
+      Authorization: token ? `Bearer ${token}` : '',
+      'Content-Type': 'application/json',
     });
   }
 
@@ -48,22 +48,25 @@ export class AuthService {
     }
 
     // Send token to backend to initialize session
-    return this.http.post(`${this.baseUrl}/auth/initialize-session`, 
-      { access_token: token }, 
+    return this.http.post(
+      `${this.baseUrl}/auth/initialize-session`,
+      { access_token: token },
       { headers: this.getAuthHeaders(), withCredentials: true }
     );
   }
 
   // Get user info from backend
   getUserInfo(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/user-info`, 
-      { headers: this.getAuthHeaders(), withCredentials: true }
-    );
+    return this.http.get(`${this.baseUrl}/user-info`, {
+      headers: this.getAuthHeaders(),
+      withCredentials: true,
+    });
   }
 
   // Get community data from backend
   getCommunityData(communityId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/community-data/community-id/${communityId}`, 
+    return this.http.get(
+      `${this.baseUrl}/community-data/community-id/${communityId}`,
       { headers: this.getAuthHeaders(), withCredentials: true }
     );
   }
@@ -72,7 +75,8 @@ export class AuthService {
   authenticateLocally(): Promise<string | null> {
     return new Promise((resolve, reject) => {
       // Call backend endpoint that uses RDC credentials
-      this.http.get(`${this.baseUrl}/test-auth`, { withCredentials: true })
+      this.http
+        .get(`${this.baseUrl}/test-auth`, { withCredentials: true })
         .subscribe({
           next: (response: any) => {
             if (response.token) {
@@ -87,7 +91,7 @@ export class AuthService {
           error: (error) => {
             console.error('Local authentication failed:', error);
             reject(error);
-          }
+          },
         });
     });
   }

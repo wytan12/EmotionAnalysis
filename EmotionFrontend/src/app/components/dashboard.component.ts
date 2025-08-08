@@ -7,32 +7,32 @@ import { CommunityService } from '../services/community.service';
   template: `
     <div>
       <h1>Dashboard</h1>
-      
+
       <div *ngIf="!authService.isAuthenticated()">
         <p>Not authenticated. Please log in.</p>
       </div>
-      
+
       <div *ngIf="authService.isAuthenticated()">
         <button (click)="getUserInfo()">Get User Info</button>
         <button (click)="getCommunityData()">Get Community Data</button>
-        
+
         <div *ngIf="userInfo">
           <h3>User Info:</h3>
           <pre>{{ userInfo | json }}</pre>
         </div>
-        
+
         <div *ngIf="communityData">
           <h3>Community Data:</h3>
           <pre>{{ communityData | json }}</pre>
         </div>
-        
+
         <div *ngIf="error">
           <h3>Error:</h3>
           <pre>{{ error | json }}</pre>
         </div>
       </div>
     </div>
-  `
+  `,
 })
 export class DashboardComponent implements OnInit {
   userInfo: any = null;
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
         },
         error: (error) => {
           console.error('Failed to initialize session:', error);
-        }
+        },
       });
     }
   }
@@ -68,20 +68,21 @@ export class DashboardComponent implements OnInit {
       error: (error) => {
         this.error = error;
         console.error('Error getting user info:', error);
-      }
+      },
     });
   }
 
   getCommunityData(): void {
     this.error = null;
     const communityId = this.communityService.getCurrentCommunityId();
-    
+
     if (!communityId) {
-      this.error = 'No community ID available. Please access through a valid community link.';
+      this.error =
+        'No community ID available. Please access through a valid community link.';
       console.error('No community ID set in dashboard');
       return;
     }
-    
+
     this.authService.getCommunityData(communityId).subscribe({
       next: (data) => {
         this.communityData = data;
@@ -90,7 +91,7 @@ export class DashboardComponent implements OnInit {
       error: (error) => {
         this.error = error;
         console.error('Error getting community data:', error);
-      }
+      },
     });
   }
 }

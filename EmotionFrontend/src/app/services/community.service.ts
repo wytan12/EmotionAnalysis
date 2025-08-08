@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommunityService {
   private currentCommunityIdSubject = new BehaviorSubject<string | null>(null);
@@ -25,14 +25,14 @@ export class CommunityService {
   // Navigate to a route while preserving the community ID
   navigateWithCommunity(route: string[], queryParams?: any): void {
     const communityId = this.getCurrentCommunityId();
-    
+
     if (!communityId) {
       console.error('[COMMUNITY] No community ID set for navigation');
       return;
     }
 
     // Replace any route parameters that need community ID
-    const updatedRoute = route.map(segment => {
+    const updatedRoute = route.map((segment) => {
       if (typeof segment === 'string' && segment.includes(':communityId')) {
         return segment.replace(':communityId', communityId);
       }
@@ -48,7 +48,9 @@ export class CommunityService {
     if (communityId) {
       this.router.navigate(['/tryingnote', communityId]);
     } else {
-      console.error('[COMMUNITY] Cannot navigate to tryingnote: no community ID set');
+      console.error(
+        '[COMMUNITY] Cannot navigate to tryingnote: no community ID set'
+      );
     }
   }
 
@@ -56,8 +58,8 @@ export class CommunityService {
   navigateInCommunity(path: string): void {
     const communityId = this.getCurrentCommunityId();
     if (communityId) {
-      this.router.navigate([path], { 
-        queryParams: { communityId: communityId }
+      this.router.navigate([path], {
+        queryParams: { communityId: communityId },
       });
     } else {
       console.error('[COMMUNITY] Cannot navigate: no community ID set');
