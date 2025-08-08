@@ -40,7 +40,7 @@ services:
     environment:
       MONGO_URI: mongodb://liangluya:liangluya@mongo:27017/Emotion?retryWrites=true&w=majority
       API_HOST: https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id
-      HTTPS_PROXY: http://squid:3128
+      # HTTPS_PROXY: http://squid:3128
       RDC_USERNAME: gaoxiazhu
       RDC_PASSWORD: Testemotionanalytics
       DISABLE_TOKEN_CACHE: "true"
@@ -77,7 +77,7 @@ services:
     container_name: mongo
     restart: always
     ports:
-      - "27017:27017"  # MongoDB default port
+      - "27017:27017" # MongoDB default port
     environment:
       MONGO_INITDB_ROOT_USERNAME: liangluya
       MONGO_INITDB_ROOT_PASSWORD: liangluya
