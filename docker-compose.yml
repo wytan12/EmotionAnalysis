@@ -88,25 +88,25 @@ services:
     networks:
       - app-network
 
-  squid:
-    image: sameersbn/squid:latest
-    container_name: squid
-    restart: always
-    ports:
-      - "3128:3128"
-    volumes:
-      - ./squid.conf:/etc/squid/squid.conf
-      - squid-cache:/var/spool/squid
-      - squid-logs:/var/log/squid
-    networks:
-      - app-network
+#   squid:
+#     image: sameersbn/squid:latest
+#     container_name: squid
+#     restart: always
+#     ports:
+#       - "3128:3128"
+#     volumes:
+#       - ./squid.conf:/etc/squid/squid.conf
+#       - squid-cache:/var/spool/squid
+#       - squid-logs:/var/log/squid
+#     networks:
+#       - app-network
 
-volumes:
-  squid-cache:
-  squid-logs:
+# volumes:
+#   squid-cache:
+#   squid-logs:
 
-  # volumes:
-  #   mongo-data:  # Persistent storage for MongoDB
+# volumes:
+#   mongo-data:  # Persistent storage for MongoDB
 
 networks:
   app-network:
