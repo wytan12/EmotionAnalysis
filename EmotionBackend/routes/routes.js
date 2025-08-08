@@ -36,20 +36,28 @@ async function authenticateWithKF6() {
   
   try {
     console.log('[AUTH] Authenticating with KF6 using RDC credentials...');
+    console.log('[AUTH] Username:', username);
+    console.log('[AUTH] Password:', password ? '***' : 'undefined');
+    
+    const authPayload = {
+      userName: username,
+      password: password
+    };
     
     const axiosConfig = {
       headers: { 'Content-Type': 'application/json' },
-      proxy: false
+      proxy: false,
+      timeout: 10000
     };
     
     if (proxyAgent) {
       axiosConfig.httpsAgent = proxyAgent;
     }
     
-    const authResponse = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', {
-      identifier: username,
-      password: password
-    }, axiosConfig);
+    console.log('[AUTH] Sending request to: https://kf6.rdc.nie.edu.sg/auth/local');
+    console.log('[AUTH] Payload:', JSON.stringify(authPayload));
+    
+    const authResponse = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', authPayload, axiosConfig);
     
     if (authResponse.data && authResponse.data.jwt) {
       console.log('[AUTH] Successfully authenticated with KF6');
@@ -61,6 +69,10 @@ async function authenticateWithKF6() {
     }
   } catch (error) {
     console.error('[AUTH] Failed to authenticate with KF6:', error.message);
+    if (error.response) {
+      console.error('[AUTH] Response status:', error.response.status);
+      console.error('[AUTH] Response data:', JSON.stringify(error.response.data));
+    }
     throw error;
   }
 }
@@ -207,10 +219,34 @@ APIrouter.get("/tests", (req, res) => {
 APIrouter.get("/test-auth", async (req, res) => {
   try {
     console.log('[TEST-AUTH] Testing RDC authentication...');
+    
+    // For local development, check if we should use a mock token
+    const isDevelopment = process.env.NODE_ENV === 'development' || process.env.DISABLE_TOKEN_CACHE === 'true';
+    console.log('[TEST-AUTH] NODE_ENV:', process.env.NODE_ENV);
+    console.log('[TEST-AUTH] DISABLE_TOKEN_CACHE:', process.env.DISABLE_TOKEN_CACHE);
+    console.log('[TEST-AUTH] isDevelopment:', isDevelopment);
+    
+    if (isDevelopment) {
+      // Use a mock token for local development
+      const mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE2MjM5MDIyfQ.mock_token_for_local_development';
+      console.log('[TEST-AUTH] Using mock token for local development');
+      
+      res.status(200).json({
+        message: 'Authentication successful (development mode)',
+        token: mockToken,
+        tokenPreview: mockToken.substring(0, 20) + '...',
+        timestamp: new Date().toISOString(),
+        mode: 'development'
+      });
+      return;
+    }
+    
+    // Production mode - try real KF6 authentication
     const token = await getValidToken();
     
     res.status(200).json({
       message: 'Authentication successful',
+      token: token, // Return the actual token for local development
       tokenPreview: token.substring(0, 20) + '...',
       timestamp: new Date().toISOString()
     });
