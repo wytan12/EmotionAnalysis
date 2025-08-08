@@ -59,12 +59,15 @@ async function authenticateWithKF6() {
     
     const authResponse = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', authPayload, axiosConfig);
     
-    if (authResponse.data && authResponse.data.jwt) {
+    const token = authResponse.data.jwt || authResponse.data.token;
+    
+    if (token) {
       console.log('[AUTH] Successfully authenticated with KF6');
-      cachedToken = authResponse.data.jwt;
+      cachedToken = token;
       tokenExpiry = Date.now() + (18 * 60 * 60 * 1000); // 18 hours
-      return authResponse.data.jwt;
+      return token;
     } else {
+      console.error('[AUTH] No token field found in response:', JSON.stringify(authResponse.data));
       throw new Error('No JWT token received from KF6');
     }
   } catch (error) {
@@ -79,6 +82,18 @@ async function authenticateWithKF6() {
 
 // Get valid token (cached or new)
 async function getValidToken() {
+  // For local development, use mock token
+  const isDevelopment = process.env.NODE_ENV === 'development' || process.env.DISABLE_TOKEN_CACHE === 'true';
+  
+  console.log('[AUTH] getValidToken - NODE_ENV:', process.env.NODE_ENV);
+  console.log('[AUTH] getValidToken - DISABLE_TOKEN_CACHE:', process.env.DISABLE_TOKEN_CACHE);
+  console.log('[AUTH] getValidToken - isDevelopment:', isDevelopment);
+  
+  if (isDevelopment) {
+    console.log('[AUTH] Using mock token for development mode');
+    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE2MjM5MDIyfQ.mock_token_for_local_development';
+  }
+
   // Check if we have a cached token that's still valid
   if (cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
     console.log('[AUTH] Using cached token');
