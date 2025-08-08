@@ -22,10 +22,65 @@ if (proxyUrl) {
 
 // Store user sessions with tokens
 const userSessions = new Map(); // In production, use Redis or database
+let cachedToken = null;
+let tokenExpiry = null;
 
-// Extract token from request (query param, header, or session)
-function getTokenFromRequest(req) {
-  // First check query parameters (for KF redirects)
+// Authenticate with KF6 using RDC credentials
+async function authenticateWithKF6() {
+  const username = process.env.RDC_USERNAME;
+  const password = process.env.RDC_PASSWORD;
+  
+  if (!username || !password) {
+    throw new Error('RDC_USERNAME and RDC_PASSWORD must be set in environment variables');
+  }
+  
+  try {
+    console.log('[AUTH] Authenticating with KF6 using RDC credentials...');
+    
+    const axiosConfig = {
+      headers: { 'Content-Type': 'application/json' },
+      proxy: false
+    };
+    
+    if (proxyAgent) {
+      axiosConfig.httpsAgent = proxyAgent;
+    }
+    
+    const authResponse = await axios.post('https://kf6.rdc.nie.edu.sg/auth/local', {
+      identifier: username,
+      password: password
+    }, axiosConfig);
+    
+    if (authResponse.data && authResponse.data.jwt) {
+      console.log('[AUTH] Successfully authenticated with KF6');
+      cachedToken = authResponse.data.jwt;
+      tokenExpiry = Date.now() + (18 * 60 * 60 * 1000); // 18 hours
+      return authResponse.data.jwt;
+    } else {
+      throw new Error('No JWT token received from KF6');
+    }
+  } catch (error) {
+    console.error('[AUTH] Failed to authenticate with KF6:', error.message);
+    throw error;
+  }
+}
+
+// Get valid token (cached or new)
+async function getValidToken() {
+  // Check if we have a cached token that's still valid
+  if (cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
+    console.log('[AUTH] Using cached token');
+    return cachedToken;
+  }
+  
+  // Token expired or doesn't exist, get a new one
+  console.log('[AUTH] Token expired or missing, getting new token...');
+  return await authenticateWithKF6();
+}
+
+// Extract token from request (query param, header, or session) or use RDC auth
+async function getTokenFromRequest(req) {
+  // First check query parameters (for KF redirects - still support this)
   if (req.query.access_token) {
     console.log('[AUTH] Token found in query parameters');
     return req.query.access_token;
@@ -44,7 +99,9 @@ function getTokenFromRequest(req) {
     return req.session.access_token;
   }
   
-  return null;
+  // If no token found in request, use RDC credentials to get one
+  console.log('[AUTH] No token in request, using RDC credentials');
+  return await getValidToken();
 }
 
 // Store token in session for future requests
@@ -146,20 +203,40 @@ APIrouter.get("/tests", (req, res) => {
     });
 });
 
+// Test endpoint to verify RDC authentication works
+APIrouter.get("/test-auth", async (req, res) => {
+  try {
+    console.log('[TEST-AUTH] Testing RDC authentication...');
+    const token = await getValidToken();
+    
+    res.status(200).json({
+      message: 'Authentication successful',
+      tokenPreview: token.substring(0, 20) + '...',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('[TEST-AUTH] Authentication failed:', error.message);
+    res.status(401).json({
+      message: 'Authentication failed',
+      error: error.message
+    });
+  }
+});
+
 APIrouter.get("/user-info", async (req, res) => {
   // Use base API host and construct user endpoint
   const baseApiHost = process.env.API_HOST || "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
   const userApiHost = baseApiHost.replace('/analytics/emotions/note-emotions/community-id', '/users/me');
   
   try {
-    // Extract token from request (query params, headers, or session)
-    const token = getTokenFromRequest(req);
+    // Extract token from request or authenticate with RDC credentials
+    const token = await getTokenFromRequest(req);
     
     if (!token) {
-      console.error('[AUTH] No access token found in user-info request');
+      console.error('[AUTH] Failed to get token for user-info request');
       return res.status(401).json({ 
-        message: 'Access token required', 
-        error: 'No access_token found in query parameters, Authorization header, or session'
+        message: 'Authentication failed', 
+        error: 'Could not obtain access token'
       });
     }
     
@@ -195,29 +272,23 @@ APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => 
   try {
     console.log(`[REQUEST] Fetching data for community ID: ${communityId}`);
     
-    // Extract token from request (query params, headers, or session)
-    const token = getTokenFromRequest(req);
+    // Extract token from request or authenticate with RDC credentials
+    const token = await getTokenFromRequest(req);
     
     if (!token) {
-      console.error('[AUTH] No access token found in request');
+      console.error('[AUTH] Failed to get token for community data request');
       return res.status(401).json({ 
-        message: 'Access token required', 
-        error: 'No access_token found in query parameters, Authorization header, or session'
+        message: 'Authentication failed', 
+        error: 'Could not obtain access token'
       });
     }
     
-    console.log(`[DEBUG] Using token from request: ${token.substring(0, 20)}...`);
+    console.log(`[DEBUG] Using token: ${token.substring(0, 20)}...`);
     
     // Store token and community ID in session for future requests
     if (req.query.access_token && communityId) {
       storeTokenInSession(req, token, communityId);
       console.log('[AUTH] Initial authentication detected - stored token in session');
-      
-      // // If this is a direct API hit with token (from external redirect), redirect to frontend
-      // const frontendUrl = process.env.FRONTEND_URL || 'http://localhost';
-      // const redirectPath = `/redirect/${communityId}?access_token=${token}`;
-      // console.log(`[REDIRECT] Redirecting to frontend: ${frontendUrl}${redirectPath}`);
-      // return res.redirect(`${frontendUrl}${redirectPath}`);
     }
     
     const fullUrl = `${API_HOST}/${communityId}`;
