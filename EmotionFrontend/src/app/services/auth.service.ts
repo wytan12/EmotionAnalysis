@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000/api'; // Adjust based on your backend URL
+  private baseUrl = environment.apiUrl; // Use environment configuration
 
   constructor(private http: HttpClient) {}
 
@@ -65,5 +66,29 @@ export class AuthService {
     return this.http.get(`${this.baseUrl}/community-data/community-id/${communityId}`, 
       { headers: this.getAuthHeaders(), withCredentials: true }
     );
+  }
+
+  // Authenticate locally using RDC credentials (for development)
+  authenticateLocally(): Promise<string | null> {
+    return new Promise((resolve, reject) => {
+      // Call backend endpoint that uses RDC credentials
+      this.http.get(`${this.baseUrl}/test-auth`, { withCredentials: true })
+        .subscribe({
+          next: (response: any) => {
+            if (response.token) {
+              // Store the token
+              this.setToken(response.token);
+              resolve(response.token);
+            } else {
+              console.error('No token in response:', response);
+              resolve(null);
+            }
+          },
+          error: (error) => {
+            console.error('Local authentication failed:', error);
+            reject(error);
+          }
+        });
+    });
   }
 }
