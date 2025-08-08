@@ -82,18 +82,6 @@ async function authenticateWithKF6() {
 
 // Get valid token (cached or new)
 async function getValidToken() {
-  // For local development, use mock token
-  const isDevelopment = process.env.NODE_ENV === 'development' || process.env.DISABLE_TOKEN_CACHE === 'true';
-  
-  console.log('[AUTH] getValidToken - NODE_ENV:', process.env.NODE_ENV);
-  console.log('[AUTH] getValidToken - DISABLE_TOKEN_CACHE:', process.env.DISABLE_TOKEN_CACHE);
-  console.log('[AUTH] getValidToken - isDevelopment:', isDevelopment);
-  
-  if (isDevelopment) {
-    console.log('[AUTH] Using mock token for development mode');
-    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE2MjM5MDIyfQ.mock_token_for_local_development';
-  }
-
   // Check if we have a cached token that's still valid
   if (cachedToken && tokenExpiry && Date.now() < tokenExpiry) {
     console.log('[AUTH] Using cached token');
@@ -233,17 +221,13 @@ APIrouter.get("/tests", (req, res) => {
 // Test endpoint to verify RDC authentication works
 APIrouter.get("/test-auth", async (req, res) => {
   try {
-    console.log('[TEST-AUTH] Local development authentication');
-    
-    // Always return a mock token for local development
-    const mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjgyMDJjYmQ5OWY2ZmEzZGEwMTE3MWMiLCJpYXQiOjE3NTQ2MzgzODksImV4cCI6MTc1NDY1NjM4OX0.mock_token_for_local_development';
-    
+    console.log('[TEST-AUTH] Testing RDC authentication...');
+    const token = await getValidToken();
     res.status(200).json({
-      message: 'Local development authentication successful',
-      token: mockToken,
-      tokenPreview: mockToken.substring(0, 20) + '...',
+      message: 'Authentication successful',
+      token: token,
+      tokenPreview: token.substring(0, 20) + '...',
       timestamp: new Date().toISOString(),
-      mode: 'development'
     });
   } catch (error) {
     console.error('[TEST-AUTH] Authentication failed:', error.message);
@@ -297,6 +281,7 @@ APIrouter.get("/user-info", async (req, res) => {
 APIrouter.get('/community-data/community-id/:communityId?', async (req, res) => {
   const communityId = req.params.communityId || req.query.community_id;
   console.log(`[DEBUG] communityId received: ${communityId}`);
+  console.log(`[DEBUG] Authorization header: ${req.headers.authorization}`);
   const API_HOST = process.env.API_HOST || "https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id";
   console.log(`[DEBUG] Using API_HOST from environment: ${API_HOST}`);
 
