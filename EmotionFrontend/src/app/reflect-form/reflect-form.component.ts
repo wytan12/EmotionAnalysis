@@ -18,24 +18,7 @@ import { EmotionService } from '../services/emotion.service';
 export class ReflectFormComponent {
   formData: any = {};
   selectedUsers: string[] = [];
-
-  // Initialize allQuestionsAnswered as false
-  allQuestionsAnswered = false;
-
-  // Update this function based on your actual logic
-  checkIfAllQuestionsAnswered() {
-    console.log('Checking questions...');
-    // Example: Check if all 5 inputs are not empty
-    this.allQuestionsAnswered = !!(
-      this.formData.ReflectionTitle &&
-      this.formData.Visualization &&
-      this.formData.Challenges &&
-      this.formData.ImprovementWays &&
-      this.formData.PositivePlan &&
-      this.formData.Action &&
-      this.selectedUsers.length > 0
-    );
-  }
+  selectedTitle: string | null = null;
 
   constructor(
     private router: Router, 
@@ -48,17 +31,12 @@ export class ReflectFormComponent {
     this.selectedUsers = selectedUsers;
     this.formData.GroupMembers = selectedUsers;
     console.log("Ok received: ", selectedUsers);
-
-    // Trigger the check for all questions answered
-    this.checkIfAllQuestionsAnswered();
   }
 
   handleTitleSelected(title: string): void {
     console.log('Selected Reflection Title:', title);
-    this.formData.ReflectionTitle = title; // Set the Reflection Title in formData
-
-    // Trigger the check for all questions answered
-    this.checkIfAllQuestionsAnswered();
+    this.selectedTitle = title;                 // <- update this
+    this.formData.ReflectionTitle = title;      // keep storing it too
   } 
 
   submit() {

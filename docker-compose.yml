@@ -38,7 +38,7 @@ services:
     build: ./EmotionBackend
     container_name: emotion_backend
     environment:
-      MONGO_URI: mongodb://liang:luya@mongo:27017/Emotion?retryWrites=true&w=majority
+      MONGO_URI: mongodb://liangluya:liangluya@mongo:27017/Emotion?authSource=Emotion&directConnection=true
       API_HOST: https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id
       # HTTPS_PROXY: http://squid:3128
       RDC_USERNAME: gaoxiazhu

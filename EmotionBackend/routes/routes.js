@@ -91,7 +91,8 @@ async function getValidToken() {
   
   if (isDevelopment) {
     console.log('[AUTH] Using mock token for development mode');
-    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE2MjM5MDIyfQ.mock_token_for_local_development';
+    // return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjE2MjM5MDIyfQ.mock_token_for_local_development';
+    return await authenticateWithKF6();
   }
 
   // Check if we have a cached token that's still valid
