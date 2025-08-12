@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, filter, tap } from 'rxjs/operators';
+import { catchError, map, filter, tap, switchMap, take } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { EmoReadWrite, EmoReg, EmoSurvey, Emotion, Test } from './emotion';
 import { API_ENDPOINTS } from '../shared/api-endpoints';
@@ -170,58 +170,68 @@ export class EmotionService {
       );
   }
 
-  //ADDING REFLECTION HISTORY
+  // ADDING REFLECTION HISTORY
   addReg(EmotionData: any): Observable<EmoReg> {
-    let userID = 'userID123';
-    let timestamp = Date.now().toString();
-    const groupMembersString = EmotionData.GroupMembers.join(', ');
-    const a: EmoReg = new EmoReg(
-      userID,
-      timestamp,
-      EmotionData.ReflectionTitle,
-      groupMembersString, // Assign the string value to GroupMembers
-      EmotionData.Visualization,
-      EmotionData.Challenges,
-      EmotionData.ImprovementWays,
-      EmotionData.PositivePlan,
-      EmotionData.Action,
-      EmotionData.communityID // Include communityId in the EmoReg object
+    return this.getUserData().pipe(
+      take(1),
+      switchMap(userData => {
+        const userID = userData.userName ?? 'unknown'; // 👈 use username from API
+
+        const groupMembersArr = Array.isArray(EmotionData.GroupMembers)
+          ? EmotionData.GroupMembers
+          : EmotionData.GroupMembers
+            ? [EmotionData.GroupMembers]
+            : [];
+
+        const groupMembersString = groupMembersArr.join(', ');
+
+        const a: EmoReg = new EmoReg(
+          userID,
+          Date.now().toString(),
+          EmotionData.ReflectionTitle ?? '',
+          groupMembersString,
+          EmotionData.Visualization ?? '',
+          EmotionData.Challenges ?? '',
+          EmotionData.ImprovementWays ?? '',
+          EmotionData.PositivePlan ?? '',
+          EmotionData.Action ?? '',
+          EmotionData.communityID ?? ''
+        );
+
+        console.log('Saving reflection history:', a);
+        return this.http.post<EmoReg>(API_ENDPOINTS.addReg, a, this.httpOptions);
+      }),
+      catchError(this.handleError<EmoReg>('addaddReg'))
     );
-    console.log(a);
-    return this.http
-      .post<EmoReg>(API_ENDPOINTS.addReg, a, this.httpOptions)
-      .pipe(
-        // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
-        catchError(this.handleError<EmoReg>('addaddReg'))
-      );
   }
 
   addEmoSurvey(EmotionData: any): Observable<EmoSurvey> {
-    let userID = 'userID123';
-    let timestamp = Date.now().toString();
-    const a: EmoSurvey = new EmoSurvey(
-      userID,
-      timestamp,
-      EmotionData.Joyful,
-      EmotionData.Curious,
-      EmotionData.Surprised,
-      EmotionData.Confused,
-      EmotionData.Anxious,
-      EmotionData.Frustrated,
-      EmotionData.Bored,
-      EmotionData.Inconducive,
-      EmotionData.Reason,
-      EmotionData.Remarks,
-      EmotionData.communityID // Include communityId in the EmoSurvey object
-    );
-    console.log(a);
+    return this.getUserData().pipe(
+      take(1),
+      switchMap(userData => {
+        const userID = userData.userName ?? 'unknown'; // 👈 use username from API
 
-    return this.http
-      .post<EmoSurvey>(API_ENDPOINTS.addEmoSurvey, a, this.httpOptions)
-      .pipe(
-        // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
-        catchError(this.handleError<EmoSurvey>('addEmoSurvey'))
-      );
+        const a: EmoSurvey = new EmoSurvey(
+          userID,
+          Date.now().toString(),
+          EmotionData.Joyful,
+          EmotionData.Curious,
+          EmotionData.Surprised,
+          EmotionData.Confused,
+          EmotionData.Anxious,
+          EmotionData.Frustrated,
+          EmotionData.Bored,
+          EmotionData.Inconducive ?? [],
+          EmotionData.Reason ?? '',
+          EmotionData.Remarks ?? '',
+          EmotionData.communityID ?? ''
+        );
+
+        console.log('Saving emotion survey:', a);
+        return this.http.post<EmoSurvey>(API_ENDPOINTS.addEmoSurvey, a, this.httpOptions);
+      }),
+      catchError(this.handleError<EmoSurvey>('addEmoSurvey'))
+    );
   }
 
   // --------------------------------------------------------
