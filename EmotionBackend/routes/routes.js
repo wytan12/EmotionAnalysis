@@ -438,7 +438,7 @@ APIrouter.get("/findAllEmoSurvey", (req, res) => {
 APIrouter.get("/findAllEmoSurvey/:communityId", (req, res) => {
   const communityId = req.params.communityId;
   console.log("findAllEmoSurvey for community:", communityId);
-  EmoSurvey.find({ communityId: communityId })
+  EmoSurvey.find({ communityID: communityId })
     .then((found) => {
       res.send(found);
     })
@@ -464,7 +464,7 @@ APIrouter.get("/findAllEmoReadWrite/:communityId", (req, res) => {
 APIrouter.get("/findAllEmoReg/:communityId", (req, res) => {
   const communityId = req.params.communityId;
   console.log("findAllEmoReg for community:", communityId);
-  EmoReg.find({ communityId: communityId })
+  EmoReg.find({ communityID: communityId })
     .then((found) => {
       res.send(found);
     })
