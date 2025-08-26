@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { EmotionService } from '../services/emotion.service';
 import { EmoSurvey } from '../services/emotion';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommunityService } from '../services/community.service';
 
 @Component({
   selector: 'app-emotion-slider',
@@ -25,7 +26,8 @@ export class EmotionSliderComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private emotionService: EmotionService, // Inject your EmotionService here
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private communityService: CommunityService
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +70,12 @@ export class EmotionSliderComponent implements OnInit {
   }
 
   onSubmit() {
+    const communityId = this.communityService.getCurrentCommunityId();
+    if (communityId) {
+      this.feelingsForm.patchValue({ communityID: communityId });
+    } else {
+      console.error('No community ID set. Cannot submit with community context.');
+    }
     if (this.feelingsForm.valid) {
       console.log('Form submitted successfully!');
       console.log('Form data:', this.feelingsForm.value);
