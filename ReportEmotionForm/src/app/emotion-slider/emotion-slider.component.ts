@@ -58,42 +58,48 @@ export class EmotionSliderComponent implements OnInit {
     }
   }
 
-  onCheckboxChange(event: Event) {
+  onCheckboxChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     const inconducive: FormArray = this.feelingsForm.get('Inconducive') as FormArray;
     if (input.checked) {
       inconducive.push(new FormControl(input.value));
     } else {
-      const index = inconducive.controls.findIndex(x => x.value === input.value);
+      const index = inconducive.controls.findIndex((control: any) => control.value === input.value);
       inconducive.removeAt(index);
     }
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const communityId = this.communityService.getCurrentCommunityId();
+    console.log('Current community ID from service:', communityId);
+    
     if (communityId) {
       this.feelingsForm.patchValue({ communityID: communityId });
+      console.log('Community ID set in form:', communityId);
     } else {
       console.error('No community ID set. Cannot submit with community context.');
+      this.openSnackBar('Error: No community context found. Please access this form through the proper link.', 'Close');
+      return;
     }
+    
     if (this.feelingsForm.valid) {
       console.log('Form submitted successfully!');
       console.log('Form data:', this.feelingsForm.value);
 
       // Call the addEmoSurvey function from the EmotionService
-      this.emotionService.addEmoSurvey(this.feelingsForm.value).subscribe(
-        (EmoSurvey) => {
+      this.emotionService.addEmoSurvey(this.feelingsForm.value).subscribe({
+        next: (EmoSurvey: any) => {
           console.log('EmoSurvey added successfully!', EmoSurvey.Timestamp);
           this.openSnackBar('Form submitted successfully!', 'Close');
         },
-        (error) => {
+        error: (error: any) => {
           console.error('Error adding EmoSurvey:', error);
           this.openSnackBar(
             'Error submitting form. Please try again.',
             'Close'
           );
         }
-      );
+      });
     } else {
       console.log('Please answer all compulsory questions.');
       this.openSnackBar('Please answer all compulsory questions.', 'Close');
