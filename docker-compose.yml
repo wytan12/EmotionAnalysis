@@ -41,11 +41,11 @@ services:
       MONGO_URI: mongodb://liangluya:liangluya@mongo:27017/Emotion?authSource=Emotion&directConnection=true
       API_HOST: https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id
       # HTTPS_PROXY: http://squid:3128
-      RDC_USERNAME: gaoxiazhu
-      RDC_PASSWORD: Testemotionanalytics
+      RDC_USERNAME: ${RDC_USERNAME:-gaoxiazhu}
+      RDC_PASSWORD: ${RDC_PASSWORD:-Testemotionanalytics}
       DISABLE_TOKEN_CACHE: "true"
     ports:
-      - "3000:3000"
+      - "${BACKEND_PORT:-3000}:3000"
     # expose:
     #   - "3000"
     depends_on:
@@ -62,7 +62,7 @@ services:
     #   API_URL: http://localhost/api
     restart: always
     ports:
-      - "60312:80"
+      - "${FORM_PORT:-60312}:80"
     # expose:
     #   - "80"  # Map port 80 to Nginx
     # ports:
