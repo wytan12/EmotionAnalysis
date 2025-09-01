@@ -9,8 +9,8 @@ export class LocalSetupService {
 
   // Initialize local development setup
   initializeLocalSetup(): void {
-    // Set a default community ID for local development
-    const defaultCommunityId = 'test-community-001';
+    // Set the same community ID as used by EmotionFrontend for consistency
+    const defaultCommunityId = '6645ab836782b352b64ea86c';
 
     // Only set if no community ID is already set (to avoid overriding production redirects)
     if (!this.communityService.getCurrentCommunityId()) {

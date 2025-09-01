@@ -92,11 +92,12 @@ export class EmotionSliderComponent implements OnInit {
     console.log('Current community ID from service:', communityId);
 
     if (communityId) {
-      this.feelingsForm.patchValue({ communityID: communityId });
-      console.log('Community ID set in form:', communityId);
+      // Add communityID to the form data for submission
+      const formData = { ...this.feelingsForm.value, communityID: communityId };
+      console.log('Community ID set in form data:', communityId);
 
       // Show info message for local development
-      if (communityId === 'test-community-001') {
+      if (communityId === '6645ab836782b352b64ea86c') {
         console.log('Using default test community ID for local development');
       }
     } else {
@@ -114,8 +115,14 @@ export class EmotionSliderComponent implements OnInit {
       console.log('Form submitted successfully!');
       console.log('Form data:', this.feelingsForm.value);
 
+      // Use the formData with communityID instead of patching the form
+      const submissionData = {
+        ...this.feelingsForm.value,
+        communityID: communityId,
+      };
+
       // Call the addEmoSurvey function from the EmotionService
-      this.emotionService.addEmoSurvey(this.feelingsForm.value).subscribe({
+      this.emotionService.addEmoSurvey(submissionData).subscribe({
         next: (EmoSurvey: any) => {
           console.log('EmoSurvey added successfully!', EmoSurvey.Timestamp);
           this.openSnackBar('Form submitted successfully!', 'Close');

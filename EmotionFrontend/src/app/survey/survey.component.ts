@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router'; // Import the Router module
 import { CommunityService } from '../services/community.service';
 import { ExportService } from '../services/export.service';
@@ -8,27 +8,30 @@ import { startWith } from 'rxjs';
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
-  styleUrls: ['./survey.component.css']
+  styleUrls: ['./survey.component.css'],
 })
 export class SurveyComponent implements OnInit {
-  isVisible = false;
-  
+  isVisible = true; // Changed from false to true to show by default
+
   constructor(
-    private router: Router, 
+    private router: Router,
     private exportService: ExportService,
     private visibilityService: NoteVisibilityService,
     private cdr: ChangeDetectorRef,
     private communityService: CommunityService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.visibilityService.getVisibilityObservable('SurveyNote').pipe(
-      startWith(false) // Ensure the observable starts with false
-    ).subscribe(visible => {
-      console.log('Visibility:', visible);
-      this.isVisible = visible;
-      this.cdr.detectChanges(); // Manually trigger change detection
-    });
+    this.visibilityService
+      .getVisibilityObservable('SurveyNote')
+      .pipe(
+        startWith(true) // Changed from false to true
+      )
+      .subscribe((visible) => {
+        console.log('Visibility:', visible);
+        this.isVisible = visible;
+        this.cdr.detectChanges(); // Manually trigger change detection
+      });
   }
 
   async exportToCsv() {
@@ -74,5 +77,3 @@ export class SurveyComponent implements OnInit {
 // closeSurveyNote() {
 //   this.showScrollSpy = false;
 // }
-
-
