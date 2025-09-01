@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { EmotionService } from '../services/emotion.service';
 import { EmoSurvey } from '../services/emotion';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -41,30 +47,42 @@ export class EmotionSliderComponent implements OnInit {
       Bored: [0],
       Inconducive: this.fb.array([]),
       Reason: [''],
-      Remarks: ['']
+      Remarks: [''],
     });
   }
 
   getEmoji(id: string): string {
     switch (id) {
-      case 'Joyful': return '😀';
-      case 'Curious': return '😳';
-      case 'Surprised': return '😲';
-      case 'Confused': return '😕';
-      case 'Anxious': return '😰';
-      case 'Frustrated': return '😣';
-      case 'Bored': return '🥱';
-      default: return '';
+      case 'Joyful':
+        return '😀';
+      case 'Curious':
+        return '😳';
+      case 'Surprised':
+        return '😲';
+      case 'Confused':
+        return '😕';
+      case 'Anxious':
+        return '😰';
+      case 'Frustrated':
+        return '😣';
+      case 'Bored':
+        return '🥱';
+      default:
+        return '';
     }
   }
 
   onCheckboxChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const inconducive: FormArray = this.feelingsForm.get('Inconducive') as FormArray;
+    const inconducive: FormArray = this.feelingsForm.get(
+      'Inconducive'
+    ) as FormArray;
     if (input.checked) {
       inconducive.push(new FormControl(input.value));
     } else {
-      const index = inconducive.controls.findIndex((control: any) => control.value === input.value);
+      const index = inconducive.controls.findIndex(
+        (control: any) => control.value === input.value
+      );
       inconducive.removeAt(index);
     }
   }
@@ -72,16 +90,26 @@ export class EmotionSliderComponent implements OnInit {
   onSubmit(): void {
     const communityId = this.communityService.getCurrentCommunityId();
     console.log('Current community ID from service:', communityId);
-    
+
     if (communityId) {
       this.feelingsForm.patchValue({ communityID: communityId });
       console.log('Community ID set in form:', communityId);
+
+      // Show info message for local development
+      if (communityId === 'test-community-001') {
+        console.log('Using default test community ID for local development');
+      }
     } else {
-      console.error('No community ID set. Cannot submit with community context.');
-      this.openSnackBar('Error: No community context found. Please access this form through the proper link.', 'Close');
+      console.error(
+        'No community ID set. Cannot submit with community context.'
+      );
+      this.openSnackBar(
+        'Error: No community context found. Please access this form through the proper link.',
+        'Close'
+      );
       return;
     }
-    
+
     if (this.feelingsForm.valid) {
       console.log('Form submitted successfully!');
       console.log('Form data:', this.feelingsForm.value);
@@ -98,7 +126,7 @@ export class EmotionSliderComponent implements OnInit {
             'Error submitting form. Please try again.',
             'Close'
           );
-        }
+        },
       });
     } else {
       console.log('Please answer all compulsory questions.');

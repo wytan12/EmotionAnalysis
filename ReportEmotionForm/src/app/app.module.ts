@@ -13,9 +13,18 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { ConfigService } from './shared/config.service';
 import { initializeApiEndpoints } from './shared/api-endpoints';
+import { LocalSetupService } from './services/local-setup.service';
 
-export function initializeApp(configService: ConfigService) {
-  return () => configService.loadConfig().then(() => initializeApiEndpoints(configService));
+export function initializeApp(
+  configService: ConfigService,
+  localSetupService: LocalSetupService
+) {
+  return () =>
+    configService.loadConfig().then(() => {
+      initializeApiEndpoints(configService);
+      // Initialize local development setup
+      localSetupService.initializeLocalSetup();
+    });
 }
 
 @NgModule({
@@ -33,9 +42,9 @@ export function initializeApp(configService: ConfigService) {
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
-      deps: [ConfigService], // Dependency injection for ConfigService
-      multi: true // Allows multiple initializers
-    }
+      deps: [ConfigService, LocalSetupService], // Dependency injection for ConfigService and LocalSetupService
+      multi: true, // Allows multiple initializers
+    },
   ],
   bootstrap: [AppComponent],
 })
