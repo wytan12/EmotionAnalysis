@@ -97,7 +97,7 @@ emoSurvey: EmoSurvey[] = [];
         return;
       }
   
-      const timestamps = allData.map(es => new Date(Number(es.Timestamp) * 1000));
+      const timestamps = allData.map(es => new Date(Number(es.Timestamp)));
       fromDate = new Date(Math.min(...timestamps.map(d => d.getTime())));
       toDate = new Date(Math.max(...timestamps.map(d => d.getTime())));
     }
@@ -115,7 +115,7 @@ emoSurvey: EmoSurvey[] = [];
   
       this.emotionService.getEmoSurvey().subscribe(emoSurvey => {
         for (const es of emoSurvey) {
-          const timestamp = new Date(Number(es.Timestamp) * 1000);
+          const timestamp = new Date(Number(es.Timestamp));
           if (timestamp >= from && timestamp <= to) {
             if (es.Inconducive.includes('Joyful')) rdata[0]++;
             if (es.Inconducive.includes('Curious')) rdata[1]++;

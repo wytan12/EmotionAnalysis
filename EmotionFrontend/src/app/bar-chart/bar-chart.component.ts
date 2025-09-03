@@ -112,9 +112,14 @@ export class BarChartComponent implements OnInit {
         'to',
         defaultToDate
       );
+      console.log('Bar chart: Default from timestamp:', defaultFromDate.getTime());
+      console.log('Bar chart: Default to timestamp:', defaultToDate.getTime());
       this.getData(defaultFromDate, defaultToDate);
       return; // Exit function to prevent further execution
     }
+    console.log('Bar chart: Getting data with date range:', from, 'to', to);
+    console.log('Bar chart: From timestamp:', from.getTime());
+    console.log('Bar chart: To timestamp:', to.getTime());
     const dataHttp = await this.getDataHttp(from, to);
     this.data = dataHttp;
     console.log('Bar chart: Setting chart data:', this.data);
@@ -140,18 +145,35 @@ export class BarChartComponent implements OnInit {
           emoSurvey.length,
           'entries'
         );
+        
+        // Log the first few entries to inspect their structure
+        if (emoSurvey.length > 0) {
+          console.log('Bar chart: First survey entry:', emoSurvey[0]);
+          console.log('Bar chart: Sample Joyful value:', emoSurvey[0].Joyful);
+        }
 
         for (let i = 0; i < emoSurvey.length; i++) {
           const es: EmoSurvey = emoSurvey[i];
           const timestampnumber = es['Timestamp'];
-          const timestamp = new Date(Number(timestampnumber) * 1000);
+          // The timestamp is already in milliseconds, no need to multiply by 1000
+          const timestamp = new Date(Number(timestampnumber));
 
           console.log(
-            `Bar chart: Entry ${i} - Timestamp: ${timestamp}, From: ${from}, To: ${to}`
+            `Bar chart: Entry ${i} - Raw timestamp: ${timestampnumber}, Converted timestamp: ${timestamp}, From: ${from}, To: ${to}`
           );
+          console.log(`Bar chart: Entry ${i} - timestamp >= from: ${timestamp >= from}, timestamp <= to: ${timestamp <= to}`);
 
           if (timestamp >= from && timestamp <= to) {
             console.log(`Bar chart: Entry ${i} included in date range`);
+            console.log(`Bar chart: Entry ${i} emotion values:`, {
+              Joyful: es.Joyful,
+              Curious: es.Curious,
+              Surprised: es.Surprised,
+              Confused: es.Confused,
+              Anxious: es.Anxious,
+              Frustrated: es.Frustrated,
+              Bored: es.Bored
+            });
             rdata[0] += es.Joyful;
             rdata[1] += es.Curious;
             rdata[2] += es.Surprised;
