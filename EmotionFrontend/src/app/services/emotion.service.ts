@@ -113,10 +113,12 @@ export class EmotionService {
       actionType = 'Writing';
     }
     
-    // Get current community ID - log warning if missing
+    // Get current community ID from service
+    // Note: Unlike read operations which fail fast, write operations allow proceeding 
+    // with empty communityID for backwards compatibility and local testing scenarios
     const communityId = this.communityService.getCurrentCommunityId();
     if (!communityId) {
-      console.warn('No community ID available for addEmoReadWrite - record will not be associated with a community');
+      console.warn('[addEmoReadWrite] No community ID available - record will not be associated with a community');
     }
     
     const a: EmoReadWrite = new EmoReadWrite(
