@@ -113,8 +113,11 @@ export class EmotionService {
       actionType = 'Writing';
     }
     
-    // Get current community ID
-    const communityId = this.communityService.getCurrentCommunityId() || '';
+    // Get current community ID - log warning if missing
+    const communityId = this.communityService.getCurrentCommunityId();
+    if (!communityId) {
+      console.warn('No community ID available for addEmoReadWrite - record will not be associated with a community');
+    }
     
     const a: EmoReadWrite = new EmoReadWrite(
       EmotionData.noteID,
@@ -124,7 +127,7 @@ export class EmotionService {
       timestamp,
       EmotionData.noEmotion,
       actionType,
-      communityId
+      communityId || ''
     );
     if (EmotionData.noEmotion == 1) {
       for (let i = 0; i < EmotionData.emotions.length; i++) {
