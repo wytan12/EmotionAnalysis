@@ -206,45 +206,15 @@ export class EmotionService {
   }
 
   addEmoSurvey(EmotionData: any): Observable<EmoSurvey> {
-    // For local development, don't require user authentication
-    const isLocalDev =
-      !EmotionData.communityID ||
-      EmotionData.communityID === '6645ab836782b352b64ea86c';
-
-    if (isLocalDev) {
-      // Skip user data fetch for local development
-      const a: EmoSurvey = new EmoSurvey(
-        'local-user', // Default user ID for local dev
-        Date.now().toString(),
-        EmotionData.Joyful,
-        EmotionData.Curious,
-        EmotionData.Surprised,
-        EmotionData.Confused,
-        EmotionData.Anxious,
-        EmotionData.Frustrated,
-        EmotionData.Bored,
-        EmotionData.Inconducive ?? [],
-        EmotionData.Reason ?? '',
-        EmotionData.Remarks ?? '',
-        EmotionData.communityID ?? ''
-      );
-
-      console.log('Saving emotion survey (local dev):', a);
-      return this.http
-        .post<EmoSurvey>(API_ENDPOINTS.addEmoSurvey, a, this.httpOptions)
-        .pipe(
-          tap((result) =>
-            this.log(`added EmoSurvey w/ timestamp=${result.Timestamp}`)
-          ),
-          catchError(this.handleError<EmoSurvey>('addEmoSurvey'))
-        );
-    }
-
-    // For production, get user data first
+    // Always try to get user data first, but handle failures gracefully
     return this.getUserData().pipe(
       take(1),
+      catchError((error) => {
+        console.warn('Failed to get user data, using fallback:', error);
+        return of({ userName: 'anonymous-user' });
+      }),
       switchMap((userData) => {
-        const userID = userData.userName ?? 'unknown';
+        const userID = userData.userName ?? 'anonymous-user';
 
         const a: EmoSurvey = new EmoSurvey(
           userID,
