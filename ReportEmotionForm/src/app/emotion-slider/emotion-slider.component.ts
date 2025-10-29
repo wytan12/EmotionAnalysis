@@ -1,8 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { EmotionService } from '../services/emotion.service';
 import { EmoSurvey } from '../services/emotion';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommunityService } from '../services/community.service';
 
 @Component({
   selector: 'app-emotion-slider',
@@ -25,7 +32,8 @@ export class EmotionSliderComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private emotionService: EmotionService, // Inject your EmotionService here
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private communityService: CommunityService
   ) {}
 
   ngOnInit(): void {
@@ -39,53 +47,94 @@ export class EmotionSliderComponent implements OnInit {
       Bored: [0],
       Inconducive: this.fb.array([]),
       Reason: [''],
-      Remarks: ['']
+      Remarks: [''],
     });
   }
 
   getEmoji(id: string): string {
     switch (id) {
-      case 'Joyful': return '😀';
-      case 'Curious': return '😳';
-      case 'Surprised': return '😲';
-      case 'Confused': return '😕';
-      case 'Anxious': return '😰';
-      case 'Frustrated': return '😣';
-      case 'Bored': return '🥱';
-      default: return '';
+      case 'Joyful':
+        return '😀';
+      case 'Curious':
+        return '😳';
+      case 'Surprised':
+        return '😲';
+      case 'Confused':
+        return '😕';
+      case 'Anxious':
+        return '😰';
+      case 'Frustrated':
+        return '😣';
+      case 'Bored':
+        return '🥱';
+      default:
+        return '';
     }
   }
 
-  onCheckboxChange(event: Event) {
+  onCheckboxChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const inconducive: FormArray = this.feelingsForm.get('Inconducive') as FormArray;
+    const inconducive: FormArray = this.feelingsForm.get(
+      'Inconducive'
+    ) as FormArray;
     if (input.checked) {
       inconducive.push(new FormControl(input.value));
     } else {
-      const index = inconducive.controls.findIndex(x => x.value === input.value);
+      const index = inconducive.controls.findIndex(
+        (control: any) => control.value === input.value
+      );
       inconducive.removeAt(index);
     }
   }
 
-  onSubmit() {
+  onSubmit(): void {
+    const communityId = this.communityService.getCurrentCommunityId();
+    console.log('Current community ID from service:', communityId);
+
+    if (communityId) {
+      // Add communityID to the form data for submission
+      const formData = { ...this.feelingsForm.value, communityID: communityId };
+      console.log('Community ID set in form data:', communityId);
+
+      // Show info message for local development
+      if (communityId === '6645ab836782b352b64ea86c') {
+        console.log('Using default test community ID for local development');
+      }
+    } else {
+      console.error(
+        'No community ID set. Cannot submit with community context.'
+      );
+      this.openSnackBar(
+        'Error: No community context found. Please access this form through the proper link.',
+        'Close'
+      );
+      return;
+    }
+
     if (this.feelingsForm.valid) {
       console.log('Form submitted successfully!');
       console.log('Form data:', this.feelingsForm.value);
 
+      // Use the formData with communityID instead of patching the form
+      const submissionData = {
+        ...this.feelingsForm.value,
+        communityID: communityId,
+      };
+
       // Call the addEmoSurvey function from the EmotionService
-      this.emotionService.addEmoSurvey(this.feelingsForm.value).subscribe(
-        (EmoSurvey) => {
+      this.emotionService.addEmoSurvey(submissionData).subscribe({
+        next: (EmoSurvey: any) => {
           console.log('EmoSurvey added successfully!', EmoSurvey.Timestamp);
           this.openSnackBar('Form submitted successfully!', 'Close');
         },
-        (error) => {
+        error: (error: any) => {
           console.error('Error adding EmoSurvey:', error);
           this.openSnackBar(
             'Error submitting form. Please try again.',
             'Close'
           );
-        }
-      );
+        },
+      });
     } else {
       console.log('Please answer all compulsory questions.');
       this.openSnackBar('Please answer all compulsory questions.', 'Close');

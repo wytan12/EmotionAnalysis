@@ -1,6 +1,6 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,13 +10,13 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSnackBarModule
 
 import { AppComponent } from './app.component';
-import { StaticsComponent} from "./statics/statics.component";
+import { StaticsComponent } from './statics/statics.component';
 import { HeaderComponent } from './header/header.component';
 import { NgChartsModule } from 'ng2-charts';
 import { RadarChartComponent } from './radar-chart/radar-chart.component';
 import { SurveyComponent } from './survey/survey.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
-import { PopupWindowComponent} from "./popup-window/popup-window.component";
+import { PopupWindowComponent } from './popup-window/popup-window.component';
 import { ReflectFormComponent } from './reflect-form/reflect-form.component';
 import { ReflectButtonComponent } from './reflect-button/reflect-button.component';
 import { NegativeBarchartComponent } from './negative-barchart/negative-barchart.component';
@@ -31,7 +31,10 @@ registerLocaleData(en);
 
 /** 配置 ng-zorro-antd 国际化 **/
 import { provideNzI18n, en_US } from 'ng-zorro-antd/i18n';
-import {NzDatePickerComponent, NzRangePickerComponent} from "ng-zorro-antd/date-picker";
+import {
+  NzDatePickerComponent,
+  NzRangePickerComponent,
+} from 'ng-zorro-antd/date-picker';
 import { SelectMemberDropdownComponent } from './select-member-dropdown/select-member-dropdown.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { SelectViewDropdownComponent } from './select-view-dropdown/select-view-dropdown.component';
@@ -49,7 +52,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ReportEmotionButtonComponent } from './report-emotion-button/report-emotion-button.component';
 
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { TabComponent } from './tab/tab.component';
 import { ReflectHistoryButtonComponent } from './reflect-history-button/reflect-history-button.component';
 import { WriteRatingComponent } from './write-rating/write-rating.component';
@@ -61,9 +64,32 @@ import { ConfigService } from './shared/config.service';
 import { initializeApiEndpoints } from './shared/api-endpoints';
 import { RedirectComponent } from './redirect/redirect.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { LocalSetupService } from './services/local-setup.service';
 
-export function initializeApp(configService: ConfigService) {
-  return () => configService.loadConfig().then(() => initializeApiEndpoints(configService));
+export function initializeApp(
+  configService: ConfigService,
+  localSetupService: LocalSetupService
+) {
+  return () =>
+    configService
+      .loadConfig()
+      .then(() => initializeApiEndpoints(configService))
+      .then(() => {
+        // Initialize local development environment if needed
+        const isLocalhost =
+          typeof window !== 'undefined' &&
+          (window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1' ||
+            window.location.hostname === '0.0.0.0');
+
+        if (isLocalhost) {
+          console.log(
+            '[APP-INIT] Running on localhost, initializing local environment...'
+          );
+          return localSetupService.initializeLocalEnvironment();
+        }
+        return Promise.resolve(true);
+      });
 }
 
 @NgModule({
@@ -86,7 +112,7 @@ export function initializeApp(configService: ConfigService) {
     NzDropDownModule,
     NzIconModule,
     MatTabsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   declarations: [
     AppComponent,
@@ -115,24 +141,23 @@ export function initializeApp(configService: ConfigService) {
     TryingnoteComponent,
     RadarChartJerrisonapiComponent,
     TestNoteratingComponent,
-    RedirectComponent
+    RedirectComponent,
   ],
-  bootstrap: [ AppComponent ],
+  bootstrap: [AppComponent],
   providers: [
     provideNzI18n(en_US),
     // { provide: NZ_ICONS, useValue: icons }
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
-      deps: [ConfigService], // Dependency injection for ConfigService
-      multi: true // Allows multiple initializers
+      deps: [ConfigService, LocalSetupService], // Dependency injection for ConfigService and LocalSetupService
+      multi: true, // Allows multiple initializers
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class AppModule { }
-
+export class AppModule {}

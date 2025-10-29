@@ -38,12 +38,14 @@ services:
     build: ./EmotionBackend
     container_name: emotion_backend
     environment:
-      MONGO_URI: mongodb://liang:luya@mongo:27017/Emotion?retryWrites=true&w=majority
+      MONGO_URI: mongodb://liangluya:liangluya@mongo:27017/Emotion?authSource=Emotion&directConnection=true
       API_HOST: https://kf6.rdc.nie.edu.sg/api/analytics/emotions/note-emotions/community-id
-      HTTPS_PROXY: http://squid:3128
+      # HTTPS_PROXY: http://squid:3128
+      RDC_USERNAME: ${RDC_USERNAME:-gaoxiazhu}
+      RDC_PASSWORD: ${RDC_PASSWORD:-Testemotionanalytics}
       DISABLE_TOKEN_CACHE: "true"
     ports:
-      - "3000:3000"
+      - "${BACKEND_PORT:-3000}:3000"
     # expose:
     #   - "3000"
     depends_on:
@@ -60,7 +62,7 @@ services:
     #   API_URL: http://localhost/api
     restart: always
     ports:
-      - "60312:80"
+      - "${FORM_PORT:-60312}:80"
     # expose:
     #   - "80"  # Map port 80 to Nginx
     # ports:
@@ -74,10 +76,10 @@ services:
     image: mongo:latest
     container_name: mongo
     restart: always
-    # ports:
-    #   - "27017:27017"  # MongoDB default port
+    ports:
+      - "27017:27017" # MongoDB default port
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_USERNAME: liangluya
       MONGO_INITDB_ROOT_PASSWORD: liangluya
       MONGO_INITDB_DATABASE: Emotion
     volumes:
@@ -86,8 +88,25 @@ services:
     networks:
       - app-network
 
-  # volumes:
-  #   mongo-data:  # Persistent storage for MongoDB
+#   squid:
+#     image: sameersbn/squid:latest
+#     container_name: squid
+#     restart: always
+#     ports:
+#       - "3128:3128"
+#     volumes:
+#       - ./squid.conf:/etc/squid/squid.conf
+#       - squid-cache:/var/spool/squid
+#       - squid-logs:/var/log/squid
+#     networks:
+#       - app-network
+
+# volumes:
+#   squid-cache:
+#   squid-logs:
+
+# volumes:
+#   mongo-data:  # Persistent storage for MongoDB
 
 networks:
   app-network:

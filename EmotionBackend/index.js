@@ -16,11 +16,7 @@ var corsOptions = {
   origin: ['http://localhost:80', 'http://localhost:60312', 'http://localhost:4200', 'https://emotion-analysis.rdc.nie.edu.sg'],
   credentials: true,
   optionsSuccessStatus: 200,
-  headers: {
-    "Access-Control-Allow-Origin": "*", // Allow CORS from configured origins
-    "Access-Control-Allow-Methods": "GET, HEAD, POST, PUT, DELETE, OPTIONS", // Allow all HTTP methods
-    "Access-Control-Allow-Headers": "*", // Allow specified headers
-  },
+  allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",
 };
 
 ///////////////////////////////////////////////// app set-up //////////////////////////////////////////////////

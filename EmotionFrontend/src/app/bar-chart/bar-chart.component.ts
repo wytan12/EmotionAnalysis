@@ -12,6 +12,7 @@ import labels = _default.defaults.labels;
 import { SharedTimeService } from '../services/shared-time.service';
 import { TitleService } from '../services/title.service';
 import { NoteVisibilityService } from '../services/note-visibility.service';
+import { CommunityService } from '../services/community.service';
 
 @Component({
   selector: 'app-bar-chart',
@@ -26,7 +27,8 @@ export class BarChartComponent implements OnInit {
     private emotionService: EmotionService,
     private sharedTimeService: SharedTimeService,
     private titleService: TitleService,
-    private visibilityService: NoteVisibilityService
+    private visibilityService: NoteVisibilityService,
+    private communityService: CommunityService
   ) {}
 
   public data: number[] = [];
@@ -66,20 +68,25 @@ export class BarChartComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    // this.getData();
+    // Get community ID from community service (set by parent component)
+    const communityId = this.communityService.getCurrentCommunityId();
+    console.log('Bar chart: Community ID from service:', communityId);
+
+    // Load initial data
+    this.getData(undefined, undefined);
+
+    // Subscribe to time range changes
     this.sharedTimeService.selectedTime$.subscribe((timeRange: number[]) => {
       if (timeRange && timeRange.length === 2) {
         const from = new Date(timeRange[0]);
-        console.log('From Date: ', from);
+        console.log('Bar chart: From Date: ', from);
         const to = new Date(timeRange[1]);
-        console.log('To Date: ', to);
+        console.log('Bar chart: To Date: ', to);
         this.getData(from, to);
       } else {
+        console.log('Bar chart: No time range selected, using defaults');
         this.getData(undefined, undefined);
       }
-    });
-    this.sharedTimeService.selectedTime$.subscribe((timeRange: number[]) => {
-      console.log('Selected time range:', timeRange);
     });
   }
 
@@ -96,13 +103,21 @@ export class BarChartComponent implements OnInit {
       // Set default values for from and to if not provided
       const defaultFromDate = new Date(); // Default to current date/time
       const defaultToDate = new Date(); // Default to current date/time
-      defaultFromDate.setDate(defaultFromDate.getDate() - 300); // Default to one month ago
+      // Set a very wide default range to include all data (5 years ago to future)
+      defaultFromDate.setFullYear(defaultFromDate.getFullYear() - 5);
+      defaultToDate.setFullYear(defaultToDate.getFullYear() + 1);
+      console.log(
+        'Bar chart: Using wide default date range:',
+        defaultFromDate,
+        'to',
+        defaultToDate
+      );
       this.getData(defaultFromDate, defaultToDate);
       return; // Exit function to prevent further execution
     }
     const dataHttp = await this.getDataHttp(from, to);
     this.data = dataHttp;
-    console.log(this.data);
+    console.log('Bar chart: Setting chart data:', this.data);
     this.barChartData[0].data = this.data;
     if (this.chart) {
       this.chart.update();
@@ -114,12 +129,30 @@ export class BarChartComponent implements OnInit {
       const rdata: number[] = [0, 0, 0, 0, 0, 0, 0];
       let totalEntries = 0;
 
+      console.log(
+        'Bar chart: Fetching survey data for community:',
+        this.communityService.getCurrentCommunityId()
+      );
+
       this.emotionService.getEmoSurvey().subscribe((emoSurvey) => {
+        console.log(
+          'Bar chart: Received survey data:',
+          emoSurvey.length,
+          'entries'
+        );
+
         for (let i = 0; i < emoSurvey.length; i++) {
           const es: EmoSurvey = emoSurvey[i];
           const timestampnumber = es['Timestamp'];
-          const timestamp = new Date(Number(timestampnumber) * 1000);
+          // The timestamp is already in milliseconds, no need to multiply by 1000
+          const timestamp = new Date(Number(timestampnumber));
+
+          console.log(
+            `Bar chart: Entry ${i} - Raw timestamp: ${timestampnumber}, Converted timestamp: ${timestamp}, From: ${from}, To: ${to}`
+          );
+
           if (timestamp >= from && timestamp <= to) {
+            console.log(`Bar chart: Entry ${i} included in date range`);
             rdata[0] += es.Joyful;
             rdata[1] += es.Curious;
             rdata[2] += es.Surprised;
@@ -128,12 +161,24 @@ export class BarChartComponent implements OnInit {
             rdata[5] += es.Frustrated;
             rdata[6] += es.Bored;
             totalEntries++;
+          } else {
+            console.log(`Bar chart: Entry ${i} excluded from date range`);
           }
         }
 
+        console.log('Bar chart: Total entries processed:', totalEntries);
+        console.log('Bar chart: Raw data before averaging:', rdata);
+
         // Calculate average value for each intensity
-        for (let i = 0; i < rdata.length; i++) {
-          rdata[i] /= totalEntries;
+        if (totalEntries > 0) {
+          for (let i = 0; i < rdata.length; i++) {
+            rdata[i] /= totalEntries;
+          }
+          console.log('Bar chart: Final averaged data:', rdata);
+        } else {
+          console.log(
+            'Bar chart: No entries found in date range, returning zeros'
+          );
         }
 
         resolve(rdata);
