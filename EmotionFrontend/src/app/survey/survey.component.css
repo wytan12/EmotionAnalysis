@@ -55,3 +55,9 @@
   box-shadow: none;
   transform: translateY(0);
 }
+
+.controls-container {
+  margin-bottom: 50px;
+  padding-left: 50px;
+  max-width: 50%;
+}
