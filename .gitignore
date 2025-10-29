@@ -98,3 +98,7 @@ mongo-data/
 # Squid cache
 squid-cache/
 squid-logs/
+SURVEY_DATA_DEBUG.md
+SURVEY_DISPLAY_FIX.md
+SURVEY_FIX_NOTES.md
+USER_ID_FLOW.md
