@@ -419,7 +419,8 @@ APIrouter.post("/addEmoReadWrite", (req, res) => {
     Confused_Intensity:req.body.Confused_Intensity,
     Anxious_Intensity:req.body.Anxious_Intensity,
     Frustrated_Intensity:req.body.Frustrated_Intensity,
-    Bored_Intensity:req.body.Bored_Intensity
+    Bored_Intensity:req.body.Bored_Intensity,
+    communityID: req.body.communityID
   });
   newEmoReadWrite
     .save()

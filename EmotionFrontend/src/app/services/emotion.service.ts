@@ -112,6 +112,10 @@ export class EmotionService {
     if (EmotionData.userID == EmotionData.author) {
       actionType = 'Writing';
     }
+    
+    // Get current community ID
+    const communityId = this.communityService.getCurrentCommunityId() || '';
+    
     const a: EmoReadWrite = new EmoReadWrite(
       EmotionData.noteID,
       'NoteTitle',
@@ -119,7 +123,8 @@ export class EmotionService {
       userID,
       timestamp,
       EmotionData.noEmotion,
-      actionType
+      actionType,
+      communityId
     );
     if (EmotionData.noEmotion == 1) {
       for (let i = 0; i < EmotionData.emotions.length; i++) {

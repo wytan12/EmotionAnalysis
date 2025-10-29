@@ -43,10 +43,11 @@ export interface EmoReadWrite {
   Bored: number;
   Bored_Intensity: number;
   Intensity: { key: keyof EmoReadWrite, value: number }[];
+  communityID: string;
 }
 
 export class EmoReadWrite implements EmoReadWrite {
-  constructor(NoteID: string,NoteTitle: string,NoteContent: string, UserID: string, Timestamp: string,NoEmotion: number,ActionType: string){
+  constructor(NoteID: string,NoteTitle: string,NoteContent: string, UserID: string, Timestamp: string,NoEmotion: number,ActionType: string, communityID: string){
     this.NoteID = NoteID;
     this.NoteTitle = NoteTitle;
     this.NoteContent = NoteContent;
@@ -54,6 +55,7 @@ export class EmoReadWrite implements EmoReadWrite {
     this.Timestamp = Timestamp;
     this.NoEmotion = NoEmotion;
     this.ActionType = ActionType;
+    this.communityID = communityID;
     this.Intensity = []; 
   }
 

@@ -117,7 +117,8 @@ const EmoReadWriteSchema = new mongoose.Schema({
   Bored_Intensity:{
     type: Number,
     default: 0
-  }
+  },
+  communityID: String
 });
 
 const EmoSurveySchema = new mongoose.Schema({
