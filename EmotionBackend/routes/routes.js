@@ -457,7 +457,20 @@ APIrouter.post("/addReg", (req, res) => {
     });
 });
 APIrouter.post("/addEmoSurvey", (req, res) => {
+  // Validate that communityID is present
+  if (!req.body.communityID) {
+    console.error('[addEmoSurvey] Attempt to save survey without communityID');
+    return res.status(400).json({
+      message: 'Community ID is required',
+      error: 'Cannot save survey without communityID'
+    });
+  }
+
+  // Also add UserID if not present
+  const userID = req.body.UserID || 'anonymous-user';
+  
   const newEmoSurvey = new EmoSurvey({
+    UserID: userID,
     Timestamp:req.body.Timestamp,
     Joyful:req.body.Joyful,
     Curious:req.body.Curious,
@@ -471,6 +484,9 @@ APIrouter.post("/addEmoSurvey", (req, res) => {
     Remarks:req.body.Remarks,
     communityID: req.body.communityID,
   });
+  
+  console.log(`[addEmoSurvey] Saving survey for community: ${req.body.communityID}, user: ${userID}`);
+  
   newEmoSurvey
     .save()
     .then((result) => {

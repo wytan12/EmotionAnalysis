@@ -91,24 +91,22 @@ export class EmotionSliderComponent implements OnInit {
     const communityId = this.communityService.getCurrentCommunityId();
     console.log('Current community ID from service:', communityId);
 
-    if (communityId) {
-      // Add communityID to the form data for submission
-      const formData = { ...this.feelingsForm.value, communityID: communityId };
-      console.log('Community ID set in form data:', communityId);
-
-      // Show info message for local development
-      if (communityId === '6645ab836782b352b64ea86c') {
-        console.log('Using default test community ID for local development');
-      }
-    } else {
-      console.error(
-        'No community ID set. Cannot submit with community context.'
-      );
+    if (!communityId) {
+      console.error('No community ID set. Cannot submit with community context.');
       this.openSnackBar(
         'Error: No community context found. Please access this form through the proper link.',
         'Close'
       );
       return;
+    }
+
+    // Add communityID to the form data for submission
+    const formData = { ...this.feelingsForm.value, communityID: communityId };
+    console.log('Community ID set in form data:', communityId);
+
+    // Show info message for local development
+    if (communityId === '6645ab836782b352b64ea86c') {
+      console.log('Using default test community ID for local development');
     }
 
     if (this.feelingsForm.valid) {
