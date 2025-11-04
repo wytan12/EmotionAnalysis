@@ -29,18 +29,22 @@ export class EmotionService {
       catchError(this.handleError<Test[]>('getEmotiones', []))
     );
   }
-  
+
   getEmoReadWrite(): Observable<EmoReadWrite[]> {
     const communityId = this.communityService.getCurrentCommunityId();
     if (!communityId) {
       console.error('No community ID available for getEmoReadWrite');
       return of([]);
     }
-    
+
     return this.http
-      .get<EmoReadWrite[]>(`${API_ENDPOINTS.findAllEmoReadWrite}/${communityId}`)
+      .get<EmoReadWrite[]>(
+        `${API_ENDPOINTS.findAllEmoReadWrite}/${communityId}`
+      )
       .pipe(
-        tap((_) => this.log('fetched EmoReadWrite for community: ' + communityId)),
+        tap((_) =>
+          this.log('fetched EmoReadWrite for community: ' + communityId)
+        ),
         catchError(this.handleError<EmoReadWrite[]>('getEmoReadWrite', []))
       );
   }
@@ -50,13 +54,23 @@ export class EmotionService {
       console.error('No community ID available for getEmoSurvey');
       return of([]);
     }
-    
-    console.log('EmotionService: Fetching EmoSurvey for community:', communityId);
-    console.log('EmotionService: Full URL:', `${API_ENDPOINTS.findAllEmoSurvey}/${communityId}`);
+
+    console.log(
+      'EmotionService: Fetching EmoSurvey for community:',
+      communityId
+    );
+    console.log(
+      'EmotionService: Full URL:',
+      `${API_ENDPOINTS.findAllEmoSurvey}/${communityId}`
+    );
     return this.http
       .get<EmoSurvey[]>(`${API_ENDPOINTS.findAllEmoSurvey}/${communityId}`)
       .pipe(
-        tap((data) => this.log(`fetched ${data.length} EmoSurvey records for community: ${communityId}`)),
+        tap((data) =>
+          this.log(
+            `fetched ${data.length} EmoSurvey records for community: ${communityId}`
+          )
+        ),
         catchError(this.handleError<EmoSurvey[]>('EmoSurvey', []))
       );
   }
@@ -66,7 +80,7 @@ export class EmotionService {
       console.error('No community ID available for getEmoReg');
       return of([]);
     }
-    
+
     return this.http
       .get<EmoReg[]>(`${API_ENDPOINTS.findAllEmoReg}/${communityId}`)
       .pipe(
@@ -80,7 +94,7 @@ export class EmotionService {
     // const headers = token
     //   ? new HttpHeaders().set('Authorization', `Bearer ${token}`)
     //   : new HttpHeaders();
-  
+
     // return this.http.get<any>(API_ENDPOINTS.userData, { headers }).pipe(
     return this.http.get<any>(API_ENDPOINTS.userData).pipe(
       tap(() => this.log('fetched userData')),
@@ -96,11 +110,7 @@ export class EmotionService {
     const a: Emotion = new Emotion(' ', timestamp + '');
     console.log(a);
     return this.http
-      .post<Emotion>(
-        API_ENDPOINTS.addEmotion,
-        a,
-        this.httpOptions
-      )
+      .post<Emotion>(API_ENDPOINTS.addEmotion, a, this.httpOptions)
       .pipe(
         // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
         catchError(this.handleError<Emotion>('addEmotion'))
@@ -160,11 +170,7 @@ export class EmotionService {
     }
     console.log(a);
     return this.http
-      .post<EmoReadWrite>(
-        API_ENDPOINTS.addEmoReadWrite,
-        a,
-        this.httpOptions
-      )
+      .post<EmoReadWrite>(API_ENDPOINTS.addEmoReadWrite, a, this.httpOptions)
       .pipe(
         // tap((newEmotion: Emotion) => this.log(`added Emotion w/ id=${newEmotion.id}`)),
         catchError(this.handleError<EmoReadWrite>('addEmoReadWrite'))
@@ -175,14 +181,14 @@ export class EmotionService {
   addReg(EmotionData: any): Observable<EmoReg> {
     return this.getUserData().pipe(
       take(1),
-      switchMap(userData => {
+      switchMap((userData) => {
         const userID = userData.userName ?? 'unknown'; // 👈 use username from API
 
         const groupMembersArr = Array.isArray(EmotionData.GroupMembers)
           ? EmotionData.GroupMembers
           : EmotionData.GroupMembers
-            ? [EmotionData.GroupMembers]
-            : [];
+          ? [EmotionData.GroupMembers]
+          : [];
 
         const groupMembersString = groupMembersArr.join(', ');
 
@@ -200,7 +206,11 @@ export class EmotionService {
         );
 
         console.log('Saving reflection history:', a);
-        return this.http.post<EmoReg>(API_ENDPOINTS.addReg, a, this.httpOptions);
+        return this.http.post<EmoReg>(
+          API_ENDPOINTS.addReg,
+          a,
+          this.httpOptions
+        );
       }),
       catchError(this.handleError<EmoReg>('addaddReg'))
     );
@@ -209,7 +219,7 @@ export class EmotionService {
   addEmoSurvey(EmotionData: any): Observable<EmoSurvey> {
     return this.getUserData().pipe(
       take(1),
-      switchMap(userData => {
+      switchMap((userData) => {
         const userID = userData.userName ?? 'unknown'; // 👈 use username from API
 
         const a: EmoSurvey = new EmoSurvey(
@@ -229,7 +239,11 @@ export class EmotionService {
         );
 
         console.log('Saving emotion survey:', a);
-        return this.http.post<EmoSurvey>(API_ENDPOINTS.addEmoSurvey, a, this.httpOptions);
+        return this.http.post<EmoSurvey>(
+          API_ENDPOINTS.addEmoSurvey,
+          a,
+          this.httpOptions
+        );
       }),
       catchError(this.handleError<EmoSurvey>('addEmoSurvey'))
     );

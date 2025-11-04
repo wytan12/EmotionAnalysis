@@ -90,10 +90,15 @@ export class EmotionSliderComponent implements OnInit {
   onSubmit(): void {
     const communityId = this.communityService.getCurrentCommunityId();
     console.log('[EMOTION-SLIDER] Submit initiated');
-    console.log('[EMOTION-SLIDER] Current community ID from service:', communityId);
+    console.log(
+      '[EMOTION-SLIDER] Current community ID from service:',
+      communityId
+    );
 
     if (!communityId) {
-      console.error('[EMOTION-SLIDER] No community ID set. Cannot submit with community context.');
+      console.error(
+        '[EMOTION-SLIDER] No community ID set. Cannot submit with community context.'
+      );
       this.openSnackBar(
         'Error: No community context found. Please access this form through the proper link.',
         'Close'
@@ -108,7 +113,9 @@ export class EmotionSliderComponent implements OnInit {
 
     // Show info message for local development
     if (communityId === '6645ab836782b352b64ea86c') {
-      console.log('[EMOTION-SLIDER] Using default test community ID for local development');
+      console.log(
+        '[EMOTION-SLIDER] Using default test community ID for local development'
+      );
     }
 
     if (this.feelingsForm.valid) {
@@ -124,8 +131,14 @@ export class EmotionSliderComponent implements OnInit {
       // Call the addEmoSurvey function from the EmotionService
       this.emotionService.addEmoSurvey(submissionData).subscribe({
         next: (EmoSurvey: any) => {
-          console.log('[EMOTION-SLIDER] EmoSurvey added successfully!', EmoSurvey.Timestamp);
-          console.log('[EMOTION-SLIDER] Survey saved with community ID:', communityId);
+          console.log(
+            '[EMOTION-SLIDER] EmoSurvey added successfully!',
+            EmoSurvey.Timestamp
+          );
+          console.log(
+            '[EMOTION-SLIDER] Survey saved with community ID:',
+            communityId
+          );
           this.openSnackBar('Form submitted successfully!', 'Close');
         },
         error: (error: any) => {

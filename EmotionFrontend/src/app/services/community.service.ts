@@ -17,7 +17,7 @@ export class CommunityService {
     this.currentCommunityIdSubject.next(communityId);
     console.log('[COMMUNITY] Community ID changed:', {
       previous: previousId,
-      current: communityId
+      current: communityId,
     });
   }
 

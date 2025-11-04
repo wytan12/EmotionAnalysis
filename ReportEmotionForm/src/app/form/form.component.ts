@@ -15,7 +15,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('[FORM] Form component initialized');
-    
+
     // Check for communityId in route parameters
     const communityId = this.route.snapshot.paramMap.get('communityId');
     console.log('[FORM] Community ID from route params:', communityId);
@@ -28,7 +28,7 @@ export class FormComponent implements OnInit {
       this.route.queryParams.subscribe((params: Params) => {
         const queryCommunityId = params['communityId'];
         console.log('[FORM] Community ID from query params:', queryCommunityId);
-        
+
         if (queryCommunityId) {
           console.log(
             '[FORM] Setting community ID from query params:',
@@ -43,11 +43,14 @@ export class FormComponent implements OnInit {
         }
       });
     }
-    
+
     // Log final community ID after initialization
     setTimeout(() => {
       const finalCommunityId = this.communityService.getCurrentCommunityId();
-      console.log('[FORM] Final community ID after initialization:', finalCommunityId);
+      console.log(
+        '[FORM] Final community ID after initialization:',
+        finalCommunityId
+      );
     }, 100);
   }
 

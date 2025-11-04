@@ -38,14 +38,14 @@ export class TryingnoteComponent implements OnInit {
   helpWindow() {
     const communityId = this.communityService.getCurrentCommunityId();
     console.log('Opening form with community ID:', communityId);
-    
+
     // Append community ID to the form URL
-    const apiUrl = communityId 
+    const apiUrl = communityId
       ? `${API_ENDPOINTS.form}?communityId=${communityId}`
       : API_ENDPOINTS.form;
-    
+
     console.log('Form URL:', apiUrl);
-    
+
     // Calculate the position to center the window
     const width = 1000;
     const height = 700;
