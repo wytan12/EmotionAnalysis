@@ -89,10 +89,11 @@ export class EmotionSliderComponent implements OnInit {
 
   onSubmit(): void {
     const communityId = this.communityService.getCurrentCommunityId();
-    console.log('Current community ID from service:', communityId);
+    console.log('[EMOTION-SLIDER] Submit initiated');
+    console.log('[EMOTION-SLIDER] Current community ID from service:', communityId);
 
     if (!communityId) {
-      console.error('No community ID set. Cannot submit with community context.');
+      console.error('[EMOTION-SLIDER] No community ID set. Cannot submit with community context.');
       this.openSnackBar(
         'Error: No community context found. Please access this form through the proper link.',
         'Close'
@@ -102,16 +103,17 @@ export class EmotionSliderComponent implements OnInit {
 
     // Add communityID to the form data for submission
     const formData = { ...this.feelingsForm.value, communityID: communityId };
-    console.log('Community ID set in form data:', communityId);
+    console.log('[EMOTION-SLIDER] Community ID set in form data:', communityId);
+    console.log('[EMOTION-SLIDER] Full submission data:', formData);
 
     // Show info message for local development
     if (communityId === '6645ab836782b352b64ea86c') {
-      console.log('Using default test community ID for local development');
+      console.log('[EMOTION-SLIDER] Using default test community ID for local development');
     }
 
     if (this.feelingsForm.valid) {
-      console.log('Form submitted successfully!');
-      console.log('Form data:', this.feelingsForm.value);
+      console.log('[EMOTION-SLIDER] Form is valid, submitting...');
+      console.log('[EMOTION-SLIDER] Form data:', this.feelingsForm.value);
 
       // Use the formData with communityID instead of patching the form
       const submissionData = {
@@ -122,11 +124,12 @@ export class EmotionSliderComponent implements OnInit {
       // Call the addEmoSurvey function from the EmotionService
       this.emotionService.addEmoSurvey(submissionData).subscribe({
         next: (EmoSurvey: any) => {
-          console.log('EmoSurvey added successfully!', EmoSurvey.Timestamp);
+          console.log('[EMOTION-SLIDER] EmoSurvey added successfully!', EmoSurvey.Timestamp);
+          console.log('[EMOTION-SLIDER] Survey saved with community ID:', communityId);
           this.openSnackBar('Form submitted successfully!', 'Close');
         },
         error: (error: any) => {
-          console.error('Error adding EmoSurvey:', error);
+          console.error('[EMOTION-SLIDER] Error adding EmoSurvey:', error);
           this.openSnackBar(
             'Error submitting form. Please try again.',
             'Close'
@@ -134,7 +137,7 @@ export class EmotionSliderComponent implements OnInit {
         },
       });
     } else {
-      console.log('Please answer all compulsory questions.');
+      console.log('[EMOTION-SLIDER] Form is invalid - missing required fields');
       this.openSnackBar('Please answer all compulsory questions.', 'Close');
     }
   }

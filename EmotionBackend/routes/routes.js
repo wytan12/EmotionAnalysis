@@ -543,6 +543,10 @@ APIrouter.get("/findAllEmoSurvey/:communityId", (req, res) => {
   console.log("findAllEmoSurvey for community:", communityId);
   EmoSurvey.find({ communityID: communityId })
     .then((found) => {
+      console.log(`Found ${found.length} EmoSurvey records for community:`, communityId);
+      if (found.length > 0) {
+        console.log("Sample record communityID field:", found[0].communityID);
+      }
       res.send(found);
     })
     .catch((err) => {
@@ -556,6 +560,7 @@ APIrouter.get("/findAllEmoReadWrite/:communityId", (req, res) => {
   console.log("findAllEmoReadWrite for community:", communityId);
   EmoReadWrite.find({ communityID: communityId })
     .then((found) => {
+      console.log(`Found ${found.length} EmoReadWrite records for community:`, communityId);
       res.send(found);
     })
     .catch((err) => {
@@ -569,6 +574,7 @@ APIrouter.get("/findAllEmoReg/:communityId", (req, res) => {
   console.log("findAllEmoReg for community:", communityId);
   EmoReg.find({ communityID: communityId })
     .then((found) => {
+      console.log(`Found ${found.length} EmoReg records for community:`, communityId);
       res.send(found);
     })
     .catch((err) => {

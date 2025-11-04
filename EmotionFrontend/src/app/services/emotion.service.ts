@@ -51,11 +51,12 @@ export class EmotionService {
       return of([]);
     }
     
-    console.log('api/findAllEmoSurvey for community:', communityId);
+    console.log('EmotionService: Fetching EmoSurvey for community:', communityId);
+    console.log('EmotionService: Full URL:', `${API_ENDPOINTS.findAllEmoSurvey}/${communityId}`);
     return this.http
       .get<EmoSurvey[]>(`${API_ENDPOINTS.findAllEmoSurvey}/${communityId}`)
       .pipe(
-        tap((_) => this.log('fetched EmoSurvey for community: ' + communityId)),
+        tap((data) => this.log(`fetched ${data.length} EmoSurvey records for community: ${communityId}`)),
         catchError(this.handleError<EmoSurvey[]>('EmoSurvey', []))
       );
   }

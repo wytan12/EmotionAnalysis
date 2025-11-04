@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './tryingnote.component.html',
   styleUrl: './tryingnote.component.css',
 })
-export class TryingnoteComponent {
+export class TryingnoteComponent implements OnInit {
   communityId: string = '';
 
   constructor(
@@ -36,7 +36,16 @@ export class TryingnoteComponent {
   }
 
   helpWindow() {
-    const apiUrl = API_ENDPOINTS.form;
+    const communityId = this.communityService.getCurrentCommunityId();
+    console.log('Opening form with community ID:', communityId);
+    
+    // Append community ID to the form URL
+    const apiUrl = communityId 
+      ? `${API_ENDPOINTS.form}?communityId=${communityId}`
+      : API_ENDPOINTS.form;
+    
+    console.log('Form URL:', apiUrl);
+    
     // Calculate the position to center the window
     const width = 1000;
     const height = 700;

@@ -13,8 +13,12 @@ export class CommunityService {
 
   // Set the current community ID
   setCommunityId(communityId: string): void {
+    const previousId = this.currentCommunityIdSubject.value;
     this.currentCommunityIdSubject.next(communityId);
-    console.log('[COMMUNITY] Set community ID:', communityId);
+    console.log('[COMMUNITY] Community ID changed:', {
+      previous: previousId,
+      current: communityId
+    });
   }
 
   // Get the current community ID

@@ -6,6 +6,7 @@ import { TimeService } from '../services/time.service';
 import { TitleService } from '../services/title.service';
 import { SharedTimeService } from '../services/shared-time.service';
 import { NoteVisibilityService } from '../services/note-visibility.service';
+import { CommunityService } from '../services/community.service';
 
 @Component({
   selector: 'app-scrollspy',
@@ -26,10 +27,14 @@ export class ScrollspyComponent implements OnInit {
     private timeService: TimeService,
     private sharedTimeService: SharedTimeService,
     private titleService: TitleService,
-    private visibilityService: NoteVisibilityService
+    private visibilityService: NoteVisibilityService,
+    private communityService: CommunityService
   ) {}
 
   ngOnInit(): void {
+    const currentCommunityId = this.communityService.getCurrentCommunityId();
+    console.log('Scrollspy initialized with community ID:', currentCommunityId);
+
     this.visibilityService
       .getVisibilityObservable('SurveyNote')
       .subscribe((visible) => {
@@ -69,7 +74,7 @@ export class ScrollspyComponent implements OnInit {
   }
 
   convertTimestampToDate(timestamp: string): string {
-    const ms = Number(timestamp) * 1000;
+    const ms = Number(timestamp);
     return new Date(ms).toLocaleString(); // or use Angular DatePipe if needed
   }
 
@@ -97,7 +102,7 @@ export class ScrollspyComponent implements OnInit {
         } else {
           // Filter by inconducive emotions or by emotion ratings
           filteredList = emoSurveyList.filter((emoSurvey) => {
-            const timestampDate = new Date(Number(emoSurvey.Timestamp) * 1000);
+            const timestampDate = new Date(Number(emoSurvey.Timestamp));
             const matchesInconducive =
               emoSurvey.Inconducive.includes(emotionTitle);
 
