@@ -24,11 +24,32 @@ export class TryingnoteComponent implements OnInit {
   ngOnInit(): void {
     // ✅ Extract communityId from the route parameter
     this.communityId = this.route.snapshot.paramMap.get('communityId') || '';
-    console.log('Loaded communityId:', this.communityId);
+    console.log(
+      '[TRYINGNOTE] Community ID from URL route params:',
+      this.communityId
+    );
 
     // Set the community ID in the community service for global access
     if (this.communityId) {
       this.communityService.setCommunityId(this.communityId);
+      console.log(
+        '[TRYINGNOTE] Community ID set in service:',
+        this.communityId
+      );
+    } else {
+      // Try to get from service (might have been restored from localStorage)
+      const storedCommunityId = this.communityService.getCurrentCommunityId();
+      if (storedCommunityId) {
+        console.log(
+          '[TRYINGNOTE] Using community ID from service/localStorage:',
+          storedCommunityId
+        );
+        this.communityId = storedCommunityId;
+      } else {
+        console.warn(
+          '[TRYINGNOTE] No community ID available from URL or storage'
+        );
+      }
     }
 
     // If needed: pass communityId to a service or fetch data

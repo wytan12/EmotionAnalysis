@@ -9,12 +9,31 @@ export class CommunityService {
   private currentCommunityIdSubject = new BehaviorSubject<string | null>(null);
   public currentCommunityId$ = this.currentCommunityIdSubject.asObservable();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    // Restore community ID from localStorage on service initialization
+    this.restoreCommunityId();
+  }
+
+  // Restore community ID from localStorage
+  private restoreCommunityId(): void {
+    const storedCommunityId = localStorage.getItem('current_community_id');
+    if (storedCommunityId) {
+      console.log(
+        '[COMMUNITY] Restored community ID from localStorage:',
+        storedCommunityId
+      );
+      this.currentCommunityIdSubject.next(storedCommunityId);
+    }
+  }
 
   // Set the current community ID
   setCommunityId(communityId: string): void {
     const previousId = this.currentCommunityIdSubject.value;
     this.currentCommunityIdSubject.next(communityId);
+
+    // Persist to localStorage
+    localStorage.setItem('current_community_id', communityId);
+
     console.log('[COMMUNITY] Community ID changed:', {
       previous: previousId,
       current: communityId,
@@ -74,6 +93,9 @@ export class CommunityService {
   // Clear the community ID (for logout, etc.)
   clearCommunityId(): void {
     this.currentCommunityIdSubject.next(null);
-    console.log('[COMMUNITY] Cleared community ID');
+    localStorage.removeItem('current_community_id');
+    console.log(
+      '[COMMUNITY] Cleared community ID from memory and localStorage'
+    );
   }
 }
