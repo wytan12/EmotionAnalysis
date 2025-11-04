@@ -16,6 +16,16 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     console.log('[FORM] Form component initialized');
 
+    // Check if token is available in localStorage
+    const token = localStorage.getItem('access_token');
+    console.log(
+      '[FORM] Token available in localStorage:',
+      token ? 'Yes' : 'No'
+    );
+    if (token) {
+      console.log('[FORM] Token preview:', token.substring(0, 20) + '...');
+    }
+
     // Check for communityId in route parameters
     const communityId = this.route.snapshot.paramMap.get('communityId');
     console.log('[FORM] Community ID from route params:', communityId);
