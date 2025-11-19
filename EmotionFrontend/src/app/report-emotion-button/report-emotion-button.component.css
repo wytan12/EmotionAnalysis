@@ -8,31 +8,65 @@
   box-sizing: border-box;
   color: #0f1111;
   cursor: pointer;
-  display: inline-block;
-  font-family: "Amazon Ember", Arial, sans-serif;
-  font-size: 14px;
-  height: 29px;
-  font-size: 13px;
-  outline: 0;
-  overflow: hidden;
-  padding: 0 11px;
-  text-align: center;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Amazon Ember", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  outline: 0;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  
+  /* Fixed positioning */
   position: fixed;
-  top: 30%;
+  top: 40%;
   right: 0;
-  transform-origin: bottom left;
-  width: 40px;
-  height: 130px;
-  writing-mode: vertical-lr; /* Rotate the text by 90 degrees */
+  z-index: 1000;
+  
+  /* Vertical text rotation */
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  
+  /* Responsive sizing */
+  width: 60px;
+  height: 180px;
+  padding: 10px 8px;
+  
+  /* Text overflow handling */
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 1024px) {
+  .button-14 {
+    width: 55px;
+    height: 160px;
+    font-size: 14px;
+    top: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .button-14 {
+    width: 50px;
+    height: 140px;
+    font-size: 12px;
+    top: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .button-14 {
+    width: 45px;
+    height: 120px;
+    font-size: 11px;
+    top: 50%;
+  }
 }
 
 .button-14:active {
@@ -45,6 +79,7 @@
 
 .button-14:hover {
   border-color: #a2a6ac #979aa1 #82858a;
+  background-image: linear-gradient(#e7e9ec, #d7d9dc);
 }
 
 .button-14:focus {

@@ -72,6 +72,29 @@ export class SurveyComponent implements OnInit {
   closeSurveyNote(): void {
     this.visibilityService.setVisibility('SurveyNote', false);
   }
+
+  helpWindow() {
+    const communityId = this.communityService.getCurrentCommunityId();
+    console.log('Opening form with community ID:', communityId);
+
+    // Import API_ENDPOINTS from shared folder
+    const apiUrl = communityId ? `/form?communityId=${communityId}` : '/form';
+
+    console.log('Form URL:', apiUrl);
+
+    // Calculate the position to center the window
+    const width = 1000;
+    const height = 700;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+
+    // Open the window with the calculated position
+    window.open(
+      apiUrl,
+      '_blank',
+      `location=yes,width=${width},height=${height},left=${left},top=${top},scrollbars=yes,status=yes`
+    );
+  }
 }
 
 // closeSurveyNote() {
