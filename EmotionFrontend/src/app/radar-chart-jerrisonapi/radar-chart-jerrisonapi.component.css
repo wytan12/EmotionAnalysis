@@ -4,11 +4,22 @@ p {
 
 .radarchart-container {
   padding-left: 50px;
-  overflow: hidden;
+  overflow: visible;
   display: block;
-  width: 80%;
+  width: 100%;
+  max-width: 600px;
+  min-width: 280px;
+  min-height: 300px;
   margin-top: 20px;
   cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Ensure canvas is responsive */
+.radarchart-container canvas {
+  max-width: 100%;
+  height: auto !important;
+  min-height: 280px;
 }
 
 .preloader {
@@ -18,6 +29,7 @@ p {
   justify-content: center;
   align-items: center;
   height: 100%;
+  min-height: 300px;
 }
 
 .spinner {
@@ -35,5 +47,53 @@ p {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1199px) {
+  .radarchart-container {
+    padding-left: 30px;
+    max-width: 550px;
+  }
+}
+
+@media (max-width: 991px) {
+  .radarchart-container {
+    padding-left: 20px;
+    width: 100%;
+    max-width: 100%;
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .radarchart-container {
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: 260px;
+    min-height: 260px;
+  }
+  .radarchart-container canvas {
+    min-height: 250px;
+  }
+  .preloader {
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 575px) {
+  .radarchart-container {
+    padding-left: 5px;
+    padding-right: 5px;
+    min-width: 240px;
+    min-height: 240px;
+  }
+  .radarchart-container canvas {
+    min-height: 230px;
+  }
+  .preloader {
+    min-height: 240px;
+    padding-top: 25%;
   }
 }

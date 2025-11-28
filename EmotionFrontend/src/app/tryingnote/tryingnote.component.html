@@ -1,22 +1,21 @@
 <app-header></app-header>
 
-<div style="display: flex; margin-top: 10px; margin-left: 2%">
-  <app-user-guide-button
-    style="margin-left: 0.2%; margin-top: 0.2%"
-  ></app-user-guide-button>
-  <app-select-time-dropdown style="margin-left: 2%"></app-select-time-dropdown>
-  <app-select-view-dropdown style="margin-left: 2%"></app-select-view-dropdown>
+<div class="controls-bar">
+  <app-user-guide-button></app-user-guide-button>
+  <app-select-time-dropdown></app-select-time-dropdown>
+  <app-select-view-dropdown></app-select-view-dropdown>
 </div>
-<div style="display: flex; justify-content: space-between">
-  <div class="left-section" style="flex: 1">
-    <!-- <app-radar-chart></app-radar-chart> -->
+
+<div class="main-content">
+  <div class="left-section">
     <app-radar-chart-jerrisonapi></app-radar-chart-jerrisonapi>
   </div>
-  <div class="right-section flex">
-    <app-test-noterating style="flex: 1; overflow: auto"></app-test-noterating>
+  <div class="right-section">
+    <app-test-noterating></app-test-noterating>
   </div>
 </div>
-<div class="flex pt-4" style="width: 60%; padding-left: 4rem">
+
+<div class="download-buttons">
   <button
     (click)="exportToCsv()"
     type="button"
@@ -28,7 +27,6 @@
     (click)="exportSurveyToCsv()"
     type="button"
     class="button inline-flex px-3 py-3 items-center mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-    style="margin-left: 4rem"
   >
     Download Survey Emotion
   </button>
