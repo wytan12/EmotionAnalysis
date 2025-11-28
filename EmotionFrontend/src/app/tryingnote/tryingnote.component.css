@@ -1,9 +1,48 @@
+/* Main layout container */
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 2%;
+  gap: 1rem;
+}
+
+.left-section {
+  flex: 1 1 45%;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .right-section {
+  flex: 1 1 45%;
+  min-width: 300px;
   margin-top: 50px;
-  margin-right: 100px;
-  width: 50%;
+  margin-right: 2%;
   display: flex;
   height: 60vh;
+  overflow: auto;
+}
+
+/* Controls bar */
+.controls-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 10px;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+/* Download buttons container */
+.download-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-left: 4rem;
+  padding-top: 1rem;
 }
 
 .button {
@@ -40,4 +79,128 @@
 .button:active {
   box-shadow: none;
   transform: translateY(0);
+}
+
+/* Responsive breakpoints */
+
+/* Large screens (1200px and up) */
+@media (min-width: 1200px) {
+  .left-section {
+    flex: 0 0 45%;
+  }
+  .right-section {
+    flex: 0 0 50%;
+    margin-right: 2%;
+  }
+}
+
+/* Medium screens (992px to 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .left-section {
+    flex: 0 0 50%;
+  }
+  .right-section {
+    flex: 0 0 45%;
+    margin-right: 1%;
+    height: 55vh;
+  }
+}
+
+/* Tablet screens (768px to 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+  .left-section {
+    flex: 1 1 100%;
+    min-width: unset;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .right-section {
+    flex: 1 1 100%;
+    min-width: unset;
+    width: 96%;
+    margin: 0 2%;
+    height: 50vh;
+  }
+  .controls-bar {
+    justify-content: flex-start;
+  }
+  .download-buttons {
+    padding-left: 2rem;
+    width: 100%;
+  }
+}
+
+/* Small screens (576px to 767px) */
+@media (max-width: 767px) and (min-width: 576px) {
+  .main-content {
+    flex-direction: column;
+    padding: 0 1%;
+  }
+  .left-section {
+    flex: 1 1 100%;
+    width: 100%;
+    min-width: unset;
+  }
+  .right-section {
+    flex: 1 1 100%;
+    width: 98%;
+    min-width: unset;
+    margin: 1rem 1%;
+    height: 45vh;
+  }
+  .controls-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .download-buttons {
+    flex-direction: column;
+    padding-left: 1rem;
+    width: 100%;
+  }
+  .button {
+    font-size: 14px;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Extra small screens (below 576px) */
+@media (max-width: 575px) {
+  .main-content {
+    flex-direction: column;
+    padding: 0 1%;
+  }
+  .left-section {
+    flex: 1 1 100%;
+    width: 100%;
+    min-width: unset;
+  }
+  .right-section {
+    flex: 1 1 100%;
+    width: 98%;
+    min-width: unset;
+    margin: 0.5rem 1%;
+    height: 40vh;
+  }
+  .controls-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-left: 1%;
+  }
+  .download-buttons {
+    flex-direction: column;
+    padding-left: 1rem;
+    width: 100%;
+    gap: 0.5rem;
+  }
+  .button {
+    font-size: 13px;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    max-width: 250px;
+  }
 }

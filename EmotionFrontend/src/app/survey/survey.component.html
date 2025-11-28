@@ -1,14 +1,14 @@
 <app-header></app-header>
 
-<div class="survey-container flex flex-col w-full h-screen">
-  <div class="flex w-full">
-    <div class="left-section flex-2">
+<div class="survey-container">
+  <div class="survey-content">
+    <div class="left-section">
       <app-tab></app-tab>
     </div>
 
-    <div class="right-section justify-center flex-1 ">
-      <div class = "flex justify-end">
-          <button *ngIf="isVisible"
+    <div class="right-section">
+      <div class="flex justify-end">
+        <button *ngIf="isVisible"
           (click)="closeSurveyNote()"
           type="button"
           class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black close-button"
@@ -27,28 +27,21 @@
   class="btn btn-help"
 ></app-report-emotion-button>
 
-<div
-  class="flex flex-col pt-2 w-2/3 justify-around"
-  style="margin-bottom: 50px"
->
-  <div class="flex pt-2 w-2/3 justify-left pl-24">
-    <app-select-time-dropdown></app-select-time-dropdown>
-  </div>
-
-  <div class="flex pt-2 w-2/3 justify-around">
-    <button
-      (click)="exportToCsv()"
-      type="button"
-      class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-    >
-      Download Note Emotion
-    </button>
-    <button
-      (click)="exportSurveyToCsv()"
-      type="button"
-      class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-    >
-      Download Survey Emotion
-    </button>
-  </div>
+<div class="download-section">
+  <app-select-time-dropdown></app-select-time-dropdown>
+  
+  <button
+    (click)="exportToCsv()"
+    type="button"
+    class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+  >
+    Download Note Emotion
+  </button>
+  <button
+    (click)="exportSurveyToCsv()"
+    type="button"
+    class="button inline-flex items-center px-3 py-3 mb-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+  >
+    Download Survey Emotion
+  </button>
 </div>

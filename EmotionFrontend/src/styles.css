@@ -5,6 +5,52 @@
 /*@import "~ng-zorro-antd/style/index.min.css"; !* 引入基本样式 *!*/
 /*@import "~ng-zorro-antd/button/style/index.min.css"; !* 引入组件样式 *!*/
 /*@import "0~ng-zorro-antd/button/style/index.min.css"; !* 引入组件样式 *!*/
+
+/* Global Reset & Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Global responsive utilities */
+img, canvas, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent horizontal scroll on mobile */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Global responsive font scaling */
+@media (max-width: 767px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 575px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+/* Ensure charts maintain aspect ratio */
+canvas {
+  display: block;
+  max-width: 100% !important;
 }

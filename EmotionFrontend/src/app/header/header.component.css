@@ -1,6 +1,6 @@
 .header-container {
   width: 100%;
-  height: 5rem;
+  min-height: 5rem;
   background: rgb(238, 174, 202);
   background: radial-gradient(
     circle,
@@ -8,7 +8,9 @@
     rgba(148, 187, 233, 1) 100%
   );
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  padding: 0.5rem 0;
 }
 
 .header-container .logo {
@@ -18,7 +20,7 @@
   font-family: "Times New Roman", cursive;
   margin-left: 40px;
   cursor: pointer;
-  width: 15rem;
+  white-space: nowrap;
 }
 
 .header-container .survey {
@@ -28,21 +30,65 @@
   font-family: "Times New Roman", cursive;
   margin-left: 50px;
   cursor: pointer;
-  width: 15rem
+  white-space: nowrap;
 }
 
 .header-container .logo.active {
-  color: black; /* Apply grey color for the active state */
+  color: black;
 }
 
 .header-container .survey.active {
-  color: black; /* Apply grey color for the active state */
+  color: black;
 }
 
 .flex-spacer {
   flex: 1;
+  min-width: 1rem;
 }
 
-.reflect-button{
+.reflect-button {
   margin-right: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 991px) {
+  .header-container .logo,
+  .header-container .survey {
+    font-size: 1.5rem;
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .header-container {
+    justify-content: center;
+    padding: 0.5rem 1rem;
+  }
+  .header-container .logo,
+  .header-container .survey {
+    font-size: 1.25rem;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .flex-spacer {
+    flex: 0 0 100%;
+    min-width: 100%;
+    height: 0.5rem;
+  }
+  .reflect-button {
+    margin: 0.5rem auto;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 575px) {
+  .header-container .logo,
+  .header-container .survey {
+    font-size: 1.1rem;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 }

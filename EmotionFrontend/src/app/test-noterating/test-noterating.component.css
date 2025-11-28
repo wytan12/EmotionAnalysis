@@ -7,105 +7,111 @@
 }
 
 .nav-link.active {
-  background-color: #0d6efd; /* Set your desired background color for the active nav-link */
-  /* Set your desired text color for the active nav-link */
+  background-color: #0d6efd;
 }
 
 .container {
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .header-section {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  gap: 1rem;
 }
 
 .controls {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem; /* Adds space between the dropdown and the button */
-  margin-left: auto; /* Pushes the controls to the right end */
+  gap: 1rem;
+  margin-left: auto;
 }
 
 .controls .button {
-  margin-bottom: 5px; /* Add space below the button */
+  margin-bottom: 5px;
 }
 
 .custom-button {
-  background-color: black; /* Blue background color */
-  color: white; /* White text */
-  font-weight: bold; /* Bold text */
-  padding: 0.5rem 1rem; /* Padding (8px top/bottom, 16px left/right) */
-  border-radius: 15px; /* Rounded corners */
-  border: none; /* Remove default border */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth background color transition */
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .custom-button:hover {
-  background-color: grey; /* Darker blue on hover */
+  background-color: grey;
 }
 
 .custom-button:focus {
-  outline: none; /* Remove default focus outline */
+  outline: none;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5),
-    0 0 0 4px rgba(59, 130, 246, 0.3); /* Custom focus outline */
+    0 0 0 4px rgba(59, 130, 246, 0.3);
 }
 
 .survey-section {
-  background-color: #f8f9fa; /* Light gray background color */
-  border: 1px solid #dee2e6; /* Border color */
-  border-radius: 8px; /* Rounded corners */
-  margin-bottom: 20px; /* Spacing between sections */
-  padding: 20px; /* Padding inside each section */
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .question-answer {
-  margin-bottom: 15px; /* Spacing between question and answer */
+  margin-bottom: 15px;
 }
 
 .question {
   font-weight: bold;
-  font-size: 18px; /* Adjust font size */
-  margin-bottom: 8px; /* Spacing below the question */
+  font-size: 18px;
+  margin-bottom: 8px;
+  word-wrap: break-word;
 }
 
 .answer {
-  font-size: 16px; /* Adjust font size */
+  font-size: 16px;
 }
 
 .section-divider {
-  border-top: 1px solid #ccc; /* Border color for section divider */
-  margin-top: 20px; /* Spacing above the divider */
-  margin-bottom: 20px; /* Spacing below the divider */
+  border-top: 1px solid #ccc;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .sidebar {
   background-color: #ffffe2;
   color: black;
-  padding: 10px; /* Padding inside the sidebar items */
-  border-radius: 8px; /* Rounded corners */
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .sidebar .nav-link {
-  color: black; /* White text color for sidebar links */
-  font-size: 16px; /* Adjust font size */
-  margin-bottom: 10px; /* Spacing between sidebar links */
+  color: black;
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
 .sidebar .nav-link.active {
-  background-color: #0056b3; /* Darker blue background color for active link */
+  background-color: #0056b3;
 }
 
 .preloader {
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
   height: 100%;
+  min-height: 200px;
 }
 
 .spinner {
@@ -123,5 +129,58 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+/* Responsive breakpoints */
+@media (max-width: 991px) {
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .controls {
+    margin-left: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 15px;
+  }
+  .survey-section {
+    padding: 15px;
+  }
+  .question {
+    font-size: 16px;
+  }
+  .answer {
+    font-size: 14px;
+  }
+  .custom-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 575px) {
+  .container {
+    padding: 10px;
+  }
+  .survey-section {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+  .question {
+    font-size: 15px;
+  }
+  .answer {
+    font-size: 13px;
+  }
+  .controls {
+    gap: 0.5rem;
   }
 }

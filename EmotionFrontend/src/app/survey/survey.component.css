@@ -4,20 +4,44 @@
 
 .survey-container {
   display: flex;
-  height: 70vh;
+  flex-direction: column;
+  min-height: 70vh;
+}
+
+.survey-content {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1rem;
 }
 
 .left-section {
-  width: 50%;
+  flex: 1 1 55%;
+  min-width: 320px;
 }
 
 .right-section {
+  flex: 1 1 40%;
+  min-width: 280px;
   margin-top: 50px;
-  width: 20%;
-  display: absolute;
+  display: flex;
   flex-direction: column;
-  height: 80vh;
+  max-height: 80vh;
   overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.close-button {
+  margin-bottom: 1rem;
+}
+
+/* Download section */
+.download-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  align-items: center;
 }
 
 .button {
@@ -54,4 +78,63 @@
 .button:active {
   box-shadow: none;
   transform: translateY(0);
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1199px) {
+  .left-section {
+    flex: 1 1 50%;
+  }
+  .right-section {
+    flex: 1 1 45%;
+    max-height: 70vh;
+  }
+}
+
+@media (max-width: 991px) {
+  .survey-content {
+    flex-direction: column;
+  }
+  .left-section {
+    flex: 1 1 100%;
+    min-width: unset;
+    width: 100%;
+  }
+  .right-section {
+    flex: 1 1 100%;
+    min-width: unset;
+    width: 100%;
+    margin-top: 1rem;
+    max-height: 60vh;
+    padding-right: 0;
+  }
+  .download-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 767px) {
+  .right-section {
+    max-height: 50vh;
+    margin-top: 0.5rem;
+  }
+  .button {
+    font-size: 14px;
+    padding: 0.5rem 1rem;
+  }
+  .download-section {
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .right-section {
+    max-height: 45vh;
+  }
+  .button {
+    font-size: 13px;
+    width: 100%;
+    max-width: 280px;
+  }
 }
