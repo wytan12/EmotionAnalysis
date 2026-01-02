@@ -100,18 +100,12 @@ export class ScrollspyComponent implements OnInit {
           console.log('No emotion title selected, showing all surveys');
           filteredList = emoSurveyList;
         } else {
-          // Filter by inconducive emotions or by emotion ratings
+          // Filter by inconducive emotions only
+          // This ensures the count matches the frequency shown in the chart
           filteredList = emoSurveyList.filter((emoSurvey) => {
             const timestampDate = new Date(Number(emoSurvey.Timestamp));
             const matchesInconducive =
               emoSurvey.Inconducive.includes(emotionTitle);
-
-            // Also check if the emotion has a high rating (3 or above)
-            const emotionRating = this.getEmotionRating(
-              emoSurvey,
-              emotionTitle
-            );
-            const hasHighRating = emotionRating >= 3;
 
             const inRange =
               (!fromDate || timestampDate >= fromDate) &&
@@ -122,12 +116,11 @@ export class ScrollspyComponent implements OnInit {
               inconducive: emoSurvey.Inconducive,
               matchesInconducive,
               emotionTitle,
-              emotionRating,
-              hasHighRating,
               inRange,
             });
 
-            return (matchesInconducive || hasHighRating) && inRange;
+            // Only show surveys where the emotion is marked as inconducive
+            return matchesInconducive && inRange;
           });
         }
 
