@@ -34,11 +34,12 @@ export class TestNoteratingComponent implements OnInit {
         intensity_1star: number;
         intensity_2star: number;
         intensity_3star: number;
+        intensity_4star: number;
+        intensity_5star: number;
       };
     };
   } = {};
   currentSectionNumber: number = 1; // Add this line
-
 
   constructor(
     private route: ActivatedRoute,
@@ -48,7 +49,7 @@ export class TestNoteratingComponent implements OnInit {
     private titleService: TitleService,
     private sharedViewService: SharedViewService,
     private visibilityService: NoteVisibilityService,
-    private cdr: ChangeDetectorRef, // Inject ChangeDetectorRef
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -82,9 +83,9 @@ export class TestNoteratingComponent implements OnInit {
               timeRange && timeRange.length === 2
                 ? new Date(timeRange[1])
                 : undefined;
-            
+
             const communityId = this.route.snapshot.paramMap.get('communityId');
-            
+
             // 🧠 Default to all views if none selected
             if (!view || view.length === 0) {
               if (!communityId) {
@@ -95,7 +96,13 @@ export class TestNoteratingComponent implements OnInit {
               return this.sharedViewService.getViews(communityId).pipe(
                 switchMap((views: string[]) => {
                   this.selectedView = views;
-                  return this.getEmoReadWriteByEmotionTitle(title, datasetLabel, from, to, this.selectedView);
+                  return this.getEmoReadWriteByEmotionTitle(
+                    title,
+                    datasetLabel,
+                    from,
+                    to,
+                    this.selectedView
+                  );
                 })
               );
             }
@@ -149,8 +156,8 @@ export class TestNoteratingComponent implements OnInit {
 
       // this.http.get<any[]>(url, { headers }).subscribe((dataList) => {
       this.http.get<any[]>(url).subscribe((dataList) => {
-          console.log('Data List:', dataList); // Log the fetched data
-          const filteredList = dataList.filter((data) => {
+        console.log('Data List:', dataList); // Log the fetched data
+        const filteredList = dataList.filter((data) => {
           const action = data.actionType.toLowerCase();
           const isActionTypeMatch = action === emotionLabel.toLowerCase();
 
@@ -187,7 +194,10 @@ export class TestNoteratingComponent implements OnInit {
         });
 
         // Sort the filtered list by timestamp in descending order
-        filteredList.sort((a, b) => new Date(b.created).valueOf() - new Date(a.created).valueOf());
+        filteredList.sort(
+          (a, b) =>
+            new Date(b.created).valueOf() - new Date(a.created).valueOf()
+        );
 
         resolve(filteredList);
       });
@@ -211,6 +221,8 @@ export class TestNoteratingComponent implements OnInit {
             intensity_1star: 0,
             intensity_2star: 0,
             intensity_3star: 0,
+            intensity_4star: 0,
+            intensity_5star: 0,
           };
         }
 
@@ -220,6 +232,10 @@ export class TestNoteratingComponent implements OnInit {
           acc[noteId][emotionId].intensity_2star += 1;
         } else if (intensity === 3) {
           acc[noteId][emotionId].intensity_3star += 1;
+        } else if (intensity === 4) {
+          acc[noteId][emotionId].intensity_4star += 1;
+        } else if (intensity === 5) {
+          acc[noteId][emotionId].intensity_5star += 1;
         }
       });
 
@@ -237,7 +253,9 @@ export class TestNoteratingComponent implements OnInit {
       const key = `intensity_${intensity}star` as
         | 'intensity_1star'
         | 'intensity_2star'
-        | 'intensity_3star';
+        | 'intensity_3star'
+        | 'intensity_4star'
+        | 'intensity_5star';
       return noteData[emotionId][key] || 0;
     }
     return 0;
@@ -247,7 +265,7 @@ export class TestNoteratingComponent implements OnInit {
     const noteData = this.intensityCounts[noteId];
     if (noteData && noteData[emotionId]) {
       // Determine the highest intensity level
-      const intensities = [1, 2, 3];
+      const intensities = [1, 2, 3, 4, 5];
       let maxIntensity = 0;
 
       for (const intensity of intensities) {
@@ -268,9 +286,13 @@ export class TestNoteratingComponent implements OnInit {
   filterList(selectedValue: string): void {
     if (selectedValue === 'Intensity') {
       // Determine if the entire list is 'read' or 'write'
-      const isAllWrite = this.filteredEmoReadWrite.every(item => item.actionType === 'write');
-      const isAllRead = this.filteredEmoReadWrite.every(item => item.actionType === 'read');
-  
+      const isAllWrite = this.filteredEmoReadWrite.every(
+        (item) => item.actionType === 'write'
+      );
+      const isAllRead = this.filteredEmoReadWrite.every(
+        (item) => item.actionType === 'read'
+      );
+
       if (isAllWrite) {
         this.filteredEmoReadWrite.sort((a, b) => {
           const intensityA = a.Intensity?.[0]?.value || 0;
@@ -281,27 +303,35 @@ export class TestNoteratingComponent implements OnInit {
         this.filteredEmoReadWrite.sort((a, b) => {
           const noteIdA = a.note._id;
           const emotionIdA = a.ratings[0]?.emotionId;
-          const intensityCountA = this.getIntensityCount(noteIdA, emotionIdA, 3) * 3 + this.getIntensityCount(noteIdA, emotionIdA, 2) * 2 + this.getIntensityCount(noteIdA, emotionIdA, 1);
-  
+          const intensityCountA =
+            this.getIntensityCount(noteIdA, emotionIdA, 5) * 5 +
+            this.getIntensityCount(noteIdA, emotionIdA, 4) * 4 +
+            this.getIntensityCount(noteIdA, emotionIdA, 3) * 3 +
+            this.getIntensityCount(noteIdA, emotionIdA, 2) * 2 +
+            this.getIntensityCount(noteIdA, emotionIdA, 1);
+
           const noteIdB = b.note._id;
           const emotionIdB = b.ratings[0]?.emotionId;
-          const intensityCountB = this.getIntensityCount(noteIdB, emotionIdB, 3) * 3 + this.getIntensityCount(noteIdB, emotionIdB, 2) * 2 + this.getIntensityCount(noteIdB, emotionIdB, 1);
-          
+          const intensityCountB =
+            this.getIntensityCount(noteIdB, emotionIdB, 5) * 5 +
+            this.getIntensityCount(noteIdB, emotionIdB, 4) * 4 +
+            this.getIntensityCount(noteIdB, emotionIdB, 3) * 3 +
+            this.getIntensityCount(noteIdB, emotionIdB, 2) * 2 +
+            this.getIntensityCount(noteIdB, emotionIdB, 1);
+
           return intensityCountB - intensityCountA;
         });
       }
     } else {
       this.filteredEmoReadWrite.sort(
-        (a, b) =>
-          new Date(b.created).valueOf() - new Date(a.created).valueOf()
+        (a, b) => new Date(b.created).valueOf() - new Date(a.created).valueOf()
       );
     }
-  
+
     // Update filteredUniqueEmoReadWrite after filtering
     this.updateUniqueEmoReadWrite();
     this.cdr.detectChanges(); // Trigger change detection
   }
-  
 
   closeEmotionNote(): void {
     this.visibilityService.setVisibility('EmotionNote', false);
@@ -310,12 +340,14 @@ export class TestNoteratingComponent implements OnInit {
   // Method to update filteredUniqueEmoReadWrite
   updateUniqueEmoReadWrite(): void {
     const seenIds = new Set<string>();
-    this.filteredUniqueEmoReadWrite = this.filteredEmoReadWrite.filter((item) => {
-      if (!seenIds.has(item.note._id)) {
-        seenIds.add(item.note._id);
-        return true;
+    this.filteredUniqueEmoReadWrite = this.filteredEmoReadWrite.filter(
+      (item) => {
+        if (!seenIds.has(item.note._id)) {
+          seenIds.add(item.note._id);
+          return true;
+        }
+        return false;
       }
-      return false;
-    });
+    );
   }
 }

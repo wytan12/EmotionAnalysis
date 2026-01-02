@@ -27,9 +27,11 @@
             class="flex flex-col"
             style="margin: 0; text-align: left"
           >
-            ⭐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Weak Emotion<br />
-            ⭐⭐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Moderate Emotion<br />
-            ⭐⭐⭐&nbsp;- Strong Emotion
+            ⭐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Very Weak<br />
+            ⭐⭐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Weak<br />
+            ⭐⭐⭐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Moderate<br />
+            ⭐⭐⭐⭐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Strong<br />
+            ⭐⭐⭐⭐⭐&nbsp;- Very Strong
           </d-form-label>
           <d-form-label>I feel</d-form-label>
           <d-form-control [style.width.%]="80">
@@ -74,7 +76,7 @@
                     [(ngModel)]="item.value"
                     color="#fac20a"
                     [allowHalf]="false"
-                    [count]="3"
+                    [count]="5"
                   ></d-rate
                   >{{ item.value }}
                 </d-form-control>
