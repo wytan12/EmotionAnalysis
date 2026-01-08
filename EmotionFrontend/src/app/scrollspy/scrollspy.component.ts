@@ -74,7 +74,7 @@ export class ScrollspyComponent implements OnInit {
   }
 
   convertTimestampToDate(timestamp: string): string {
-    const ms = Number(timestamp) * 1000;
+    const ms = Number(timestamp);
     return new Date(ms).toLocaleString(); // or use Angular DatePipe if needed
   }
 
