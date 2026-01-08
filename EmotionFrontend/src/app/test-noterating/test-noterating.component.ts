@@ -34,8 +34,6 @@ export class TestNoteratingComponent implements OnInit {
         intensity_1star: number;
         intensity_2star: number;
         intensity_3star: number;
-        intensity_4star: number;
-        intensity_5star: number;
       };
     };
   } = {};
@@ -221,8 +219,6 @@ export class TestNoteratingComponent implements OnInit {
             intensity_1star: 0,
             intensity_2star: 0,
             intensity_3star: 0,
-            intensity_4star: 0,
-            intensity_5star: 0,
           };
         }
 
@@ -232,10 +228,6 @@ export class TestNoteratingComponent implements OnInit {
           acc[noteId][emotionId].intensity_2star += 1;
         } else if (intensity === 3) {
           acc[noteId][emotionId].intensity_3star += 1;
-        } else if (intensity === 4) {
-          acc[noteId][emotionId].intensity_4star += 1;
-        } else if (intensity === 5) {
-          acc[noteId][emotionId].intensity_5star += 1;
         }
       });
 
@@ -253,9 +245,7 @@ export class TestNoteratingComponent implements OnInit {
       const key = `intensity_${intensity}star` as
         | 'intensity_1star'
         | 'intensity_2star'
-        | 'intensity_3star'
-        | 'intensity_4star'
-        | 'intensity_5star';
+        | 'intensity_3star';
       return noteData[emotionId][key] || 0;
     }
     return 0;
@@ -265,7 +255,7 @@ export class TestNoteratingComponent implements OnInit {
     const noteData = this.intensityCounts[noteId];
     if (noteData && noteData[emotionId]) {
       // Determine the highest intensity level
-      const intensities = [1, 2, 3, 4, 5];
+      const intensities = [1, 2, 3];
       let maxIntensity = 0;
 
       for (const intensity of intensities) {
@@ -304,8 +294,6 @@ export class TestNoteratingComponent implements OnInit {
           const noteIdA = a.note._id;
           const emotionIdA = a.ratings[0]?.emotionId;
           const intensityCountA =
-            this.getIntensityCount(noteIdA, emotionIdA, 5) * 5 +
-            this.getIntensityCount(noteIdA, emotionIdA, 4) * 4 +
             this.getIntensityCount(noteIdA, emotionIdA, 3) * 3 +
             this.getIntensityCount(noteIdA, emotionIdA, 2) * 2 +
             this.getIntensityCount(noteIdA, emotionIdA, 1);
@@ -313,8 +301,6 @@ export class TestNoteratingComponent implements OnInit {
           const noteIdB = b.note._id;
           const emotionIdB = b.ratings[0]?.emotionId;
           const intensityCountB =
-            this.getIntensityCount(noteIdB, emotionIdB, 5) * 5 +
-            this.getIntensityCount(noteIdB, emotionIdB, 4) * 4 +
             this.getIntensityCount(noteIdB, emotionIdB, 3) * 3 +
             this.getIntensityCount(noteIdB, emotionIdB, 2) * 2 +
             this.getIntensityCount(noteIdB, emotionIdB, 1);

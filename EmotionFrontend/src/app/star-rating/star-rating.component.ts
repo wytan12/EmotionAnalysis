@@ -11,6 +11,4 @@ export class StarRatingComponent {
   @Input() intensity_1star: number | undefined;
   @Input() intensity_2star: number | undefined;
   @Input() intensity_3star: number | undefined;
-  @Input() intensity_4star: number | undefined;
-  @Input() intensity_5star: number | undefined;
 }
