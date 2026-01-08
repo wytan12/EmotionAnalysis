@@ -59,9 +59,7 @@
                       <app-star-rating
                         [intensity_1star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 1)"
                         [intensity_2star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 2)"
-                        [intensity_3star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 3)"
-                        [intensity_4star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 4)"
-                        [intensity_5star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 5)">
+                        [intensity_3star]="getIntensityCount(emoReadWrite.note._id, emoReadWrite.ratings[0]?.emotionId, 3)">
                       </app-star-rating>
                     </ng-container>
                     <ng-template #writeRating>
