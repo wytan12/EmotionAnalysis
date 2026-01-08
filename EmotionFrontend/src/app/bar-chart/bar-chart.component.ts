@@ -199,11 +199,25 @@ export class BarChartComponent implements OnInit {
       },
       y: {
         beginAtZero: true,
+        min: 0,
+        max: 5,
         ticks: {
           font: {
             size: 18,
           },
-          stepSize: 0.5,
+          stepSize: 1,
+          callback: function(value: any) {
+            // Map numeric values to intensity labels
+            const labels: { [key: number]: string } = {
+              0: '0 (None)',
+              1: '1 (Very Weak)',
+              2: '2 (Weak)',
+              3: '3 (Moderate)',
+              4: '4 (Strong)',
+              5: '5 (Very Strong)'
+            };
+            return labels[value] || value;
+          }
         },
       },
     },
@@ -217,6 +231,25 @@ export class BarChartComponent implements OnInit {
         },
         onClick: () => {},
       },
+      tooltip: {
+        callbacks: {
+          label: function(context: any) {
+            const value = context.parsed.y;
+            const labels: { [key: string]: string } = {
+              '0': 'None',
+              '1': 'Very Weak',
+              '2': 'Weak',
+              '3': 'Moderate',
+              '4': 'Strong',
+              '5': 'Very Strong'
+            };
+            // Find the closest intensity level
+            const roundedValue = Math.round(value);
+            const label = labels[roundedValue.toString()] || '';
+            return `${context.dataset.label}: ${value.toFixed(2)} (${label})`;
+          }
+        }
+      }
     },
   };
 
