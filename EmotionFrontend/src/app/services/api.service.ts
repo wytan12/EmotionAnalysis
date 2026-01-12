@@ -38,8 +38,6 @@ export interface ProcessedData {
       intensity_1star: number;
       intensity_2star: number;
       intensity_3star: number;
-      intensity_4star: number;
-      intensity_5star: number;
     };
   };
 }
@@ -82,22 +80,16 @@ export class ApiService {
             intensity_1star: 0,
             intensity_2star: 0,
             intensity_3star: 0,
-            intensity_4star: 0,
-            intensity_5star: 0,
           };
         }
 
-        // Increment the count based on the intensity (1-5)
+        // Increment the count based on the intensity (1-3)
         if (intensity === 1) {
           acc[noteId].intensities[emotion].intensity_1star += 1;
         } else if (intensity === 2) {
           acc[noteId].intensities[emotion].intensity_2star += 1;
         } else if (intensity === 3) {
           acc[noteId].intensities[emotion].intensity_3star += 1;
-        } else if (intensity === 4) {
-          acc[noteId].intensities[emotion].intensity_4star += 1;
-        } else if (intensity === 5) {
-          acc[noteId].intensities[emotion].intensity_5star += 1;
         }
       });
 

@@ -25,4 +25,17 @@ th, td {
   td {
     text-align: center;
   }
+
+  /* Hide extra stars beyond 3 */
+  ::ng-deep nz-rate {
+    display: inline-block;
+  }
+
+  ::ng-deep nz-rate .ant-rate-item {
+    display: inline-block;
+  }
+
+  ::ng-deep nz-rate .ant-rate-item:nth-child(n+4) {
+    display: none;
+  }
   
