@@ -38,14 +38,14 @@ export class EmotionSliderComponent implements OnInit {
 
   ngOnInit(): void {
     this.feelingsForm = this.fb.group({
-      Joyful: [0],
-      Curious: [0],
-      Surprised: [0],
-      Confused: [0],
-      Anxious: [0],
-      Frustrated: [0],
-      Bored: [0],
-      Inconducive: this.fb.array([]),
+      Joyful: [0, [Validators.required, Validators.min(1)]],
+      Curious: [0, [Validators.required, Validators.min(1)]],
+      Surprised: [0, [Validators.required, Validators.min(1)]],
+      Confused: [0, [Validators.required, Validators.min(1)]],
+      Anxious: [0, [Validators.required, Validators.min(1)]],
+      Frustrated: [0, [Validators.required, Validators.min(1)]],
+      Bored: [0, [Validators.required, Validators.min(1)]],
+      Inconducive: this.fb.array([], [Validators.required, Validators.minLength(1)]),
       Reason: [''],
       Remarks: [''],
     });
@@ -85,6 +85,13 @@ export class EmotionSliderComponent implements OnInit {
       );
       inconducive.removeAt(index);
     }
+    // Mark as touched to trigger validation display
+    inconducive.markAsTouched();
+  }
+
+  isInconduciveChecked(emotionId: string): boolean {
+    const inconducive: FormArray = this.feelingsForm.get('Inconducive') as FormArray;
+    return inconducive.controls.some((control: any) => control.value === emotionId);
   }
 
   onSubmit(): void {
@@ -151,6 +158,14 @@ export class EmotionSliderComponent implements OnInit {
       });
     } else {
       console.log('[EMOTION-SLIDER] Form is invalid - missing required fields');
+      console.log('[EMOTION-SLIDER] Form errors:', this.feelingsForm.errors);
+      console.log('[EMOTION-SLIDER] Form values:', this.feelingsForm.value);
+      
+      // Mark all fields as touched to show validation errors
+      Object.keys(this.feelingsForm.controls).forEach(key => {
+        this.feelingsForm.get(key)?.markAsTouched();
+      });
+      
       this.openSnackBar('Please answer all compulsory questions.', 'Close');
     }
   }
