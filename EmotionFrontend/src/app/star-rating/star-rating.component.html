@@ -1,13 +1,18 @@
-<table>
-    <tr>
-      <th>Rating</th>
-      <td><nz-rate [ngModel]="1" nzDisabled [nzCount]="3"></nz-rate></td>
-      <td><nz-rate [ngModel]="2" nzDisabled [nzCount]="3"></nz-rate></td>
-      <td><nz-rate [ngModel]="3" nzDisabled [nzCount]="3"></nz-rate></td>
-      <td>{{ intensity_1star }}</td>
-      <td>{{ intensity_2star }}</td>
-      <td>{{ intensity_3star }}</td>
-    </tr>
-</table>
+<div class="star-rating-container">
+  <table>
+      <tr>
+        <th>Rating</th>
+        <td><nz-rate [ngModel]="1" nzDisabled [nzCount]="1"></nz-rate></td>
+        <td><nz-rate [ngModel]="2" nzDisabled [nzCount]="2"></nz-rate></td>
+        <td><nz-rate [ngModel]="3" nzDisabled [nzCount]="3"></nz-rate></td>
+      </tr>
+      <tr>
+        <th>Count</th>
+        <td>{{ intensity_1star }}</td>
+        <td>{{ intensity_2star }}</td>
+        <td>{{ intensity_3star }}</td>
+      </tr>
+  </table>
+</div>
   
   
