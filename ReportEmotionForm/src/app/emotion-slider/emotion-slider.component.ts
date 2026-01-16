@@ -45,7 +45,10 @@ export class EmotionSliderComponent implements OnInit {
       Anxious: [0, [Validators.required, Validators.min(1)]],
       Frustrated: [0, [Validators.required, Validators.min(1)]],
       Bored: [0, [Validators.required, Validators.min(1)]],
-      Inconducive: this.fb.array([], [Validators.required, Validators.minLength(1)]),
+      Inconducive: this.fb.array(
+        [],
+        [Validators.required, Validators.minLength(1)]
+      ),
       Reason: [''],
       Remarks: [''],
     });
@@ -90,8 +93,12 @@ export class EmotionSliderComponent implements OnInit {
   }
 
   isInconduciveChecked(emotionId: string): boolean {
-    const inconducive: FormArray = this.feelingsForm.get('Inconducive') as FormArray;
-    return inconducive.controls.some((control: any) => control.value === emotionId);
+    const inconducive: FormArray = this.feelingsForm.get(
+      'Inconducive'
+    ) as FormArray;
+    return inconducive.controls.some(
+      (control: any) => control.value === emotionId
+    );
   }
 
   onSubmit(): void {
@@ -160,12 +167,12 @@ export class EmotionSliderComponent implements OnInit {
       console.log('[EMOTION-SLIDER] Form is invalid - missing required fields');
       console.log('[EMOTION-SLIDER] Form errors:', this.feelingsForm.errors);
       console.log('[EMOTION-SLIDER] Form values:', this.feelingsForm.value);
-      
+
       // Mark all fields as touched to show validation errors
-      Object.keys(this.feelingsForm.controls).forEach(key => {
+      Object.keys(this.feelingsForm.controls).forEach((key) => {
         this.feelingsForm.get(key)?.markAsTouched();
       });
-      
+
       this.openSnackBar('Please answer all compulsory questions.', 'Close');
     }
   }
