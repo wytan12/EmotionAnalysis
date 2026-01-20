@@ -6,36 +6,24 @@
   <div class="left-section">
     <!-- Left Question Block -->
     <div class="question-block blue-bg">
-      <h2 class="question-block-heading">Our analysis</h2>
-      <label>What do you see in the visualizations?</label>
-      <textarea name="q1" rows="5" maxlength="1000" [(ngModel)]="formData.Visualization"></textarea>
+      <h2 class="question-block-heading">Our Analysis</h2>
+      <label>Which positive emotion do you see the most in the charts?</label>
+      <textarea name="q1" rows="5" maxlength="1000" [(ngModel)]="formData.PositiveEmotion"></textarea>
 
-      <label>Based on the analysis results, what emotional challenges do we have
-        during the Knowledge Building?</label>
-      <textarea name="q2" rows="5" maxlength="1000" [(ngModel)]="formData.Challenges"></textarea>
-    </div>
-  </div>
-
-  <div class="middle-section">
-    <!-- Middle Question Block -->
-    <div class="question-block blue-bg">
-      <h2 class="question-block-heading">Our reflection</h2>
-      <label>Which aspects do you think we can do better?</label>
-      <textarea name="q3" rows="5" maxlength="1000" [(ngModel)]="formData.ImprovementWays"></textarea>
-
-      <label>How can we create a more positive emotional environment to support our
-        Knowledge Building?</label>
-      <textarea name="q4" rows="5" maxlength="1000" [(ngModel)]="formData.PositivePlan"></textarea>
+      <label>Which negative emotion do you see the most in the charts?</label>
+      <textarea name="q2" rows="5" maxlength="1000" [(ngModel)]="formData.NegativeEmotion"></textarea>
     </div>
   </div>
 
   <div class="right-section">
     <!-- Right Question Block -->
     <div class="question-block blue-bg">
-      <h2 class="question-block-heading">Our regulation</h2>
-      <label>What is our specific action plan for creating a supportive emotional
-        environment?</label>
-      <textarea name="q5" rows="8" maxlength="1000" [(ngModel)]="formData.Action"></textarea>
+      <h2 class="question-block-heading">Our Regulation</h2>
+      <label>Choose 1 strategy to maintain the positive emotion</label>
+      <textarea name="q3" rows="5" maxlength="1000" [(ngModel)]="formData.PositiveStrategy"></textarea>
+
+      <label>Choose 1 strategy to overcome the negative emotion</label>
+      <textarea name="q4" rows="5" maxlength="1000" [(ngModel)]="formData.NegativeStrategy"></textarea>
     </div>
   </div>
 </div>
