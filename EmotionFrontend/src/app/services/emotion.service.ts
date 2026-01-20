@@ -197,11 +197,10 @@ export class EmotionService {
           Date.now().toString(),
           EmotionData.ReflectionTitle ?? '',
           groupMembersString,
-          EmotionData.Visualization ?? '',
-          EmotionData.Challenges ?? '',
-          EmotionData.ImprovementWays ?? '',
-          EmotionData.PositivePlan ?? '',
-          EmotionData.Action ?? '',
+          EmotionData.PositiveEmotion ?? '',
+          EmotionData.NegativeEmotion ?? '',
+          EmotionData.PositiveStrategy ?? '',
+          EmotionData.NegativeStrategy ?? '',
           EmotionData.communityID ?? ''
         );
 
