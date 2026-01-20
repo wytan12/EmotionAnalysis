@@ -225,11 +225,10 @@ export interface EmoReg {
   ReflectionTitle: string;
   Timestamp: string;
   GroupMembers: string;
-  Visualization: string;
-  Challenges: string;
-  ImprovementWays: string;
-  PositivePlan: string;
-  Action: string;
+  PositiveEmotion: string;
+  NegativeEmotion: string;
+  PositiveStrategy: string;
+  NegativeStrategy: string;
   communityID: string;
 }
 
@@ -238,21 +237,19 @@ export class EmoReg implements EmoReg{
               Timestamp: string,
               ReflectionTitle: string,
               GroupMembers: string,
-              Visualization: string,
-              Challenges: string,
-              ImprovementWays: string,
-              PositivePlan: string,
-              Action: string,
+              PositiveEmotion: string,
+              NegativeEmotion: string,
+              PositiveStrategy: string,
+              NegativeStrategy: string,
               communityID: string) {
     this.UserID = UserID;
     this.ReflectionTitle = ReflectionTitle;
     this.Timestamp = Timestamp;
     this.GroupMembers = GroupMembers;
-    this.Visualization = Visualization;
-    this.Challenges = Challenges;
-    this.ImprovementWays = ImprovementWays;
-    this.PositivePlan = PositivePlan;
-    this.Action = Action;
+    this.PositiveEmotion = PositiveEmotion;
+    this.NegativeEmotion = NegativeEmotion;
+    this.PositiveStrategy = PositiveStrategy;
+    this.NegativeStrategy = NegativeStrategy;
     this.communityID = communityID;
   }
 }

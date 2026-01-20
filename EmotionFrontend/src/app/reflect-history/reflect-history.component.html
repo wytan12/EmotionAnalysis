@@ -22,27 +22,26 @@
             <div class="question-answer">
               <p class="question">Group Members:</p>
               <p class="answer">{{ emoReg.GroupMembers }}</p>
+              
+              <h4 style="margin-top: 20px; color: #2563eb;">Our Analysis</h4>
               <p class="question">
-                What is our specific action plan for creating a supportive
-                emotional environment?
+                Which positive emotion do you see the most in the charts?
               </p>
-              <p class="answer">{{ emoReg.Action }}</p>
-              <p class="question">What do you see in the visualizations?</p>
-              <p class="answer">{{ emoReg.Visualization }}</p>
+              <p class="answer">{{ emoReg.PositiveEmotion }}</p>
               <p class="question">
-                Based on the analysis results, what emotional challenges do we
-                have during the Knowledge Building?
+                Which negative emotion do you see the most in the charts?
               </p>
-              <p class="answer">{{ emoReg.Challenges }}</p>
+              <p class="answer">{{ emoReg.NegativeEmotion }}</p>
+              
+              <h4 style="margin-top: 20px; color: #2563eb;">Our Regulation</h4>
               <p class="question">
-                Which aspects do you think we can do better?
+                Choose 1 strategy to maintain the positive emotion
               </p>
-              <p class="answer">{{ emoReg.ImprovementWays }}</p>
+              <p class="answer">{{ emoReg.PositiveStrategy }}</p>
               <p class="question">
-                How can we create a more positive emotional environment to
-                support our Knowledge Building?
+                Choose 1 strategy to overcome the negative emotion
               </p>
-              <p class="answer">{{ emoReg.PositivePlan }}</p>
+              <p class="answer">{{ emoReg.NegativeStrategy }}</p>
               <hr class="section-divider" />
             </div>
           </section>
