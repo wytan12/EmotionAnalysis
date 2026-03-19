@@ -18,6 +18,7 @@ import { CommunityService } from '../services/community.service';
 })
 export class EmotionSliderComponent implements OnInit {
   feelingsForm!: FormGroup;
+  isSubmitting = false;
 
   options = [
     { id: 'Joyful', label: 'Joyful' },
@@ -102,6 +103,12 @@ export class EmotionSliderComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // Prevent multiple submissions
+    if (this.isSubmitting) {
+      console.log('[EMOTION-SLIDER] Submission already in progress. Ignoring duplicate submit.');
+      return;
+    }
+
     const communityId = this.communityService.getCurrentCommunityId();
     console.log('[EMOTION-SLIDER] Submit initiated');
     console.log(
@@ -136,6 +143,10 @@ export class EmotionSliderComponent implements OnInit {
       console.log('[EMOTION-SLIDER] Form is valid, submitting...');
       console.log('[EMOTION-SLIDER] Form data:', this.feelingsForm.value);
 
+      // Mark as submitting to prevent duplicate submissions
+      this.isSubmitting = true;
+      this.feelingsForm.disable();
+
       // Use the formData with communityID instead of patching the form
       const submissionData = {
         ...this.feelingsForm.value,
@@ -154,6 +165,7 @@ export class EmotionSliderComponent implements OnInit {
             communityId
           );
           this.openSnackBar('Form submitted successfully!', 'Close');
+          this.isSubmitting = false;
         },
         error: (error: any) => {
           console.error('[EMOTION-SLIDER] Error adding EmoSurvey:', error);
@@ -161,6 +173,8 @@ export class EmotionSliderComponent implements OnInit {
             'Error submitting form. Please try again.',
             'Close'
           );
+          this.isSubmitting = false;
+          this.feelingsForm.enable();
         },
       });
     } else {
