@@ -28,11 +28,11 @@
   </div>
 </div>
 
-<div class="submit-block" [ngClass]="{'disabled-button': !(selectedTitle?.trim()?.length)}">
+<div class="submit-block" [ngClass]="{'disabled-button': !(selectedTitle?.trim()?.length) || isSubmitting}">
   <input
     type="button"
-    value="Submit"
+    [value]="isSubmitting ? 'Submitting...' : 'Submit'"
     (click)="onSubmitClick()"
-    [disabled]="!(selectedTitle && selectedTitle.trim().length)"
+    [disabled]="!(selectedTitle && selectedTitle.trim().length) || isSubmitting"
   />
 </div>
