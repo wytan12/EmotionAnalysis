@@ -19,9 +19,10 @@ export class ReflectFormComponent {
   formData: any = {};
   selectedUsers: string[] = [];
   selectedTitle: string | null = null;
+  isSubmitting = false;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private emotionService: EmotionService,
     private communityService: CommunityService
   ) {}
@@ -40,19 +41,32 @@ export class ReflectFormComponent {
   } 
 
   submit() {
+    // Prevent multiple submissions
+    if (this.isSubmitting) {
+      console.log('[REFLECT-FORM] Submission already in progress. Ignoring duplicate submit.');
+      return;
+    }
+
     const communityId = this.communityService.getCurrentCommunityId();
 
     if (communityId) {
       this.formData.communityID = communityId;  // 👈 add it here
     } else {
       console.error('No community ID set. Cannot submit with community context.');
+      return;
     }
     console.log(this.formData);
+
+    // Mark as submitting to prevent duplicate submissions
+    this.isSubmitting = true;
+
     this.emotionService.addReg(this.formData).subscribe(() => {
+      this.isSubmitting = false;
       // Navigate while preserving community context
       this.communityService.navigateInCommunity('reflect-history');
     }, error => {
       console.error('Error submitting form data:', error);
+      this.isSubmitting = false;
     });
   }
 
