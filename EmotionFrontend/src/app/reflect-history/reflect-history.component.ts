@@ -15,7 +15,6 @@ export class ReflectHistoryComponent {
   filteredEmoReg: EmoReg[] = []; // Initialize the array to store EmoReg objects
   activeSection: number = 0;
   currentSectionNumber: number = 1;
-  userFirstName: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -29,27 +28,13 @@ export class ReflectHistoryComponent {
       // Retrieve the 'a' parameter from the query parameters
       this.title = params['a'];
 
-      this.fetchUserDataAndEmoReg();
-
       // Call the function to retrieve EmoReg objects
-      // this.getEmoReg();
+      this.getEmoReg();
     });
   }
 
   setActiveSection(sectionIndex: number): void {
     this.activeSection = sectionIndex;
-  }
-
-  fetchUserDataAndEmoReg(): void {
-    this.emotionService.getUserData().subscribe({
-      next: (userData) => {
-        this.userFirstName = userData.firstName;  // directly use firstName field
-        this.getEmoReg();  // Once user is fetched, load EmoReg
-      },
-      error: (err) => {
-        console.error('Error fetching user data:', err);
-      }
-    });
   }
 
   sortReflectionsByTimestamp(): void {
@@ -61,14 +46,11 @@ export class ReflectHistoryComponent {
   getEmoReg(): void {
     this.emotionService.getEmoReg().subscribe(
       emoRegList => {
-        this.filteredEmoReg = emoRegList
-          .filter(emoReg => 
-            emoReg.GroupMembers?.toLowerCase().includes(this.userFirstName.toLowerCase())
-          )
-          .map(emoReg => ({
-            ...emoReg,
-            Timestamp: this.timeService.convertToDate(Number(emoReg.Timestamp))
-          }));
+        // Show all reflections for the community (no filtering by user)
+        this.filteredEmoReg = emoRegList.map(emoReg => ({
+          ...emoReg,
+          Timestamp: this.timeService.convertToDate(Number(emoReg.Timestamp))
+        }));
         this.sortReflectionsByTimestamp();
       },
       error => {
