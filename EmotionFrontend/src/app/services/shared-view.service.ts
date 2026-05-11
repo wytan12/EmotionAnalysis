@@ -26,11 +26,17 @@ export class SharedViewService {
     return this.http.get<any[]>(url).pipe(
       map((data) => {
         const viewsSet = new Set<string>();
-        data.forEach((entry) => {
-          entry.inViews.forEach((view: any) => {
-            viewsSet.add(view.title);
+        if (Array.isArray(data)) {
+          data.forEach((entry) => {
+            if (entry && Array.isArray(entry.inViews)) {
+              entry.inViews.forEach((view: any) => {
+                if (view && view.title) {
+                  viewsSet.add(view.title);
+                }
+              });
+            }
           });
-        });
+        }
         return Array.from(viewsSet);
       })
     );
