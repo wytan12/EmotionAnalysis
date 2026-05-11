@@ -303,9 +303,16 @@ export class RadarChartJerrisonapiComponent {
 
       //const API_BASE_URL = process.env['REACT_APP_COMMUNITY_DATA_URL'] || 'http://localhost/api';
       this.http.get<any[]>(url).subscribe(
-
-      // this.http.get<any[]>(url, { headers }).subscribe(
         (response: any[]) => {
+          if (!Array.isArray(response)) {
+            console.error('Error: API response is not an array', response);
+            resolve({
+              Reading: [0, 0, 0, 0, 0, 0, 0],
+              Writing: [0, 0, 0, 0, 0, 0, 0],
+            });
+            return;
+          }
+
           const intensityKeys = [
             'Joyful',
             'Curious',
@@ -322,8 +329,9 @@ export class RadarChartJerrisonapiComponent {
             const _id = dataEntry['_id'];
 
             // Check if the entry matches the selected view
+            const inViews = dataEntry.inViews;
             const viewsMatch = this.selectedView
-              ? dataEntry.inViews.some((view: any) =>
+              ? Array.isArray(inViews) && inViews.some((view: any) =>
                   this.selectedView?.includes(view.title)
                 )
               : true;
@@ -331,9 +339,10 @@ export class RadarChartJerrisonapiComponent {
             if (timestamp >= from && timestamp <= to && viewsMatch) {
               intensityKeys.forEach((key, index) => {
                 const emotionId = `eat_${key.toLowerCase()}`;
-                const rating = dataEntry['ratings']?.find(
-                  (r: any) => r.emotionId === emotionId
-                );
+                const ratings = dataEntry['ratings'];
+                const rating = Array.isArray(ratings)
+                  ? ratings.find((r: any) => r.emotionId === emotionId)
+                  : null;
                 const intensity = rating ? rating.intensity : 0;
 
                 if (actionType === 'read' || actionType === 'write') {

@@ -71,27 +71,29 @@ export class ApiService {
         };
       }
 
-      curr.ratings.forEach((rating) => {
-        const emotion = rating.emotionId;
-        const intensity = rating.intensity;
+      if (Array.isArray(curr.ratings)) {
+        curr.ratings.forEach((rating) => {
+          const emotion = rating.emotionId;
+          const intensity = rating.intensity;
 
-        if (!acc[noteId].intensities[emotion]) {
-          acc[noteId].intensities[emotion] = {
-            intensity_1star: 0,
-            intensity_2star: 0,
-            intensity_3star: 0,
-          };
-        }
+          if (!acc[noteId].intensities[emotion]) {
+            acc[noteId].intensities[emotion] = {
+              intensity_1star: 0,
+              intensity_2star: 0,
+              intensity_3star: 0,
+            };
+          }
 
-        // Increment the count based on the intensity (1-3)
-        if (intensity === 1) {
-          acc[noteId].intensities[emotion].intensity_1star += 1;
-        } else if (intensity === 2) {
-          acc[noteId].intensities[emotion].intensity_2star += 1;
-        } else if (intensity === 3) {
-          acc[noteId].intensities[emotion].intensity_3star += 1;
-        }
-      });
+          // Increment the count based on the intensity (1-3)
+          if (intensity === 1) {
+            acc[noteId].intensities[emotion].intensity_1star += 1;
+          } else if (intensity === 2) {
+            acc[noteId].intensities[emotion].intensity_2star += 1;
+          } else if (intensity === 3) {
+            acc[noteId].intensities[emotion].intensity_3star += 1;
+          }
+        });
+      }
 
       return acc;
     }, {});
